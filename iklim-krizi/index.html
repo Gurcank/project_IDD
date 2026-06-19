@@ -1,0 +1,1599 @@
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>İklim Krizi</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Open Sans Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap"
+    rel="stylesheet">
+  <!-- Google Fonts: Montserrat & Inter -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@700;800;900&amp;display=swap"
+    rel="stylesheet">
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" crossorigin="anonymous"
+    href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9pa2xpbWRkLm9yZy9jYW1wYWluZ3M">
+  <style>
+    :root {
+      --idd-green: #2c7933;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
+      padding-top: 32px;
+    }
+
+    p,
+    .about-desc,
+    .slider-desc,
+    .logo-section .about-subtitle,
+    .stat-card,
+    .lead,
+    .footer,
+    .auth-buttons,
+    .btn,
+    .navbar,
+    .dropdown-item {
+      font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .hero-title,
+    .about-title,
+    .slider-title {
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /*  ========================================================================= Navigation Bar Styles =============================================================================== */
+    .navbar {
+      background-color: #212529 !important;
+      padding-top: 0.6rem;
+      padding-bottom: 0.6rem;
+      min-height: 56px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      width: 100%;
+      transition: none;
+    }
+
+    .navbar .nav-link {
+      font-size: 1.08rem;
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
+    }
+
+    .navbar .navbar-brand {
+      font-size: 1.18rem;
+    }
+
+    .navbar .navbar-brand img {
+      height: 56px;
+      max-height: 64px;
+      width: auto;
+      transition: height 0.3s;
+    }
+
+    .navbar .btn,
+    .auth-buttons .btn {
+      font-size: 1.08rem;
+      padding: 0.6rem 1.3rem;
+    }
+
+    .navbar .lang-switcher {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 4px;
+      display: inline-flex;
+      position: relative;
+      cursor: pointer;
+      margin-left: 1rem;
+      width: 120px;
+      height: 44px;
+      user-select: none;
+    }
+
+    .navbar .lang-option {
+      position: absolute;
+      width: 58px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .navbar .lang-option[data-lang="tr"] {
+      left: 4px;
+    }
+
+    .navbar .lang-option[data-lang="en"] {
+      right: 4px;
+    }
+
+    .navbar .lang-switcher::before {
+      content: '';
+      position: absolute;
+      width: 58px;
+      height: 36px;
+      background: #2c7933;
+      border-radius: 6px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      left: 4px;
+    }
+
+    .navbar .lang-switcher.en::before {
+      left: calc(100% - 62px);
+    }
+
+    .navbar .lang-option.active {
+      color: white;
+    }
+
+    @media (max-width: 991px) {
+      .navbar .nav-link {
+        font-size: 0.98rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+      }
+
+      .navbar .btn,
+      .auth-buttons .btn {
+        font-size: 0.98rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .navbar .navbar-brand img {
+        height: 44px;
+        max-height: 48px;
+      }
+
+      .navbar .navbar-collapse {
+        text-align: left;
+      }
+
+      .navbar .lang-switcher-mobile {
+        display: flex;
+        justify-content: center;
+        margin: 0.5rem 0;
+      }
+
+      .navbar .lang-switcher {
+        margin-left: 0;
+        width: 100px;
+        height: 40px;
+      }
+
+      .navbar .lang-option {
+        width: 48px;
+        height: 32px;
+        font-size: 1rem;
+      }
+
+      .navbar .lang-switcher::before {
+        width: 48px;
+        height: 32px;
+      }
+
+      .navbar .lang-switcher.en::before {
+        left: calc(100% - 52px);
+      }
+    }
+
+    /*  ========================================================================= Footer Styles =============================================================================== */
+
+    footer .row {
+      gap: 48px 0;
+    }
+
+    @media (min-width: 768px) {
+      footer .col-md-4:not(:last-child) {
+        padding-right: 48px;
+      }
+
+      footer .col-md-4:not(:first-child) {
+        padding-left: 48px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      footer .row {
+        gap: 32px 0;
+      }
+
+      footer .col-md-7,
+      footer .col-md-5 {
+        text-align: center;
+      }
+
+      footer .contact-info p {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+      }
+
+      footer .social-links {
+        justify-content: center;
+        display: flex;
+        gap: 1rem;
+      }
+
+      footer img {
+        margin: 0 auto;
+      }
+
+      footer .contact-social-wrapper {
+        gap: 2rem;
+        padding-left: 0 !important;
+      }
+    }
+
+    #main-slider {
+      min-height: 95vh !important;
+      height: 95vh !important;
+    }
+
+    @media (max-width: 767px) {
+      #main-slider {
+        min-height: 80vh !important;
+        height: 80vh !important;
+      }
+    }
+
+    footer .contact-info p {
+      display: flex;
+      align-items: center;
+    }
+
+    footer .social-links a:hover {
+      color: var(--idd-green) !important;
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+
+    :root {
+      --sdg12-color: #d87624;
+      --sdg13-color: #3f7e44;
+      --sdg14-color: #0a97d9;
+      --sdg15-color: #56c02b;
+    }
+
+    /*  ========================================================================= Hero Section Styles =============================================================================== */
+
+    .hero-section {
+      position: relative;
+      height: 94vh;
+      /* Ekran yüksekliğinin %85'i */
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      /* Video yüklenene kadar yedek siyah arka plan */
+    }
+
+    /* Tam Ekran Responsive Video Modülü */
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      /* Videonun en-boy oranını koruyarak container'ı kaplar */
+      z-index: 1;
+      /* En alt katman */
+    }
+
+    /* Koyu Renk Maske (Overlay) */
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.7) 100%);
+      z-index: 2;
+      /* Videonun üstünde, metnin altında */
+    }
+
+    /* Ön Plan İçerik Katmanı */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      /* En üst katman, böylece etkileşime açık (tıklanabilir) olur */
+      text-align: center;
+      color: #ffffff;
+      padding: 0 20px;
+      max-width: 800px;
+    }
+
+    /* Tipografi ve Buton Tasarımı */
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2.5rem;
+    }
+
+    /* Text Rotator Styles */
+    .text-rotator-wrapper {
+      min-height: 4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .rotator-text {
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      /* Projenizin kurumsal renklerine uygun (Yeşil - Mavi tonları) degrade */
+      background: linear-gradient(to right, #2c7933, #56c02b, #0a97d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+      transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Animasyon Durumları */
+    .rotator-text.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+
+    .rotator-text.exit {
+      opacity: 0;
+      transform: translateY(-20px);
+      filter: blur(8px);
+    }
+
+    @media (max-width: 768px) {
+      .rotator-text {
+        font-size: 1.8rem;
+      }
+
+      .text-rotator-wrapper {
+        min-height: 3rem;
+      }
+    }
+
+    /* Mobil Breakpoint Uyumluluğu */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .hero-section {
+        height: 100vh;
+        /* Mobilde de yarım kalmaması ve tam ekran deneyim sunması için 100vh yapıldı */
+        padding-top: 44px;
+        /* Mobil navbar yüksekliğine göre güncellendi */
+      }
+    }
+
+    /*  ========================================================================= SDG Section Styles =============================================================================== */
+
+    .sdg-section {
+      position: relative;
+      background: #000;
+      height: 93vh;
+      /* min-height yerine height kullanıldı */
+      overflow: hidden;
+      /* Dikey taşmaları gizlemek için güncellendi */
+      touch-action: auto;
+    }
+
+    /* ── Header ── */
+    .sdg-header {
+      text-align: center;
+      padding: 100px 20px 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .sdg-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #2c7933;
+      border: 1px solid rgba(44, 121, 51, 0.5);
+      padding: 5px 18px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .sdg-main-title {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: clamp(2rem, 5vw, 3.5rem) !important;
+      font-weight: 900 !important;
+      color: #fff;
+      line-height: 1.05 !important;
+      letter-spacing: -1px !important;
+      margin: 0 0 20px !important;
+    }
+
+    .sdg-main-title em {
+      font-style: normal;
+      color: #2c7933;
+    }
+
+    .sdg-main-desc {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.55);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.85;
+    }
+
+    /* ── Interactive Zone ── */
+    .sdg-zone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 60px 60px 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── Orbit Side ── */
+    .sdg-orbit-wrapper {
+      flex: 0 0 600px;
+      height: 580px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .sdg-orbit-canvas {
+      position: relative;
+      width: 560px;
+      height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+    }
+
+    .sdg-orbit-ring {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .sdg-orbit-ring-outer {
+      width: 540px;
+      height: 540px;
+      border-color: rgba(255, 255, 255, 0.025);
+    }
+
+    /* Center Core */
+    .sdg-center-gif {
+      width: 300px;
+      /* Boyutu tasarıma göre ayarlayabilirsiniz */
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: relative;
+      z-index: 25;
+      box-shadow: 0 0 30px rgba(44, 121, 51, 0.4);
+    }
+
+    /* Arkadaki ping animasyonlarının boyutunu GIF'e uyumlu hale getirmek için: */
+    .sdg-center-core::before {
+      width: 140px;
+      height: 140px;
+    }
+
+    .sdg-center-core::after {
+      width: 160px;
+      height: 160px;
+    }
+
+    /* ── Nodes ── */
+    .sdg-node {
+      position: absolute;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform, opacity;
+      pointer-events: auto;
+      touch-action: auto;
+      transition: opacity 0.25s ease;
+    }
+
+    .sdg-node-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .sdg-node:hover .sdg-node-logo {
+      border-color: rgba(255, 255, 255, 0.55);
+      transform: scale(1.12);
+    }
+
+    .sdg-node.sdg-is-active .sdg-node-logo {
+      transform: scale(1.3);
+      border-width: 3px;
+      border-color: var(--sdg-node-color, #fff);
+      box-shadow: 0 0 22px var(--sdg-node-color, rgba(255, 255, 255, 0.5));
+    }
+
+    .sdg-node.sdg-dimmed {
+      opacity: 0.12 !important;
+      pointer-events: none;
+    }
+
+    /* ── Info Panel Side ── */
+    .sdg-info-wrapper {
+      flex: 1;
+      min-width: 0;
+      padding-left: 48px;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Hint (initial) */
+    .sdg-hint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.22);
+      text-align: center;
+      gap: 14px;
+      width: 100%;
+      padding: 40px 20px;
+    }
+
+    .sdg-hint-icon {
+      font-size: 2.4rem;
+      display: block;
+      opacity: 0.5;
+      animation: sdgHintFloat 3s infinite ease-in-out;
+    }
+
+    @keyframes sdgHintFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .sdg-hint p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      max-width: 240px;
+      margin: 0;
+    }
+
+    .sdg-hint-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .sdg-hint-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      animation: sdgDotPulse 1.5s infinite ease-in-out;
+    }
+
+    .sdg-hint-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .sdg-hint-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes sdgDotPulse {
+
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.8;
+        transform: scale(1.4);
+      }
+    }
+
+    /* Info Card */
+    .sdg-info-card {
+      width: 100%;
+      display: none;
+    }
+
+    .sdg-info-card.sdg-card-visible {
+      display: block;
+      animation: sdgCardIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes sdgCardIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sdg-card-inner {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px;
+      border-left: 5px solid var(--sdg-color, #2c7933);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle color glow top-right */
+    .sdg-card-inner::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, var(--sdg-color, #2c7933) 0%, transparent 70%);
+      opacity: 0.08;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+
+    /* Top block: logo + title */
+    .sdg-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .sdg-card-logo {
+      width: 76px;
+      height: 76px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+      object-fit: cover;
+    }
+
+    .sdg-card-titles h3 {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: 1.65rem !important;
+      font-weight: 900 !important;
+      color: #fff;
+      margin: 0 0 6px !important;
+      line-height: 1.15 !important;
+      letter-spacing: -0.5px !important;
+    }
+
+    .sdg-card-subtitle {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--sdg-color, #2c7933);
+      letter-spacing: 0.04em;
+      margin: 0;
+    }
+
+    /* Description */
+    .sdg-card-desc {
+      font-size: 0.92rem;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.85;
+      margin: 0 0 26px;
+    }
+
+    /* Stat row */
+    .sdg-card-stat {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .sdg-stat-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--sdg-color, #2c7933);
+      line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sdg-stat-label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.42);
+      line-height: 1.5;
+    }
+
+    /* Navigation Dots */
+    .sdg-nav-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+      padding: 4px 0;
+    }
+
+    .sdg-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      transition: background 0.2s ease, transform 0.2s ease;
+      outline: none;
+      flex-shrink: 0;
+    }
+
+    .sdg-dot:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .sdg-dot.sdg-dot-active {
+      transform: scale(1.4);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .sdg-zone {
+        padding: 60px 30px 100px;
+      }
+
+      .sdg-orbit-wrapper {
+        flex: 0 0 500px;
+        height: 500px;
+      }
+
+      .sdg-orbit-canvas {
+        width: 500px;
+        height: 500px;
+      }
+
+      .sdg-orbit-ring {
+        width: 420px;
+        height: 420px;
+      }
+
+      .sdg-orbit-ring-outer {
+        width: 480px;
+        height: 480px;
+      }
+    }
+
+    @media (max-width: 991px) {
+      .sdg-zone {
+        flex-direction: column;
+        padding: 40px 20px 80px;
+        gap: 44px;
+      }
+
+      .sdg-orbit-wrapper {
+        flex: none;
+        width: 360px;
+        height: 360px;
+      }
+
+      .sdg-orbit-canvas {
+        width: 360px;
+        height: 360px;
+      }
+
+      .sdg-orbit-ring {
+        width: 300px;
+        height: 300px;
+      }
+
+      .sdg-orbit-ring-outer {
+        width: 346px;
+        height: 346px;
+      }
+
+      .sdg-node-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+      }
+
+      .sdg-info-wrapper {
+        padding-left: 0;
+        min-height: auto;
+        width: 100%;
+      }
+
+      .sdg-card-inner {
+        padding: 28px 24px;
+      }
+
+      .sdg-card-titles h3 {
+        font-size: 1.35rem !important;
+      }
+
+      .sdg-stat-value {
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .sdg-header {
+        padding-top: 60px;
+      }
+
+      .sdg-orbit-wrapper {
+        width: 310px;
+        height: 310px;
+      }
+
+      .sdg-orbit-canvas {
+        width: 310px;
+        height: 310px;
+      }
+
+      .sdg-orbit-ring {
+        width: 250px;
+        height: 250px;
+      }
+
+      .sdg-orbit-ring-outer {
+        width: 296px;
+        height: 296px;
+      }
+
+      .sdg-node-logo {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        border-width: 1.5px;
+      }
+
+      .sdg-card-inner {
+        padding: 22px 18px;
+        border-radius: 14px;
+      }
+
+      .sdg-card-logo {
+        width: 60px;
+        height: 60px;
+      }
+
+      .sdg-card-titles h3 {
+        font-size: 1.2rem !important;
+      }
+
+      /* --- Yeni Layout CSS Kuralları --- */
+
+.sdg-info-wrapper.left-panel {
+  padding-left: 0;
+  padding-right: 48px; /* Sağdaki orbital ile güvenli boşluk */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Dikeyde ortalama */
+}
+
+.sdg-header-inline {
+  text-align: left;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 5;
+}
+
+.sdg-header-inline .sdg-main-desc {
+  margin: 0; /* Eski margin: 0 auto (ortalama) kuralını eziyoruz */
+}
+
+/* Mobil / Tablet Responsive Davranışı (Breakpoint: 991px) */
+@media (max-width: 991px) {
+  .sdg-info-wrapper.left-panel {
+    padding-right: 0;
+    text-align: center;
+  }
+  .sdg-header-inline {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .sdg-header-inline .sdg-main-desc {
+    margin: 0 auto; /* Mobilde tekrar ortala */
+  }
+}
+    }
+  </style>
+</head>
+
+<!--========================================================================= Body ==============================================================================  -->
+
+<body data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
+
+  <!--========================================================================= Nav Bar ============================================================================== -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom: none; box-shadow: none;">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="https://iklimdd.org/idd-logo.png" alt="idd-logo" height="48" class="me-2 d-none d-lg-block">
+        <img src="https://iklimdd.org/idd-logo.png" alt="idd-logo" height="48" class="d-lg-none"
+          style="padding-right: 10px;">
+        <span class="d-lg-none fw-bold text-white"><b>IDD ORG</b></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link " href="/">Ana Sayfa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  " href="/about">Hakkımızda</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="#" id="projectsDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Projelerimiz
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/book">Kitap</a></li>
+              <li><a class="dropdown-item" href="/podcast">Podcast</a></li>
+              <li>
+                <a class="dropdown-item " href="/campaings">Kampanyalarımız</a>
+              </li>
+              <li>
+                <a class="dropdown-item " href="/iklim-krizi/">İklim Krizi</a>
+              </li>
+
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/events">Etkinliklerimiz</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/blog">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  " href="/contact">İletişim</a>
+          </li>
+        </ul>
+        <div class="d-none d-lg-flex align-items-center">
+          <!-- <div class="lang-switcher">
+                    <span class="lang-option" data-lang="tr">TR</span>
+                    <span class="lang-option" data-lang="en">EN</span>
+                </div> -->
+        </div>
+
+        <div class="d-lg-none lang-switcher-mobile mb-2">
+          <!-- <div class="lang-switcher">
+                    <span class="lang-option" data-lang="tr">TR</span>
+                    <span class="lang-option" data-lang="en">EN</span>
+                </div> -->
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!--========================================================================= Hero ============================================================================== -->
+
+  <section class="hero-section">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="assets/video/hero-bg.mp4" type="video/mp4">
+    </video>
+
+    <div class="video-overlay"></div>
+
+    <div class="container hero-content" data-aos="fade-up">
+      <h1 class="hero-title">İklim Krizi</h1>
+
+      <div class="text-rotator-wrapper">
+        <span id="hero-rotator" class="rotator-text"></span>
+      </div>
+
+      <p class="hero-subtitle">Soyut raporları ve karmaşık grafikleri bir kenara bıraktık. İklim krizi uzak kutuplardaki
+        eriyen buzullardan ibaret değil; her gün soluduğumuz havada, attığımız her adımda ve aldığımız her kararda
+        saklı. Gerçeği tüm çıplaklığıyla hissetmeye hazır mısınız?</p>
+    </div>
+  </section>
+
+  <!--========================================================================= SDG ============================================================================== -->
+
+  <section id="sdg-section" class="sdg-section">
+
+
+    <!-- Ana İnteraktif Alan -->
+    <div class="sdg-zone" data-aos="fade-up" data-aos-delay="200">
+
+  <div class="sdg-info-wrapper left-panel">
+    
+    <div class="sdg-header-inline">
+      <h2 class="sdg-main-title">Sürdürülebilir<br><em>Kalkınma Amaçları</em></h2>
+      <p class="sdg-main-desc">
+        Birleşmiş Milletler'in 17 hedefi, gezegeni ve insanlığı kurtarmak için çizilen küresel haritadır.
+        İklim krizi bu hedeflerin tamamını tehdit ediyor.
+      </p>
+    </div>
+
+    <div class="sdg-info-card" id="sdgInfoCard">
+      <div class="sdg-card-inner" id="sdgCardInner">
+        </div>
+      <div class="sdg-nav-dots" id="sdgNavDots"></div>
+    </div>
+
+  </div>
+
+  <div class="sdg-orbit-wrapper">
+    <div class="sdg-orbit-canvas" id="sdgCanvas">
+      <div class="sdg-orbit-ring"></div>
+      <div class="sdg-center-core">
+        <img src="assets/video/placidplace-earth-19822.gif" alt="Dünya" class="sdg-center-gif">
+      </div>
+      </div>
+  </div>
+
+</div>
+
+    <!-- ── SDG Orbital JavaScript ── -->
+    <script>
+      (function () {
+
+        /* ── 1. VERİ TABANI ─────────────────────────────────────── */
+        const sdgData = [
+          {
+            id: 1, title: "Yoksulluğa Son", color: "#E5243B", tag: "SOSYAL",
+            desc: "Dünya genelinde 700 milyondan fazla insan günlük 2.15 doların altında geçimini sağlamaktadır. Bu hedef; sosyal koruma ağları oluşturmayı, ekonomik eşitsizlikleri azaltmayı ve dezavantajlı gruplara kaynak erişimi sağlamayı kapsamaktadır.",
+            stat: "700M+", statLabel: "kişi günlük 2.15 $'ın altında yaşıyor"
+          },
+          {
+            id: 2, title: "Açlığa Son", color: "#DDA63A", tag: "GIDA",
+            desc: "Yaklaşık 690 milyon insan kronik açlıkla mücadele ederken iklim değişikliği tarım alanlarını tahrip ediyor. Sürdürülebilir tarım, gıda güvenliği ve küçük çiftçilerin güçlendirilmesi bu hedefin temel eksenini oluşturuyor.",
+            stat: "690M", statLabel: "insan kronik açlık yaşıyor"
+          },
+          {
+            id: 3, title: "Sağlıklı Bireyler", color: "#4C9F38", tag: "SAĞLIK",
+            desc: "Evrensel sağlık hizmetine erişim, bulaşıcı hastalıklarla mücadele ve iklimle bağlantılı hastalıkların önlenmesi bu hedefin odağındadır. Dünya nüfusunun yarısı temel sağlık hizmetinden yoksun.",
+            stat: "%50", statLabel: "dünya nüfusu temel sağlık hizmetine erişemiyor"
+          },
+          {
+            id: 4, title: "Nitelikli Eğitim", color: "#C5192D", tag: "EĞİTİM",
+            desc: "300 milyondan fazla çocuk okul dışında. Kapsayıcı ve kaliteli eğitim, iklim değişikliği farkındalığını içermeli ve sürdürülebilir bir geleceğin inşasında genç nesillere yol göstermelidir.",
+            stat: "300M+", statLabel: "çocuk okul dışında kalıyor"
+          },
+          {
+            id: 5, title: "Cinsiyet Eşitliği", color: "#FF3A21", tag: "EŞİTLİK",
+            desc: "İklim krizinin en ağır yükünü taşıyanlar arasında kadınlar ve kız çocukları yer alıyor. Toplumsal cinsiyet eşitliğinin sağlanması, sürdürülebilir kalkınmanın hem koşulu hem de çıktısıdır.",
+            stat: "%135", statLabel: "daha fazla iklim mültecisi kadınlardan oluşuyor"
+          },
+          {
+            id: 6, title: "Temiz Su ve Sanitasyon", color: "#26BDE2", tag: "SU",
+            desc: "2 milyardan fazla insan güvenli içme suyuna erişimi bulunmayan bölgelerde yaşıyor. İklim değişikliği su kaynaklarını tehdit ederken kuraklık ve sel döngüleri giderek sertleşiyor.",
+            stat: "2B+", statLabel: "insan temiz suya erişemiyor"
+          },
+          {
+            id: 7, title: "Erişilebilir Enerji", color: "#FCC30B", tag: "ENERJİ",
+            desc: "759 milyon insan elektriklere sahip değil. Fosil yakıtlardan yenilenebilir enerjiye geçiş hem iklim krizini durdurmak hem de enerji yoksulluğunu ortadan kaldırmak için kritik bir dönüşümdür.",
+            stat: "759M", statLabel: "insan elektriğe erişemiyor"
+          },
+          {
+            id: 8, title: "İnsana Yakışır İş", color: "#A21942", tag: "EKONOMİ",
+            desc: "Sürdürülebilir ekonomik büyüme, tam istihdam ve insana yakışır iş koşulları bu hedefin özünü oluşturur. Yeşil dönüşüm, doğru politikalarla milyonlarca yeni iş fırsatı yaratabilir.",
+            stat: "470M", statLabel: "insan işsiz veya yetersiz istihdam edilmiş"
+          },
+          {
+            id: 9, title: "Sanayi ve Yenilikçilik", color: "#FD6925", tag: "İNOVASYON",
+            desc: "Sürdürülebilir altyapı, kapsayıcı sanayileşme ve inovasyonun teşvik edilmesi bu hedefin odağındadır. Temiz teknolojilere yapılan her dolar yatırım, iklim mücadelesinde çarpan etkisi yaratıyor.",
+            stat: "%40", statLabel: "insanlık hâlâ internetle bağlanamıyor"
+          },
+          {
+            id: 10, title: "Eşitsizliklerin Azaltılması", color: "#DD1367", tag: "ADALEt",
+            desc: "İklim krizinin yükü eşitsiz dağılıyor: En az kirleten ülkeler en ağır sonuçları yaşıyor. Gelir, fırsat ve güç eşitsizliklerinin azaltılması hem adalet hem sürdürülebilirlik için zorunludur.",
+            stat: "%82", statLabel: "küresel servet en zengin %1'in elinde"
+          },
+          {
+            id: 11, title: "Sürdürülebilir Şehirler", color: "#FD9D24", tag: "KENTSEL",
+            desc: "2050'de dünya nüfusunun %68'i kentte yaşayacak. İklim dayanıklılığına sahip, kapsayıcı ve sürdürülebilir kentler inşa etmek, mücadelenin en kritik cephelerinden birini oluşturuyor.",
+            stat: "%68", statLabel: "2050'de dünya nüfusu kentte yaşayacak"
+          },
+          {
+            id: 12, title: "Sorumlu Tüketim", color: "#BF8B2E", tag: "TÜKETİM",
+            desc: "Küresel gıdanın üçte biri israf edilirken moda endüstrisi küresel CO₂ emisyonlarının %10'unu üretiyor. Döngüsel ekonomi modellerine geçiş ve üretim zincirinin dönüşümü kaçınılmazdır.",
+            stat: "1/3", statLabel: "küresel gıda üretimi çöpe gidiyor"
+          },
+          {
+            id: 13, title: "İklim Eylemi", color: "#3F7E44", tag: "ACİL",
+            desc: "Küresel sıcaklık artışı 1.5°C eşiğini aşmak üzere. Acil önlemler alınmazsa aşırı hava olayları, kıtlık ve zorunlu göç milyarlarca insanı doğrudan etkileyecek. Zaman tükeniyor.",
+            stat: "1.5°C", statLabel: "aşılmaması gereken ısınma eşiği"
+          },
+          {
+            id: 14, title: "Sudaki Yaşam", color: "#0A97D9", tag: "OKYANUS",
+            desc: "Okyanuslar ürettiğimiz CO₂'nin %30'unu, fazla ısının %90'ını absorbe ediyor. Okyanus asitlenmesi, sıcaklık artışı ve plastik kirlilik; mercan resifleri ve kıyı ekosistemlerini yok ediyor.",
+            stat: "%50", statLabel: "mercan resifler son 30 yılda yok oldu"
+          },
+          {
+            id: 15, title: "Karasal Yaşam", color: "#56C02B", tag: "EKOSİSTEM",
+            desc: "Her yıl 10 milyon hektar orman tahrip ediliyor. Ormansızlaşma, biyoçeşitlilik kaybı ve çölleşme karbon yutaklarını ortadan kaldırarak iklim krizini derinleştiriyor.",
+            stat: "10M ha", statLabel: "orman her yıl yok ediliyor"
+          },
+          {
+            id: 16, title: "Barış ve Adalet", color: "#00689D", tag: "YÖNETİŞİM",
+            desc: "İklim değişikliği, kaynak kıtlığı ve göç dalgaları aracılığıyla çatışma riskini artırıyor. Şeffaf kurumlar ve güçlü hukuk sistemleri olmadan iklim adaleti sağlanamaz.",
+            stat: "2050", statLabel: "yılına kadar 1 milyar iklim mültecisi öngörülüyor"
+          },
+          {
+            id: 17, title: "Hedefler İçin Ortaklık", color: "#19486A", tag: "ORTAKLIK",
+            desc: "İklim kriziyle mücadele tek bir ülkenin, şirketin ya da bireyin sorunu değil. Küresel finansman mekanizmaları, teknoloji transferi ve uluslararası işbirliği olmadan 2030 hedeflerine ulaşmak imkânsız.",
+            stat: "3.9T$", statLabel: "yıllık iklim finansmanı açığı"
+          }
+        ];
+
+        /* ── 2. STATE ────────────────────────────────────────────── */
+        let rotationAngle = 0;
+        let autoRotate = true;
+        let animFrameId = null;
+        let activeId = null;
+
+        /* ── 3. DOM REFERANSLARI ─────────────────────────────────── */
+        const canvas = document.getElementById('sdgCanvas');
+        const infoCard = document.getElementById('sdgInfoCard');
+        const cardInner = document.getElementById('sdgCardInner');
+        const navDots = document.getElementById('sdgNavDots');
+
+        /* ── 4. YARDIMCI FONKSİYONLAR ───────────────────────────── */
+        function getRadius() {
+          const w = window.innerWidth;
+          if (w > 1100) return 240;
+          if (w > 991) return 210;
+          if (w > 575) return 150;
+          return 125;
+        }
+
+        function imgSrc(id) {
+          return 'assets/image/E_WEB_' + String(id).padStart(2, '0') + '.png';
+        }
+
+        /* ── 5. NODE'LARI OLUŞTUR ───────────────────────────────── */
+        sdgData.forEach(function (sdg) {
+          var node = document.createElement('div');
+          node.className = 'sdg-node';
+          node.setAttribute('data-id', sdg.id);
+          node.style.setProperty('--sdg-node-color', sdg.color);
+
+          var img = document.createElement('img');
+          img.className = 'sdg-node-logo';
+          img.src = imgSrc(sdg.id);
+          img.alt = 'SDG ' + sdg.id + ': ' + sdg.title;
+          img.setAttribute('draggable', 'false');
+          img.setAttribute('loading', 'lazy');
+          img.onerror = function () {
+            // Logo yüklenemezse SDG numarası göster
+            this.style.display = 'none';
+            var fallback = document.createElement('div');
+            fallback.style.cssText = [
+              'width:' + this.width + 'px',
+              'height:' + this.height + 'px',
+              'border-radius:8px',
+              'background:' + sdg.color,
+              'color:#fff',
+              'display:flex',
+              'align-items:center',
+              'justify-content:center',
+              'font-weight:900',
+              'font-size:0.85rem',
+              'font-family:Montserrat,sans-serif'
+            ].join(';');
+            fallback.textContent = sdg.id;
+            this.parentNode.appendChild(fallback);
+          };
+
+          node.appendChild(img);
+
+          node.addEventListener('click', function (e) {
+            e.stopPropagation();
+            handleNodeClick(sdg.id);
+          });
+
+          canvas.appendChild(node);
+        });
+
+        /* ── 6. NAV DOTS OLUŞTUR ────────────────────────────────── */
+        sdgData.forEach(function (sdg) {
+          var dot = document.createElement('button');
+          dot.className = 'sdg-dot';
+          dot.setAttribute('data-id', sdg.id);
+          dot.setAttribute('title', 'SDG ' + sdg.id + ': ' + sdg.title);
+          dot.setAttribute('aria-label', 'SDG ' + sdg.id + ': ' + sdg.title);
+
+          dot.addEventListener('click', function (e) {
+            e.stopPropagation();
+            handleNodeClick(sdg.id);
+          });
+
+          navDots.appendChild(dot);
+        });
+
+        var nodes = canvas.querySelectorAll('.sdg-node');
+
+        /* ── 7. ANİMASYON DÖNGÜSÜ ───────────────────────────────── */
+        function updatePositions() {
+          var total = sdgData.length;
+          var radius = getRadius();
+
+          nodes.forEach(function (node, index) {
+            if (node.classList.contains('sdg-is-active')) {
+              node.style.transform = 'translate3d(0px,-72px,0)';
+              node.style.opacity = '1';
+              node.style.zIndex = '500';
+              return;
+            }
+            if (node.classList.contains('sdg-dimmed')) {
+              // opacity set by class
+              return;
+            }
+
+            var angle = ((index / total) * 360 + rotationAngle) % 360;
+            var rad = (angle * Math.PI) / 180;
+            var x = radius * Math.cos(rad);
+            var y = radius * Math.sin(rad);
+            var depth = Math.cos(rad);
+            var zIndex = Math.round(100 + 40 * depth);
+            var opacity = Math.max(0.35, Math.min(1, 0.35 + 0.65 * ((1 + Math.sin(rad)) / 2)));
+
+            node.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+            node.style.zIndex = zIndex;
+            node.style.opacity = opacity;
+          });
+
+          if (autoRotate) {
+            rotationAngle = (rotationAngle + 0.16) % 360;
+            animFrameId = requestAnimationFrame(updatePositions);
+          }
+        }
+
+        /* ── 8. TIKLAMA HANDLER ─────────────────────────────────── */
+        function handleNodeClick(id) {
+          if (activeId === id) {
+            resetState();
+            return;
+          }
+
+          autoRotate = false;
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+          activeId = id;
+
+          // Tüm node'ları soluklaştır, aktifi öne çıkar
+          nodes.forEach(function (n) {
+            n.classList.remove('sdg-is-active');
+            n.classList.add('sdg-dimmed');
+            n.style.opacity = '';
+            n.style.zIndex = '10';
+          });
+
+          var activeNode = canvas.querySelector('.sdg-node[data-id="' + id + '"]');
+          if (activeNode) {
+            activeNode.classList.remove('sdg-dimmed');
+            activeNode.classList.add('sdg-is-active');
+            activeNode.style.transform = 'translate3d(0px,-72px,0)';
+            activeNode.style.opacity = '1';
+            activeNode.style.zIndex = '500';
+          }
+
+          showInfoCard(id);
+        }
+
+        /* ── 9. BİLGİ KARTINI GÜNCELLE ─────────────────────────── */
+        function showInfoCard(id) {
+          var sdg = sdgData.find(function (s) { return s.id === id; });
+          if (!sdg) return;
+
+
+          // CSS değişkenini card inner'a uygula
+          cardInner.style.setProperty('--sdg-color', sdg.color);
+
+          cardInner.innerHTML =
+            '<div class="sdg-card-top">'
+            + '<img class="sdg-card-logo" src="' + imgSrc(sdg.id) + '" alt="SDG ' + sdg.id + '" onerror="this.style.display=\'none\'">'
+            + '<div class="sdg-card-titles">'
+            + '<h3>' + sdg.title + '</h3>'
+            + '<p class="sdg-card-subtitle">Sürdürülebilir Kalkınma Hedefi ' + sdg.id + '</p>'
+            + '</div>'
+            + '</div>'
+            + '<p class="sdg-card-desc">' + sdg.desc + '</p>'
+            + '<div class="sdg-card-stat">'
+            + '<div class="sdg-stat-value">' + sdg.stat + '</div>'
+            + '<div class="sdg-stat-label">' + sdg.statLabel + '</div>'
+            + '</div>';
+
+          // Animasyonu sıfırla ve başlat
+          infoCard.classList.remove('sdg-card-visible');
+          void infoCard.offsetWidth; // reflow
+          infoCard.classList.add('sdg-card-visible');
+
+          // Nav dots güncelle
+          navDots.querySelectorAll('.sdg-dot').forEach(function (dot) {
+            var dotId = parseInt(dot.getAttribute('data-id'), 10);
+            if (dotId === id) {
+              dot.classList.add('sdg-dot-active');
+              dot.style.background = sdg.color;
+              dot.style.transform = 'scale(1.4)';
+            } else {
+              dot.classList.remove('sdg-dot-active');
+              dot.style.background = '';
+              dot.style.transform = '';
+            }
+          });
+        }
+
+        /* ── 10. SIFIRLAMA ──────────────────────────────────────── */
+        function resetState() {
+          activeId = null;
+          nodes.forEach(function (n) {
+            n.classList.remove('sdg-is-active', 'sdg-dimmed');
+            n.style.opacity = '';
+            n.style.zIndex = '';
+            n.style.transform = '';
+          });
+          infoCard.classList.remove('sdg-card-visible');
+          navDots.querySelectorAll('.sdg-dot').forEach(function (dot) {
+            dot.classList.remove('sdg-dot-active');
+            dot.style.background = '';
+            dot.style.transform = '';
+          });
+          autoRotate = true;
+          updatePositions();
+        }
+
+        /* ── 11. DIŞARI TIKLAMA → SIFIRLA ──────────────────────── */
+        var sectionEl = document.getElementById('sdg-section');
+        sectionEl.addEventListener('click', function (e) {
+          if (activeId !== null
+            && !e.target.closest('.sdg-node')
+            && !e.target.closest('.sdg-info-wrapper')) {
+            resetState();
+          }
+        });
+
+        /* ── 12. PENCERE YENİDEN BOYUTLANMA ─────────────────────── */
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            if (autoRotate && !animFrameId) {
+              updatePositions();
+            }
+          }, 200);
+        });
+
+        /* ── 13. INTERSECTION OBSERVER — PERFORMANS ─────────────── */
+        var sectionObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (!animFrameId && autoRotate) {
+                updatePositions();
+              }
+            } else {
+              cancelAnimationFrame(animFrameId);
+              animFrameId = null;
+            }
+          });
+        }, { threshold: 0.08 });
+
+        sectionObserver.observe(sectionEl);
+
+      })();
+    </script>
+  </section>
+
+  <!--========================================================================= Footer ============================================================================= -->
+
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <img src="https://iklimdd.org/idd-logo.png" alt="idd-logo" class="img-fluid mb-3" style="max-height: 100px;">
+          <h5>İklim Değişmeden Değiş (IDD ORG)</h5>
+          <p>İklim için harekete geçmek, yalnızca bilimin değil, sanatın, teknolojinin ve dayanışmanın da ortak
+            sorumluluğudur. Değişim ise birlikte düşündüğümüzde, ürettiğimizde ve harekete geçtiğimizde mümkündür.
+            <i>Çünkü iklim krizi tek bir alanın değil, insanlığın yaratıcılığının sınavıdır.</i>
+          </p>
+        </div>
+        <div class="col-md-5">
+          <div class="contact-social-wrapper"
+            style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding-left: 3rem;">
+            <div class="contact-info mb-4">
+              <h5 class="mb-3">İletişim</h5>
+              <p class="mb-2">
+                <i class="bi bi-envelope me-2"></i>iklimdegismedendegis@gmail.com
+              </p>
+              <p class="mb-0">
+                <i class="bi bi-geo-alt me-2"></i>İstanbul, Türkiye
+              </p>
+            </div>
+            <div class="social-links-wrapper">
+              <h5 class="mb-3">Bizi Takip Edin</h5>
+              <div class="social-links">
+                <a href="https://www.instagram.com/idd.org.tr/" class="text-white me-3 fs-4"><i
+                    class="bi bi-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/i%CC%87klim-de%C4%9Fi%C5%9Fmeden-de%C4%9Fi%C5%9F-%C5%9Firket"
+                  class="text-white me-3 fs-4"><i class="bi bi-linkedin"></i></a>
+                <a href="https://open.spotify.com/show/0FnjKhFwwugAHvTSIOiVS0?si=5fe08b0c2dde4414&amp;nd=1&amp;dlsi=b1f7cc70aa8e45e4"
+                  class="text-white me-3 fs-4"><i class="bi bi-spotify"></i></a>
+                <a href="https://www.youtube.com/@iklimdegismedendegis" class="text-white me-3 fs-4"><i
+                    class="bi bi-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap 5 JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <!-- Custom JS -->
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mevcut AOS veya scroll kodlarınız burada...
+
+      // --- Text Rotator Logic ---
+      const rotatorWords = ["Sebepleri", "Ne olacak", "Neler yapabiliriz", "Neler yapılıyor"];
+      const rotatorElement = document.getElementById("hero-rotator");
+      let currentWordIndex = 0;
+
+      function animateRotator() {
+        // 1. Çıkış animasyonunu tetikle
+        rotatorElement.classList.remove("visible");
+        rotatorElement.classList.add("exit");
+
+        setTimeout(() => {
+          // 2. Metni güncelle
+          rotatorElement.textContent = rotatorWords[currentWordIndex];
+
+          // 3. Çıkış sınıfını temizle, elementi başlangıç konumuna (aşağıya) al
+          rotatorElement.classList.remove("exit");
+
+          // DOM reflow zorunluluğu (Animasyonun tekrar tetiklenmesi için)
+          void rotatorElement.offsetWidth;
+
+          // 4. Giriş animasyonunu tetikle
+          rotatorElement.classList.add("visible");
+
+          // 5. İndeksi güncelle
+          currentWordIndex = (currentWordIndex + 1) % rotatorWords.length;
+        }, 600); // CSS transition süresi ile eşzamanlı
+      }
+
+      if (rotatorElement) {
+        // İlk kelimeyi yükle
+        animateRotator();
+        // 3.5 saniyede bir döngüyü çalıştır
+        setInterval(animateRotator, 3500);
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // AOS Initialize
+      AOS.init({
+        duration: 800,
+        offset: 100,
+        once: true,
+        easing: 'ease-out-cubic'
+      });
+
+      // Eski scroll listener'ı silin ve yerine bunu ekleyin:
+      const scrollToTopButton = document.querySelector('.scroll-to-top');
+      let isScrolling = false;
+
+      function checkScroll() {
+        const currentScroll = window.scrollY;
+        if (currentScroll > 300) {
+          scrollToTopButton.classList.add('show');
+        } else {
+          scrollToTopButton.classList.remove('show');
+        }
+        isScrolling = false;
+      }
+
+      // Passive true ile tarayıcıya "scroll'u engellemeyeceğim" garantisi veriyoruz.
+      window.addEventListener('scroll', function () {
+        if (!isScrolling) {
+          window.requestAnimationFrame(checkScroll);
+          isScrolling = true;
+        }
+      }, { passive: true });
+    });
+  </script>
+
+</body>
+
+</html>
