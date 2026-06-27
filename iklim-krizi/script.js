@@ -91,6 +91,16 @@
   ];
 
   /* ── 2. STATE ────────────────────────────────────────────── */
+  const ACTIVE_NODE_OFFSET_Y = -72;
+  const ROTATION_STEP_DEGREES = 0.16;
+  const ORBIT_BASE_Z_INDEX = 100;
+  const ORBIT_Z_INDEX_DEPTH_FACTOR = 40;
+  const RADIUS_BREAKPOINT_DESKTOP = 1100;
+  const RADIUS_BREAKPOINT_TABLET = 575;
+  const RADIUS_DESKTOP = 240;
+  const RADIUS_TABLET = 150;
+  const RADIUS_MOBILE = 125;
+
   let rotationAngle = 0;
   let autoRotate = true;
   let animFrameId = null;
@@ -100,62 +110,48 @@
   const canvas = document.getElementById('sdgCanvas');
   const infoCard = document.getElementById('sdgInfoCard');
   const cardInner = document.getElementById('sdgCardInner');
-  const navDots = document.getElementById('sdgNavDots');
 
-  if (!canvas || !infoCard || !cardInner || !navDots) {
+  if (!canvas || !infoCard || !cardInner) {
     return;
   }
 
   /* ── 4. YARDIMCI FONKSİYONLAR ───────────────────────────── */
   function getRadius() {
     const w = window.innerWidth;
-    if (w > 1100) return 240;
-    if (w > 991) return 210;
-    if (w > 575) return 150;
-    return 125;
+    if (w > RADIUS_BREAKPOINT_DESKTOP) return RADIUS_DESKTOP;
+    if (w > RADIUS_BREAKPOINT_TABLET) return RADIUS_TABLET;
+    return RADIUS_MOBILE;
   }
 
   function imgSrc(id) {
-    return 'assets/image/E_WEB_' + String(id).padStart(2, '0') + '.png';
+    return `assets/image/E_WEB_${String(id).padStart(2, '0')}.png`;
   }
 
   /* ── 5. NODE'LARI OLUŞTUR ───────────────────────────────── */
-  sdgData.forEach(function (sdg) {
-    var node = document.createElement('div');
+  sdgData.forEach((sdg) => {
+    const node = document.createElement('div');
     node.className = 'sdg-node';
     node.setAttribute('data-id', sdg.id);
     node.style.setProperty('--sdg-node-color', sdg.color);
 
-    var img = document.createElement('img');
+    const img = document.createElement('img');
     img.className = 'sdg-node-logo';
     img.src = imgSrc(sdg.id);
-    img.alt = 'SDG ' + sdg.id + ': ' + sdg.title;
+    img.alt = `SDG ${sdg.id}: ${sdg.title}`;
     img.setAttribute('draggable', 'false');
     img.setAttribute('loading', 'lazy');
     img.onerror = function () {
       // Logo yüklenemezse SDG numarası göster
       this.style.display = 'none';
-      var fallback = document.createElement('div');
-      fallback.style.cssText = [
-        'width:' + this.width + 'px',
-        'height:' + this.height + 'px',
-        'border-radius:8px',
-        'background:' + sdg.color,
-        'color:#fff',
-        'display:flex',
-        'align-items:center',
-        'justify-content:center',
-        'font-weight:900',
-        'font-size:0.85rem',
-        'font-family:Montserrat,sans-serif'
-      ].join(';');
+      const fallback = document.createElement('div');
+      fallback.style.cssText = `width:${this.width}px;height:${this.height}px;border-radius:8px;background:${sdg.color};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.85rem;font-family:Montserrat,sans-serif`;
       fallback.textContent = sdg.id;
       this.parentNode.appendChild(fallback);
     };
 
     node.appendChild(img);
 
-    node.addEventListener('click', function (e) {
+    node.addEventListener('click', (e) => {
       e.stopPropagation();
       handleNodeClick(sdg.id);
     });
@@ -163,32 +159,16 @@
     canvas.appendChild(node);
   });
 
-  /* ── 6. NAV DOTS OLUŞTUR ────────────────────────────────── */
-  sdgData.forEach(function (sdg) {
-    var dot = document.createElement('button');
-    dot.className = 'sdg-dot';
-    dot.setAttribute('data-id', sdg.id);
-    dot.setAttribute('title', 'SDG ' + sdg.id + ': ' + sdg.title);
-    dot.setAttribute('aria-label', 'SDG ' + sdg.id + ': ' + sdg.title);
-
-    dot.addEventListener('click', function (e) {
-      e.stopPropagation();
-      handleNodeClick(sdg.id);
-    });
-
-    navDots.appendChild(dot);
-  });
-
-  var nodes = canvas.querySelectorAll('.sdg-node');
+  const nodes = canvas.querySelectorAll('.sdg-node');
 
   /* ── 7. ANİMASYON DÖNGÜSÜ ───────────────────────────────── */
   function updatePositions() {
-    var total = sdgData.length;
-    var radius = getRadius();
+    const total = sdgData.length;
+    const radius = getRadius();
 
-    nodes.forEach(function (node, index) {
+    nodes.forEach((node, index) => {
       if (node.classList.contains('sdg-is-active')) {
-        node.style.transform = 'translate3d(0px,-72px,0)';
+        node.style.transform = `translate3d(0px,${ACTIVE_NODE_OFFSET_Y}px,0)`;
         node.style.opacity = '1';
         node.style.zIndex = '500';
         return;
@@ -198,21 +178,20 @@
         return;
       }
 
-      var angle = ((index / total) * 360 + rotationAngle) % 360;
-      var rad = (angle * Math.PI) / 180;
-      var x = radius * Math.cos(rad);
-      var y = radius * Math.sin(rad);
-      var depth = Math.cos(rad);
-      var zIndex = Math.round(100 + 40 * depth);
-      var opacity = Math.max(0.35, Math.min(1, 0.35 + 0.65 * ((1 + Math.sin(rad)) / 2)));
+      const angle = ((index / total) * 360 + rotationAngle) % 360;
+      const rad = (angle * Math.PI) / 180;
+      const x = radius * Math.cos(rad);
+      const y = radius * Math.sin(rad);
+      const depth = Math.cos(rad);
+      const zIndex = Math.round(ORBIT_BASE_Z_INDEX + ORBIT_Z_INDEX_DEPTH_FACTOR * depth);
 
-      node.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+      node.style.transform = `translate3d(${x}px,${y}px,0)`;
       node.style.zIndex = zIndex;
-      node.style.opacity = opacity;
+      node.style.opacity = '1';
     });
 
     if (autoRotate) {
-      rotationAngle = (rotationAngle + 0.16) % 360;
+      rotationAngle = (rotationAngle + ROTATION_STEP_DEGREES) % 360;
       animFrameId = requestAnimationFrame(updatePositions);
     }
   }
@@ -230,18 +209,18 @@
     activeId = id;
 
     // Tüm node'ları soluklaştır, aktifi öne çıkar
-    nodes.forEach(function (n) {
+    nodes.forEach((n) => {
       n.classList.remove('sdg-is-active');
       n.classList.add('sdg-dimmed');
       n.style.opacity = '';
       n.style.zIndex = '10';
     });
 
-    var activeNode = canvas.querySelector('.sdg-node[data-id="' + id + '"]');
+    const activeNode = canvas.querySelector(`.sdg-node[data-id="${id}"]`);
     if (activeNode) {
       activeNode.classList.remove('sdg-dimmed');
       activeNode.classList.add('sdg-is-active');
-      activeNode.style.transform = 'translate3d(0px,-72px,0)';
+      activeNode.style.transform = `translate3d(0px,${ACTIVE_NODE_OFFSET_Y}px,0)`;
       activeNode.style.opacity = '1';
       activeNode.style.zIndex = '500';
     }
@@ -251,90 +230,72 @@
 
   /* ── 9. BİLGİ KARTINI GÜNCELLE ─────────────────────────── */
   function showInfoCard(id) {
-    var sdg = sdgData.find(function (s) { return s.id === id; });
+    const sdg = sdgData.find((s) => s.id === id);
     if (!sdg) return;
-
 
     // CSS değişkenini card inner'a uygula
     cardInner.style.setProperty('--sdg-color', sdg.color);
 
-    cardInner.innerHTML =
-      '<div class="sdg-card-top">'
-      + '<img class="sdg-card-logo" src="' + imgSrc(sdg.id) + '" alt="SDG ' + sdg.id + '" onerror="this.style.display=\'none\'">'
-      + '<div class="sdg-card-titles">'
-      + '<h3>' + sdg.title + '</h3>'
-      + '<p class="sdg-card-subtitle">Sürdürülebilir Kalkınma Hedefi ' + sdg.id + '</p>'
-      + '</div>'
-      + '</div>'
-      + '<p class="sdg-card-desc">' + sdg.desc + '</p>'
-      + '<div class="sdg-card-stat">'
-      + '<div class="sdg-stat-value">' + sdg.stat + '</div>'
-      + '<div class="sdg-stat-label">' + sdg.statLabel + '</div>'
-      + '</div>';
+    cardInner.innerHTML = `
+      <div class="sdg-card-top">
+        <img class="sdg-card-logo" src="${imgSrc(sdg.id)}" alt="SDG ${sdg.id}" onerror="this.style.display='none'">
+        <div class="sdg-card-titles">
+          <h3>${sdg.title}</h3>
+          <p class="sdg-card-subtitle">Sürdürülebilir Kalkınma Hedefi ${sdg.id}</p>
+        </div>
+      </div>
+      <p class="sdg-card-desc">${sdg.desc}</p>
+      <div class="sdg-card-stat">
+        <div class="sdg-stat-value">${sdg.stat}</div>
+        <div class="sdg-stat-label">${sdg.statLabel}</div>
+      </div>
+    `;
 
     // Animasyonu sıfırla ve başlat
     infoCard.classList.remove('sdg-card-visible');
     void infoCard.offsetWidth; // reflow
     infoCard.classList.add('sdg-card-visible');
-
-    // Nav dots güncelle
-    navDots.querySelectorAll('.sdg-dot').forEach(function (dot) {
-      var dotId = parseInt(dot.getAttribute('data-id'), 10);
-      if (dotId === id) {
-        dot.classList.add('sdg-dot-active');
-        dot.style.background = sdg.color;
-        dot.style.transform = 'scale(1.4)';
-      } else {
-        dot.classList.remove('sdg-dot-active');
-        dot.style.background = '';
-        dot.style.transform = '';
-      }
-    });
   }
 
   /* ── 10. SIFIRLAMA ──────────────────────────────────────── */
   function resetState() {
     activeId = null;
-    nodes.forEach(function (n) {
+    nodes.forEach((n) => {
       n.classList.remove('sdg-is-active', 'sdg-dimmed');
       n.style.opacity = '';
       n.style.zIndex = '';
       n.style.transform = '';
     });
     infoCard.classList.remove('sdg-card-visible');
-    navDots.querySelectorAll('.sdg-dot').forEach(function (dot) {
-      dot.classList.remove('sdg-dot-active');
-      dot.style.background = '';
-      dot.style.transform = '';
-    });
     autoRotate = true;
     updatePositions();
   }
 
   /* ── 11. DIŞARI TIKLAMA → SIFIRLA ──────────────────────── */
-  var sectionEl = document.getElementById('sdg-section');
-  sectionEl.addEventListener('click', function (e) {
+  const sectionEl = document.getElementById('sdg-section');
+  sectionEl.addEventListener('click', (e) => {
     if (activeId !== null
       && !e.target.closest('.sdg-node')
-      && !e.target.closest('.sdg-info-wrapper')) {
+      && !e.target.closest('.sdg-card-panel')) {
       resetState();
     }
   });
 
   /* ── 12. PENCERE YENİDEN BOYUTLANMA ─────────────────────── */
-  var resizeTimer;
-  window.addEventListener('resize', function () {
+  const RESIZE_DEBOUNCE_MS = 200;
+  let resizeTimer;
+  window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
+    resizeTimer = setTimeout(() => {
       if (autoRotate && !animFrameId) {
         updatePositions();
       }
-    }, 200);
+    }, RESIZE_DEBOUNCE_MS);
   });
 
   /* ── 13. INTERSECTION OBSERVER — PERFORMANS ─────────────── */
-  var sectionObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         if (!animFrameId && autoRotate) {
           updatePositions();
@@ -350,45 +311,124 @@
 
 })();
 
-/* ── Reveal Sequencer ── */
+/* ── Bölüm Bazlı Giriş Animasyonları (GSAP ScrollTrigger) ──
+   Her bölümün kendine özgü tek bir "imza" hareketi var; AOS genel
+   fade-up girişleri yönetmeye devam ediyor, GSAP sadece kart/öğe
+   gruplarının stagger hareketini ekliyor — farklı mekanizmalar
+   oldukları için çakışmıyorlar. */
 (function () {
-  var lines = document.querySelectorAll('.reveal-line');
-  var cue = document.querySelector('.reveal-scroll-cue');
-  if (!lines.length) return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
 
-  var DISPLAY_MS = 2000;
-  var index = 0;
-
-  function showNext() {
-    var current = lines[index];
-    current.classList.add('visible');
-
-    var isLast = index === lines.length - 1;
-
-    if (!isLast) {
-      setTimeout(function () {
-        current.classList.remove('visible');
-        current.classList.add('exit');
-        index += 1;
-        showNext();
-      }, DISPLAY_MS);
-    } else if (cue) {
-      setTimeout(function () {
-        cue.classList.add('visible');
-      }, 800);
-    }
+  // Hero: video arka plana hafif parallax
+  if (document.querySelector('.hero-video')) {
+    gsap.to('.hero-video', {
+      yPercent: 8,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero-section',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
   }
 
-  showNext();
+  // Diğer tüm "tek seferlik" giriş animasyonları ScrollTrigger'ın
+  // start/end+onEnter mekaniği yerine IntersectionObserver ile tetiklenir.
+  // Sebep: bu sayfadaki "tek scroll = bir bölüm" wheel-paging script'i
+  // bölümler arasında hızlı/anlık scrollIntoView sıçramaları yapıyor; GSAP
+  // ScrollTrigger'ın onEnter callback'i böyle ani sıçramalarda bazen hiç
+  // tetiklenmiyor (animasyon "from" durumunda — yani opacity:0'da — asılı
+  // kalabiliyor). IntersectionObserver gerçek görünürlük durumuna baktığı
+  // için bu sorunu yaşamıyor; sayfadaki Chart.js lazy-init de zaten bu
+  // deseni kullanıyor.
+  const signatureAnimations = [
+    {
+      sectionId: 'sdg-section',
+      play: () => {
+        if (!document.getElementById('sdgCanvas')) return;
+        gsap.from('#sdgCanvas', { opacity: 0, scale: 0.85, duration: 0.8, ease: 'power2.out' });
+      }
+    },
+    {
+      sectionId: 'causes-section',
+      play: () => {
+        if (!document.querySelector('.cause-tab-content')) return;
+        gsap.from('.cause-tab-content', { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' });
+      }
+    },
+    {
+      sectionId: 'consequences-section',
+      play: () => {
+        const panels = document.querySelectorAll('.results-panel');
+        panels.forEach((panel, i) => {
+          gsap.from(panel, {
+            opacity: 0,
+            x: i % 2 === 0 ? -30 : 30,
+            duration: 0.6,
+            delay: i * 0.1,
+            ease: 'power2.out'
+          });
+        });
+      }
+    },
+    {
+      sectionId: 'actions-section',
+      play: () => {
+        if (!document.querySelector('.action-columns')) return;
+        gsap.from('.action-column:nth-child(1) .action-item', {
+          opacity: 0, x: -30, duration: 0.5, stagger: 0.08, ease: 'power2.out'
+        });
+        gsap.from('.action-column:nth-child(2) .action-item', {
+          opacity: 0, x: 30, duration: 0.5, stagger: 0.08, ease: 'power2.out'
+        });
+      }
+    },
+    {
+      sectionId: 'progress-section',
+      play: () => {
+        if (!document.querySelector('#progress-section .info-card')) return;
+        gsap.from('#progress-section .info-card', {
+          opacity: 0, scale: 0.9, duration: 0.5, stagger: 0.08, ease: 'back.out(1.7)'
+        });
+      }
+    },
+    {
+      sectionId: 'resources-section',
+      play: () => {
+        if (!document.querySelector('.resource-card')) return;
+        gsap.from('.resource-card', {
+          opacity: 0, scale: 0.92, y: 16, duration: 0.5, stagger: 0.06, ease: 'power2.out'
+        });
+      }
+    }
+  ];
+
+  signatureAnimations.forEach((entry) => {
+    const section = document.getElementById(entry.sectionId);
+    if (!section) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          entry.play();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
+  });
 })();
 
 /* ── Chart.js Bölümleri (lazy init via IntersectionObserver) ── */
 (function () {
   if (typeof Chart === 'undefined') return;
 
-  var chartInstances = {};
+  const chartInstances = {};
 
-  var palette = {
+  const palette = {
     green: '#2c7933',
     lightGreen: '#56c02b',
     blue: '#0a97d9',
@@ -397,6 +437,9 @@
     red: '#e5243b',
     brown: '#bf8b2e'
   };
+
+  const AXIS_TICK_COLOR = 'rgba(255,255,255,0.55)';
+  const AXIS_GRID_COLOR = 'rgba(255,255,255,0.06)';
 
   function legendPosition() {
     return window.matchMedia('(max-width: 575px)').matches ? 'bottom' : 'right';
@@ -415,107 +458,188 @@
     }, extra);
   }
 
-  function initEmissionsDoughnutChart() {
-    var ctx = document.getElementById('emissionsDoughnutChart');
+  /* Sade bar grafiklerin (legend gizli, ortak eksen stili) tekrar eden seçeneklerini tek yerden üretir. */
+  function barOptions(extra) {
+    return baseOptions(Object.assign({
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: AXIS_TICK_COLOR }, grid: { display: false } },
+        y: { ticks: { color: AXIS_TICK_COLOR }, grid: { color: AXIS_GRID_COLOR } }
+      }
+    }, extra));
+  }
+
+  /* PointsChart referansındaki temiz tooltip kartının Chart.js karşılığı. */
+  function styledTooltip(extra) {
+    return Object.assign({
+      backgroundColor: 'rgba(15,15,15,0.95)',
+      titleColor: '#fff',
+      bodyColor: 'rgba(255,255,255,0.85)',
+      borderColor: 'rgba(255,255,255,0.15)',
+      borderWidth: 1,
+      cornerRadius: 8,
+      padding: 10,
+      displayColors: false
+    }, extra);
+  }
+
+  /* PointsChart'taki yıldız işaretli "level" referans çizgisinin Chart.js
+     karşılığı: belirli bir eşik değerinde kesikli çizgi + yıldız ikonu. */
+  function drawStar(ctx, cx, cy, r, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const angle = (Math.PI / 5) * i - Math.PI / 2;
+      const radius = i % 2 === 0 ? r : r / 2.3;
+      const x = cx + radius * Math.cos(angle);
+      const y = cy + radius * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function referenceLinePlugin(value, color) {
+    return {
+      id: `referenceLine-${value}`,
+      afterDatasetsDraw: (chart) => {
+        const yScale = chart.scales.y;
+        if (!yScale) return;
+        const y = yScale.getPixelForValue(value);
+        const area = chart.chartArea;
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.setLineDash([6, 4]);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(area.left, y);
+        ctx.lineTo(area.right, y);
+        ctx.stroke();
+        ctx.restore();
+        drawStar(ctx, area.left, y, 6, color);
+      }
+    };
+  }
+
+  function initCauseEnergyChart() {
+    if (chartInstances.causeEnergy) return;
+    const ctx = document.getElementById('causeEnergyChart');
     if (!ctx) return;
-    chartInstances.emissionsDoughnut = new Chart(ctx, {
+    chartInstances.causeEnergy = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Kömür', 'Doğal Gaz', 'Petrol', 'Yenilenebilir', 'Nükleer'],
+        datasets: [{
+          label: 'Küresel Elektrik Üretiminde Pay (%)',
+          data: [35, 23, 3, 30, 9],
+          backgroundColor: [palette.brown, palette.blue, '#555', palette.lightGreen, palette.amber],
+          borderRadius: 6
+        }]
+      },
+      options: barOptions()
+    });
+  }
+
+  function initCauseDeforestationChart() {
+    if (chartInstances.causeDeforestation) return;
+    const ctx = document.getElementById('causeDeforestationChart');
+    if (!ctx) return;
+    chartInstances.causeDeforestation = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2001', '2007', '2013', '2019', '2023'],
+        datasets: [{
+          label: 'Kaybedilen Orman Alanı (Milyon Hektar)',
+          data: [12.8, 15.4, 17.9, 23.1, 28.3],
+          borderColor: palette.brown,
+          backgroundColor: 'rgba(191,139,46,0.18)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: palette.brown
+        }]
+      },
+      plugins: [referenceLinePlugin(12.8, 'rgba(255,255,255,0.85)')],
+      options: baseOptions({
+        plugins: {
+          legend: { display: false },
+          tooltip: styledTooltip()
+        },
+        scales: {
+          x: { ticks: { color: AXIS_TICK_COLOR }, grid: { color: AXIS_GRID_COLOR } },
+          y: { ticks: { color: AXIS_TICK_COLOR }, grid: { color: AXIS_GRID_COLOR } }
+        }
+      })
+    });
+  }
+
+  function initCauseIndustryChart() {
+    if (chartInstances.causeIndustry) return;
+    const ctx = document.getElementById('causeIndustryChart');
+    if (!ctx) return;
+    chartInstances.causeIndustry = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Çimento', 'Çelik', 'Kimyasallar', 'Diğer'],
+        datasets: [{
+          label: 'Endüstriyel CO₂ Emisyonu (Gt)',
+          data: [2.6, 2.6, 1.4, 2.2],
+          backgroundColor: palette.orange,
+          borderRadius: 6
+        }]
+      },
+      options: barOptions()
+    });
+  }
+
+  function initCauseAgricultureChart() {
+    if (chartInstances.causeAgriculture) return;
+    const ctx = document.getElementById('causeAgricultureChart');
+    if (!ctx) return;
+    chartInstances.causeAgriculture = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['Enerji / Elektrik', 'Tarım, Orman ve Arazi', 'Sanayi', 'Ulaşım', 'Binalar'],
+        labels: ['Hayvancılık (Metan)', 'Gübre Kullanımı', 'Pirinç Tarımı', 'Diğer'],
         datasets: [{
-          data: [34, 22, 24, 15, 5],
-          backgroundColor: [palette.blue, palette.brown, palette.orange, palette.red, palette.amber],
+          data: [44, 24, 12, 20],
+          backgroundColor: [palette.lightGreen, palette.amber, palette.blue, '#777'],
           borderColor: '#000',
           borderWidth: 2
         }]
       },
       options: baseOptions({
         plugins: {
-          legend: {
-            position: legendPosition(),
-            labels: { color: 'rgba(255,255,255,0.7)' }
-          }
+          legend: { position: legendPosition(), labels: { color: 'rgba(255,255,255,0.7)' } }
         }
       })
     });
   }
 
-  function initCo2LineChart() {
-    var ctx = document.getElementById('co2LineChart');
+  function initCauseTransportChart() {
+    if (chartInstances.causeTransport) return;
+    const ctx = document.getElementById('causeTransportChart');
     if (!ctx) return;
-    chartInstances.co2Line = new Chart(ctx, {
-      type: 'line',
+    chartInstances.causeTransport = new Chart(ctx, {
+      type: 'bar',
       data: {
-        labels: ['1960', '1980', '2000', '2010', '2020', '2024'],
+        labels: ['Karayolu', 'Denizcilik', 'Havacılık', 'Demiryolu'],
         datasets: [{
-          label: 'CO₂ (ppm)',
-          data: [317, 339, 369, 389, 412, 424],
-          borderColor: palette.lightGreen,
-          backgroundColor: 'rgba(86,192,43,0.15)',
-          fill: true,
-          tension: 0.35,
-          pointBackgroundColor: palette.lightGreen
+          label: 'Ulaşım Türüne Göre CO₂ Payı (%)',
+          data: [74, 11, 12, 3],
+          backgroundColor: palette.red,
+          borderRadius: 6
         }]
       },
-      options: baseOptions({
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { color: 'rgba(255,255,255,0.55)' }, grid: { color: 'rgba(255,255,255,0.06)' } },
-          y: { ticks: { color: 'rgba(255,255,255,0.55)' }, grid: { color: 'rgba(255,255,255,0.06)' } }
-        }
-      })
-    });
-  }
-
-  function initTempProjectionChart() {
-    var ctx = document.getElementById('tempProjectionChart');
-    if (!ctx) return;
-    var years = ['2020', '2040', '2060', '2080', '2100'];
-    chartInstances.tempProjection = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: years,
-        datasets: [
-          {
-            label: 'SSP1-1.9 (Güçlü Eylem)',
-            data: [1.1, 1.4, 1.5, 1.4, 1.4],
-            borderColor: palette.lightGreen,
-            backgroundColor: 'transparent',
-            tension: 0.35
-          },
-          {
-            label: 'SSP2-4.5 (Orta Yol)',
-            data: [1.1, 1.6, 2.0, 2.4, 2.7],
-            borderColor: palette.amber,
-            backgroundColor: 'transparent',
-            tension: 0.35
-          },
-          {
-            label: 'SSP5-8.5 (Eylemsizlik)',
-            data: [1.1, 1.9, 2.8, 3.6, 4.4],
-            borderColor: palette.red,
-            backgroundColor: 'transparent',
-            tension: 0.35
-          }
-        ]
-      },
-      options: baseOptions({
-        plugins: {
-          legend: { position: legendPosition(), labels: { color: 'rgba(255,255,255,0.7)' } }
-        },
-        scales: {
-          x: { ticks: { color: 'rgba(255,255,255,0.55)' }, grid: { color: 'rgba(255,255,255,0.06)' } },
-          y: {
-            ticks: { color: 'rgba(255,255,255,0.55)', callback: function (v) { return v + '°C'; } },
-            grid: { color: 'rgba(255,255,255,0.06)' }
-          }
-        }
-      })
+      options: barOptions()
     });
   }
 
   function initRenewableGrowthChart() {
-    var ctx = document.getElementById('renewableGrowthChart');
+    const ctx = document.getElementById('renewableGrowthChart');
     if (!ctx) return;
     chartInstances.renewableGrowth = new Chart(ctx, {
       type: 'bar',
@@ -528,28 +652,21 @@
           borderRadius: 6
         }]
       },
-      options: baseOptions({
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { color: 'rgba(255,255,255,0.55)' }, grid: { display: false } },
-          y: { ticks: { color: 'rgba(255,255,255,0.55)' }, grid: { color: 'rgba(255,255,255,0.06)' } }
-        }
-      })
+      options: barOptions()
     });
   }
 
-  var initializers = [
-    { sectionId: 'causes-section', fn: function () { initEmissionsDoughnutChart(); initCo2LineChart(); } },
-    { sectionId: 'consequences-section', fn: initTempProjectionChart },
+  const initializers = [
+    { sectionId: 'causes-section', fn: initCauseEnergyChart },
     { sectionId: 'progress-section', fn: initRenewableGrowthChart }
   ];
 
-  initializers.forEach(function (entry) {
-    var section = document.getElementById(entry.sectionId);
+  initializers.forEach((entry) => {
+    const section = document.getElementById(entry.sectionId);
     if (!section) return;
 
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
         if (e.isIntersecting) {
           entry.fn();
           observer.disconnect();
@@ -559,11 +676,212 @@
 
     observer.observe(section);
   });
+
+  // Sebepler sekmeleri: ilk sekmenin grafiği yukarıdaki IntersectionObserver ile
+  // çizilir; diğer 4 sekme, Bootstrap'ın native "shown.bs.tab" event'iyle ilk
+  // açıldığında lazy-init edilir.
+  const causeChartInitByTab = {
+    'cause-deforestation': initCauseDeforestationChart,
+    'cause-industry': initCauseIndustryChart,
+    'cause-agriculture': initCauseAgricultureChart,
+    'cause-transport': initCauseTransportChart
+  };
+
+  document.querySelectorAll('#causeTabsNav .cause-tab-btn').forEach((btn) => {
+    btn.addEventListener('shown.bs.tab', (e) => {
+      const targetId = e.target.getAttribute('data-bs-target').replace('#', '');
+      const initFn = causeChartInitByTab[targetId];
+      if (initFn) initFn();
+    });
+  });
+})();
+
+/* ── Sebepler Başlığı: Sekme Değişince Renkli "Sweep" ile Yazı Değişimi ──
+   Sekmelerin kendine özel renkleri kaldırıldı; başlık artık her zaman beyaz
+   dinleniyor (sweep band'ı hâlâ DiaTextReveal'ın varsayılan renk paletiyle
+   geçiyor, ama sonunda beyaza yerleşiyor). */
+(function () {
+  const suffix = document.getElementById('causeHeadingSuffix');
+  const suffixText = suffix ? suffix.querySelector('.cause-heading-suffix-text') : null;
+  if (!suffix || !suffixText) return;
+
+  const DIP_RESET_MS = 340;
+  const HEADING_RESIZE_DEBOUNCE_MS = 150;
+  const HEADING_FIT_MOBILE_BREAKPOINT = 769;
+  const HEADING_FIT_MIN_SCALE = 0.7;
+  const HEADING_FIT_MAX_SCALE = 3;
+
+  function playDipAndSweep() {
+    suffixText.classList.remove('dip', 'sweep-in');
+    void suffixText.offsetWidth; // reflow, animasyonları yeniden tetikler
+    suffixText.classList.add('dip', 'sweep-in');
+    setTimeout(() => {
+      suffixText.classList.remove('dip');
+    }, DIP_RESET_MS);
+  }
+
+  /* Başlık (sabit metin + değişen sekme adı) en soldan en sağa kadar uzansın:
+     doğal genişliği ölçüp mevcut alana sığacak şekilde font-size'ı ölçekler. */
+  const headingEl = document.querySelector('.cause-heading');
+  function fitHeadingWidth() {
+    if (!headingEl) return;
+    if (window.innerWidth < HEADING_FIT_MOBILE_BREAKPOINT) {
+      headingEl.style.fontSize = '';
+      return;
+    }
+    headingEl.style.fontSize = '';
+    const available = headingEl.clientWidth;
+    const natural = headingEl.scrollWidth;
+    if (!available || !natural) return;
+    const baseSize = parseFloat(getComputedStyle(headingEl).fontSize);
+    const scale = Math.max(HEADING_FIT_MIN_SCALE, Math.min(available / natural, HEADING_FIT_MAX_SCALE));
+    headingEl.style.fontSize = `${baseSize * scale}px`;
+  }
+
+  document.querySelectorAll('#causeTabsNav .cause-tab-btn').forEach((btn) => {
+    btn.addEventListener('shown.bs.tab', (e) => {
+      const name = e.target.getAttribute('data-cause-name');
+      if (!name) return;
+
+      // DiaTextReveal'da metin React state ile anında değişir, kaybolmaz —
+      // değişimi gizleyen şey eşzamanlı oynayan "dip" (opaklık/blur/kayma) efekti.
+      suffixText.textContent = name;
+      playDipAndSweep();
+      requestAnimationFrame(fitHeadingWidth);
+    });
+  });
+
+  // İlk yüklemede de bir kez sweep oynat (component mount olduğunda olduğu gibi)
+  playDipAndSweep();
+  fitHeadingWidth();
+
+  // Montserrat web fontu ilk ölçümden SONRA yüklenirse (FOUT), scrollWidth
+  // yedek fontun metrikleriyle hesaplanmış olur — font tamamen hazır
+  // olduğunda ölçümü gerçek font metrikleriyle tekrar yapıyoruz.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fitHeadingWidth);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fitHeadingWidth, HEADING_RESIZE_DEBOUNCE_MS);
+  });
+})();
+
+/* ── Sebepler Arka Plan Fotoğrafı: Sekme Değişince Crossfade ──
+   Fotoğraflar artık sekme içinde değil, bölümün arka planında; aktif
+   sekmeye göre değişip yumuşak bir crossfade ile geçiş yapar. Sekme
+   geçişindeki takılmayı önlemek için tüm fotoğraflar sayfa yüklenir
+   yüklenmez tarayıcı önbelleğine ısıtılır (her biri zaten kart istifinde
+   de kullanıldığı için tek seferlik decode maliyeti tüm kullanımları kapsar). */
+(function () {
+  const bgLayer = document.getElementById('causesBgLayer');
+  const buttons = document.querySelectorAll('#causeTabsNav .cause-tab-btn');
+  if (!bgLayer || !buttons.length) return;
+
+  const CROSSFADE_DELAY_MS = 260;
+
+  buttons.forEach((btn) => {
+    const image = btn.getAttribute('data-bg-image');
+    if (image) {
+      const preload = new Image();
+      preload.src = image;
+    }
+  });
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('shown.bs.tab', (e) => {
+      const image = e.target.getAttribute('data-bg-image');
+      if (!image) return;
+
+      bgLayer.style.opacity = '0';
+      setTimeout(() => {
+        bgLayer.style.backgroundImage = `url('${image}')`;
+        bgLayer.style.opacity = '0.85';
+      }, CROSSFADE_DELAY_MS);
+    });
+  });
+})();
+
+/* ── Sebep Örnekleri: CardStack (fanlanmış kart istifi) ──
+   Her sekmenin altında 3 örnek kart fan şeklinde dizilir; tıklanan kart
+   öne/ortaya gelir. Pozisyonlar sabit data-index'e göre değil, aktif
+   karta göre (i - activeIndex) DİNAMİK olarak hesaplanıp her kartın
+   --offset CSS değişkenine yazılır — böylece hangi kart aktif olursa
+   olsun her zaman merkeze gelir, diğerleri ondan doğru offsetle kayar
+   (önceden "ortadaki" kart sabit merkez pozisyonda kalıp aktif karta
+   görünmez şekilde üst üste biniyordu). Noktalı navigasyon kaldırıldı,
+   sadece kartlara tıklayarak geçiş yapılıyor. */
+(function () {
+  document.querySelectorAll('.cause-stack').forEach((stack) => {
+    const cards = Array.prototype.slice.call(stack.querySelectorAll('.cause-stack-card'));
+    if (!cards.length) return;
+
+    const setActive = (index) => {
+      cards.forEach((card, i) => {
+        card.classList.toggle('active', i === index);
+        card.style.setProperty('--offset', i - index);
+      });
+    };
+
+    cards.forEach((card, i) => {
+      card.addEventListener('click', () => setActive(i));
+    });
+
+    var initialIndex = cards.findIndex((card) => card.classList.contains('active'));
+    setActive(initialIndex === -1 ? 0 : initialIndex);
+  });
+})();
+
+/* ── Canlı CO₂ Sayacı (NOAA Mauna Loa temel + yıllık ortalama artış hızı) ──
+   Sabit bir geçmiş tarihten bugüne kadar geçen süreyi gerçek zamanlı
+   hesaplayıp güncel atmosferik CO₂ seviyesini tahmin eder — sayı her saniye
+   o anki gerçek tarihe göre yeniden hesaplanır, uydurma bir animasyon değildir. */
+(function () {
+  const valueEl = document.getElementById('co2CounterValue');
+  if (!valueEl) return;
+
+  const BASELINE_DATE = new Date('2024-01-01T00:00:00Z').getTime();
+  const BASELINE_PPM = 422.8; // NOAA Mauna Loa, 2023 küresel yıllık ortalama
+  const ANNUAL_GROWTH = 2.4; // ppm/yıl, son 10 yıl ortalama artış hızı
+  const MS_PER_YEAR = 365.25 * 24 * 60 * 60 * 1000;
+  const COUNTER_REFRESH_MS = 1000;
+
+  function currentEstimate() {
+    const elapsedYears = (Date.now() - BASELINE_DATE) / MS_PER_YEAR;
+    return BASELINE_PPM + ANNUAL_GROWTH * elapsedYears;
+  }
+
+  function render() {
+    valueEl.textContent = currentEstimate().toFixed(2);
+  }
+
+  render();
+  setInterval(render, COUNTER_REFRESH_MS);
+
+  // İlk görünür olduğunda DiaTextReveal tarzı sweep'i bir kez oynat
+  const counter = document.getElementById('co2Counter');
+  if (counter && typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          valueEl.classList.remove('sweep-in');
+          void valueEl.offsetWidth;
+          valueEl.classList.add('sweep-in');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(counter);
+  }
 })();
 
 /* ── Sayfa Genel JS ── */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   // --- Text Rotator Logic ---
+  const ROTATOR_TRANSITION_MS = 600; // CSS transition süresi ile eşzamanlı
+  const ROTATOR_INTERVAL_MS = 3500;
   const rotatorWords = ["Sebepleri", "Ne olacak", "Neler yapabiliriz", "Neler yapılıyor"];
   const rotatorElement = document.getElementById("hero-rotator");
   let currentWordIndex = 0;
@@ -588,18 +906,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // 5. İndeksi güncelle
       currentWordIndex = (currentWordIndex + 1) % rotatorWords.length;
-    }, 600); // CSS transition süresi ile eşzamanlı
+    }, ROTATOR_TRANSITION_MS);
   }
 
   if (rotatorElement) {
     // İlk kelimeyi yükle
     animateRotator();
-    // 3.5 saniyede bir döngüyü çalıştır
-    setInterval(animateRotator, 3500);
+    // Döngüyü periyodik olarak çalıştır
+    setInterval(animateRotator, ROTATOR_INTERVAL_MS);
   }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
+  const SCROLL_TO_TOP_THRESHOLD = 300;
+
   // AOS Initialize
   AOS.init({
     duration: 800,
@@ -614,17 +934,13 @@ document.addEventListener('DOMContentLoaded', function () {
   function checkScroll() {
     const currentScroll = window.scrollY;
     if (scrollToTopButton) {
-      if (currentScroll > 300) {
-        scrollToTopButton.classList.add('show');
-      } else {
-        scrollToTopButton.classList.remove('show');
-      }
+      scrollToTopButton.classList.toggle('show', currentScroll > SCROLL_TO_TOP_THRESHOLD);
     }
     isScrolling = false;
   }
 
   // Passive true ile tarayıcıya "scroll'u engellemeyeceğim" garantisi veriyoruz.
-  window.addEventListener('scroll', function () {
+  window.addEventListener('scroll', () => {
     if (!isScrolling) {
       window.requestAnimationFrame(checkScroll);
       isScrolling = true;

@@ -95,27 +95,11 @@
     </div>
   </nav>
 
-  <!--========================================================================= Reveal ============================================================================== -->
-
-  <section class="reveal-section">
-    <div class="reveal-lines">
-      <span class="reveal-line">Bu gezegende sadece bir evimiz var.</span>
-      <span class="reveal-line">70 yıl. İnsanlık tarihinin en hızlı değişimine sahne oldu.</span>
-      <span class="reveal-line">Buzullar eriyor. Okyanuslar ısınıyor. Ormanlar susuyor.</span>
-      <span class="reveal-line">Bilim bize ne olduğunu söylüyor.</span>
-      <span class="reveal-line reveal-final">Şimdi soru şu: Ne yapacağız?</span>
-    </div>
-    <div class="reveal-scroll-cue">
-      <span>Kaydır</span>
-      <i class="fa-solid fa-chevron-down"></i>
-    </div>
-  </section>
-
   <!--========================================================================= Hero ============================================================================== -->
 
   <section class="hero-section">
     <video autoplay muted loop playsinline class="hero-video">
-      <source src="assets/video/hero-bg.mp4" type="video/mp4">
+      <source src="assets/video/14619128_1920_1080_24fps.mp4" type="video/mp4">
     </video>
 
     <div class="video-overlay"></div>
@@ -141,19 +125,12 @@
     <!-- Ana İnteraktif Alan -->
     <div class="sdg-zone" data-aos="fade-up" data-aos-delay="200">
 
-      <div class="sdg-info-wrapper left-panel">
-        <div class="sdg-header-inline">
-          <h2 class="sdg-main-title">Sürdürülebilir<br><em>Kalkınma Amaçları</em></h2>
-          <p class="sdg-main-desc">
-            Birleşmiş Milletler'in 17 hedefi, gezegeni ve insanlığı kurtarmak için çizilen küresel haritadır.
-            İklim krizi bu hedeflerin tamamını tehdit ediyor.
-          </p>
-        </div>
-
-        <div class="sdg-info-card" id="sdgInfoCard">
-          <div class="sdg-card-inner" id="sdgCardInner"></div>
-          <div class="sdg-nav-dots" id="sdgNavDots"></div>
-        </div>
+      <div class="sdg-text-panel">
+        <h2 class="sdg-main-title">Sürdürülebilir<br>Kalkınma<br>Hedefleri</h2>
+        <p class="sdg-main-desc">
+          Birleşmiş Milletler'in 17 hedefi, gezegeni ve insanlığı kurtarmak için çizilen küresel haritadır.
+          İklim krizi bu hedeflerin tamamını tehdit ediyor.
+        </p>
       </div>
 
       <div class="sdg-orbit-wrapper">
@@ -165,6 +142,10 @@
         </div>
       </div>
 
+      <div class="sdg-card-panel" id="sdgInfoCard">
+        <div class="sdg-card-inner" id="sdgCardInner"></div>
+      </div>
+
     </div>
 
   </section>
@@ -172,65 +153,248 @@
   <!--========================================================================= İklim Krizinin Sebepleri ============================================================================== -->
 
   <section id="causes-section" class="section-dark">
-    <div class="container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-eyebrow">Sebepler</span>
-        <h2 class="section-title">İklim Krizinin <em>Kökleri</em></h2>
-        <p class="section-desc">
-          İklim değişikliği gökten inmedi; onu biz, özellikle son 150 yılda fosil yakıt yakarak, ormanları
-          yok ederek ve üretim biçimimizle inşa ettik. Sebepleri anlamak, çözümün ilk adımıdır.
-        </p>
-      </div>
+    <div class="causes-bg-layer" id="causesBgLayer"
+      style="background-image:url('assets/image/zbynek-burival-GrmwVnVSSdU-unsplash.jpg');"></div>
+    <div class="causes-bg-overlay"></div>
 
-      <div class="row align-items-stretch">
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-          <div class="cause-cards">
-            <div class="info-card" style="--card-color:#0a97d9;">
-              <div class="info-card-icon"><i class="fa-solid fa-fire"></i></div>
+    <div class="section-header cause-header-standalone" data-aos="fade-up">
+      <h2 class="section-title cause-heading">
+        <span class="cause-heading-static">İKLİM KRİZİNİN SEBEBİ</span>
+        <span class="cause-heading-suffix" id="causeHeadingSuffix">
+          <span class="cause-heading-suffix-text">ENERJİ VE FOSİL YAKITLAR</span>
+        </span>
+      </h2>
+      <p class="section-desc">
+        İklim değişikliği gökten inmedi; onu biz, özellikle son 150 yılda fosil yakıt yakarak, ormanları
+        yok ederek ve üretim biçimimizle inşa ettik. Sebepleri anlamak, çözümün ilk adımıdır.
+      </p>
+    </div>
+
+    <div class="container">
+      <ul class="nav cause-tabs-nav" id="causeTabsNav" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="cause-tab-btn active" data-bs-toggle="tab" data-bs-target="#cause-energy" type="button"
+            role="tab" aria-selected="true" data-cause-name="ENERJİ VE FOSİL YAKITLAR"
+            data-bg-image="assets/image/zbynek-burival-GrmwVnVSSdU-unsplash.jpg">
+            <span class="cause-tab-btn-icon"><i class="fa-solid fa-fire"></i></span>
+            <span class="cause-tab-btn-label"><span>Enerji ve Fosil Yakıtlar</span></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-deforestation" type="button"
+            role="tab" aria-selected="false" data-cause-name="ORMANSIZLAŞMA"
+            data-bg-image="assets/image/jamie-morris-796FOi6EO9o-unsplash.jpg">
+            <span class="cause-tab-btn-icon"><i class="fa-solid fa-tree"></i></span>
+            <span class="cause-tab-btn-label"><span>Ormansızlaşma</span></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-industry" type="button"
+            role="tab" aria-selected="false" data-cause-name="SANAYİ ÜRETİMİ"
+            data-bg-image="assets/image/patrick-hendry-6xeDIZgoPaw-unsplash.jpg">
+            <span class="cause-tab-btn-icon"><i class="fa-solid fa-industry"></i></span>
+            <span class="cause-tab-btn-label"><span>Sanayi Üretimi</span></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-agriculture" type="button"
+            role="tab" aria-selected="false" data-cause-name="TARIM VE HAYVANCILIK"
+            data-bg-image="assets/image/no-one-cares-l_5MJnbrmrs-unsplash.jpg">
+            <span class="cause-tab-btn-icon"><i class="fa-solid fa-cow"></i></span>
+            <span class="cause-tab-btn-label"><span>Tarım ve Hayvancılık</span></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-transport" type="button"
+            role="tab" aria-selected="false" data-cause-name="ULAŞIM"
+            data-bg-image="assets/image/engin-akyurt-H4GGjhkhwF0-unsplash.jpg">
+            <span class="cause-tab-btn-icon"><i class="fa-solid fa-car"></i></span>
+            <span class="cause-tab-btn-label"><span>Ulaşım</span></span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content cause-tab-content" id="causeTabsContent">
+        <div class="tab-pane fade show active cause-tab-grid" id="cause-energy" role="tabpanel">
+          <div class="cause-tab-row">
+            <div class="cause-tab-text">
               <h3>Enerji ve Fosil Yakıtlar</h3>
               <p>Elektrik üretimi, ısınma ve sanayi için kömür, petrol ve doğal gaz yakmak, küresel sera gazı
                 emisyonlarının %75'inden fazlasının kaynağı. Her kilovat saat hâlâ büyük ölçüde fosil yakıtla
                 üretiliyor.</p>
+              <div class="cause-co2-counter" id="co2Counter">
+                <span class="cause-co2-counter-label">Şu anki tahmini atmosferik CO₂ seviyesi</span>
+                <div class="cause-co2-counter-row">
+                  <span class="cause-heading-suffix-text cause-co2-counter-value" id="co2CounterValue">424.00</span>
+                  <span class="cause-co2-counter-unit">ppm</span>
+                </div>
+                <span class="cause-co2-counter-note">NOAA Mauna Loa temel alınarak, yıllık ortalama artış hızıyla
+                  hesaplanan canlı tahmin</span>
+              </div>
             </div>
-            <div class="info-card" style="--card-color:#bf8b2e;">
-              <div class="info-card-icon"><i class="fa-solid fa-tree"></i></div>
-              <h3>Ormansızlaşma ve Arazi Kullanımı</h3>
-              <p>Ormanlar atmosferdeki karbonu emen doğal süngerlerimiz. Her yıl kaybedilen milyonlarca hektar
-                orman, hem bu karbon yutağını yok ediyor hem de depolanmış karbonu atmosfere geri salıyor.</p>
+            <div class="cause-tab-chart">
+              <div class="chart-wrapper">
+                <canvas id="causeEnergyChart"></canvas>
+              </div>
             </div>
-            <div class="info-card" style="--card-color:#fd6925;">
-              <div class="info-card-icon"><i class="fa-solid fa-industry"></i></div>
-              <h3>Sanayi Üretimi</h3>
-              <p>Çimento, çelik ve kimyasal üretimi, hem enerji yoğun süreçler hem de üretimin kendisinden
-                kaynaklanan kimyasal reaksiyonlar nedeniyle emisyonların önemli bir kısmını oluşturuyor.</p>
-            </div>
-            <div class="info-card" style="--card-color:#56c02b;">
-              <div class="info-card-icon"><i class="fa-solid fa-cow"></i></div>
-              <h3>Tarım ve Hayvancılık</h3>
-              <p>Hayvancılık metan, gübre kullanımı ise nitröz oksit salımına yol açıyor. Bu iki gaz, CO₂'den
-                çok daha güçlü ısınma etkisine sahip.</p>
-            </div>
-            <div class="info-card" style="--card-color:#e5243b;">
-              <div class="info-card-icon"><i class="fa-solid fa-car"></i></div>
-              <h3>Ulaşım</h3>
-              <p>Karayolu, deniz ve hava taşımacılığı küresel emisyonların beşte birine yakınını oluşturuyor;
-                elektrikli ve düşük karbonlu ulaşıma geçiş bu yükü doğrudan azaltabilir.</p>
+          </div>
+          <div class="cause-stack" data-cause-stack="energy"
+            style="--stack-img:url('assets/image/zbynek-burival-GrmwVnVSSdU-unsplash.jpg');">
+            <div class="cause-stack-cards">
+              <div class="cause-stack-card active" data-index="0">
+                <h4>Garzweiler Açık Maden Ocağı</h4>
+                <p>Almanya'da linyit kömürü çıkarmak için açılan devasa açık ocak — köyler ve ormanlar yerini
+                  kilometrelerce genişlikte bir çukura bırakıyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="1">
+                <h4>Çin Termik Santralleri</h4>
+                <p>Dünyanın en büyük kömür tüketicisi; binlerce aktif termik santral küresel kömür emisyonlarının
+                  büyük kısmını oluşturuyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="2">
+                <h4>Nijer Deltası</h4>
+                <p>Petrol çıkarımı sırasında yaşanan sızıntılar, on yıllardır bölgenin sucul ekosistemlerini ve
+                  tarım arazilerini kirletiyor.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-          <div class="causes-charts">
-            <div class="chart-card">
-              <h4>Küresel Sera Gazı Emisyonları (Sektöre Göre, %)</h4>
+        <div class="tab-pane fade cause-tab-grid" id="cause-deforestation" role="tabpanel">
+          <div class="cause-tab-row">
+            <div class="cause-tab-text">
+              <h3>Ormansızlaşma ve Arazi Kullanımı</h3>
+              <p>Ormanlar atmosferdeki karbonu emen doğal süngerlerimiz. Her yıl kaybedilen milyonlarca hektar
+                orman, hem bu karbon yutağını yok ediyor hem de depolanmış karbonu atmosfere geri salıyor.</p>
+            </div>
+            <div class="cause-tab-chart">
               <div class="chart-wrapper">
-                <canvas id="emissionsDoughnutChart"></canvas>
+                <canvas id="causeDeforestationChart"></canvas>
               </div>
             </div>
-            <div class="chart-card">
-              <h4>Atmosferdeki CO₂ Yoğunluğu (ppm), 1960-2024</h4>
+          </div>
+          <div class="cause-stack" data-cause-stack="deforestation"
+            style="--stack-img:url('assets/image/jamie-morris-796FOi6EO9o-unsplash.jpg');">
+            <div class="cause-stack-cards">
+              <div class="cause-stack-card active" data-index="0">
+                <h4>Amazon Yağmur Ormanları</h4>
+                <p>Brezilya'da tarım ve hayvancılık için her yıl milyonlarca hektar yağmur ormanı temizleniyor —
+                  dünyanın en büyük karbon yutaklarından biri küçülüyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="1">
+                <h4>Borneo Adası</h4>
+                <p>Endonezya ve Malezya'da palmiye yağı tarımı için yok edilen ormanlar, adanın eşsiz
+                  biyoçeşitliliğini tehdit ediyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="2">
+                <h4>Kongo Havzası</h4>
+                <p>Dünyanın ikinci büyük yağmur ormanı, kereste ticareti ve madencilik baskısı altında giderek
+                  küçülüyor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade cause-tab-grid" id="cause-industry" role="tabpanel">
+          <div class="cause-tab-row">
+            <div class="cause-tab-text">
+              <h3>Sanayi Üretimi</h3>
+              <p>Çimento, çelik ve kimyasal üretimi, hem enerji yoğun süreçler hem de üretimin kendisinden
+                kaynaklanan kimyasal reaksiyonlar nedeniyle emisyonların önemli bir kısmını oluşturuyor.</p>
+            </div>
+            <div class="cause-tab-chart">
               <div class="chart-wrapper">
-                <canvas id="co2LineChart"></canvas>
+                <canvas id="causeIndustryChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="cause-stack" data-cause-stack="industry"
+            style="--stack-img:url('assets/image/patrick-hendry-6xeDIZgoPaw-unsplash.jpg');">
+            <div class="cause-stack-cards">
+              <div class="cause-stack-card active" data-index="0">
+                <h4>Ruhr Bölgesi Çelik Tesisleri</h4>
+                <p>Almanya'nın tarihi ağır sanayi merkezi; yüksek fırınlar ve çelik tesisleri yüzyıldan uzun
+                  süredir bölgenin emisyon profilini belirliyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="1">
+                <h4>Çimento Fabrikaları</h4>
+                <p>Hindistan ve Çin'deki tesisler, küresel çimento üretiminin yarısından fazlasını
+                  karşılıyor — yüksek sıcaklıkta pişirme süreci büyük miktarda CO₂ açığa çıkarıyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="2">
+                <h4>Teksas Körfez Kıyısı</h4>
+                <p>Yoğun petrokimya tesisleri kompleksi, ABD'nin en büyük endüstriyel emisyon
+                  bölgelerinden birini oluşturuyor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade cause-tab-grid" id="cause-agriculture" role="tabpanel">
+          <div class="cause-tab-row">
+            <div class="cause-tab-text">
+              <h3>Tarım ve Hayvancılık</h3>
+              <p>Hayvancılık metan, gübre kullanımı ise nitröz oksit salımına yol açıyor. Bu iki gaz, CO₂'den
+                çok daha güçlü ısınma etkisine sahip.</p>
+            </div>
+            <div class="cause-tab-chart">
+              <div class="chart-wrapper">
+                <canvas id="causeAgricultureChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="cause-stack" data-cause-stack="agriculture"
+            style="--stack-img:url('assets/image/no-one-cares-l_5MJnbrmrs-unsplash.jpg');">
+            <div class="cause-stack-cards">
+              <div class="cause-stack-card active" data-index="0">
+                <h4>Brezilya Sığır Çiftlikleri</h4>
+                <p>Endüstriyel ölçekte et üretimi için ayrılan geniş otlaklar, hem ormansızlaşmayı hem de metan
+                  emisyonlarını birlikte tetikliyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="1">
+                <h4>Güneydoğu Asya Pirinç Tarlaları</h4>
+                <p>Su altında kalan pirinç tarlaları, anaerobik ayrışma yoluyla yüksek miktarda metan gazı
+                  açığa çıkarıyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="2">
+                <h4>Avrupa Yoğun Tarım Alanları</h4>
+                <p>Aşırı azotlu gübre kullanımı, topraktan atmosfere güçlü bir sera gazı olan nitröz oksit
+                  salınımına yol açıyor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade cause-tab-grid" id="cause-transport" role="tabpanel">
+          <div class="cause-tab-row">
+            <div class="cause-tab-text">
+              <h3>Ulaşım</h3>
+              <p>Karayolu, deniz ve hava taşımacılığı küresel emisyonların beşte birine yakınını oluşturuyor;
+                elektrikli ve düşük karbonlu ulaşıma geçiş bu yükü doğrudan azaltabilir.</p>
+            </div>
+            <div class="cause-tab-chart">
+              <div class="chart-wrapper">
+                <canvas id="causeTransportChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="cause-stack" data-cause-stack="transport"
+            style="--stack-img:url('assets/image/engin-akyurt-H4GGjhkhwF0-unsplash.jpg');">
+            <div class="cause-stack-cards">
+              <div class="cause-stack-card active" data-index="0">
+                <h4>Los Angeles Otoyol Ağı</h4>
+                <p>Dünyanın en yoğun karayolu trafiğine sahip şehirlerinden biri; günlük milyonlarca araç
+                  yolculuğu önemli bir emisyon kaynağı oluşturuyor.</p>
+              </div>
+              <div class="cause-stack-card" data-index="1">
+                <h4>Küresel Konteyner Gemiciliği</h4>
+                <p>Ağır fuel-oil kullanan dev konteyner gemileri, küresel ticaretin omurgası olmakla birlikte
+                  denizcilik emisyonlarının başlıca kaynağı.</p>
+              </div>
+              <div class="cause-stack-card" data-index="2">
+                <h4>Atlantik Hava Trafiği</h4>
+                <p>Kıtalar arası uçuşların yüksek irtifada saldığı emisyonlar, havacılığın iklim etkisini
+                  karbondioksitin ötesine taşıyor.</p>
               </div>
             </div>
           </div>
@@ -239,61 +403,105 @@
     </div>
   </section>
 
-  <!--========================================================================= Bir Şey Yapılmazsa Ne Olacak ============================================================================== -->
+  <!--========================================================================= İki Olası Gelecek (Sonuçlar) ============================================================================== -->
 
-  <section id="consequences-section" class="section-dark">
-    <div class="container">
+  <section id="consequences-section" class="section-dark results-split-section">
+    <div class="container results-split-container">
       <div class="section-header" data-aos="fade-up">
         <span class="section-eyebrow">Sonuçlar</span>
-        <h2 class="section-title">Bir Şey Yapılmazsa <em>Ne Olacak?</em></h2>
+        <h2 class="section-title">İki Olası <em>Gelecek</em></h2>
         <p class="section-desc">
-          Bilim kurgudan bahsetmiyoruz; IPCC raporlarının önümüze koyduğu somut senaryolardan bahsediyoruz.
-          Emisyonlar bu hızda sürerse, 2100'e kadar gezegenimizi tanınmaz hale getirecek değişiklikler kapıda.
+          Aynı gezegen, iki ayrı yol. Bugün attığımız adımlar — ya da atmadığımız adımlar — hangi tarafta
+          yaşayacağımızı belirliyor.
         </p>
       </div>
 
-      <div class="chart-card mb-5" data-aos="fade-up" data-aos-delay="100">
-        <h4>Küresel Sıcaklık Artışı Senaryoları (2100'e Kadar)</h4>
-        <div class="chart-wrapper">
-          <canvas id="tempProjectionChart"></canvas>
-        </div>
-      </div>
+      <div class="results-split-grid">
+        <!-- Sol Panel: Korunursa olası gelecek -->
+        <div class="results-panel results-panel-positive">
+          <div class="results-panel-intro">
+            <h3>Kıymetini Bilmemiz Gerekiyor</h3>
+            <p>Bu manzaralar hâlâ burada — ama sonsuza dek kalmayacaklar. Şimdi harekete geçersek, gelecek
+              nesiller de aynı güzelliği görebilir.</p>
+          </div>
 
-      <div class="row impact-cards g-4">
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
-          <div class="info-card" style="--card-color:#0a97d9;">
-            <div class="info-card-icon"><i class="fa-solid fa-water"></i></div>
-            <span class="info-card-stat">+1m</span>
-            <span class="info-card-stat-label">2100'e kadar olası deniz seviyesi yükselişi</span>
-            <p>Kutuplardaki buzullar ve Grönland buz tabakası eridikçe deniz seviyeleri yükseliyor. Milyonlarca
-              kıyı sakini için bu, evlerinin ve topraklarının sular altında kalması anlamına geliyor.</p>
+          <!-- Görseller geçici (placeholder); gerçek/AI üretimi fotoğraflarla değiştirilecek -->
+          <div class="results-scroll-wrapper">
+            <div class="results-scroll-track">
+              <figure class="results-photo">
+                <img src="assets/image/zbynek-burival-GrmwVnVSSdU-unsplash.jpg" alt="Kutup buzulları">
+                <figcaption>Kutup Buzulları</figcaption>
+              </figure>
+              <figure class="results-photo">
+                <img src="assets/image/jamie-morris-796FOi6EO9o-unsplash.jpg" alt="Yağmur ormanı">
+                <figcaption>Yağmur Ormanları</figcaption>
+              </figure>
+              <figure class="results-photo">
+                <img src="assets/image/engin-akyurt-H4GGjhkhwF0-unsplash.jpg" alt="Kıyı şeridi">
+                <figcaption>Kıyı Şeritleri</figcaption>
+              </figure>
+              <figure class="results-photo">
+                <img src="assets/image/no-one-cares-l_5MJnbrmrs-unsplash.jpg" alt="Verimli tarım arazisi">
+                <figcaption>Verimli Tarım Arazileri</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="results-panel-list">
+            <h4>Gündelik Yaşamda Yapabildiklerimiz</h4>
+            <ul>
+              <li><i class="fa-solid fa-check"></i><span>Temiz havada dışarıda spor yapmak ve yürüyüş</span></li>
+              <li><i class="fa-solid fa-check"></i><span>Musluktan güvenle içilebilir, bol tatlı su</span></li>
+              <li><i class="fa-solid fa-check"></i><span>Mevsiminde, bol çeşitli ve ucuz meyve-sebze</span></li>
+              <li><i class="fa-solid fa-check"></i><span>Kıyılarda yüzmek, kar mevsiminde kayak yapmak</span></li>
+            </ul>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-          <div class="info-card" style="--card-color:#fd6925;">
-            <div class="info-card-icon"><i class="fa-solid fa-cloud-bolt"></i></div>
-            <span class="info-card-stat">x5</span>
-            <span class="info-card-stat-label">ekstrem hava olaylarında artış (50 yılda)</span>
-            <p>Sıcak hava dalgaları, kuraklıklar, seller ve kasırgalar artık "yüz yılda bir" değil, neredeyse
-              her yıl yaşanan olaylar haline geliyor.</p>
+
+        <div class="results-divider" aria-hidden="true"><span>VS</span></div>
+
+        <!-- Sağ Panel: Eylemsizlik sonucu gelecek -->
+        <div class="results-panel results-panel-negative">
+          <div class="results-panel-intro">
+            <h3>Kaybettik</h3>
+            <p>Bu manzaralar artık eskisi gibi değil. Eylemsizlik, geri dönüşü zor bir yıkımı gezegene
+              yazdı.</p>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
-          <div class="info-card" style="--card-color:#e5243b;">
-            <div class="info-card-icon"><i class="fa-solid fa-paw"></i></div>
-            <span class="info-card-stat">%14</span>
-            <span class="info-card-stat-label">türlerin yok olma riski (+1.5°C'de)</span>
-            <p>Ekosistemler değişim hızına ayak uyduramıyor. Mercan resiflerinden Amazon ormanlarına kadar pek
-              çok yaşam alanı çöküş eşiğinde.</p>
+
+          <!-- Görseller geçici (placeholder); AI ile değiştirilmiş gerçek görsellerle değiştirilecek -->
+          <div class="results-scroll-wrapper">
+            <div class="results-scroll-track">
+              <figure class="results-photo results-photo-altered">
+                <img src="assets/image/zbynek-burival-GrmwVnVSSdU-unsplash.jpg" alt="Eriyen buzullar">
+                <figcaption>Eriyen Buzullar</figcaption>
+              </figure>
+              <figure class="results-photo results-photo-altered">
+                <img src="assets/image/jamie-morris-796FOi6EO9o-unsplash.jpg" alt="Yok olan ormanlar">
+                <figcaption>Yok Olan Ormanlar</figcaption>
+              </figure>
+              <figure class="results-photo results-photo-altered">
+                <img src="assets/image/engin-akyurt-H4GGjhkhwF0-unsplash.jpg" alt="Sular altında kalan kıyı">
+                <figcaption>Sular Altında Kalan Kıyılar</figcaption>
+              </figure>
+              <figure class="results-photo results-photo-altered">
+                <img src="assets/image/no-one-cares-l_5MJnbrmrs-unsplash.jpg" alt="Çöle dönen tarım arazisi">
+                <figcaption>Çöle Dönen Tarım Arazileri</figcaption>
+              </figure>
+            </div>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-          <div class="info-card" style="--card-color:#bf8b2e;">
-            <div class="info-card-icon"><i class="fa-solid fa-droplet-slash"></i></div>
-            <span class="info-card-stat">+1.2 milyar</span>
-            <span class="info-card-stat-label">2100'e kadar su kıtlığı yaşaması beklenen kişi</span>
-            <p>Değişen yağış düzenleri ve kuraklıklar tarımsal üretimi tehdit ediyor; bu da gıda fiyatlarını ve
-              kıtlığı doğrudan etkiliyor.</p>
+
+          <div class="results-panel-list">
+            <h4>Artık Yapamadıklarımız</h4>
+            <ul>
+              <li><i class="fa-solid fa-xmark"></i><span>Hava kirliliği ve sıcak hava dalgaları yüzünden dışarıda
+                  spor — solunum riski yüksek</span></li>
+              <li><i class="fa-solid fa-xmark"></i><span>Su kıtlığı nedeniyle kısıtlı ve pahalı içme suyu</span>
+              </li>
+              <li><i class="fa-solid fa-xmark"></i><span>Kuraklık ve mevsim kayması yüzünden daralan, pahalı gıda
+                  çeşitliliği</span></li>
+              <li><i class="fa-solid fa-xmark"></i><span>Deniz seviyesi yükselişi ve kar azlığı yüzünden
+                  kaybolan kıyı/kayak turizmi</span></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -403,37 +611,33 @@
         </p>
       </div>
 
-      <div class="row g-4 mb-5">
+      <div class="row g-2 mb-2">
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
           <div class="info-card" style="--card-color:#2c7933;">
             <div class="info-card-icon"><i class="fa-solid fa-file-signature"></i></div>
             <h3>Paris Anlaşması</h3>
-            <p>2015'te 195 ülke, küresel ısınmayı 2°C'nin (mümkünse 1.5°C'nin) altında tutmayı taahhüt etti. Bu,
-              iklim diplomasisinde bir dönüm noktasıydı.</p>
+            <p>2015'te 195 ülke, ısınmayı 2°C'nin altında tutmayı taahhüt etti.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
           <div class="info-card" style="--card-color:#0a97d9;">
             <div class="info-card-icon"><i class="fa-solid fa-globe"></i></div>
             <h3>COP Süreci</h3>
-            <p>Her yıl düzenlenen COP zirveleri, ülkelerin emisyon hedeflerini güncellediği ve iklim
-              finansmanı müzakerelerinin yürütüldüğü küresel platform haline geldi.</p>
+            <p>Her yıl ülkeler emisyon hedeflerini ve iklim finansmanını burada müzakere ediyor.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
           <div class="info-card" style="--card-color:#56c02b;">
             <div class="info-card-icon"><i class="fa-solid fa-wind"></i></div>
             <h3>Yenilenebilir Enerji Patlaması</h3>
-            <p>Güneş ve rüzgar enerjisi maliyetleri son on yılda %80'e yakın düştü; bu da yenilenebilir
-              kaynakları dünyanın çoğu yerinde fosil yakıtlardan daha ucuz hale getirdi.</p>
+            <p>Güneş ve rüzgar maliyetleri %80 düştü; artık çoğu yerde fosil yakıttan daha ucuz.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
           <div class="info-card" style="--card-color:#fcc30b;">
             <div class="info-card-icon"><i class="fa-solid fa-charging-station"></i></div>
             <h3>Elektrikli Araç Devrimi</h3>
-            <p>Küresel elektrikli araç satışları her yıl rekor kırıyor; büyük otomotiv üreticileri içten
-              yanmalı motorlardan çıkış takvimleri açıklıyor.</p>
+            <p>Küresel EV satışları rekor kırıyor; üreticiler içten yanmalıdan çıkış açıklıyor.</p>
           </div>
         </div>
       </div>
@@ -460,78 +664,72 @@
         </p>
       </div>
 
-      <div data-aos="fade-up" data-aos-delay="100">
-        <div class="resources-group-title">Belgeseller</div>
-        <div class="row g-4 mb-3">
-          <div class="col-md-4">
-            <div class="resource-card" style="--card-color:#2c7933;">
-              <div class="resource-card-icon"><i class="fa-solid fa-clapperboard"></i></div>
-              <h4>Breaking Boundaries: The Science of Our Planet</h4>
-              <p>David Attenborough'un anlattığı, gezegensel sınırları ve iklim krizini bilimsel verilerle
-                anlatan Netflix belgeseli.</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="resource-card" style="--card-color:#0a97d9;">
-              <div class="resource-card-icon"><i class="fa-solid fa-clapperboard"></i></div>
-              <h4>Our Planet</h4>
-              <p>Dünyanın en kırılgan ekosistemlerini ve insan etkisini gözler önüne seren Netflix belgesel
-                serisi.</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="resource-card" style="--card-color:#fd6925;">
-              <div class="resource-card-icon"><i class="fa-solid fa-clapperboard"></i></div>
-              <h4>An Inconvenient Truth / Sequel</h4>
-              <p>Al Gore'un iklim değişikliğine küresel farkındalık yaratan öncü belgesel filmleri.</p>
-            </div>
+      <div class="row g-2" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-6 col-md-3">
+          <div class="resource-card" style="--card-color:#2c7933;">
+            <div class="resource-card-icon"><i class="fa-solid fa-clapperboard"></i></div>
+            <span class="resource-card-tag">Belgesel</span>
+            <h4>Breaking Boundaries</h4>
+            <p>David Attenborough'un anlattığı, iklim krizini bilimsel verilerle anlatan Netflix belgeseli.</p>
           </div>
         </div>
-      </div>
-
-      <div data-aos="fade-up" data-aos-delay="150">
-        <div class="resources-group-title">Kuruluşlar ve Kaynaklar</div>
-        <div class="row g-4">
-          <div class="col-md-6 col-lg-3">
-            <a class="resource-card" style="--card-color:#2c7933;" href="https://www.ipcc.ch" target="_blank"
-              rel="noopener">
-              <div class="resource-card-icon"><i class="fa-solid fa-landmark"></i></div>
-              <h4>IPCC</h4>
-              <p>Birleşmiş Milletler'in hükümetler arası iklim değişikliği paneli — bilimsel raporların ana
-                kaynağı.</p>
-              <span class="resource-link">ipcc.ch <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-            </a>
+        <div class="col-6 col-md-3">
+          <div class="resource-card" style="--card-color:#0a97d9;">
+            <div class="resource-card-icon"><i class="fa-solid fa-clapperboard"></i></div>
+            <span class="resource-card-tag">Belgesel</span>
+            <h4>Our Planet</h4>
+            <p>Dünyanın en kırılgan ekosistemlerini gözler önüne seren Netflix belgesel serisi.</p>
           </div>
-          <div class="col-md-6 col-lg-3">
-            <a class="resource-card" style="--card-color:#0a97d9;" href="https://climate.nasa.gov" target="_blank"
-              rel="noopener">
-              <div class="resource-card-icon"><i class="fa-solid fa-satellite"></i></div>
-              <h4>NASA Climate</h4>
-              <p>NASA'nın uydu verileriyle desteklenen güncel iklim verileri ve görselleştirmeleri.</p>
-              <span class="resource-link">climate.nasa.gov <i
-                  class="fa-solid fa-arrow-up-right-from-square"></i></span>
-            </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="resource-card" style="--card-color:#fd6925;">
+            <div class="resource-card-icon"><i class="fa-solid fa-clapperboard"></i></div>
+            <span class="resource-card-tag">Belgesel</span>
+            <h4>An Inconvenient Truth</h4>
+            <p>Al Gore'un küresel farkındalık yaratan öncü belgesel filmleri.</p>
           </div>
-          <div class="col-md-6 col-lg-3">
-            <a class="resource-card" style="--card-color:#56c02b;" href="https://www.un.org/climatechange"
-              target="_blank" rel="noopener">
-              <div class="resource-card-icon"><i class="fa-solid fa-globe"></i></div>
-              <h4>UN Climate Action</h4>
-              <p>Birleşmiş Milletler'in küresel iklim eylemi, taahhütler ve politika kaynakları.</p>
-              <span class="resource-link">un.org/climatechange <i
-                  class="fa-solid fa-arrow-up-right-from-square"></i></span>
-            </a>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <a class="resource-card" style="--card-color:#fcc30b;"
-              href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions" target="_blank" rel="noopener">
-              <div class="resource-card-icon"><i class="fa-solid fa-chart-line"></i></div>
-              <h4>Our World in Data</h4>
-              <p>CO₂ ve sera gazı emisyonlarına dair açık verilerle desteklenmiş kapsamlı analizler.</p>
-              <span class="resource-link">ourworldindata.org <i
-                  class="fa-solid fa-arrow-up-right-from-square"></i></span>
-            </a>
-          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <a class="resource-card" style="--card-color:#2c7933;" href="https://www.ipcc.ch" target="_blank"
+            rel="noopener">
+            <div class="resource-card-icon"><i class="fa-solid fa-landmark"></i></div>
+            <span class="resource-card-tag">Kuruluş</span>
+            <h4>IPCC</h4>
+            <p>Hükümetler arası iklim değişikliği paneli — bilimsel raporların ana kaynağı.</p>
+            <span class="resource-link">ipcc.ch <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a class="resource-card" style="--card-color:#0a97d9;" href="https://climate.nasa.gov" target="_blank"
+            rel="noopener">
+            <div class="resource-card-icon"><i class="fa-solid fa-satellite"></i></div>
+            <span class="resource-card-tag">Kuruluş</span>
+            <h4>NASA Climate</h4>
+            <p>Uydu verileriyle desteklenen güncel iklim verileri ve görselleştirmeleri.</p>
+            <span class="resource-link">climate.nasa.gov <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a class="resource-card" style="--card-color:#56c02b;" href="https://www.un.org/climatechange"
+            target="_blank" rel="noopener">
+            <div class="resource-card-icon"><i class="fa-solid fa-globe"></i></div>
+            <span class="resource-card-tag">Kuruluş</span>
+            <h4>UN Climate Action</h4>
+            <p>Birleşmiş Milletler'in küresel iklim eylemi ve politika kaynakları.</p>
+            <span class="resource-link">un.org/climatechange <i
+                class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a class="resource-card" style="--card-color:#fcc30b;"
+            href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions" target="_blank" rel="noopener">
+            <div class="resource-card-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <span class="resource-card-tag">Kaynak</span>
+            <h4>Our World in Data</h4>
+            <p>CO₂ ve sera gazı emisyonlarına dair açık verilerle kapsamlı analizler.</p>
+            <span class="resource-link">ourworldindata.org <i
+                class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </a>
         </div>
       </div>
     </div>
@@ -587,6 +785,9 @@
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <!-- GSAP + ScrollTrigger (bölüm bazlı giriş animasyonları) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
   <!-- Custom JS -->
   <script src="script.js"></script>
