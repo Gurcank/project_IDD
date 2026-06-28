@@ -20,8 +20,11 @@ body {
   padding-top: 32px;
   /* 100vw kullanan full-bleed bölümler (.cause-fullwidth-header gibi),
      dikey scrollbar genişliği yüzünden gerçek viewport'tan biraz taşabilir;
-     bu güvenlik önlemi yatay scrollbar oluşmasını engeller. */
-  overflow-x: hidden;
+     bu güvenlik önlemi yatay scrollbar oluşmasını engeller. "hidden" değil
+     "clip" kullanıyoruz: overflow-x:hidden, overflow-y'yi de örtük olarak
+     "auto"ya çevirip body'yi yeni bir scroll container'a dönüştürüyor ve bu
+     da position:sticky'yi (örn. İlerleme bölümü kart yığını) kırıyor. */
+  /* overflow-x: clip; TEMP DISABLED FOR TEST */
 }
 
 p,
@@ -899,7 +902,7 @@ footer .social-links a:hover {
 /*  ========================================================================= Scroll Chaptering =============================================================================== */
 
 html {
-  scroll-snap-type: y proximity;
+  /* TEMP DISABLED FOR TEST scroll-snap-type: y proximity; */
   scroll-padding-top: 80px;
 }
 
@@ -2328,11 +2331,17 @@ html {
   position: relative;
 }
 
-/* Referans CardsParallax bileşeniyle aynı iskelet: sticky+ortalanmış
-   wrapper, kartın kendisi sabit/küçük boyutlu, başlık+açıklama ortalanmış
-   ve fotoğrafın üstüne biniyor (tag/etiket referansta da render edilmiyor,
-   bu yüzden kaldırıldı). */
+/* Stack runway: wrap viewport'tan daha uzun olmalı, yoksa sticky'nin
+   "yapışma" penceresi sıfıra iner ve kartlar hiç sabitlenmeden normal
+   akış gibi kayıp gider (önceki sürümün asıl hatası buydu — wrap tam
+   100vh olduğunda sticky görünürde hiç devreye girmiyordu). Asıl sticky
+   pozisyonlama içteki .progress-parallax-card-sticky elemanında. */
 .progress-parallax-card-wrap {
+  position: relative;
+  height: 180vh;
+}
+
+.progress-parallax-card-sticky {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -2374,24 +2383,17 @@ html {
 }
 
 .progress-parallax-card-light .progress-parallax-card-overlay {
-  background: rgba(255, 255, 255, 0.35);
+  background: transparent;
 }
 
 .progress-parallax-card-light .progress-parallax-title {
   color: #fff;
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 8px 20px;
-  border-radius: 10px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .progress-parallax-card-light .progress-parallax-desc {
-  color: rgba(255, 255, 255, 0.92);
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.55);
-  padding: 12px 18px;
-  border-radius: 10px;
-  margin-top: 10px !important;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .progress-parallax-title {
