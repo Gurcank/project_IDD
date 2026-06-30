@@ -1875,15 +1875,17 @@ html {
 
 /*  ========================================================================= Actions Section Styles (Zoom Cards + Fullscreen Modal) =============================================================================== */
 
-/* Bu bölümün arka planı beyaza çevrildi (modal hâlâ kendi koyu/sinematik
-   temasını kullanıyor — bu sadece kartların durduğu ana bölüm). */
+/* Bu bölümün arka planında şehir fotoğrafı kullanılıyor (modal hâlâ kendi
+   koyu/sinematik temasını kullanıyor — bu sadece kartların durduğu ana
+   bölüm). Fotoğraf üzerine beyazlatma/karartma uygulanmıyor, sadece
+   başlık/kart metinleri text-shadow ile okunaklı tutuluyor. */
 #actions-section.section-dark {
   background: transparent;
   position: relative;
   z-index: 2;
 }
 
-/* Bu bölüme özel gökyüzü fotoğrafı — diğer section-bg'lerle aynı teknik. */
+/* Bu bölüme özel şehir fotoğrafı — diğer section-bg'lerle aynı teknik. */
 .actions-section-bg {
   position: absolute;
   inset: 0;
@@ -1897,17 +1899,18 @@ html {
 .actions-section-bg-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.55);
+  background: transparent;
   z-index: 0;
+}
+
+#actions-section .section-title {
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 #actions-section.section-dark .container {
   position: relative;
   z-index: 1;
-}
-
-#actions-section .section-title {
-  color: var(--idd-dark-bg) !important;
 }
 
 .action-zoom-grid {
