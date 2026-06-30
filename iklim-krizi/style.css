@@ -2334,16 +2334,13 @@ html {
   position: relative;
 }
 
-/* Stack runway: wrap viewport'tan daha uzun olmalı, yoksa sticky'nin
-   "yapışma" penceresi sıfıra iner ve kartlar hiç sabitlenmeden normal
-   akış gibi kayıp gider (önceki sürümün asıl hatası buydu — wrap tam
-   100vh olduğunda sticky görünürde hiç devreye girmiyordu). Asıl sticky
-   pozisyonlama içteki .progress-parallax-card-sticky elemanında. */
-.progress-parallax-card-wrap {
-  position: relative;
-  height: 180vh;
-}
-
+/* Her kart kendisi tam viewport yüksekliğinde + sticky top:0 olarak art
+   arda diziliyor (ekstra spacer/wrapper YOK — referans bileşendeki gibi).
+   "Yığılma" efekti bundan doğal olarak çıkıyor: bir sonraki kart kendi
+   100vh'lik akış payı boyunca öncekinin üzerine kayarak biner, tam o
+   payın sonunda öncekinin yerini sticky olarak alır. Ekstra bir spacer
+   eklemek bu sürekli üst üste binmeyi "yapış-dur-bırak" gibi kesintili
+   bir ritme çeviriyordu (önceki sürümün hatası). */
 .progress-parallax-card-sticky {
   height: 100vh;
   display: flex;
