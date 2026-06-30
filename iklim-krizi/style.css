@@ -24,7 +24,7 @@ body {
      "clip" kullanıyoruz: overflow-x:hidden, overflow-y'yi de örtük olarak
      "auto"ya çevirip body'yi yeni bir scroll container'a dönüştürüyor ve bu
      da position:sticky'yi (örn. İlerleme bölümü kart yığını) kırıyor. */
-  /* overflow-x: clip; TEMP DISABLED FOR TEST */
+  overflow-x: clip;
 }
 
 p,
@@ -902,7 +902,7 @@ footer .social-links a:hover {
 /*  ========================================================================= Scroll Chaptering =============================================================================== */
 
 html {
-  /* TEMP DISABLED FOR TEST scroll-snap-type: y proximity; */
+  scroll-snap-type: y proximity;
   scroll-padding-top: 80px;
 }
 
