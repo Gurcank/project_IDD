@@ -5,87 +5,87 @@
   const sdgData = [
     {
       id: 1, title: "Yoksulluğa Son", color: "#E5243B", tag: "SOSYAL",
-      desc: "Dünya genelinde 700 milyondan fazla insan günlük 2.15 doların altında geçimini sağlamaktadır. Bu hedef; sosyal koruma ağları oluşturmayı, ekonomik eşitsizlikleri azaltmayı ve dezavantajlı gruplara kaynak erişimi sağlamayı kapsamaktadır.",
+      desc: "İklim krizi, zaten kırılgan olan toplulukları orantısız biçimde vuruyor: kuraklık, sel ve mahsul kaybı en çok düşük gelirli haneleri vuruyor. Bu hedef; sosyal koruma ağlarını güçlendirmeyi, iklime dayanıklı geçim kaynakları kurmayı ve afet sonrası toparlanmayı hızlandırmayı kapsıyor.",
       stat: "700M+", statLabel: "kişi günlük 2.15 $'ın altında yaşıyor"
     },
     {
       id: 2, title: "Açlığa Son", color: "#DDA63A", tag: "GIDA",
-      desc: "Yaklaşık 690 milyon insan kronik açlıkla mücadele ederken iklim değişikliği tarım alanlarını tahrip ediyor. Sürdürülebilir tarım, gıda güvenliği ve küçük çiftçilerin güçlendirilmesi bu hedefin temel eksenini oluşturuyor.",
+      desc: "Değişen yağış düzenleri, uzayan kuraklıklar ve artan haşere baskısı tarımsal verimi doğrudan düşürüyor. İklime dayanıklı tohum çeşitleri, sulama teknolojileri ve küçük ölçekli üreticilerin desteklenmesi gıda güvenliğini korumanın anahtarı.",
       stat: "690M", statLabel: "insan kronik açlık yaşıyor"
     },
     {
       id: 3, title: "Sağlıklı Bireyler", color: "#4C9F38", tag: "SAĞLIK",
-      desc: "Evrensel sağlık hizmetine erişim, bulaşıcı hastalıklarla mücadele ve iklimle bağlantılı hastalıkların önlenmesi bu hedefin odağındadır. Dünya nüfusunun yarısı temel sağlık hizmetinden yoksun.",
+      desc: "Artan sıcaklıklar sıtma ve dang humması gibi hastalıkların yayılma alanını genişletirken, hava kirliliği solunum yolu rahatsızlıklarını ağırlaştırıyor. Bu hedef, önleyici sağlık hizmetlerine evrensel erişimi ve iklim kaynaklı sağlık risklerine dayanıklı sistemleri kapsıyor.",
       stat: "%50", statLabel: "dünya nüfusu temel sağlık hizmetine erişemiyor"
     },
     {
       id: 4, title: "Nitelikli Eğitim", color: "#C5192D", tag: "EĞİTİM",
-      desc: "300 milyondan fazla çocuk okul dışında. Kapsayıcı ve kaliteli eğitim, iklim değişikliği farkındalığını içermeli ve sürdürülebilir bir geleceğin inşasında genç nesillere yol göstermelidir.",
+      desc: "Aşırı hava olayları okulları kapatıyor, kuraklık ve sel kaynaklı göç dalgaları çocukların eğitimini kesintiye uğratıyor. Müfredata iklim okuryazarlığını dahil etmek, gelecek nesilleri krize bilinçli ve donanımlı yaklaşmaya hazırlıyor.",
       stat: "300M+", statLabel: "çocuk okul dışında kalıyor"
     },
     {
       id: 5, title: "Cinsiyet Eşitliği", color: "#FF3A21", tag: "EŞİTLİK",
-      desc: "İklim krizinin en ağır yükünü taşıyanlar arasında kadınlar ve kız çocukları yer alıyor. Toplumsal cinsiyet eşitliğinin sağlanması, sürdürülebilir kalkınmanın hem koşulu hem de çıktısıdır.",
+      desc: "Afet sonrasında su ve yakıt taşıma yükü çoğunlukla kadınlara ve kız çocuklarına düşüyor; bu da onları eğitimden ve karar alma süreçlerinden uzaklaştırıyor. Kadınların iklim politikalarına eşit katılımı, hem adalet hem de daha etkili çözümler için belirleyici.",
       stat: "%135", statLabel: "daha fazla iklim mültecisi kadınlardan oluşuyor"
     },
     {
       id: 6, title: "Temiz Su ve Sanitasyon", color: "#26BDE2", tag: "SU",
-      desc: "2 milyardan fazla insan güvenli içme suyuna erişimi bulunmayan bölgelerde yaşıyor. İklim değişikliği su kaynaklarını tehdit ederken kuraklık ve sel döngüleri giderek sertleşiyor.",
+      desc: "Buzul erimesi, değişen yağış rejimleri ve kıyı bölgelerinde tatlı suyun tuzlanması mevcut su kaynaklarını daralttıkça erişim güçleşiyor. Su altyapısını kuraklık ve sel şoklarına dayanıklı hale getirmek bu hedefin can alıcı noktası.",
       stat: "2B+", statLabel: "insan temiz suya erişemiyor"
     },
     {
       id: 7, title: "Erişilebilir Enerji", color: "#FCC30B", tag: "ENERJİ",
-      desc: "759 milyon insan elektriklere sahip değil. Fosil yakıtlardan yenilenebilir enerjiye geçiş hem iklim krizini durdurmak hem de enerji yoksulluğunu ortadan kaldırmak için kritik bir dönüşümdür.",
+      desc: "Elektriğe erişimi olmayan topluluklar genelde yenilenebilir kaynaklara en az yatırım alan bölgelerde yaşıyor. Güneş ve rüzgâr gibi dağıtık enerji çözümleri hem karbon salımını azaltıyor hem de şebekeye hiç bağlanamamış bölgelere doğrudan elektrik götürebiliyor.",
       stat: "759M", statLabel: "insan elektriğe erişemiyor"
     },
     {
       id: 8, title: "İnsana Yakışır İş", color: "#A21942", tag: "EKONOMİ",
-      desc: "Sürdürülebilir ekonomik büyüme, tam istihdam ve insana yakışır iş koşulları bu hedefin özünü oluşturur. Yeşil dönüşüm, doğru politikalarla milyonlarca yeni iş fırsatı yaratabilir.",
+      desc: "Fosil yakıt sektöründen yeşil ekonomiye geçiş milyonlarca yeni istihdam alanı yaratma potansiyeli taşıyor. Bu dönüşümün adil olması için eski sektörlerdeki işçilerin yeniden eğitilmesi ve geçiş sürecinde güvence altına alınması gerekiyor.",
       stat: "470M", statLabel: "insan işsiz veya yetersiz istihdam edilmiş"
     },
     {
       id: 9, title: "Sanayi ve Yenilikçilik", color: "#FD6925", tag: "İNOVASYON",
-      desc: "Sürdürülebilir altyapı, kapsayıcı sanayileşme ve inovasyonun teşvik edilmesi bu hedefin odağındadır. Temiz teknolojilere yapılan her dolar yatırım, iklim mücadelesinde çarpan etkisi yaratıyor.",
+      desc: "Düşük karbonlu üretim teknolojileri, enerji verimli altyapı ve temiz ulaşım sistemlerine yapılan yatırımlar sanayileşmeyi iklim hedefleriyle uyumlu hale getirmenin anahtarı. Dijital bağlantı eksikliği ise pek çok bölgede bu dönüşüme erişimi kısıtlıyor.",
       stat: "%40", statLabel: "insanlık hâlâ internetle bağlanamıyor"
     },
     {
       id: 10, title: "Eşitsizliklerin Azaltılması", color: "#DD1367", tag: "ADALEt",
-      desc: "İklim krizinin yükü eşitsiz dağılıyor: En az kirleten ülkeler en ağır sonuçları yaşıyor. Gelir, fırsat ve güç eşitsizliklerinin azaltılması hem adalet hem sürdürülebilirlik için zorunludur.",
+      desc: "Tarihsel olarak en az sera gazı salan düşük gelirli ülkeler, iklim krizinin en ağır sonuçlarıyla karşı karşıya kalıyor. Adil bir geçiş, hem gelir eşitsizliğini azaltmayı hem de iklim finansmanının hakkaniyetle paylaşılmasını gerektiriyor.",
       stat: "%82", statLabel: "küresel servet en zengin %1'in elinde"
     },
     {
       id: 11, title: "Sürdürülebilir Şehirler", color: "#FD9D24", tag: "KENTSEL",
-      desc: "2050'de dünya nüfusunun %68'i kentte yaşayacak. İklim dayanıklılığına sahip, kapsayıcı ve sürdürülebilir kentler inşa etmek, mücadelenin en kritik cephelerinden birini oluşturuyor.",
+      desc: "Kentler küresel enerji tüketiminin ve emisyonların büyük bölümünden sorumlu. Yeşil alanları artıran, toplu taşımayı önceleyen ve sel/ısı dalgalarına dayanıklı altyapı kuran şehirler hem yaşam kalitesini yükseltiyor hem de karbon ayak izini küçültüyor.",
       stat: "%68", statLabel: "2050'de dünya nüfusu kentte yaşayacak"
     },
     {
       id: 12, title: "Sorumlu Tüketim", color: "#BF8B2E", tag: "TÜKETİM",
-      desc: "Küresel gıdanın üçte biri israf edilirken moda endüstrisi küresel CO₂ emisyonlarının %10'unu üretiyor. Döngüsel ekonomi modellerine geçiş ve üretim zincirinin dönüşümü kaçınılmazdır.",
+      desc: "Doğrusal \"üret-tüket-at\" modeli hem doğal kaynakları tüketiyor hem de sera gazı salımını artırıyor. Onarım, geri dönüşüm ve paylaşım ekonomisine dayanan döngüsel modellere geçiş, kaynak baskısını azaltırken tüketim kaynaklı emisyonları da düşürüyor.",
       stat: "1/3", statLabel: "küresel gıda üretimi çöpe gidiyor"
     },
     {
       id: 13, title: "İklim Eylemi", color: "#3F7E44", tag: "ACİL",
-      desc: "Küresel sıcaklık artışı 1.5°C eşiğini aşmak üzere. Acil önlemler alınmazsa aşırı hava olayları, kıtlık ve zorunlu göç milyarlarca insanı doğrudan etkileyecek. Zaman tükeniyor.",
+      desc: "Bilim insanları, 1,5°C eşiğinin aşılmasının buzul kaybı, deniz seviyesi yükselişi ve ekosistem çöküşü gibi geri döndürülemez etkileri tetikleyebileceği konusunda hemfikir. Küresel emisyonların bu on yılda hızla azaltılması, zamanın daralmasıyla giderek daha kritik hale geliyor.",
       stat: "1.5°C", statLabel: "aşılmaması gereken ısınma eşiği"
     },
     {
       id: 14, title: "Sudaki Yaşam", color: "#0A97D9", tag: "OKYANUS",
-      desc: "Okyanuslar ürettiğimiz CO₂'nin %30'unu, fazla ısının %90'ını absorbe ediyor. Okyanus asitlenmesi, sıcaklık artışı ve plastik kirlilik; mercan resifleri ve kıyı ekosistemlerini yok ediyor.",
+      desc: "Okyanuslar fazla ısının büyük kısmını emerek gezegeni bir ölçüde koruyor, ama bu süreç deniz suyunu asitlendirip ekosistemleri zayıflatıyor. Aşırı avlanma ve plastik kirliliği bu baskıyı katmerlendiriyor; korunan deniz alanlarının genişletilmesi artık acil bir öncelik.",
       stat: "%50", statLabel: "mercan resifler son 30 yılda yok oldu"
     },
     {
       id: 15, title: "Karasal Yaşam", color: "#56C02B", tag: "EKOSİSTEM",
-      desc: "Her yıl 10 milyon hektar orman tahrip ediliyor. Ormansızlaşma, biyoçeşitlilik kaybı ve çölleşme karbon yutaklarını ortadan kaldırarak iklim krizini derinleştiriyor.",
+      desc: "Ormanlar, atmosferdeki karbonun önemli bir kısmını depolayan doğal yutaklar; yok edildiklerinde hem bu depolama kapasitesi kayboluyor hem de biriken karbon atmosfere geri dönüyor. Ormansızlaşmayı durdurmak, iklim hedeflerine ulaşmanın en hızlı yollarından biri.",
       stat: "10M ha", statLabel: "orman her yıl yok ediliyor"
     },
     {
       id: 16, title: "Barış ve Adalet", color: "#00689D", tag: "YÖNETİŞİM",
-      desc: "İklim değişikliği, kaynak kıtlığı ve göç dalgaları aracılığıyla çatışma riskini artırıyor. Şeffaf kurumlar ve güçlü hukuk sistemleri olmadan iklim adaleti sağlanamaz.",
+      desc: "Kuraklık ve kıtlık nedeniyle yerinden edilen topluluklar, kaynak kıtlığının yoğunlaştığı bölgelerde gerginlikleri artırabiliyor. Şeffaf ve güçlü kurumlar; iklim göçünü yönetmek ve adil kaynak paylaşımını sağlamak için vazgeçilmez.",
       stat: "2050", statLabel: "yılına kadar 1 milyar iklim mültecisi öngörülüyor"
     },
     {
       id: 17, title: "Hedefler İçin Ortaklık", color: "#19486A", tag: "ORTAKLIK",
-      desc: "İklim kriziyle mücadele tek bir ülkenin, şirketin ya da bireyin sorunu değil. Küresel finansman mekanizmaları, teknoloji transferi ve uluslararası işbirliği olmadan 2030 hedeflerine ulaşmak imkânsız.",
+      desc: "Gelişmekte olan ülkelerin iklim uyum ve azaltım kapasitesi büyük ölçüde dış finansmana ve teknoloji transferine bağlı. Zengin ülkelerin taahhüt ettikleri iklim finansmanını zamanında ve eksiksiz sağlaması, küresel işbirliğinin en önemli sınavlarından biri.",
       stat: "3.9T$", statLabel: "yıllık iklim finansmanı açığı"
     }
   ];
@@ -1078,6 +1078,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalScreens = screens.length;
     let currentStep = 0;
     let stepCooldown = false;
+    let lockedScrollY = 0;
     const STEP_COOLDOWN_MS = 650;
     const WHEEL_DELTA_THRESHOLD = 4;
 
@@ -1134,7 +1135,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal(card) {
       modal.classList.add('active');
       overlay.classList.add('active');
+
+      // Sayfanın scroll-snap-type'ı <html> üzerinde tanımlı olduğu için asıl
+      // scroll container document.documentElement'tir (body değil) — sadece
+      // body'ye overflow:hidden vermek bunu kilitlemiyor, mobilde modal
+      // içindeki adım içeriğini (.action-step-screen, mobilde overflow-y:auto)
+      // parmakla kaydırırken bu "sızıntı" arkadaki sayfayı da kaydırıp modal
+      // kapanınca kullanıcıyı "Ne Yapmalıyız" yerine footer'a düşürüyordu.
+      // <html>'i position:fixed ile scroll akışından tamamen çıkarıp
+      // kapanışta aynı konuma geri dönüyoruz.
+      const scroller = document.documentElement;
+      lockedScrollY = window.scrollY;
+      scroller.style.position = 'fixed';
+      scroller.style.top = `-${lockedScrollY}px`;
+      scroller.style.left = '0';
+      scroller.style.right = '0';
+      scroller.style.width = '100%';
       document.body.style.overflow = 'hidden';
+
       currentStep = 0;
       renderSteps();
 
@@ -1149,7 +1167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       modal.setAttribute('tabindex', '-1');
-      modal.focus();
+      modal.focus({ preventScroll: true });
     }
 
     function closeModal(card) {
@@ -1168,7 +1186,14 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.addEventListener('transitionend', onTransitionEnd);
 
       overlay.classList.remove('active');
+      const scroller = document.documentElement;
+      scroller.style.position = '';
+      scroller.style.top = '';
+      scroller.style.left = '';
+      scroller.style.right = '';
+      scroller.style.width = '';
       document.body.style.overflow = '';
+      window.scrollTo(0, lockedScrollY);
     }
 
     openBtn.addEventListener('click', () => openModal(openBtn));
@@ -1435,7 +1460,8 @@ document.addEventListener('DOMContentLoaded', () => {
    koruyoruz: hızlı scroll = daha çok eğim, durunca yumuşakça düzleşir. */
 (function () {
   const heading = document.querySelector('.cause-heading');
-  if (!heading) return;
+  const section = document.getElementById('causes-section');
+  if (!heading || !section) return;
 
   const SKEW_SENSITIVITY = 60;
   const SKEW_MAX_DEG = 18;
@@ -1446,7 +1472,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastY = window.scrollY;
   let lastT = performance.now();
   let currentSkew = 0;
+  let frameId = null;
 
+  // Bölüm ekran dışındayken bu döngü sonsuza dek çalışıp her karede
+  // stil yazıp duruyordu (sayfanın geri kalanında hiç görünmese bile) —
+  // diğer bölüm animasyonlarındaki gibi IntersectionObserver ile
+  // sadece görünürken çalıştırıyoruz.
   function loop() {
     const now = performance.now();
     const dt = Math.max(now - lastT, 1);
@@ -1460,10 +1491,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     lastY = window.scrollY;
     lastT = now;
-    requestAnimationFrame(loop);
+    frameId = requestAnimationFrame(loop);
   }
 
-  requestAnimationFrame(loop);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (!frameId) {
+          lastY = window.scrollY;
+          lastT = performance.now();
+          loop();
+        }
+      } else if (frameId) {
+        cancelAnimationFrame(frameId);
+        frameId = null;
+      }
+    });
+  }, { threshold: 0.08 });
+
+  observer.observe(section);
 })();
 
 /* ── "Adımları Keşfet" CO2 Attract Button ──

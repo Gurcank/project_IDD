@@ -2087,10 +2087,36 @@ html {
   position: fixed;
   inset: 0;
   z-index: 1050;
-  background: #080c10;
+  background: linear-gradient(135deg, var(--idd-green) 0%, var(--idd-dark-bg) 45%, #0a0f0b 100%);
   flex-direction: column;
   opacity: 0;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+/* .action-zoom-card'daki idd-logo watermark deseninin devamı: modal
+   açıldığında da marka izini orta-sağda koruyoruz. */
+.action-modal::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 4%;
+  width: min(46vw, 480px);
+  height: min(46vw, 480px);
+  transform: translateY(-50%);
+  background: url('assets/image/backgrounds/idd-logo.webp') no-repeat center / contain;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 767px) {
+  .action-modal::before {
+    width: min(70vw, 380px);
+    height: min(70vw, 380px);
+    right: 50%;
+    top: 22%;
+    transform: translate(50%, -50%);
+  }
 }
 
 .action-modal.active {
@@ -2127,6 +2153,7 @@ html {
 .action-modal-inner {
   flex: 1;
   position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -2297,20 +2324,169 @@ html {
 /* Bu bölüme özel arka plan fotoğrafı — .flow-photo-wrap'in paylaşılan
    fotoğrafının üstüne biniyor (z-index sırası: paylaşılan foto < bu foto <
    bölüm içeriği), böylece sadece "Şu An Neler Yapılıyor?" bu görseli alıyor. */
-.progress-section-bg {
+/* Foto bulunamadığında (bölüm ~7 kart x 100vh boyunda, tek bir fotoğrafın
+   "cover" ile bu kadar uzun bir alanı kaplaması hem çok yüksek çözünürlük
+   gerektiriyor hem de fotoğrafın ilginç kısmı neredeyse her zaman opak
+   kartların arkasında kalıyordu) yerine çözünürlükten bağımsız, tamamen
+   vektörel bir sahne: yukarıdan aşağıya yağan yağmur + bölümün başından
+   sonuna kadar uzanan tek bir selvi ağacı silüeti. */
+/* Sahnenin alt 1/5'i çim, üst 4/5'i bulutlu mavi gökyüzü. Bulutlar
+   .progress-sky içinde ayrı bir katman olarak tekrar eden bir SVG karosu
+   ile "arada" (sahne boyunca dağılmış) görünecek şekilde çiziliyor —
+   linear-gradient tek başına yüzde bazlı çim/gökyüzü sınırını, alt eleman
+   da bu sınırın İÇİNDE kalacak şekilde bulutları sınırlıyor. */
+.progress-scene {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  overflow: hidden;
   z-index: 0;
+}
+
+.progress-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80%;
+  background-image:
+    url('assets/image/decorative/clouds-tile.svg'),
+    linear-gradient(180deg, #4f92d6 0%, #7bb0e0 20%, #a9cce8 55%, #cfe1ec 85%, #dcebda 100%);
+  background-repeat: repeat, no-repeat;
+  background-size: 420px 620px, 100% 100%;
+}
+
+.progress-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(180deg, #6fa050 0%, #588240 40%, #3f6630 100%);
+}
+
+.progress-tree {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 960px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  filter: drop-shadow(0 0 60px rgba(0, 0, 0, 0.12));
+}
+
+.progress-tree-top {
+  flex: 0 0 570px;
+  width: 960px;
+  background-image: url('assets/image/decorative/cypress-top.svg');
+  background-repeat: no-repeat;
+}
+
+.progress-tree-body {
+  flex: 1 1 auto;
+  width: 960px;
+  background-image: url('assets/image/decorative/cypress-tile.svg');
+  background-repeat: repeat-y;
+}
+
+.progress-tree-trunk {
+  flex: 0 0 40px;
+  width: 330px;
+  align-self: center;
+  background: #7a5738;
+  border: 8px solid #3d2a1a;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+}
+
+@media (max-width: 767px) {
+  .progress-tree {
+    width: 340px;
+    top: 90px;
+  }
+
+  .progress-tree-top,
+  .progress-tree-body {
+    width: 340px;
+    background-size: 340px auto;
+  }
+
+  .progress-tree-top {
+    flex-basis: 202px;
+  }
+
+  .progress-tree-trunk {
+    width: 116px;
+    border-width: 5px;
+  }
+
+  .progress-sky {
+    background-size: 260px 400px, 100% 100%;
+  }
+}
+
+/* İki katman farklı açı/yoğunlukla yağmura derinlik hissi verir; her ikisi de
+   yalnızca transform:translateY ile hareket ettiği için (background-position
+   değil) GPU tarafından composite edilir, her karede yeniden boyanmaz.
+   Damlalar (background-position değil) çizgi film tarzı belirgin yağmur
+   taneleri olarak çizildi (bkz. rain-drops.svg). */
+.progress-rain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -260px;
+  height: calc(100% + 260px);
+  pointer-events: none;
+  z-index: 2;
+  background-image: url('assets/image/decorative/rain-drops.svg');
+  background-repeat: repeat;
+}
+
+.progress-rain-far {
+  background-size: 260px 260px;
+  opacity: 0.45;
+  animation: progress-rain-fall-far 0.9s linear infinite;
+}
+
+.progress-rain-near {
+  background-size: 190px 190px;
+  opacity: 0.7;
+  animation: progress-rain-fall-near 0.55s linear infinite;
+}
+
+@keyframes progress-rain-fall-far {
+  from {
+    transform: translateY(0) translateX(0);
+  }
+
+  to {
+    transform: translateY(260px) translateX(-16px);
+  }
+}
+
+@keyframes progress-rain-fall-near {
+  from {
+    transform: translateY(0) translateX(0);
+  }
+
+  to {
+    transform: translateY(190px) translateX(-20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-rain {
+    animation: none;
+    display: none;
+  }
 }
 
 .progress-section-bg-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.12);
   z-index: 0;
 }
 

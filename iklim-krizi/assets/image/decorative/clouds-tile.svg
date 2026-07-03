@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="620" viewBox="0 0 420 620">
+  <g fill="#ffffff" stroke="#c9dded" stroke-width="4" stroke-linejoin="round">
+    <!-- büyük bulut -->
+    <path d="M60,150 a30,30 0 0 1 40,-28 a36,36 0 0 1 68,-6 a32,32 0 0 1 46,20
+             a26,26 0 0 1 6,50 L54,186 a26,26 0 0 1 6,-36 Z" />
+    <!-- küçük bulut -->
+    <path d="M270,430 a22,22 0 0 1 30,-20 a26,26 0 0 1 50,-4 a24,24 0 0 1 34,15
+             a19,19 0 0 1 4,37 L266,458 a19,19 0 0 1 4,-28 Z" />
+  </g>
+</svg>
