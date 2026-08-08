@@ -1193,7 +1193,13 @@ document.addEventListener('DOMContentLoaded', () => {
       scroller.style.right = '';
       scroller.style.width = '';
       document.body.style.overflow = '';
-      window.scrollTo(0, lockedScrollY);
+      // Bootstrap'ın reboot CSS'i <html> üzerinde scroll-behavior:smooth
+      // tanımlıyor; behavior belirtilmeden çağrılan scrollTo bunu miras alıp
+      // sayfanın en başından (kilit sırasında scrollY sıfırlanmıştı) bu
+      // section'a kadar birkaç saniye süren gözle görülür bir "kayma"
+      // yapıyordu. behavior:'instant' bu CSS varsayılanını geçersiz kılıp
+      // konumu anında geri yükler.
+      window.scrollTo({ top: lockedScrollY, left: 0, behavior: 'instant' });
     }
 
     openBtn.addEventListener('click', () => openModal(openBtn));

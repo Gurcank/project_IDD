@@ -298,6 +298,10 @@ footer .social-links a:hover {
 .hero-section {
   position: relative;
   height: 100vh;
+  /* dvh, mobil tarayıcıların adres çubuğu kayarken değişen gerçek görünür
+     yüksekliği yansıtır; sabit vh kullanınca çubuk gizlenip/gösterilince
+     bölüm sınırı kayıyor, bu da scroll sırasında "titreme" hissi veriyordu. */
+  height: 100dvh;
   /* Ekran yüksekliğinin %85'i */
   width: 100%;
   overflow: hidden;
@@ -439,6 +443,7 @@ footer .social-links a:hover {
   background-repeat: no-repeat;
   height: 100vh;
   /* min-height yerine height kullanıldı */
+  height: 100dvh;
   overflow: hidden;
   /* Dikey taşmaları gizlemek için güncellendi */
   touch-action: auto;
@@ -928,6 +933,18 @@ html {
   }
 }
 
+/* Dokunmatik (kaba işaretçili) cihazlarda CSS scroll-snap kapatılıyor:
+   iOS/Android'de momentum scroll ile "proximity" snap birbirine giriyor —
+   parmak bırakıldıktan sonra tarayıcı hem doğal kaydırmayı bitirmeye hem de
+   en yakın bölüme snap etmeye çalışıyor, bu da takılma/titreme ve beklenmedik
+   bir bölüme sıçrama hissi yaratıyor. Fare/trackpad (pointer:fine) tarafında
+   snap sorunsuz çalıştığı için sadece dokunmatikte kapatıyoruz. */
+@media (pointer: coarse) {
+  html {
+    scroll-snap-type: none;
+  }
+}
+
 .hero-section,
 .sdg-section {
   scroll-snap-align: start;
@@ -939,6 +956,7 @@ html {
   position: relative;
   background: #000;
   height: 100vh;
+  height: 100dvh;
   scroll-snap-align: start;
   padding: 84px 0 18px;
   overflow: hidden;
@@ -1220,6 +1238,7 @@ html {
   .section-dark {
     height: auto;
     min-height: 100vh;
+    min-height: 100dvh;
     padding: 76px 0 40px;
   }
 
