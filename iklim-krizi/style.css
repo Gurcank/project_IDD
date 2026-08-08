@@ -247,7 +247,15 @@ footer .row {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 3rem;
+}
+
+/* padding-left sadece geniş masaüstünde (md sütunları arasında görsel boşluk
+   için) uygulanır; 768-991px aralığında (col-md-5 zaten dar) bu boşluk
+   e-posta adresi gibi kırılmayan metinlerin taşmasına neden oluyordu. */
+@media (min-width: 992px) {
+  .contact-social-wrapper {
+    padding-left: 3rem;
+  }
 }
 
 .footer-logo {
@@ -269,6 +277,14 @@ footer .row {
 footer .contact-info p {
   display: flex;
   align-items: center;
+  /* flex item'ların varsayılan min-width:auto'su, içeriği (uzun e-posta
+     adresi gibi) daralan bir sütunda sarmak yerine dışarı taşırıyordu. */
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+footer .contact-info p i {
+  flex-shrink: 0;
 }
 
 footer .social-links a:hover {
@@ -1106,7 +1122,11 @@ html {
   }
 }
 
-@media (max-width: 767px) {
+/* 1200px'e kadar genişletildi: statik başlık + suffix birlikte ~46 karakter
+   olduğundan, tablet ve küçük laptop genişliklerinde de tek satıra sığmayıp
+   viewport kenarından taşıyor/kırpılıyordu (overflow-x:clip yüzünden
+   scrollbar oluşturmadan sessizce metni kesiyordu). */
+@media (max-width: 1200px) {
   .cause-heading {
     flex-wrap: wrap;
     justify-content: center;
@@ -1621,19 +1641,20 @@ html {
     padding: 16px;
   }
 
-  /* future-slider-container içindeki iki panel yan yana durduğu için her
-     panel viewport'un yaklaşık yarısı kadar yer kaplıyor — bu yüzden grafik
-     boyutu 60-65vw değil, panel genişliğine uygun ~38vw ile sınırlanmalı. */
+  /* 767px altında paneller artık yan yana değil, tam genişlikte alt alta
+     diziliyor (bkz. .future-slider-container mobil kuralları) — bu yüzden
+     grafik, panel genişliğinin (viewport'un tamamı) büyük kısmını
+     kullanabilir. */
   .future-gauge-chart {
-    width: min(170px, 38vw);
-    height: min(170px, 38vw);
+    width: min(260px, 58vw);
+    height: min(260px, 58vw);
   }
 }
 
 @media (max-width: 575px) {
   .future-gauge-chart {
-    width: min(130px, 34vw);
-    height: min(130px, 34vw);
+    width: min(200px, 62vw);
+    height: min(200px, 62vw);
   }
 }
 
@@ -1842,6 +1863,41 @@ html {
 @media (max-width: 767px) {
   .future-panel-content {
     padding: 1rem 4vw 1.5rem;
+    min-height: 0;
+  }
+
+  /* ── Mobilde yatay sürükle-karşılaştır yerine dikey akış ──
+     50/50 yan yana bölünen paneller, dar telefon ekranlarında panel
+     başına ~%40'lık genişlik bırakıyor (metin/grafik/görseller okunamaz
+     hale geliyordu). Fare ile yatay sürükleme zaten dar dokunmatik
+     ekranlarda doğal bir etkileşim değil — bu yüzden 767px altında
+     sürükleme kızağını tamamen kaldırıp iki senaryoyu tam genişlikte,
+     alt alta okunan iki blok olarak sunuyoruz. */
+  .future-slider-container {
+    flex-direction: column;
+    flex: none;
+    overflow: visible;
+  }
+
+  .future-panel {
+    position: static;
+    width: 100% !important;
+    height: auto;
+    overflow: visible;
+  }
+
+  .future-panel-scroll {
+    height: auto;
+    overflow: visible;
+  }
+
+  .future-slider-handle {
+    display: none;
+  }
+
+  .future-panel-right {
+    margin-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
 }
 
