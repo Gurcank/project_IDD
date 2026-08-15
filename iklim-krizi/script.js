@@ -1398,7 +1398,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const individualSteps = [
     { icon: 'fa-bolt', color: 'green', photo: 'assets/image/actions/energy-saving.avif', title: 'Enerji Tasarrufu',
-      desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile fark yaratabiliyor — bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
+      desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor — bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
       examples: ["Çamaşırı 30°C'de ve tam dolu makinede yıka", 'Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar', 'Mümkünse enerji tedarikçini yenilenebilire geçir'] },
     { icon: 'fa-bicycle', color: 'blue', photo: 'assets/image/actions/transportation-preferences.avif', title: 'Ulaşım Tercihleri',
       desc: 'Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.',

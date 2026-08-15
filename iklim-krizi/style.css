@@ -217,64 +217,9 @@ h6,
   transition: height 0.3s;
 }
 
-.navbar .btn,
-.auth-buttons .btn {
+.navbar .btn {
   font-size: 1.08rem;
   padding: 0.6rem 1.3rem;
-}
-
-.navbar .lang-switcher {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 4px;
-  display: inline-flex;
-  position: relative;
-  cursor: pointer;
-  margin-left: 1rem;
-  width: 120px;
-  height: 44px;
-  user-select: none;
-}
-
-.navbar .lang-option {
-  position: absolute;
-  width: 58px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
-}
-
-.navbar .lang-option[data-lang="tr"] {
-  left: 4px;
-}
-
-.navbar .lang-option[data-lang="en"] {
-  right: 4px;
-}
-
-.navbar .lang-switcher::before {
-  content: '';
-  position: absolute;
-  width: 58px;
-  height: 36px;
-  background: var(--idd-green);
-  border-radius: 6px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  left: 4px;
-}
-
-.navbar .lang-switcher.en::before {
-  left: calc(100% - 62px);
-}
-
-.navbar .lang-option.active {
-  color: white;
 }
 
 @media (max-width: 991px) {
@@ -284,8 +229,7 @@ h6,
     padding-right: 0.8rem;
   }
 
-  .navbar .btn,
-  .auth-buttons .btn {
+  .navbar .btn {
     font-size: 0.98rem;
     padding: 0.5rem 1rem;
   }
@@ -298,49 +242,12 @@ h6,
   .navbar .navbar-collapse {
     text-align: left;
   }
-
-  .navbar .lang-switcher-mobile {
-    display: flex;
-    justify-content: center;
-    margin: 0.5rem 0;
-  }
-
-  .navbar .lang-switcher {
-    margin-left: 0;
-    width: 100px;
-    height: 40px;
-  }
-
-  .navbar .lang-option {
-    width: 48px;
-    height: 32px;
-    font-size: 1rem;
-  }
-
-  .navbar .lang-switcher::before {
-    width: 48px;
-    height: 32px;
-  }
-
-  .navbar .lang-switcher.en::before {
-    left: calc(100% - 52px);
-  }
 }
 
 /*  ========================================================================= Footer Styles =============================================================================== */
 
 footer .row {
   gap: 48px 0;
-}
-
-@media (min-width: 768px) {
-  footer .col-md-4:not(:last-child) {
-    padding-right: 48px;
-  }
-
-  footer .col-md-4:not(:first-child) {
-    padding-left: 48px;
-  }
 }
 
 @media (max-width: 767px) {
@@ -393,18 +300,6 @@ footer .row {
 
 .footer-logo {
   max-height: 100px;
-}
-
-#main-slider {
-  min-height: 95vh !important;
-  height: 95vh !important;
-}
-
-@media (max-width: 767px) {
-  #main-slider {
-    min-height: 80vh !important;
-    height: 80vh !important;
-  }
 }
 
 footer .contact-info p {
@@ -608,27 +503,6 @@ footer .social-links a:hover {
   touch-action: auto;
 }
 
-/* ── Header ── */
-.sdg-header {
-  text-align: center;
-  padding: 100px 20px 0;
-  position: relative;
-  z-index: 5;
-}
-
-.sdg-eyebrow {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #fff;
-  border: 1px solid rgba(44, 121, 51, 0.5);
-  padding: 5px 18px;
-  border-radius: 2px;
-  margin-bottom: 20px;
-}
-
 .sdg-main-title {
   font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
   font-size: clamp(2rem, 5vw, 3.5rem) !important;
@@ -725,12 +599,6 @@ footer .social-links a:hover {
   pointer-events: none;
 }
 
-.sdg-orbit-ring-outer {
-  width: 540px;
-  height: 540px;
-  border-color: rgba(255, 255, 255, 0.025);
-}
-
 /* Center Core — halkayla aynı oranda (halka çapının ~%62,5'i) küçülsün diye
    halkayla aynı clamp() ailesinden, önceden hiçbir breakpoint'te
    küçülmüyordu; ≤575px'te halka 250px'e inince gif (sabit 300px) halkadan
@@ -802,81 +670,6 @@ footer .social-links a:hover {
 .sdg-node.sdg-dimmed {
   opacity: 0.12 !important;
   pointer-events: none;
-}
-
-/* Hint (initial) */
-.sdg-hint {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.22);
-  text-align: center;
-  gap: 14px;
-  width: 100%;
-  padding: 40px 20px;
-}
-
-.sdg-hint-icon {
-  font-size: 2.4rem;
-  display: block;
-  opacity: 0.5;
-  animation: sdgHintFloat 3s infinite ease-in-out;
-}
-
-@keyframes sdgHintFloat {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.sdg-hint p {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  max-width: 240px;
-  margin: 0;
-}
-
-.sdg-hint-dots {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.sdg-hint-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  animation: sdgDotPulse 1.5s infinite ease-in-out;
-}
-
-.sdg-hint-dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.sdg-hint-dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes sdgDotPulse {
-
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.8;
-    transform: scale(1.4);
-  }
 }
 
 .sdg-card-inner {
@@ -1018,11 +811,6 @@ footer .social-links a:hover {
     height: 300px;
   }
 
-  .sdg-orbit-ring-outer {
-    width: 346px;
-    height: 346px;
-  }
-
   .sdg-node-logo {
     width: 36px;
     height: 36px;
@@ -1067,10 +855,6 @@ footer .social-links a:hover {
 }
 
 @media (max-width: 575px) {
-  .sdg-header {
-    padding-top: 60px;
-  }
-
   .sdg-orbit-wrapper {
     width: 310px;
     height: 310px;
@@ -1084,11 +868,6 @@ footer .social-links a:hover {
   .sdg-orbit-ring {
     width: 250px;
     height: 250px;
-  }
-
-  .sdg-orbit-ring-outer {
-    width: 296px;
-    height: 296px;
   }
 
   .sdg-node-logo {
@@ -1235,21 +1014,9 @@ footer .social-links a:hover {
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-#sdg-section.theme-green .sdg-orbit-ring-outer {
-  border-color: rgba(0, 0, 0, 0.045);
-}
-
 #sdg-section.theme-green .sdg-node-logo {
   border-color: rgba(0, 0, 0, 0.1);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-#sdg-section.theme-green .sdg-hint {
-  color: rgba(20, 30, 15, 0.35);
-}
-
-#sdg-section.theme-green .sdg-hint-dot {
-  background: rgba(20, 30, 15, 0.3);
 }
 
 #sdg-section.theme-green .sdg-card-inner {
@@ -1585,19 +1352,6 @@ footer .social-links a:hover {
   margin: 0 auto 20px;
   position: relative;
   z-index: 5;
-}
-
-.section-eyebrow {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #fff;
-  border: 1px solid rgba(44, 121, 51, 0.5);
-  padding: 3px 14px;
-  border-radius: 2px;
-  margin-bottom: 10px;
 }
 
 .section-title {
