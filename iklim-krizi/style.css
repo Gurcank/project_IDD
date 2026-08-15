@@ -981,21 +981,21 @@ footer .social-links a:hover {
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 180px;
   pointer-events: none;
   z-index: 0;
 }
 
 .seam-fade-white::before {
-  background: linear-gradient(to bottom, #ffffff, transparent);
+  background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.6) 35%, rgba(255, 255, 255, 0.18) 65%, transparent 100%);
 }
 
 .seam-fade-gray::before {
-  background: linear-gradient(to bottom, #f8f9fa, transparent);
+  background: linear-gradient(to bottom, #f8f9fa 0%, rgba(248, 249, 250, 0.6) 35%, rgba(248, 249, 250, 0.18) 65%, transparent 100%);
 }
 
 .seam-fade-green::before {
-  background: linear-gradient(to bottom, #2c7933, transparent);
+  background: linear-gradient(to bottom, #2c7933 0%, rgba(44, 121, 51, 0.6) 35%, rgba(44, 121, 51, 0.18) 65%, transparent 100%);
 }
 
 /* ── SDG (beyaz section) koyu metin uyarlaması ── */
@@ -1057,9 +1057,6 @@ footer .social-links a:hover {
 .theme-white .indicator-subblock h4,
 .theme-gray .indicator-subblock h4,
 .theme-green .indicator-subblock h4,
-.theme-white .evidence-head h3,
-.theme-gray .evidence-head h3,
-.theme-green .evidence-head h3,
 .theme-white .evidence-row-text h4,
 .theme-gray .evidence-row-text h4,
 .theme-green .evidence-row-text h4,
@@ -1079,9 +1076,6 @@ footer .social-links a:hover {
 .theme-white .indicator-lead,
 .theme-gray .indicator-lead,
 .theme-green .indicator-lead,
-.theme-white .evidence-head p,
-.theme-gray .evidence-head p,
-.theme-green .evidence-head p,
 .theme-white .steps-group-desc,
 .theme-gray .steps-group-desc,
 .theme-green .steps-group-desc,
@@ -1095,12 +1089,6 @@ footer .social-links a:hover {
 .theme-gray .evidence-row-text p,
 .theme-green .evidence-row-text p {
   color: var(--light-ink-soft) !important;
-}
-
-.theme-white .indicator-title-rule,
-.theme-gray .indicator-title-rule,
-.theme-green .indicator-title-rule {
-  color: var(--light-ink-faint);
 }
 
 /* Sebepler başlığının dinamik kısmı (ör. "ENERJİ VE FOSİL YAKITLAR") normal
@@ -1134,9 +1122,6 @@ footer .social-links a:hover {
   text-underline-offset: 5px;
 }
 
-.theme-white .evidence-head a,
-.theme-gray .evidence-head a,
-.theme-green .evidence-head a,
 .theme-white .indicator-lead a,
 .theme-gray .indicator-lead a,
 .theme-green .indicator-lead a {
@@ -1905,30 +1890,6 @@ footer .social-links a:hover {
   line-height: 1.4;
 }
 
-/* ── Değişimin Kanıtları başlığı ── */
-.evidence-head {
-  margin: 56px 0 24px;
-  max-width: 720px;
-}
-
-.evidence-head h3 {
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: clamp(1.3rem, 2.4vw, 1.8rem) !important;
-  font-weight: 800 !important;
-  color: #fff;
-  margin: 0 0 8px !important;
-}
-
-.evidence-head p {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.92rem;
-  margin: 0;
-}
-
-.evidence-head a {
-  color: var(--idd-accent-green);
-}
-
 /* ── "Değişimin Kanıtları" zigzag düzeni: her örnek doğrudan arka plan
    üzerinde, kart/kutu çerçevesi yok. Satır index'ine göre (nth-child even)
    metin/fotoğraf yönü dönüşümlü değişiyor. ── */
@@ -1936,6 +1897,7 @@ footer .social-links a:hover {
   display: flex;
   flex-direction: column;
   gap: clamp(40px, 6vw, 72px);
+  margin-top: 56px;
   padding: 8px 0 12px;
 }
 
@@ -2018,15 +1980,6 @@ footer .social-links a:hover {
   margin-bottom: 18px;
 }
 
-/* tastecooking.com'daki "CULTURE" etiketinin solundaki çizgi kuralı —
-   başlıktan önce gelen ince, uzun bir yatay çizgi. */
-.indicator-title-rule {
-  flex: 0 0 56px;
-  height: 2px;
-  background: currentColor;
-  opacity: 0.55;
-}
-
 .indicator-block-header h3 {
   font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
   font-size: clamp(1.2rem, 2.2vw, 1.5rem) !important;
@@ -2039,7 +1992,7 @@ footer .social-links a:hover {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
   line-height: 1.65;
-  max-width: 860px;
+  max-width: 100%;
   margin: 0 0 20px;
 }
 
@@ -2202,7 +2155,28 @@ footer .social-links a:hover {
   object-fit: cover;
 }
 
+/* Sekme/liste bileşeni olmadan, metnin hemen altında duran tekil video
+   (bkz. "NASA: Sıcaklık Nasıl Ölçülüyor?") — .indicator-tabs-photo ile
+   aynı yükseklik/köşe ölçülerini kullanıyor ki bölüm içinde tutarlı görünsün. */
+.indicator-video-standalone {
+  width: 100%;
+  height: 434px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+}
+
+.indicator-video-standalone video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (max-width: 767px) {
+  .indicator-video-standalone {
+    height: 220px;
+  }
+
   .indicator-tabs-card {
     flex-direction: column;
     gap: 16px;
