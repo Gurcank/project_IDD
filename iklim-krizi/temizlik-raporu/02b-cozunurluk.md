@@ -89,6 +89,15 @@
 | **Ciddi düşük (<500px)** | **11** | **RİSKLİ — kullanıcı kararı gerekli** |
 | Ölçülemeyen (webp/avif) | 24 | RİSKLİ — bu ortamda doğrulanamadı, karar verilmiyor |
 
-## Onay bekleyen karar
+## Karar: Öncelikli Değiştirilecek Listesi
 
-**11 "ciddi düşük çözünürlük" dosyası** için: (a) olduğu gibi bırakılsın mı (görsel etki sınırlı kart boyutunda kabul edilebilir olabilir), (b) ileride daha yüksek çözünürlüklü kaynaklarla değiştirilmek üzere ayrı bir "RİSKLİ — değiştirilecek" listesine mi alınsın? Bu görevin kapsamında yeni fotoğraf kaynağı bulma/indirme yok — sadece karar ve önceliklendirme yapılabilir.
+Kullanıcı kararı: bu 11 dosya şimdi değiştirilmiyor, ileride ayrı bir görsel yenileme turu için önceliklendirildi. Kullanım yerine göre öncelik sırası:
+
+| Öncelik | Dosya | Çözünürlük | Kullanım yeri | Neden öncelikli |
+|---|---|---|---|---|
+| 1 | `causes/cin-termik-santralleri.jpg` | 300×168 | Cause-stack kartı **+** vital-sign kartı (2 farklı yerde görünüyor) | En yaygın kullanım — tek dosya iki yerde etkili |
+| 2 | `progress/paris-agreement.jpg` | 275×183 | İlerleme hikayesi kartı | Sembolik/tanınırlığı yüksek bir konu (Paris Anlaşması), düşük kalite görsel imaj zedeler |
+| 3 | `progress/electric-vehicle.jpg` | 275×183 | İlerleme hikayesi kartı | Aynı gerekçe |
+| 4-11 | `causes/avustralya-lng-tesisleri.jpg`, `causes/garzweiler-acik-maden-ocagi.jpg`, `causes/hollanda-yogun-hayvancilik-tesisleri.jpg`, `causes/hindistan-komur-madenleri.jpg`, `causes/indias-brick-kilns.jpg`, `causes/bati-teksas-permian-havzasi.jpg`, `causes/ruhr-bolgesi-celik-tesisleri.jpg`, `causes/nijer-deltasi.jpg` | 267-300px | Cause-stack kartları (tek kullanım) | Standart öncelik — sırayla ele alınabilir |
+
+Bu liste sadece önceliklendirme amaçlıdır; hiçbir dosya bu turda değiştirilmedi.
