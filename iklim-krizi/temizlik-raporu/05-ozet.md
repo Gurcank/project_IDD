@@ -10,9 +10,9 @@
   - Faz 2'de silinen 13 ölü CSS seçici için hiçbir referans kalmadı — **0 sonuç**.
 - **Ekran görüntüsü karşılaştırması:** Bu ortamda çalışan bir Python/Playwright kurulumu yok (Faz 2'de de karşılaşılan bir kısıt) — otomatik görsel karşılaştırma yapılamadı. Yapılan tüm değişiklikler statik olarak doğrulandı (CSS parantez dengesi, HTML yapı bütünlüğü, grep ile sıfır-referans teyidi). Kullanıcının tarayıcıda hızlı bir gezinme yapması önerilir.
 
-## ⚠️ Kapsam dışı, çözülmemiş bulgu (Faz 1'den beri açık)
+## ✅ Kırık `backgrounds/` referansları — çözüldü (ayrı iş olarak, Faz 7 sonrası)
 
-`index.html` içindeki **5 cause-stack-card** hâlâ `assets/image/backgrounds/` klasörüne referans veriyor, klasör diskte hâlâ yok (bu oturumun ilk commit'inden önce, muhtemelen önceki bir tasarım değişikliğinde silinmiş, referanslar temizlenmemiş). Bu temizlik görevinin kapsamı (ölü kod/kullanılmayan medya/çözünürlük/optimizasyon/metin) bu sorunu kapsamıyor — bir **görsel bug**, ayrı olarak ele alınmalı: ya bu 5 dosya bulunup eklenmeli ya da kartlar başka görsellerle güncellenmeli. Etkilenen kartlar: `index.html` içinde `--stack-img` ile `zbynek-burival-grmwvnvssdu-unsplash.jpg`, `jamie-morris-796foi6eo9o-unsplash.jpg`, `patrick-hendry-6xedizgopaw-unsplash.jpg`, `no-one-cares-l-5mjnbrmrs-unsplash.jpg`, `engin-akyurt-h4ggjhkhwf0-unsplash.jpg` kullanan kartlar.
+Kök neden analizi yapıldı: bu 5 referans, 5 adet **dış** `.cause-stack` sarmalayıcı `<div>`'in inline `--stack-img` stiliydi. CSS'te `--stack-img` sadece `.cause-stack-card` kuralında (`background-image: ...var(--stack-img)`) tüketiliyor; her tek kart (`.cause-stack-card`, toplam 30 adet) kendi `causes/` fotoğrafını inline olarak AYRICA tanımlıyor ve bu, dıştaki sarmalayıcıdan miras alınan değeri her zaman gölgeliyor. Yani bu 5 URL tarayıcı tarafından **hiçbir zaman indirilmiyor/render edilmiyordu** — görsel etkisi sıfır olan, tamamen ölü bir inline attribute'tu. Çözüm: yeni fotoğraf kaynağı bulmaya gerek kalmadan, 5 sarmalayıcıdaki ölü `style="--stack-img:url('assets/image/backgrounds/...)"` attribute'ları kaldırıldı (`index.html`, `energy`/`deforestation`/`industry`/`agriculture`/`transport` stack'leri). Görsel çıktı değişmedi (zaten hiç render edilmiyordu); `grep "assets/image/backgrounds/" index.html` artık 0 sonuç veriyor.
 
 ## Öncesi / Sonrası Özet
 
@@ -27,7 +27,7 @@
 | CDN kütüphane sayısı | 7 | 7 | değişmedi (şablon kuralı: sürüm/bağımlılık değişikliği yok) |
 | Preconnect kapsamı (render-blocking CSS origin) | 3/5 (%60) | 5/5 (%100) | +2 origin |
 | Ölü CSS seçici | 13 (+2 `@keyframes`) | 0 | −13 |
-| Kırık medya referansı | 5 | 5 | **değişmedi — kapsam dışı, yukarıda not edildi** |
+| Kırık medya referansı | 5 | 0 | −5 (ölü kod olduğu tespit edilip kaldırıldı, yukarıda detay var) |
 | Kullanılmayan medya (referanssız) | 42 dosya (~7.8 MB) | 33 dosya (~6.3 MB, `image/un/`, bilinçli korundu) | −9 dosya arşivlendi |
 | Düşük çözünürlüklü öncelik listesi | — | 11 dosya (bekliyor, değiştirilmedi) | yeni tespit |
 | AI-klişe metin adayı | 7 | 0 | −7 |
