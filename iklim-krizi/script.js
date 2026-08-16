@@ -907,21 +907,36 @@
   }
 
   /* Başlık (sabit metin + değişen sekme adı) en soldan en sağa kadar uzansın:
-     doğal genişliği ölçüp mevcut alana sığacak şekilde font-size'ı ölçekler. */
+     doğal genişliği ölçüp mevcut alana sığacak şekilde font-size'ı ölçekler.
+     İki düzeltme gerekti:
+     1) .cause-heading-suffix'in overflow-x:hidden'ı yüzünden headingEl'in
+        kendi scrollWidth'i gerçek (taşan) genişliği yansıtmıyordu — bunun
+        yerine iki iç metin öğesinin kendi scrollWidth'lerini topluyoruz.
+     2) headingEl'e (kapsayıcı flex div'ine) font-size yazmak hiçbir işe
+        yaramıyordu, çünkü çocuklar (.cause-heading-static / -suffix-text)
+        kendi clamp(rem/vw) tabanlı font-size'larını tanımlıyor — bunlar
+        ebeveynden miras almıyor. Ölçeklenmiş font-size'ı artık doğrudan bu
+        iki çocuk öğeye, kendi taban punto ölçümlerine göre yazıyoruz. */
+  const staticEl = document.querySelector('.cause-heading-static');
   const headingEl = document.querySelector('.cause-heading');
   function fitHeadingWidth() {
-    if (!headingEl) return;
+    if (!headingEl || !staticEl) return;
     if (window.innerWidth < HEADING_FIT_MOBILE_BREAKPOINT) {
-      headingEl.style.fontSize = '';
+      staticEl.style.fontSize = '';
+      suffixText.style.fontSize = '';
       return;
     }
-    headingEl.style.fontSize = '';
+    staticEl.style.fontSize = '';
+    suffixText.style.fontSize = '';
     const available = headingEl.clientWidth;
-    const natural = headingEl.scrollWidth;
+    const gap = parseFloat(getComputedStyle(headingEl).columnGap || getComputedStyle(headingEl).gap || '0') || 0;
+    const staticBaseSize = parseFloat(getComputedStyle(staticEl).fontSize);
+    const suffixBaseSize = parseFloat(getComputedStyle(suffixText).fontSize);
+    const natural = staticEl.scrollWidth + gap + suffixText.scrollWidth;
     if (!available || !natural) return;
-    const baseSize = parseFloat(getComputedStyle(headingEl).fontSize);
     const scale = Math.max(HEADING_FIT_MIN_SCALE, Math.min(available / natural, HEADING_FIT_MAX_SCALE));
-    headingEl.style.fontSize = `${baseSize * scale}px`;
+    staticEl.style.fontSize = `${staticBaseSize * scale}px`;
+    suffixText.style.fontSize = `${suffixBaseSize * scale}px`;
   }
 
   document.querySelectorAll('#causeTabsNav .cause-tab-btn').forEach((btn) => {
@@ -1019,16 +1034,24 @@
 })();
 
 /* ── Counter FX (Framer referansı: layerInView tetikli, 0'dan hedefe sayan
-   istatistik değerleri) ── Her [data-count-to] öğesi kendi IntersectionObserver'ı
-   ile (threshold 0.2, tek seferlik — tetiklendikten sonra disconnect) 2 saniyelik
-   ease-out eğrisiyle 0'dan hedef değere sayıyor. Türkçe biçimlendirme
-   (binlik ayracı "." ondalık ayracı ",") toLocaleString('tr-TR') ile yapılıyor;
-   data-count-plus="true" pozitif değerlerin başına "+", data-count-percent="true"
-   ise "%" işareti ekliyor (negatif değerlerde "-" işareti zaten sayının
-   kendisinden geliyor, ayrı bir prefix'e gerek yok). */
+   istatistik değerleri) ── HTML'deki gerçek değer, JS çalışmayan tarayıcılar
+   ve crawler'lar için değişmeden kalır (bkz. data-count-to ile aynı metin).
+   JS varsa ve prefers-reduced-motion kapalıysa, görünüme girmeden hemen önce
+   "0"a resetlenip kendi IntersectionObserver'ı ile (threshold 0.2, tek seferlik
+   — tetiklendikten sonra disconnect) 2 saniyelik ease-out eğrisiyle hedefe
+   sayıyor. Türkçe biçimlendirme (binlik ayracı "." ondalık ayracı ",")
+   toLocaleString('tr-TR') ile yapılıyor; data-count-plus="true" pozitif
+   değerlerin başına "+", data-count-percent="true" ise "%" işareti ekliyor
+   (negatif değerlerde "-" işareti zaten sayının kendisinden geliyor, ayrı bir
+   prefix'e gerek yok). */
 (function () {
   const counters = Array.prototype.slice.call(document.querySelectorAll('[data-count-to]'));
   if (!counters.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // HTML'deki statik gerçek değer zaten doğru — animasyon için sıfırlamaya gerek yok.
+    return;
+  }
 
   function formatCount(value, decimals, plus, percent) {
     const sign = value < 0 ? '-' : (plus ? '+' : '');
@@ -1074,6 +1097,11 @@
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       const el = entry.target;
+      // HTML kaynağındaki gerçek değer, element görünüme girip animasyon
+      // başlayacağı ana kadar ekranda kalır (JS yoksa ya da JS'in DOM'u henüz
+      // taramadığı bir crawler'da kalıcı olarak) — sıfıra sadece tam bu anda,
+      // yukarı sayma animasyonunun başlangıç karesi olarak geçiyoruz.
+      el.textContent = '0';
       const group = el.closest('.vital-signs-strip, .indicator-stats') || el;
       const siblings = groups.get(group) || [el];
       const index = siblings.indexOf(el);
@@ -1724,10 +1752,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function animateCounter(el) {
+    // HTML'deki gerçek değer JS'siz/crawler'da kalıcı kalır; hareket
+    // kısıtlanmışsa da dokunmadan bırakıyoruz.
+    if (prefersReducedMotion) return;
     const end = parseFloat(el.dataset.counterEnd || '0');
     const decimals = parseInt(el.dataset.counterDecimals || '0', 10);
     const DURATION_MS = 1400;
+    el.textContent = (0).toFixed(decimals);
     const start = performance.now();
     function tick(now) {
       const progress = Math.min((now - start) / DURATION_MS, 1);
@@ -1883,4 +1917,243 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.08 });
 
   observer.observe(section);
+})();
+
+/* ── Kahraman videosu: mobilde/hareket kısıtlıyken hiç oynatma, aksi halde
+   oynat + durdur/oynat kontrolü sun (WCAG 2.2.2). preload="none" olduğu için
+   play() çağrılmadığı sürece tarayıcı video verisini indirmiyor — mobilde bu
+   fonksiyon hiç çalışmadığından kullanıcı yalnızca poster görselini indirir. */
+(function () {
+  const video = document.getElementById('heroVideo');
+  const toggle = document.getElementById('heroVideoToggle');
+  if (!video) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+  if (prefersReducedMotion || isMobile) {
+    if (toggle) toggle.hidden = true;
+    return;
+  }
+
+  video.play().catch(() => {});
+
+  if (toggle) {
+    const icon = toggle.querySelector('i');
+    toggle.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().catch(() => {});
+        toggle.setAttribute('aria-label', 'Arka plan videosunu duraklat');
+        if (icon) icon.className = 'fa-solid fa-pause';
+      } else {
+        video.pause();
+        toggle.setAttribute('aria-label', 'Arka plan videosunu oynat');
+        if (icon) icon.className = 'fa-solid fa-play';
+      }
+    });
+  }
+})();
+
+/* ── Okuma ilerleme çubuğu + Başa dön butonu + Bölüm nokta menüsü ── */
+(function () {
+  const fill = document.getElementById('readingProgressFill');
+  const bar = document.getElementById('readingProgress');
+  const backToTop = document.getElementById('backToTop');
+  const dotLinks = Array.prototype.slice.call(document.querySelectorAll('#sectionDotnav [data-section]'));
+  const sections = dotLinks
+    .map((a) => document.getElementById(a.dataset.section))
+    .filter(Boolean);
+
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const doc = document.documentElement;
+    const scrollTop = window.scrollY;
+    const scrollable = doc.scrollHeight - doc.clientHeight;
+    const pct = scrollable > 0 ? Math.min(100, Math.max(0, (scrollTop / scrollable) * 100)) : 0;
+    if (fill) fill.style.width = pct.toFixed(1) + '%';
+    if (bar) bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+
+    if (backToTop) {
+      const shouldShow = scrollTop > window.innerHeight * 0.8;
+      if (shouldShow) {
+        backToTop.hidden = false;
+        requestAnimationFrame(() => backToTop.classList.add('is-visible'));
+      } else {
+        backToTop.classList.remove('is-visible');
+        backToTop.hidden = true;
+      }
+    }
+
+    if (sections.length) {
+      const viewportMid = window.innerHeight * 0.5;
+      let activeIndex = 0;
+      sections.forEach((section, i) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= viewportMid) activeIndex = i;
+      });
+      dotLinks.forEach((a, i) => a.classList.toggle('is-active', i === activeIndex));
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }, { passive: true });
+
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  }
+
+  update();
+})();
+
+/* ── Sebepler sekmesi ↔ URL senkronizasyonu ──
+   Aktif sekme ?sekme=ulasim gibi bir sorgu parametresine yazılır (sayfa
+   yeniden yüklenmeden, history.replaceState ile) — böylece biri "Ulaşım"
+   sekmesindeyken linki paylaştığında karşı taraf da aynı sekmede açılır.
+   Sayfa da o parametreyle açılırsa ilgili sekmeyi baştan aktif eder. */
+(function () {
+  const tablist = document.getElementById('causeTabsNav');
+  if (!tablist) return;
+
+  const slugToPaneId = {
+    enerji: 'cause-energy',
+    ormansizlasma: 'cause-deforestation',
+    sanayi: 'cause-industry',
+    tarim: 'cause-agriculture',
+    ulasim: 'cause-transport'
+  };
+  const paneIdToSlug = Object.fromEntries(Object.entries(slugToPaneId).map(([k, v]) => [v, k]));
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedSlug = params.get('sekme');
+  const requestedPaneId = requestedSlug && slugToPaneId[requestedSlug];
+  if (requestedPaneId) {
+    const trigger = tablist.querySelector('[data-bs-target="#' + requestedPaneId + '"]');
+    if (trigger && window.bootstrap && window.bootstrap.Tab) {
+      window.bootstrap.Tab.getOrCreateInstance(trigger).show();
+    }
+  }
+
+  tablist.querySelectorAll('[data-bs-toggle="tab"]').forEach((btn) => {
+    btn.addEventListener('shown.bs.tab', (e) => {
+      const targetId = (e.target.getAttribute('data-bs-target') || '').replace('#', '');
+      const slug = paneIdToSlug[targetId];
+      if (!slug) return;
+      const url = new URL(window.location.href);
+      url.searchParams.set('sekme', slug);
+      window.history.replaceState(null, '', url);
+    });
+  });
+})();
+
+/* ── Bölüm başlıklarına "bağlantıyı kopyala" düğmesi ekle ──
+   Her ana section'ın (zaten id'si olan) ilk h2 başlığının yanına küçük bir
+   zincir ikonu ekliyor; tıklanınca o bölümün URL'sini panoya kopyalıyor. Bu
+   sayede "Türkiye'deki orman yangını verisi" gibi tek bir bölüm, tüm sayfa
+   yerine doğrudan paylaşılabiliyor. */
+(function () {
+  const sectionIds = [
+    'sdg-section', 'happening-section', 'causes-section',
+    'consequences-section', 'actions-section', 'progress-section', 'resources-section',
+    'indicator-orman-yanginlari', 'indicator-deniz-sicakligi', 'indicator-global-isinma'
+  ];
+
+  sectionIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const heading = el.querySelector('h2, h3');
+    if (!heading || heading.querySelector('.section-anchor-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'section-anchor-btn';
+    btn.setAttribute('aria-label', 'Bu bölümün bağlantısını kopyala');
+    btn.innerHTML = '<i class="fa-solid fa-link" aria-hidden="true"></i>';
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const url = window.location.origin + window.location.pathname + '#' + id;
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch (err) {
+        window.prompt('Bağlantıyı kopyala:', url);
+        return;
+      }
+      const icon = btn.querySelector('i');
+      icon.className = 'fa-solid fa-check';
+      setTimeout(() => { icon.className = 'fa-solid fa-link'; }, 1800);
+    });
+    heading.appendChild(btn);
+  });
+})();
+
+/* ── CTA: "Bu Sayfayı Paylaş" — Web Share API varsa native paylaşım sayfası,
+   yoksa adresi panoya kopyalayıp butonda kısa bir onay gösterir. ── */
+(function () {
+  const btn = document.getElementById('ctaShareBtn');
+  if (!btn) return;
+  const originalHTML = btn.innerHTML;
+
+  btn.addEventListener('click', async () => {
+    const shareData = {
+      title: document.title,
+      text: 'İklim krizi: veriler, kanıtlar ve Türkiye',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) { /* kullanıcı iptal etti */ }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Bağlantı kopyalandı';
+      setTimeout(() => { btn.innerHTML = originalHTML; }, 2200);
+    } catch (e) {
+      window.prompt('Bağlantıyı kopyala:', window.location.href);
+    }
+  });
+})();
+
+/* ── SDG dönen Dünya videosu: prefers-reduced-motion açıksa hiç oynatma,
+   ilk kareyle sabit dursun. ── */
+(function () {
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const earth = document.querySelector('.sdg-center-gif');
+  if (earth) earth.pause();
+})();
+
+/* ── İklim Krizinin Sebepleri sekmeleri: ARIA Authoring Practices'e uygun
+   ok tuşu gezinmesi (role="tablist"/"tab" kullanan tek grup bu). Bootstrap'ın
+   kendi Tab bileşeni tıklama/Enter'ı zaten yönetiyor; burada sadece
+   Sol/Sağ/Home/End ile odağı ve seçimi taşıyoruz. ── */
+(function () {
+  const tablist = document.getElementById('causeTabsNav');
+  if (!tablist) return;
+  const tabs = Array.prototype.slice.call(tablist.querySelectorAll('[role="tab"]'));
+  if (!tabs.length) return;
+
+  tablist.addEventListener('keydown', (e) => {
+    const currentIndex = tabs.indexOf(document.activeElement);
+    if (currentIndex === -1) return;
+    let nextIndex = null;
+    if (e.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+    else if (e.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') nextIndex = 0;
+    else if (e.key === 'End') nextIndex = tabs.length - 1;
+    if (nextIndex === null) return;
+    e.preventDefault();
+    const nextTab = tabs[nextIndex];
+    nextTab.focus();
+    // Bootstrap'ın kendi Tab API'sini tetikleyerek panel içeriğini değiştir.
+    if (window.bootstrap && window.bootstrap.Tab) {
+      window.bootstrap.Tab.getOrCreateInstance(nextTab).show();
+    } else {
+      nextTab.click();
+    }
+  });
 })();

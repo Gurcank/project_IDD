@@ -5,7 +5,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>İklim Krizi</title>
+  <title>İklim Krizi: Veriler, Kanıtlar ve Türkiye | İklim Değişmeden Değiş</title>
+  <meta name="description" content="Türkiye ve dünya verileriyle iklim krizi: sıcaklık artışı, deniz seviyesi, orman yangınları ve emisyonlar. NASA, IPCC ve ÇŞB kaynaklarıyla hazırlandı.">
+
+  <!-- Kanonik adres: şu an iklimkrizi.vercel.app'te barınıyor. Özel alan adı
+       (iklimdd.org/iklim-krizi) bağlandığında bu satır ve aşağıdaki og:url
+       güncellenmeli. -->
+  <link rel="canonical" href="https://iklimkrizi.vercel.app/">
+
+  <!-- Open Graph / Facebook, WhatsApp, LinkedIn -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://iklimkrizi.vercel.app/">
+  <meta property="og:title" content="İklim Krizi: Veriler, Kanıtlar ve Türkiye">
+  <meta property="og:description" content="Türkiye ve dünya verileriyle iklim krizi: sıcaklık artışı, deniz seviyesi, orman yangınları ve emisyonlar. NASA, IPCC ve ÇŞB kaynaklarıyla hazırlandı.">
+  <meta property="og:image" content="https://iklimkrizi.vercel.app/assets/image/og-iklim-krizi.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="İklim Değişmeden Değiş">
+
+  <!-- Twitter/X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="İklim Krizi: Veriler, Kanıtlar ve Türkiye">
+  <meta name="twitter:description" content="Türkiye ve dünya verileriyle iklim krizi: sıcaklık artışı, deniz seviyesi, orman yangınları ve emisyonlar.">
+  <meta name="twitter:image" content="https://iklimkrizi.vercel.app/assets/image/og-iklim-krizi.jpg">
+
+  <!-- Yapısal veri (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "İklim Değişmeden Değiş (IDD ORG)",
+        "url": "https://iklimdd.org/",
+        "logo": "https://iklimdd.org/idd-logo.png",
+        "sameAs": [
+          "https://www.instagram.com/idd.org.tr/",
+          "https://www.linkedin.com/company/i%CC%87klim-de%C4%9Fi%C5%9Fmeden-de%C4%9Fi%C5%9F-%C5%9Firket",
+          "https://open.spotify.com/show/0FnjKhFwwugAHvTSIOiVS0",
+          "https://www.youtube.com/@iklimdegismedendegis"
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "İklim Krizi: Veriler, Kanıtlar ve Türkiye",
+        "description": "Türkiye ve dünya verileriyle iklim krizi: sıcaklık artışı, deniz seviyesi, orman yangınları ve emisyonlar.",
+        "image": "https://iklimkrizi.vercel.app/assets/image/og-iklim-krizi.jpg",
+        "author": { "@type": "Organization", "name": "İklim Değişmeden Değiş (IDD ORG)" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "İklim Değişmeden Değiş (IDD ORG)",
+          "logo": { "@type": "ImageObject", "url": "https://iklimdd.org/idd-logo.png" }
+        },
+        "mainEntityOfPage": "https://iklimkrizi.vercel.app/"
+      }
+    ]
+  }
+  </script>
 
   <!-- Render-blocking CDN'ler için bağlantı ön ısıtması -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,6 +102,30 @@
 
 <body data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
 
+  <a href="#main-content" class="skip-link">İçeriğe atla</a>
+
+  <!-- Okuma ilerleme çubuğu: sayfa scroll yüzdesini üstte ince bir çizgiyle gösterir. -->
+  <div class="reading-progress" id="readingProgress" role="progressbar" aria-label="Sayfa okuma ilerlemesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="reading-progress-fill" id="readingProgressFill"></div>
+  </div>
+
+  <!-- Bölüm hızlı gezinme: masaüstünde sağda sabit nokta menüsü, aktif bölümü
+       vurgular ve tıklanınca o bölüme kaydırır. -->
+  <nav class="section-dotnav" id="sectionDotnav" aria-label="Bölümler arası hızlı gezinme">
+    <a href="#sdg-section" data-dot data-section="sdg-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Hedefler</span></a>
+    <a href="#happening-section" data-dot data-section="happening-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Neler Oluyor</span></a>
+    <a href="#causes-section" data-dot data-section="causes-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Sebepler</span></a>
+    <a href="#consequences-section" data-dot data-section="consequences-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Gelecek</span></a>
+    <a href="#actions-section" data-dot data-section="actions-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Ne Yapmalı</span></a>
+    <a href="#progress-section" data-dot data-section="progress-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Yapılıyor</span></a>
+    <a href="#resources-section" data-dot data-section="resources-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Kaynaklar</span></a>
+  </nav>
+
+  <!-- Başa dön butonu: bir miktar aşağı kaydırılınca belirir. -->
+  <button type="button" class="back-to-top" id="backToTop" aria-label="Sayfa başına dön" hidden>
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
   <!-- Framer "Ambient Background" komponentinin CSS karşılığı: sayfanın koyu
        yeşil zemininde yavaşça hareket edip renk değiştiren, bulanıklaştırılmış
        3 "blob" — tüm içeriğin arkasında sabit (fixed) duruyor. -->
@@ -58,62 +139,71 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="/">
-        <img src="https://iklimdd.org/idd-logo.png" alt="idd-logo" height="48" class="me-2 d-none d-lg-block">
-        <img src="https://iklimdd.org/idd-logo.png" alt="idd-logo" height="48"
+      <a class="navbar-brand d-flex align-items-center" href="https://iklimdd.org/" aria-label="İklim Değişmeden Değiş — ana sayfa">
+        <img src="/assets/image/idd-logo.webp" alt="" width="48" height="48" class="me-2 d-none d-lg-block">
+        <img src="/assets/image/idd-logo.webp" alt="" width="48" height="48"
           class="d-lg-none navbar-brand-logo-mobile">
         <span class="d-lg-none fw-bold text-white"><b>IDD ORG</b></span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Menüyü aç/kapat">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/">Ana Sayfa</a>
+            <a class="nav-link" href="https://iklimdd.org/">Ana Sayfa</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/about">Hakkımızda</a>
+            <a class="nav-link" href="https://iklimdd.org/about">Hakkımızda</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" href="#" id="projectsDropdown" role="button"
+            <button class="nav-link active dropdown-toggle" type="button" id="projectsDropdown"
               data-bs-toggle="dropdown" aria-expanded="false">
               Projelerimiz
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/book">Kitap</a></li>
-              <li><a class="dropdown-item" href="/podcast">Podcast</a></li>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
+              <li><a class="dropdown-item" href="https://iklimdd.org/book">Kitap</a></li>
+              <li><a class="dropdown-item" href="https://iklimdd.org/podcast">Podcast</a></li>
               <li>
-                <a class="dropdown-item" href="/campaings">Kampanyalarımız</a>
+                <a class="dropdown-item" href="https://iklimdd.org/campaings">Kampanyalarımız</a>
               </li>
               <li>
-                <a class="dropdown-item" href="/iklim-krizi/">İklim Krizi</a>
+                <a class="dropdown-item active" href="/" aria-current="page">İklim Krizi</a>
               </li>
 
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/events">Etkinliklerimiz</a>
+            <a class="nav-link" href="https://iklimdd.org/events">Etkinliklerimiz</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/blog">Blog</a>
+            <a class="nav-link" href="https://iklimdd.org/blog">Blog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/contact">İletişim</a>
+            <a class="nav-link" href="https://iklimdd.org/contact">İletişim</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
+  <main id="main-content">
+
   <!--========================================================================= Hero ============================================================================== -->
 
   <section class="hero-section">
-    <video autoplay muted loop playsinline class="hero-video" aria-hidden="true">
-      <source src="assets/video/14619128_1920_1080_24fps.mp4" type="video/mp4">
+    <video id="heroVideo" muted loop playsinline preload="none" poster="/assets/image/hero-poster.webp"
+      class="hero-video" aria-hidden="true">
+      <source src="/assets/video/hero-buzul-erimesi-720p.webm" type="video/webm">
+      <source src="/assets/video/hero-buzul-erimesi-720p.mp4" type="video/mp4">
     </video>
 
     <div class="video-overlay"></div>
+
+    <button type="button" id="heroVideoToggle" class="hero-video-toggle" aria-label="Arka plan videosunu duraklat">
+      <i class="fa-solid fa-pause" aria-hidden="true"></i>
+    </button>
 
     <div class="container hero-content" data-aos="fade-up">
       <h1 class="hero-title">İklim Krizi</h1>
@@ -125,6 +215,8 @@
       <p class="hero-subtitle">Soyut raporları ve karmaşık grafikleri bir kenara bıraktık. İklim krizi uzak kutuplardaki
         eriyen buzullardan ibaret değil; her gün soluduğumuz havada, attığımız her adımda ve aldığımız her kararda
         saklı. Gerçek, tüm çıplaklığıyla karşımızda duruyor.</p>
+
+      <p class="hero-reading-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> Tahmini okuma süresi: ~18 dakika</p>
     </div>
   </section>
 
@@ -147,7 +239,10 @@
         <div class="sdg-orbit-canvas" id="sdgCanvas">
           <div class="sdg-orbit-ring"></div>
           <div class="sdg-center-core">
-            <img loading="lazy" src="assets/video/placidplace-earth-19822.gif" alt="Dünya" class="sdg-center-gif">
+            <video autoplay muted loop playsinline aria-hidden="true" class="sdg-center-gif">
+              <source src="/assets/video/dunya-earth-loop.webm" type="video/webm">
+              <source src="/assets/video/dunya-earth-loop.mp4" type="video/mp4">
+            </video>
           </div>
         </div>
       </div>
@@ -155,6 +250,32 @@
       <div class="sdg-card-panel" id="sdgInfoCard">
         <div class="sdg-card-inner" id="sdgCardInner"></div>
       </div>
+
+      <!-- 17 hedefin interaktif yörüngesi JavaScript ile çiziliyor; JS
+           çalışmazsa/kapalıysa hedefler bu düz listeyle her durumda okunur
+           kalır. -->
+      <noscript>
+        <ol class="sdg-fallback-list">
+          <li>Yoksulluğa Son</li>
+          <li>Açlığa Son</li>
+          <li>Sağlıklı Bireyler</li>
+          <li>Nitelikli Eğitim</li>
+          <li>Cinsiyet Eşitliği</li>
+          <li>Temiz Su ve Sanitasyon</li>
+          <li>Erişilebilir Enerji</li>
+          <li>İnsana Yakışır İş</li>
+          <li>Sanayi ve Yenilikçilik</li>
+          <li>Eşitsizliklerin Azaltılması</li>
+          <li>Sürdürülebilir Şehirler</li>
+          <li>Sorumlu Tüketim</li>
+          <li>İklim Eylemi</li>
+          <li>Sudaki Yaşam</li>
+          <li>Karasal Yaşam</li>
+          <li>Barış ve Adalet</li>
+          <li>Hedefler İçin Ortaklık</li>
+        </ol>
+        <p><a href="https://sdgs.un.org/goals" target="_blank" rel="noopener">BM'nin resmi Sürdürülebilir Kalkınma Hedefleri sayfasını görüntüle →</a></p>
+      </noscript>
 
     </div>
 
@@ -168,6 +289,7 @@
       <h2 class="section-title">Neler <em>Oluyor?</em></h2>
       <p class="section-desc">Buzullar eriyor, denizler ısınıyor, termometreler rekor kırıyor. Kutuplardan
         Türkiye kıyılarına — gezegenin şu anda verdiği sinyalleri kanıtlarıyla ve rakamlarıyla bir araya getirdik.</p>
+      <p class="section-data-freshness">Veri güncelliği: aşağıdaki küresel göstergeler NASA/NOAA'nın belirttiği tarihlere aittir (bkz. her kartın altındaki etiket); Türkiye göstergeleri ÇŞB Çevresel Göstergeler raporunun en güncel yayınına (çoğunlukla 2018) dayanır — bkz. <a href="#indicator-global-isinma">Türkiye'de Sıcaklık</a>.</p>
     </div>
 
     <!-- Vital Signs ─ science.nasa.gov/climate-change — Framer "Hover Ticker" tarzı
@@ -177,87 +299,87 @@
     <div class="hover-ticker" id="vitalSignsTicker">
       <div class="hover-ticker-track">
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('assets/image/causes/cin-termik-santralleri.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/causes/cin-termik-santralleri.jpg');"></div>
           <i class="fa-solid fa-smog"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="431">0</span><small>ppm</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="431" aria-live="off">431</span>&#8239;<small>ppm</small></span>
           <span class="vital-sign-label">Atmosferdeki CO₂ yoğunluğu, Haziran 2026 itibarıyla</span>
         </div>
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('https://science.nasa.gov/wp-content/uploads/2022/06/sunrise-over-sand-dunes-1600x900-1.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/kum-tepeleri-gun-dogumu.webp');"></div>
           <i class="fa-solid fa-temperature-high"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true">0</span><small>°C</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true" aria-live="off">+1,19</span>&#8239;<small>°C</small></span>
           <span class="vital-sign-label">Küresel ortalama sıcaklık artışı, 2025 yılı — 1951-1980 dönemi ortalamasına kıyasla</span>
         </div>
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('https://assets.science.nasa.gov/dynamicimage/assets/science/esd/climate/2023/12/main_image-2.jpeg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/metan-yogunlugu.webp');"></div>
           <i class="fa-solid fa-flask"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1938">0</span><small>ppb</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="1938" aria-live="off">1.938</span>&#8239;<small>ppb</small></span>
           <span class="vital-sign-label">Atmosferdeki metan (CH₄) yoğunluğu, Mart 2026 itibarıyla</span>
         </div>
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/06/grace-fo-in-orbit.jpeg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/grace-fo-uydusu.webp');"></div>
           <i class="fa-solid fa-icicles"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true">0</span><small>/on yıl</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true" aria-live="off">-%12,2</span>&#8239;<small>/on yıl</small></span>
           <span class="vital-sign-label">Arktik deniz buzunun eylül ayı yıllık en düşük seviyesindeki on yıllık gerileme oranı</span>
         </div>
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('assets/image/future/eriyen-buzullar.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/future/eriyen-buzullar.jpg');"></div>
           <i class="fa-solid fa-mountain"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-266">0</span> / <span class="count-num" data-count-to="-135">0</span><small>Gt/yıl</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="-266" aria-live="off">-266</span> / <span class="count-num" data-count-to="-135" aria-live="off">-135</span>&#8239;<small>Gt/yıl</small></span>
           <span class="vital-sign-label">Grönland ve Antarktika buz tabakalarının yıllık kütle kaybı</span>
         </div>
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/06/sentinel-6-for-monitoring-sea-level-pillars.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/sentinel-6-uydusu.webp');"></div>
           <i class="fa-solid fa-water"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true">0</span><small>mm</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true" aria-live="off">+102,4</span>&#8239;<small>mm</small></span>
           <span class="vital-sign-label">Küresel ortalama deniz seviyesi yükselişi, uydu ölçümlerinin başladığı 1993'ten bu yana</span>
         </div>
         <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('https://science.nasa.gov/wp-content/uploads/2024/03/coral-640-x-480.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/mercan-resifi.webp');"></div>
           <i class="fa-solid fa-droplet"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true">0</span><small>ZJ</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true" aria-live="off">+372</span>&#8239;<small>ZJ</small></span>
           <span class="vital-sign-label">Okyanuslarda 1955'ten bu yana biriken fazladan ısı enerjisi</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('assets/image/causes/cin-termik-santralleri.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/causes/cin-termik-santralleri.jpg');"></div>
           <i class="fa-solid fa-smog"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="431">0</span><small>ppm</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="431" aria-live="off">431</span>&#8239;<small>ppm</small></span>
           <span class="vital-sign-label">Atmosferdeki CO₂ yoğunluğu, Haziran 2026 itibarıyla</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('https://science.nasa.gov/wp-content/uploads/2022/06/sunrise-over-sand-dunes-1600x900-1.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/kum-tepeleri-gun-dogumu.webp');"></div>
           <i class="fa-solid fa-temperature-high"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true">0</span><small>°C</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true" aria-live="off">+1,19</span>&#8239;<small>°C</small></span>
           <span class="vital-sign-label">Küresel ortalama sıcaklık artışı, 2025 yılı — 1951-1980 dönemi ortalamasına kıyasla</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('https://assets.science.nasa.gov/dynamicimage/assets/science/esd/climate/2023/12/main_image-2.jpeg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/metan-yogunlugu.webp');"></div>
           <i class="fa-solid fa-flask"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1938">0</span><small>ppb</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="1938" aria-live="off">1.938</span>&#8239;<small>ppb</small></span>
           <span class="vital-sign-label">Atmosferdeki metan (CH₄) yoğunluğu, Mart 2026 itibarıyla</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/06/grace-fo-in-orbit.jpeg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/grace-fo-uydusu.webp');"></div>
           <i class="fa-solid fa-icicles"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true">0</span><small>/on yıl</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true" aria-live="off">-%12,2</span>&#8239;<small>/on yıl</small></span>
           <span class="vital-sign-label">Arktik deniz buzunun eylül ayı yıllık en düşük seviyesindeki on yıllık gerileme oranı</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('assets/image/future/eriyen-buzullar.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/future/eriyen-buzullar.jpg');"></div>
           <i class="fa-solid fa-mountain"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-266">0</span> / <span class="count-num" data-count-to="-135">0</span><small>Gt/yıl</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="-266" aria-live="off">-266</span> / <span class="count-num" data-count-to="-135" aria-live="off">-135</span>&#8239;<small>Gt/yıl</small></span>
           <span class="vital-sign-label">Grönland ve Antarktika buz tabakalarının yıllık kütle kaybı</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/06/sentinel-6-for-monitoring-sea-level-pillars.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/sentinel-6-uydusu.webp');"></div>
           <i class="fa-solid fa-water"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true">0</span><small>mm</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true" aria-live="off">+102,4</span>&#8239;<small>mm</small></span>
           <span class="vital-sign-label">Küresel ortalama deniz seviyesi yükselişi, uydu ölçümlerinin başladığı 1993'ten bu yana</span>
         </div>
         <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('https://science.nasa.gov/wp-content/uploads/2024/03/coral-640-x-480.jpg');"></div>
+          <div class="vital-sign-card-bg" style="background-image:url('/assets/image/nasa/mercan-resifi.webp');"></div>
           <i class="fa-solid fa-droplet"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true">0</span><small>ZJ</small></span>
+          <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true" aria-live="off">+372</span>&#8239;<small>ZJ</small></span>
           <span class="vital-sign-label">Okyanuslarda 1955'ten bu yana biriken fazladan ısı enerjisi</span>
         </div>
       </div>
@@ -270,58 +392,58 @@
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Küresel Sıcaklık Yükseliyor</h4>
-          <p>Gezegenin ortalama yüzey sıcaklığı 19. yüzyıl sonundan bu yana yaklaşık 1°C arttı — bu artışın büyük kısmı son 40 yılda yaşandı. 1880'den bu yana en sıcak yedi yıl, son yedi yıl oldu.</p>
+          <p>Gezegenin ortalama yüzey sıcaklığı sanayi öncesi döneme (1850-1900) kıyasla yaklaşık 1,47°C arttı — bu artışın büyük kısmı son 40 yılda yaşandı. NASA GISS kayıtlarına göre 2024, ölçümlerin başladığı 1880'den bu yana kaydedilen en sıcak yıl oldu.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2022/06/sunrise-over-sand-dunes-1600x900-1.jpg" alt="Kum tepeleri üzerinde gün doğumu">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/kum-tepeleri-gun-dogumu.webp" alt="Kum tepeleri üzerinde gün doğumu" decoding="async" width="1600" height="900">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Okyanuslar Isınıyor</h4>
           <p>Okyanuslar fazladan ısının büyük kısmını emiyor; ilk 100 metresi 1969'dan bu yana 0,33°C ısındı. Dünya, fazladan biriken enerjinin %90'ını okyanuslarda depoluyor.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/coral-640-x-480.jpg" alt="Mercan resifi">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/mercan-resifi.webp" alt="Mercan resifi" decoding="async" width="640" height="480">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Buz Tabakaları Küçülüyor</h4>
           <p>NASA'nın GRACE uydu verilerine göre Grönland buz tabakası 1993-2019 arasında yılda ortalama 279 milyar ton, Antarktika ise 148 milyar ton buz kaybetti.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/thwaites-may-10-part-2jpg.jpg" alt="Thwaites buzulu">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/thwaites-buzulu.webp" alt="Thwaites buzulu" decoding="async" width="1600" height="900">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Buzullar Geri Çekiliyor</h4>
           <p>Alpler'den Himalayalar'a, Andlar'dan Alaska ve Afrika'ya kadar dünyanın hemen her yerindeki buzullar hızla küçülüyor.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/miles-glacier.jpg" alt="Geri çekilen buzul">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/miles-buzulu.webp" alt="Geri çekilen buzul" decoding="async" width="1024" height="683">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Kar Örtüsü Azalıyor</h4>
           <p>Uydu gözlemleri, Kuzey Yarımküre'deki ilkbahar kar örtüsünün son 50 yılda azaldığını ve karların her geçen yıl daha erken eridiğini gösteriyor.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/1027-snow-cover.png" alt="Azalan kar örtüsü uydu görüntüsü">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/kar-ortusu.webp" alt="Azalan kar örtüsü uydu görüntüsü" decoding="async" width="320" height="240">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Deniz Seviyesi Yükseliyor</h4>
           <p>Küresel deniz seviyesi son yüzyılda yaklaşık 20 santimetre yükseldi. Son yirmi yıldaki yükseliş hızı ise geçen yüzyılın neredeyse iki katı ve her yıl biraz daha hızlanıyor.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/640-norfolk-va-flooding.jpg" alt="Kıyıda su baskını">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/norfolk-su-baskini.webp" alt="Kıyıda su baskını" decoding="async" width="640" height="480">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Arktik Deniz Buzu Azalıyor</h4>
           <p>Arktik deniz buzunun hem kapladığı alan hem de kalınlığı son birkaç on yılda hızla azaldı.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/1033-1163-annual-arcticseaicemin-still.2012-print-320x240-1.jpg" alt="Arktik deniz buzu">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/arktik-deniz-buzu-min.webp" alt="Arktik deniz buzu" decoding="async" width="320" height="240">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
           <h4>Aşırı Hava Olayları Sıklaşıyor</h4>
           <p>ABD'de 1950'den bu yana rekor yüksek sıcaklık olayları artarken rekor düşük sıcaklık olayları azalıyor. Yoğun yağış olaylarının sayısı da giderek artıyor.</p>
         </div>
-        <img loading="lazy" class="evidence-row-photo" src="https://science.nasa.gov/wp-content/uploads/2024/03/floods-16-july-2021-belgium-tilff-1-768px.jpg" alt="Belçika'da sel">
+        <img loading="lazy" class="evidence-row-photo" src="/assets/image/nasa/belcika-sel.webp" alt="Belçika'da sel" decoding="async" width="768" height="576">
       </div>
     </div>
 
@@ -339,10 +461,10 @@
           İtalya'da 12,72 ha, İspanya'da 6,83 ha, Portekiz'de 4,6 ha (EFFIS).</p>
 
         <div class="indicator-stats">
-          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="3408">0</span></span><span class="indicator-stat-label">Türkiye'de 2024 yılında çıkan orman yangını sayısı</span></div>
-          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="26101">0</span> ha</span><span class="indicator-stat-label">2024'te orman yangınlarında zarar gören toplam alan</span></div>
-          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="7.6" data-count-decimals="1">0</span> ha</span><span class="indicator-stat-label">Yangın başına düşen ortalama zarar gören alan</span></div>
-          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="53" data-count-plus="true" data-count-percent="true">0</span></span><span class="indicator-stat-label">Yanan alanın bir önceki yıla göre artış oranı</span></div>
+          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="3408" aria-live="off">3.408</span></span><span class="indicator-stat-label">Türkiye'de 2024 yılında çıkan orman yangını sayısı</span></div>
+          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="26101" aria-live="off">26.101</span> ha</span><span class="indicator-stat-label">2024'te orman yangınlarında zarar gören toplam alan</span></div>
+          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="7.6" data-count-decimals="1" aria-live="off">7,6</span> ha</span><span class="indicator-stat-label">Yangın başına düşen ortalama zarar gören alan</span></div>
+          <div class="indicator-stat"><span class="indicator-stat-value"><span class="count-num" data-count-to="53" data-count-plus="true" data-count-percent="true" aria-live="off">+%53</span></span><span class="indicator-stat-label">Yanan alanın bir önceki yıla göre artış oranı</span></div>
         </div>
 
         <div class="indicator-tabs-card">
@@ -357,8 +479,8 @@
             </button>
           </div>
           <div class="indicator-tabs-photo">
-            <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-171-orman-yanginlari-1990-2024-20251124142230.PNG" alt="Grafik: Orman Yangınları 1990-2024">
-            <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-172-cikis-nedenlerine-gore-yangin-sayilari-1997-2024-20251124142255.PNG" alt="Grafik: Çıkış Nedenlerine Göre Yangın Sayıları 1997-2024">
+            <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="/assets/image/csb/orman-yanginlari-1990-2024.png" alt="Grafik: Orman Yangınları 1990-2024" decoding="async" width="678" height="290">
+            <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="/assets/image/csb/yangin-cikis-nedenleri-1997-2024.webp" alt="Grafik: Çıkış Nedenlerine Göre Yangın Sayıları 1997-2024" decoding="async" width="670" height="306">
           </div>
         </div>
       </div>
@@ -378,28 +500,28 @@
              initExpandedCard). Grafiğe tıklamak lightbox'ı açıyor. -->
         <div class="expanded-card" id="seaTempExpandedCard">
           <div class="expanded-card-item active">
-            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-19--akdeniz-de-olculen-yillik-ortalama-deniz-suyu-sicakliklari-c-20251119081455.PNG" alt="Grafik: Akdeniz'de Yıllık Ortalama Deniz Suyu Sıcaklıkları">
+            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="/assets/image/csb/akdeniz-suyu-sicakligi.webp" alt="Grafik: Akdeniz'de Yıllık Ortalama Deniz Suyu Sıcaklıkları" decoding="async" width="756" height="375">
             <div class="expanded-card-label">
               <span class="expanded-card-name">Akdeniz</span>
               <span class="expanded-card-desc">1970-2023 yılları arasında ölçülen yıllık ortalama deniz suyu sıcaklığı — 2018'de 22,4°C olan değer 2023'te 22,6°C'ye yükseldi.</span>
             </div>
           </div>
           <div class="expanded-card-item">
-            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-20--ege-denizi-nde-olculen-yillik-ortalama-deniz-suyu-sicakliklari-c-20251119081522.PNG" alt="Grafik: Ege Denizi'nde Yıllık Ortalama Deniz Suyu Sıcaklıkları">
+            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="/assets/image/csb/ege-denizi-suyu-sicakligi.png" alt="Grafik: Ege Denizi'nde Yıllık Ortalama Deniz Suyu Sıcaklıkları" decoding="async" width="754" height="423">
             <div class="expanded-card-label">
               <span class="expanded-card-name">Ege Denizi</span>
               <span class="expanded-card-desc">1970-2023 yılları arasında ölçülen yıllık ortalama deniz suyu sıcaklığı — 2018'de 19,8°C olan değer 2023'te 20,5°C'ye yükseldi.</span>
             </div>
           </div>
           <div class="expanded-card-item">
-            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-21-karadeniz-de-olculen-yillik-ortalama-deniz-suyu-sicakliklari-c-20251119081554.PNG" alt="Grafik: Karadeniz'de Yıllık Ortalama Deniz Suyu Sıcaklıkları">
+            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="/assets/image/csb/karadeniz-suyu-sicakligi.png" alt="Grafik: Karadeniz'de Yıllık Ortalama Deniz Suyu Sıcaklıkları" decoding="async" width="758" height="395">
             <div class="expanded-card-label">
               <span class="expanded-card-name">Karadeniz</span>
               <span class="expanded-card-desc">1970-2023 yılları arasında ölçülen yıllık ortalama deniz suyu sıcaklığı — 2018'de 16,5°C olan değer 2023'te 16,8°C'ye yükseldi.</span>
             </div>
           </div>
           <div class="expanded-card-item">
-            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-22--marmara-denizi-nde-olculen-yillik-ortalama-deniz-suyu-sicakliklari-c-20251119081705.PNG" alt="Grafik: Marmara Denizi'nde Yıllık Ortalama Deniz Suyu Sıcaklıkları">
+            <img loading="lazy" class="expanded-card-bg zoomable-chart" src="/assets/image/csb/marmara-denizi-suyu-sicakligi.png" alt="Grafik: Marmara Denizi'nde Yıllık Ortalama Deniz Suyu Sıcaklıkları" decoding="async" width="757" height="387">
             <div class="expanded-card-label">
               <span class="expanded-card-name">Marmara Denizi</span>
               <span class="expanded-card-desc">1970-2023 yılları arasında ölçülen yıllık ortalama deniz suyu sıcaklığı — 2018'de 17,4°C olan değer 2023'te 17,6°C'ye yükseldi.</span>
@@ -433,11 +555,11 @@
               </button>
             </div>
             <div class="indicator-tabs-photo">
-              <img loading="lazy" class="indicator-tab-photo-img active" src="assets/image/nasa/hurricane-lee-ri-sep-7-2023.webp" alt="NOAA GOES-East uydusu, 7 Eylül 2023'te Kasırga Lee'nin hızla şiddetlenişini görüntüledi">
-              <img loading="lazy" class="indicator-tab-photo-img" src="assets/image/nasa/article-i-before-after-1000.webp" alt="Mercan beyazlaması: 2014-2015 arası Amerikan Samoası'nda bir resifin bozulma süreci">
-              <img loading="lazy" class="indicator-tab-photo-img" src="assets/image/nasa/arcticseaice-dms-201185-06318-lrg.webp" alt="NASA'nın Operation IceBridge uçuşunda, Mart 2011'de görüntülenen kırılan Arktik deniz buzu">
-              <img loading="lazy" class="indicator-tab-photo-img" src="assets/image/nasa/ssta-mur-2023233-lrg-3-1.webp" alt="Haziran 2023'te Pasifik Okyanusu'ndaki deniz yüzeyi sıcaklık anomalilerini gösteren uydu verisi">
-              <img loading="lazy" class="indicator-tab-photo-img" src="assets/image/nasa/eo-pe-iss062e117852.webp" alt="Uluslararası Uzay İstasyonu'ndan çekilmiş Karayip Denizi fotoğrafı">
+              <img loading="lazy" decoding="async" width="767" height="589" class="indicator-tab-photo-img active" src="/assets/image/nasa/hurricane-lee-static.webp" alt="NOAA GOES-East uydusu, 7 Eylül 2023'te Kasırga Lee'nin hızla şiddetlenişini görüntüledi">
+              <img loading="lazy" class="indicator-tab-photo-img" src="/assets/image/nasa/article-i-before-after-1000.webp" alt="Mercan beyazlaması: 2014-2015 arası Amerikan Samoası'nda bir resifin bozulma süreci" decoding="async" width="768" height="368">
+              <img loading="lazy" class="indicator-tab-photo-img" src="/assets/image/nasa/arcticseaice-dms-201185-06318-lrg.webp" alt="NASA'nın Operation IceBridge uçuşunda, Mart 2011'de görüntülenen kırılan Arktik deniz buzu" decoding="async" width="768" height="512">
+              <img loading="lazy" class="indicator-tab-photo-img" src="/assets/image/nasa/ssta-mur-2023233-lrg-3-1.webp" alt="Haziran 2023'te Pasifik Okyanusu'ndaki deniz yüzeyi sıcaklık anomalilerini gösteren uydu verisi" decoding="async" width="766" height="388">
+              <img loading="lazy" class="indicator-tab-photo-img" src="/assets/image/nasa/eo-pe-iss062e117852.webp" alt="Uluslararası Uzay İstasyonu'ndan çekilmiş Karayip Denizi fotoğrafı" decoding="async" width="2048" height="1365">
             </div>
           </div>
         </div>
@@ -458,7 +580,7 @@
             kara verisinin güvenilir biçimde enterpole edilmesine imkân tanıyor. Ölçek için: son buzul çağını
             tetikleyen küresel sıcaklık düşüşü de sadece 5°C'ydi.</p>
           <div class="indicator-video-standalone">
-            <video src="https://assets.science.nasa.gov/content/dam/science/esd/explainers/global-temperature/GISTEMP_Spiral_English_Wide.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+            <video src="/assets/video/gistemp-spiral.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
           </div>
         </div>
 
@@ -485,8 +607,8 @@
               </button>
             </div>
             <div class="indicator-tabs-photo">
-              <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/graf-k-18-dunyada-ve-turkiye-de-yillik-ortalama-sicakliklar-20251119075735.PNG" alt="Grafik: Dünyada ve Türkiye'de Yıllık Ortalama Sıcaklıklar">
-              <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="https://webdosya.csb.gov.tr/db/cevreselgostergeler/icerikler/har-ta-1-turk-ye-donlu-gunler-sayisi-20251119080050.PNG" alt="Harita: Türkiye Donlu Günler Sayısı">
+              <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="/assets/image/csb/dunya-turkiye-yillik-sicakliklar.webp" alt="Grafik: Dünyada ve Türkiye'de Yıllık Ortalama Sıcaklıklar" decoding="async" width="674" height="292">
+              <img loading="lazy" class="indicator-tab-photo-img zoomable-chart" src="/assets/image/csb/donlu-gunler-haritasi.webp" alt="Harita: Türkiye Donlu Günler Sayısı" decoding="async" width="570" height="308">
             </div>
           </div>
         </div>
@@ -500,9 +622,9 @@
   <section id="causes-section" class="section-dark theme-gray seam-fade-white">
     <div class="cause-fullwidth-header">
       <h2 class="cause-fullwidth-heading cause-heading">
-        <span class="cause-heading-static">İKLİM KRİZİNİN SEBEBİ</span>
+        <span class="cause-heading-static">İklim Krizinin Sebebi</span>
         <span class="cause-heading-suffix" id="causeHeadingSuffix">
-          <span class="cause-heading-suffix-text">ENERJİ VE FOSİL YAKITLAR</span>
+          <span class="cause-heading-suffix-text">Enerji ve Fosil Yakıtlar</span>
         </span>
       </h2>
       <p class="cause-fullwidth-desc">
@@ -514,36 +636,36 @@
     <div class="container">
       <ul class="nav cause-tabs-nav" id="causeTabsNav" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="cause-tab-btn active" data-bs-toggle="tab" data-bs-target="#cause-energy" type="button"
-            role="tab" aria-selected="true" data-cause-name="ENERJİ VE FOSİL YAKITLAR">
+          <button class="cause-tab-btn active" id="cause-tab-energy" data-bs-toggle="tab" data-bs-target="#cause-energy" type="button"
+            role="tab" aria-selected="true" aria-controls="cause-energy" data-cause-name="Enerji ve Fosil Yakıtlar">
             <span class="cause-tab-btn-icon"><i class="fa-solid fa-fire"></i></span>
             <span class="cause-tab-btn-label"><span>Enerji ve Fosil Yakıtlar</span></span>
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-deforestation" type="button"
-            role="tab" aria-selected="false" data-cause-name="ORMANSIZLAŞMA">
+          <button class="cause-tab-btn" id="cause-tab-deforestation" data-bs-toggle="tab" data-bs-target="#cause-deforestation" type="button"
+            role="tab" aria-selected="false" aria-controls="cause-deforestation" data-cause-name="Ormansızlaşma">
             <span class="cause-tab-btn-icon"><i class="fa-solid fa-tree"></i></span>
             <span class="cause-tab-btn-label"><span>Ormansızlaşma</span></span>
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-industry" type="button"
-            role="tab" aria-selected="false" data-cause-name="SANAYİ ÜRETİMİ">
+          <button class="cause-tab-btn" id="cause-tab-industry" data-bs-toggle="tab" data-bs-target="#cause-industry" type="button"
+            role="tab" aria-selected="false" aria-controls="cause-industry" data-cause-name="Sanayi Üretimi">
             <span class="cause-tab-btn-icon"><i class="fa-solid fa-industry"></i></span>
             <span class="cause-tab-btn-label"><span>Sanayi Üretimi</span></span>
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-agriculture" type="button"
-            role="tab" aria-selected="false" data-cause-name="TARIM VE HAYVANCILIK">
+          <button class="cause-tab-btn" id="cause-tab-agriculture" data-bs-toggle="tab" data-bs-target="#cause-agriculture" type="button"
+            role="tab" aria-selected="false" aria-controls="cause-agriculture" data-cause-name="Tarım ve Hayvancılık">
             <span class="cause-tab-btn-icon"><i class="fa-solid fa-cow"></i></span>
             <span class="cause-tab-btn-label"><span>Tarım ve Hayvancılık</span></span>
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="cause-tab-btn" data-bs-toggle="tab" data-bs-target="#cause-transport" type="button"
-            role="tab" aria-selected="false" data-cause-name="ULAŞIM">
+          <button class="cause-tab-btn" id="cause-tab-transport" data-bs-toggle="tab" data-bs-target="#cause-transport" type="button"
+            role="tab" aria-selected="false" aria-controls="cause-transport" data-cause-name="Ulaşım">
             <span class="cause-tab-btn-icon"><i class="fa-solid fa-car"></i></span>
             <span class="cause-tab-btn-label"><span>Ulaşım</span></span>
           </button>
@@ -551,7 +673,8 @@
       </ul>
 
       <div class="tab-content cause-tab-content" id="causeTabsContent">
-        <div class="tab-pane fade show active cause-tab-grid" id="cause-energy" role="tabpanel">
+        <div class="tab-pane fade show active cause-tab-grid" id="cause-energy" role="tabpanel" aria-labelledby="cause-tab-energy" tabindex="0">
+          <h3 class="visually-hidden">Enerji ve Fosil Yakıtlar</h3>
           <div class="cause-tab-row">
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -582,33 +705,33 @@
           <div class="cause-stack-row">
             <div class="cause-stack" data-cause-stack="energy">
               <div class="cause-stack-cards">
-                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('assets/image/causes/garzweiler-acik-maden-ocagi.jpg');">
+                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('/assets/image/causes/garzweiler-acik-maden-ocagi.jpg');">
                   <h4>Garzweiler Açık Maden Ocağı</h4>
                   <p>Almanya'nın en büyük linyit ocaklarından biri; kömür çıkarmak için köyler boşaltılıyor,
                     ormanlar kesiliyor ve binlerce hektarlık alan devasa bir çukura dönüşüyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="1" style="--stack-img:url('assets/image/causes/cin-termik-santralleri.jpg');">
+                <div class="cause-stack-card" data-index="1" style="--stack-img:url('/assets/image/causes/cin-termik-santralleri.jpg');">
                   <h4>Çin Termik Santralleri</h4>
                   <p>Dünya kömür tüketiminin yarısından fazlasını tek başına gerçekleştiren Çin'de, binlerce aktif
                     termik santral küresel kömür kaynaklı CO₂ emisyonunun en büyük tekil kaynağını oluşturuyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="2" style="--stack-img:url('assets/image/causes/nijer-deltasi.jpg');">
+                <div class="cause-stack-card" data-index="2" style="--stack-img:url('/assets/image/causes/nijer-deltasi.jpg');">
                   <h4>Nijer Deltası</h4>
                   <p>Boru hatlarındaki sızıntılar ve fazla gazın yakılması (flaring), on yıllardır bölgenin sucul
                     ekosistemlerini kirletip yerel toplulukların tarım ve balıkçılık gelirini yok ediyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="3" style="--stack-img:url('assets/image/causes/bati-teksas-permian-havzasi.jpg');">
+                <div class="cause-stack-card" data-index="3" style="--stack-img:url('/assets/image/causes/bati-teksas-permian-havzasi.jpg');">
                   <h4>Batı Teksas Permian Havzası</h4>
                   <p>ABD'nin en büyük ham petrol üretim merkezi; kuyu başlarından sızan metan, bazı ölçümlerde
                     havzanın yakıt tüketiminden kaynaklanan emisyondan bile daha güçlü bir ısınma etkisi yaratıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="4" style="--stack-img:url('assets/image/causes/avustralya-lng-tesisleri.jpg');">
+                <div class="cause-stack-card" data-index="4" style="--stack-img:url('/assets/image/causes/avustralya-lng-tesisleri.jpg');">
                   <h4>Avustralya LNG Tesisleri</h4>
                   <p>Dünyanın önde gelen sıvılaştırılmış doğal gaz ihracatçılarından Avustralya'da, kıyı
                     tesislerinden kaynaklanan metan kaçakları uydu verileriyle ancak son yıllarda sistematik olarak
                     izlenmeye başlandı.</p>
                 </div>
-                <div class="cause-stack-card" data-index="5" style="--stack-img:url('assets/image/causes/hindistan-komur-madenleri.jpg');">
+                <div class="cause-stack-card" data-index="5" style="--stack-img:url('/assets/image/causes/hindistan-komur-madenleri.jpg');">
                   <h4>Hindistan Kömür Madenleri</h4>
                   <p>Jharkhand ve Odisha eyaletlerindeki açık ocak madenler, milyonlarca insanı hem solunum
                     yollarını tahriş eden kömür tozuna hem de bölgenin yüksek CO₂ emisyon yüküne maruz bırakıyor.</p>
@@ -618,7 +741,8 @@
           </div>
         </div>
 
-        <div class="tab-pane fade cause-tab-grid" id="cause-deforestation" role="tabpanel">
+        <div class="tab-pane fade cause-tab-grid" id="cause-deforestation" role="tabpanel" aria-labelledby="cause-tab-deforestation" tabindex="0">
+          <h3 class="visually-hidden">Ormansızlaşma</h3>
           <div class="cause-tab-row">
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -646,34 +770,34 @@
           <div class="cause-stack-row">
             <div class="cause-stack" data-cause-stack="deforestation">
               <div class="cause-stack-cards">
-                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('assets/image/causes/amazon-yagmur-ormanlari.jpg');">
+                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('/assets/image/causes/amazon-yagmur-ormanlari.jpg');">
                   <h4>Amazon Yağmur Ormanları</h4>
                   <p>Brezilya'da sığır otlatma ve soya tarımı için her yıl milyonlarca hektar orman açılıyor;
                     dünyanın en büyük karbon yutaklarından biri bu baskı altında küçülmeye devam ediyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="1" style="--stack-img:url('assets/image/causes/borneo-adasi.jpg');">
+                <div class="cause-stack-card" data-index="1" style="--stack-img:url('/assets/image/causes/borneo-adasi.jpg');">
                   <h4>Borneo Adası</h4>
                   <p>Endonezya ve Malezya'da palmiye yağı plantasyonları için temizlenen ormanlar, orangutan başta
                     olmak üzere adaya özgü pek çok türün yaşam alanını yok ediyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="2" style="--stack-img:url('assets/image/causes/kongo-havzasi.jpg');">
+                <div class="cause-stack-card" data-index="2" style="--stack-img:url('/assets/image/causes/kongo-havzasi.jpg');">
                   <h4>Kongo Havzası</h4>
                   <p>Dünyanın Amazon'dan sonraki en büyük yağmur ormanı, kereste ticareti, madencilik ve küçük
                     ölçekli tarımın artan baskısı altında giderek küçülüyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="3" style="--stack-img:url('assets/image/causes/endonezya-turbaliklari.webp');">
+                <div class="cause-stack-card" data-index="3" style="--stack-img:url('/assets/image/causes/endonezya-turbaliklari.webp');">
                   <h4>Endonezya Turbalıkları</h4>
                   <p>Palmiye yağı tarımı için kurutulan tropikal turbalıklar, binlerce yıldır toprakta biriken
                     karbonu hızla atmosfere salıyor; kurumuş turba aynı zamanda büyük orman yangınlarına zemin
                     hazırlıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="4" style="--stack-img:url('assets/image/causes/cerrado-savanalari-brezilya.jpg');">
+                <div class="cause-stack-card" data-index="4" style="--stack-img:url('/assets/image/causes/cerrado-savanalari-brezilya.jpg');">
                   <h4>Cerrado Savanaları, Brezilya</h4>
                   <p>Amazon kadar gündeme gelmese de Cerrado, küresel soya ve sığır talebinin baskısıyla her yıl
                     yaklaşık 1 milyon hektar kaybediyor; oysa bölge kendine özgü zengin bir biyoçeşitliliğe ev
                     sahipliği yapıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="5" style="--stack-img:url('assets/image/causes/dogu-afrika-miombo-ormanlari.jpg');">
+                <div class="cause-stack-card" data-index="5" style="--stack-img:url('/assets/image/causes/dogu-afrika-miombo-ormanlari.jpg');">
                   <h4>Doğu Afrika Miombo Ormanları</h4>
                   <p>Odun kömürü üretimi ve geçimlik tarım, Tanzanya ve Mozambik'teki Miombo ormanlarını hızla
                     tahrip ediyor; yerel halkın çoğu için uygun fiyatlı bir enerji alternatifi bulunmuyor.</p>
@@ -683,7 +807,8 @@
           </div>
         </div>
 
-        <div class="tab-pane fade cause-tab-grid" id="cause-industry" role="tabpanel">
+        <div class="tab-pane fade cause-tab-grid" id="cause-industry" role="tabpanel" aria-labelledby="cause-tab-industry" tabindex="0">
+          <h3 class="visually-hidden">Sanayi Üretimi</h3>
           <div class="cause-tab-row">
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -708,36 +833,36 @@
           <div class="cause-stack-row">
             <div class="cause-stack" data-cause-stack="industry">
               <div class="cause-stack-cards">
-                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('assets/image/causes/ruhr-bolgesi-celik-tesisleri.jpg');">
+                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('/assets/image/causes/ruhr-bolgesi-celik-tesisleri.jpg');">
                   <h4>Ruhr Bölgesi Çelik Tesisleri</h4>
                   <p>Almanya'nın tarihi ağır sanayi merkezinde yüksek fırınlar ve çelik tesisleri yüzyılı aşkın
                     süredir bölgenin emisyon profilini belirliyor; dönüşüm için yeşil hidrojen tabanlı üretim
                     planlanıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="1" style="--stack-img:url('assets/image/causes/cimento-fabrikalari.jpg');">
+                <div class="cause-stack-card" data-index="1" style="--stack-img:url('/assets/image/causes/cimento-fabrikalari.jpg');">
                   <h4>Çimento Fabrikaları</h4>
                   <p>Hindistan ve Çin'deki tesisler küresel çimento üretiminin yarısından fazlasını karşılıyor;
                     hem yüksek sıcaklıkta pişirme süreci hem de kalkerin kimyasal dönüşümü büyük miktarda CO₂ açığa
                     çıkarıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="2" style="--stack-img:url('assets/image/causes/teksas-korfez-kiyisi.jpg');">
+                <div class="cause-stack-card" data-index="2" style="--stack-img:url('/assets/image/causes/teksas-korfez-kiyisi.jpg');">
                   <h4>Teksas Körfez Kıyısı</h4>
                   <p>Yoğun petrokimya tesisleri kompleksi, ABD'nin en büyük endüstriyel emisyon bölgelerinden
                     birini oluştururken çevredeki yerleşim bölgelerinde hava kalitesi sorunlarını da beraberinde
                     getiriyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="3" style="--stack-img:url('assets/image/causes/chinese-aluminum-plants.jpg');">
+                <div class="cause-stack-card" data-index="3" style="--stack-img:url('/assets/image/causes/chinese-aluminum-plants.jpg');">
                   <h4>Çin Alüminyum Tesisleri</h4>
                   <p>Küresel alüminyum üretiminin %60'ından fazlasını gerçekleştiren Çin tesisleri büyük ölçüde
                     kömür enerjisiyle çalışıyor; bu da ton başına düşen karbon izini dünya ortalamasının çok
                     üzerinde tutuyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="4" style="--stack-img:url('assets/image/causes/indias-brick-kilns.jpg');">
+                <div class="cause-stack-card" data-index="4" style="--stack-img:url('/assets/image/causes/indias-brick-kilns.jpg');">
                   <h4>Hindistan Tuğla Ocakları</h4>
                   <p>Ülke genelindeki 140.000'den fazla geleneksel tuğla fırını, düşük verimli katı yakıt
                     kullanarak hem CO₂ hem de sağlığa zararlı kara karbon (kurum) salımına yol açıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="5" style="--stack-img:url('assets/image/causes/hungarys-pvc-and-plastics-sector.jpeg');">
+                <div class="cause-stack-card" data-index="5" style="--stack-img:url('/assets/image/causes/hungarys-pvc-and-plastics-sector.jpeg');">
                   <h4>Macaristan PVC ve Plastik Sektörü</h4>
                   <p>Orta Avrupa'daki petrokimya tesisleri, hem üretim süreçlerindeki enerji yoğunluğu hem de
                     plastik atığın yakılmasıyla yüksek emisyon değerleri üretmeye devam ediyor.</p>
@@ -747,7 +872,8 @@
           </div>
         </div>
 
-        <div class="tab-pane fade cause-tab-grid" id="cause-agriculture" role="tabpanel">
+        <div class="tab-pane fade cause-tab-grid" id="cause-agriculture" role="tabpanel" aria-labelledby="cause-tab-agriculture" tabindex="0">
+          <h3 class="visually-hidden">Tarım ve Hayvancılık</h3>
           <div class="cause-tab-row">
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -776,33 +902,33 @@
           <div class="cause-stack-row">
             <div class="cause-stack" data-cause-stack="agriculture">
               <div class="cause-stack-cards">
-                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('assets/image/causes/brazilian-cattle-ranches.webp');">
+                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('/assets/image/causes/brazilian-cattle-ranches.webp');">
                   <h4>Brezilya Sığır Çiftlikleri</h4>
                   <p>Endüstriyel ölçekte et üretimi için ayrılan geniş otlaklar hem ormansızlaşmayı tetikliyor hem
                     de sığırların sindirim süreci kaynaklı metan salımını artırıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="1" style="--stack-img:url('assets/image/causes/guneydogu-asya-pirinc-tarlalari.webp');">
+                <div class="cause-stack-card" data-index="1" style="--stack-img:url('/assets/image/causes/guneydogu-asya-pirinc-tarlalari.webp');">
                   <h4>Güneydoğu Asya Pirinç Tarlaları</h4>
                   <p>Su altında bırakılan pirinç tarlalarında organik madde oksijensiz ortamda ayrışıyor; bu
                     anaerobik süreç, CO₂'den çok daha güçlü ısınma potansiyeline sahip metanın önemli
                     kaynaklarından birini oluşturuyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="2" style="--stack-img:url('assets/image/causes/intensive-agricultural-areas-in-europe.avif');">
+                <div class="cause-stack-card" data-index="2" style="--stack-img:url('/assets/image/causes/intensive-agricultural-areas-in-europe.avif');">
                   <h4>Avrupa Yoğun Tarım Alanları</h4>
                   <p>Verimi artırmak için kullanılan aşırı azotlu gübreler, topraktan atmosfere CO₂'den çok daha
                     güçlü ısınma potansiyeline sahip nitröz oksit salınımına yol açıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="3" style="--stack-img:url('assets/image/causes/meksika-avokado-bahceleri.webp');">
+                <div class="cause-stack-card" data-index="3" style="--stack-img:url('/assets/image/causes/meksika-avokado-bahceleri.webp');">
                   <h4>Meksika Avokado Bahçeleri</h4>
                   <p>Küresel avokado talebindeki patlama, Michoacan eyaletindeki ormanların tarım arazisine
                     dönüştürülmesine, yoğun su tüketimine ve artan pestisit kirliliğine neden oluyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="4" style="--stack-img:url('assets/image/causes/abd-buyuk-ovalarda-mono-kultur.jpg');">
+                <div class="cause-stack-card" data-index="4" style="--stack-img:url('/assets/image/causes/abd-buyuk-ovalarda-mono-kultur.jpg');">
                   <h4>ABD Büyük Ovalarda Mono-Kültür</h4>
                   <p>Yüzlerce kilometre boyunca tek tip mısır ya da soya yetiştirilen alanlarda toprak karbonu
                     hızla tükeniyor, doğal biyoçeşitlilik neredeyse sıfıra iniyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="5" style="--stack-img:url('assets/image/causes/hollanda-yogun-hayvancilik-tesisleri.jpg');">
+                <div class="cause-stack-card" data-index="5" style="--stack-img:url('/assets/image/causes/hollanda-yogun-hayvancilik-tesisleri.jpg');">
                   <h4>Hollanda Yoğun Hayvancılık Tesisleri</h4>
                   <p>Dünyanın en yoğun hayvancılık sektörüne sahip ülkelerinden biri olan Hollanda, aşırı gübre ve
                     amonyak salımı nedeniyle AB'nin nitrojen krizinin merkezinde yer alıyor.</p>
@@ -812,7 +938,8 @@
           </div>
         </div>
 
-        <div class="tab-pane fade cause-tab-grid" id="cause-transport" role="tabpanel">
+        <div class="tab-pane fade cause-tab-grid" id="cause-transport" role="tabpanel" aria-labelledby="cause-tab-transport" tabindex="0">
+          <h3 class="visually-hidden">Ulaşım</h3>
           <div class="cause-tab-row">
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -839,33 +966,33 @@
           <div class="cause-stack-row">
             <div class="cause-stack" data-cause-stack="transport">
               <div class="cause-stack-cards">
-                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('assets/image/causes/los-angeles-freeway-network.webp');">
+                <div class="cause-stack-card active" data-index="0" style="--stack-img:url('/assets/image/causes/los-angeles-freeway-network.webp');">
                   <h4>Los Angeles Otoyol Ağı</h4>
                   <p>Dünyanın en yoğun karayolu trafiğine sahip şehirlerinden biri; günlük milyonlarca özel araç
                     yolculuğu, kentin en büyük tekil emisyon kaynaklarından birini oluşturuyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="1" style="--stack-img:url('assets/image/causes/kuresel-konteyner-gemiciligi.jpg');">
+                <div class="cause-stack-card" data-index="1" style="--stack-img:url('/assets/image/causes/kuresel-konteyner-gemiciligi.jpg');">
                   <h4>Küresel Konteyner Gemiciliği</h4>
                   <p>Ağır fuel-oil ile çalışan dev konteyner gemileri küresel ticaretin omurgasını oluştursa da,
                     denizcilik sektörü kükürt oksit ve CO₂ salımıyla iklim ve hava kalitesi üzerinde ciddi bir
                     baskı yaratıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="2" style="--stack-img:url('assets/image/causes/atlantik-hava-trafigi.png');">
+                <div class="cause-stack-card" data-index="2" style="--stack-img:url('/assets/image/causes/atlantik-hava-trafigi.png');">
                   <h4>Atlantik Hava Trafiği</h4>
                   <p>Kıtalar arası uçuşların yüksek irtifada bıraktığı kondensasyon izleri ve azot oksitler,
                     havacılığın iklim etkisini yalnızca yakılan yakıtın CO₂'siyle sınırlı tutmuyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="3" style="--stack-img:url('assets/image/causes/dubai-havalimani.jpg');">
+                <div class="cause-stack-card" data-index="3" style="--stack-img:url('/assets/image/causes/dubai-havalimani.jpg');">
                   <h4>Dubai Havalimanı</h4>
                   <p>Dünyanın en yoğun uluslararası havalimanlarından biri; yılda 90 milyonu aşan yolcu trafiğiyle
                     küresel havacılık emisyonlarının sembol noktalarından birine dönüştü.</p>
                 </div>
-                <div class="cause-stack-card" data-index="4" style="--stack-img:url('assets/image/causes/indonesias-two-wheeled-vehicle-problem.jpg');">
+                <div class="cause-stack-card" data-index="4" style="--stack-img:url('/assets/image/causes/indonesias-two-wheeled-vehicle-problem.jpg');">
                   <h4>Endonezya İki Tekerlekli Taşıt Sorunu</h4>
                   <p>Jakarta ve diğer büyük şehirlerde 100 milyonun üzerinde motosiklet, düzenli denetime tabi
                     olmayan egzoz emisyonlarıyla hem karbon salımını hem de yerel hava kirliliğini ağırlaştırıyor.</p>
                 </div>
-                <div class="cause-stack-card" data-index="5" style="--stack-img:url('assets/image/causes/suez-and-panama-canal-traffic-congestion.jpeg');">
+                <div class="cause-stack-card" data-index="5" style="--stack-img:url('/assets/image/causes/suez-and-panama-canal-traffic-congestion.jpeg');">
                   <h4>Süveyş ve Panama Kanalı Trafik Sıkışıklığı</h4>
                   <p>İki stratejik kanalda uzun süre bekleyen ya da yavaş seyreden devasa tankerlerin gereksiz
                     yakıt tüketimi, denizcilik emisyon hesaplarında genelde göz ardı edilen büyük bir kalemi
@@ -892,7 +1019,7 @@
          (script.js: initFutureCardShowcase). -->
     <div class="card-showcase" id="futureCardShowcase">
       <div class="card-showcase-track" id="futureCardShowcaseTrack">
-        <div class="card-showcase-card active" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/solomon-coast.jpg');">
+        <div class="card-showcase-card active" style="--cs-img:url('/assets/image/nasa/solomon-kiyisi.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -901,7 +1028,7 @@
             <p>Küresel deniz seviyesi, güvenilir kayıtların tutulmaya başladığı 1880'den bu yana yaklaşık 20 santimetre yükseldi. Bilim insanları 2100'e kadar en az 30 santimetre daha, yüksek emisyon senaryosunda ise 2 metreye kadar yükselebileceğini öngörüyor.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/sun-shining-brightly-over-misty-mountains-in-shahdag-national-park.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/shahdag-milli-parki.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -910,7 +1037,7 @@
             <p>Küresel iklimin bu yüzyıl boyunca ve sonrasında ısınmaya devam etmesi öngörülüyor — bugün atılan adımlar bu eğrinin ne kadar dik olacağını belirleyecek.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/iss056e126638.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/iss-karayip-denizi.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -919,7 +1046,7 @@
             <p>Bilim insanları, iklim ısınmaya devam ettikçe kasırgalarla ilişkili fırtına şiddetinin ve yağış oranlarının artacağını öngörüyor.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/california-drought-dry-lakebed-2009.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/kaliforniya-kuraklik.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -928,7 +1055,7 @@
             <p>Kuraklıkların ve sıcak hava dalgalarının daha yoğun hale gelmesi, soğuk hava dalgalarının ise daha az yoğun ve daha seyrek olması bekleniyor.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/1074-2830-wildfire1-768px.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/orman-yangini-sezonu.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -937,7 +1064,7 @@
             <p>İnsan kaynaklı iklim değişikliğinin son on yıllarda yanan orman alanını zaten iki katına çıkardığı tahmin ediliyor. 2050'ye doğru yangınla yanan alanın 2 ila 6 kat daha artması bekleniyor.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/flooded-road-in-oklahoma.gif');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/oklahoma-sel-yolu.gif');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -946,7 +1073,7 @@
             <p>İklim değişikliği yağışı dengesiz biçimde etkiliyor — bazı bölgeler artan yağış ve sel yaşarken bazıları kuraklık çekiyor.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/1055-crop-field.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/tarim-arazisi.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -955,7 +1082,7 @@
             <p>Donsuz mevsimin ve buna bağlı yetişme sezonunun süresi 1980'lerden bu yana artıyor; bu durum ekosistemleri ve tarımı doğrudan etkileyecek.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/heatwave-640-x-480.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/sicak-hava-dalgasi.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -964,7 +1091,7 @@
             <p>2023 yazı, NASA kayıtlarındaki en sıcak yaz oldu — önceki en sıcak yazdan 0,23°C, 1951-1980 ortalamasından ise 1,2°C daha sıcak.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('https://science.nasa.gov/wp-content/uploads/2024/03/1069-arctic-ice.jpg');">
+        <div class="card-showcase-card" style="--cs-img:url('/assets/image/nasa/arktik-buzsuzlasma.webp');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -991,13 +1118,88 @@
         <h3 class="steps-group-title"><i class="fa-solid fa-person-walking"></i> Bireysel Adımlar</h3>
         <p class="steps-group-desc">Her gün attığın küçük adımlar, zamanla büyük bir sonuca dönüşür.</p>
         <div class="reel" id="individualReel"></div>
+        <!-- JavaScript'in oluşturduğu görsel "makara" (reel) karuseli çalışmazsa
+             (tarayıcı JS desteklemiyor/kapalı, arama motoru taraması vb.) adım
+             içeriği aşağıdaki listeyle her durumda okunabilir kalır. -->
+        <noscript>
+          <div class="reel-fallback">
+            <article class="reel-fallback-item">
+              <h4>1. Enerji Tasarrufu</h4>
+              <p>Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor — bu küçük alışkanlıklar yılda 200 kg'a kadar CO₂ tasarrufu sağlayabilir.</p>
+              <ul><li>Çamaşırı 30°C'de ve tam dolu makinede yıka</li><li>Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar</li><li>Mümkünse enerji tedarikçini yenilenebilire geçir</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>2. Ulaşım Tercihleri</h4>
+              <p>Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.</p>
+              <ul><li>Haftada 3 gün toplu taşıma = yılda ~1 ton CO₂ az</li><li>3 km altındaki mesafeleri yürüyerek ya da bisikletle git</li><li>Mümkün olan seyahatlerde uçuş yerine tren tercih et</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>3. Beslenme Alışkanlıkları</h4>
+              <p>Gıda üretimi küresel sera gazı emisyonlarının önemli bir kısmından sorumlu; kırmızı et bu payın en büyük tekil kaynağı. Tüketimini azaltıp yerel, mevsimsel ve bitki ağırlıklı beslenmeye yönelmek bireysel karbon ayak izini belirgin biçimde küçültüyor.</p>
+              <ul><li>Haftada 1 gün etsiz beslenme = ~200 kg CO₂/yıl az</li><li>Yerel pazardan alışveriş yap, nakliye emisyonunu kır</li><li>Plan yap, porsiyonu küçült, gıda israfını sıfırla</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>4. Bilinçli Tüketim</h4>
+              <p>Her ürünün üretiminde harcanan enerji ve hammadde, satın alma kararlarını iklim açısından önemli kılıyor. Daha az ve bilinçli satın almak, ürünleri uzun süre kullanmak; onarmak ve ikinci eli tercih etmek hem atığı hem de üretim kaynaklı emisyonları azaltıyor.</p>
+              <ul><li>Almadan önce "gerçekten ihtiyacım var mı?" diye sor</li><li>Elektronikte önce onarımı dene, değiştirmeyi son çare yap</li><li>Tekli plastik ambalaj yerine dökme/büyük boy al</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>5. Doğayla Birlikte Yaşamak</h4>
+              <p>Yeşil alanlar hem karbon depoluyor hem de yerel biyoçeşitliliği destekliyor. Balkonunda ya da bahçende bitki yetiştirmek küçük bir adım gibi görünse de, olgun bir ağacın yılda ortalama 21-25 kg CO₂ emdiği düşünülürse toplu etkisi büyüyor.</p>
+              <ul><li>Mutfak atığını kompostlayıp toprağa besin olarak ver</li><li>Yerel ağaçlandırma projelerine gönüllü katıl</li><li>Damlayan bir musluk yılda 20.000L suyu boşa akıtabilir</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>6. Savunuculuk ve Farkındalık</h4>
+              <p>Bireysel adımlar önemli, ama en büyük etki toplu sesle ortaya çıkıyor. Çevrendeki insanları bilinçlendirmek ve oy verirken iklim politikasını önceliklendirmek, sistemsel değişimi hızlandıran dolaylı ama güçlü bir yol.</p>
+              <ul><li>Yaşadığın şehrin iklim eylem planını takip et</li><li>İş yerinde sürdürülebilirlik odaklı öneriler sun</li><li>Bilimsel kaynaklara dayanan iklim içeriklerini paylaş</li></ul>
+            </article>
+          </div>
+        </noscript>
       </div>
 
       <div class="steps-group">
         <h3 class="steps-group-title"><i class="fa-solid fa-earth-americas"></i> Toplumsal Adımlar</h3>
         <p class="steps-group-desc">Toplumsal dönüşüm politika, teknoloji ve kolektif eylemle ilerler.</p>
         <div class="reel" id="societalReel"></div>
+        <noscript>
+          <div class="reel-fallback">
+            <article class="reel-fallback-item">
+              <h4>1. Yenilenebilir Enerjiye Geçiş</h4>
+              <p>Küresel enerji üretiminin fosil yakıtlardan güneş, rüzgâr ve diğer temiz kaynaklara kaydırılması, emisyonları azaltmanın en yüksek etkili yollarından biri. Hükümetlerin ve şirketlerin yatırım önceliklerini bu yönde değiştirmesi dönüşümün hızını doğrudan belirliyor.</p>
+              <ul><li>Devlet teşvikleri çatı üstü güneş enerjisini yaygınlaştırabilir</li><li>Fosil yakıt sübvansiyonlarının kademeli kaldırılması kritik</li><li>Enerji depolama teknolojilerine Ar-Ge yatırımı şart</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>2. Karbon Fiyatlandırması</h4>
+              <p>Karbon vergisi ve emisyon ticaret sistemleri, sera gazı salımının gerçek maliyetini fiyatlara yansıtarak "kirleten öder" ilkesini işletir. Bu mekanizmalar, temiz teknolojilere geçişi piyasa içinden hızlandıran güçlü araçlar.</p>
+              <ul><li>Ton başına $50-100 CO₂ fiyatı dönüşümü tetikleyecek düzeyde</li><li>Vergi gelirleri yeşil altyapıya ayrılabilir</li><li>Sınır karbon mekanizmaları haksız rekabeti önler</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>3. Ormanların Korunması</h4>
+              <p>Ormanlar dünyanın en büyük doğal karbon yutaklarından biri; hem ormansızlaşmayı durdurmak hem de büyük ölçekli ağaçlandırma projeleri yürütmek, atmosferdeki karbonu dengelemenin en doğrudan yollarından biri.</p>
+              <ul><li>Orman tahribatına yol açan ürünlere ithalat kısıtlaması</li><li>Yerel halklara ormanlık arazide mülkiyet hakkı tanınmalı</li><li>REDD+ gibi karbon kredisi mekanizmaları yaygınlaşmalı</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>4. Uluslararası İşbirliği</h4>
+              <p>İklim krizi sınır tanımıyor; Paris Anlaşması gibi küresel çerçeveler, ülkelerin ortak, ölçülebilir ve denetlenebilir hedefler etrafında birleşmesini sağlayarak bireysel çabaların toplamından daha büyük bir etki yaratıyor.</p>
+              <ul><li>Ulusal Katkı Beyanlarının (NDC) güçlendirilmesi zorunlu</li><li>Gelişmekte olan ülkelere iklim finansmanı artmalı</li><li>Teknoloji transferi yeşil dönüşümü demokratikleştirir</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>5. Sanayi Dönüşümü</h4>
+              <p>Çimento, çelik ve kimya gibi ağır sanayiler, üretim süreçlerinin doğası gereği kolayca elektrifiye edilemiyor. Yeşil hidrojen ve karbon yakalama teknolojileri, bu sektörlerin emisyonlarını azaltmanın önündeki en kritik açık.</p>
+              <ul><li>Kamu ihalelerinde düşük karbonlu "yeşil çelik" şartı aranmalı</li><li>H₂ altyapısına kamu yatırımı ölçek ekonomisiyle maliyeti düşürür</li><li>Sanayi emisyonlarına sektörel denetim mekanizması gerekiyor</li></ul>
+            </article>
+            <article class="reel-fallback-item">
+              <h4>6. Sürdürülebilir Şehirler</h4>
+              <p>2050'de dünya nüfusunun %68'inin kentlerde yaşayacağı öngörülüyor; bu da şehir planlamasını iklim mücadelesinin merkezine taşıyor. Toplu taşımayı, yaya bölgelerini ve yeşil alanları bütünleştiren akıllı şehirler hem emisyonu azaltıyor hem yaşam kalitesini artırıyor.</p>
+              <ul><li>15 dakikalık şehir konsepti trafiği belirgin biçimde düşürür</li><li>Mevcut binaların enerji verimliliğine yükseltilmesi teşvik edilmeli</li><li>Kent ormanları gibi doğa tabanlı çözümler standart hale gelmeli</li></ul>
+            </article>
+          </div>
+        </noscript>
       </div>
+    </div>
+
+    <div class="cta-inline">
+      <p>Okumakla kalma — bugün atabileceğin somut bir adım için <a href="https://iklimdd.org/contact">bize ulaş</a> ya da <a href="https://iklimdd.org/campaings">kampanyalarımıza</a> göz at.</p>
     </div>
   </section>
 
@@ -1018,12 +1220,12 @@
         <div class="timeline-marker">1</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/progress/paris-agreement.jpg" alt="Paris Anlaşması">
+            <img loading="lazy" src="/assets/image/progress/paris-agreement.jpg" alt="Paris Anlaşması" decoding="async" width="275" height="183">
           </div>
           <div class="timeline-card-body">
             <h3>Paris Anlaşması</h3>
             <div class="timeline-card-desc">
-              <p>195 ülke, küresel ısınmayı 2°C'nin belirgin şekilde altında tutmayı ve mümkünse 1,5°C ile
+              <p>195 ülke ve Avrupa Birliği (toplam 196 taraf), küresel ısınmayı 2°C'nin belirgin şekilde altında tutmayı ve mümkünse 1,5°C ile
                 sınırlamayı taahhüt etti. Ülkeler her yıl COP zirvelerinde emisyon hedeflerini (NDC) güncelliyor;
                 2023'teki ilk Küresel Stok Alma değerlendirmesi, taahhütlerin ne kadarının gerçek azaltıma
                 dönüştüğünü resmen ölçtü.</p>
@@ -1037,7 +1239,7 @@
         <div class="timeline-marker">2</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/nasa/eo-pe-iss062e117852.webp" alt="NASA'nın iklim gözlem uyduları">
+            <img loading="lazy" src="/assets/image/nasa/eo-pe-iss062e117852.webp" alt="NASA'nın iklim gözlem uyduları" decoding="async" width="2048" height="1365">
           </div>
           <div class="timeline-card-body">
             <h3>NASA'nın İklim Gözlem Filosu</h3>
@@ -1057,7 +1259,7 @@
         <div class="timeline-marker">3</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/progress/renewable-energy.jpg" alt="Çin'in güneş enerjisi atılımı">
+            <img loading="lazy" src="/assets/image/progress/renewable-energy.jpg" alt="Çin'in güneş enerjisi atılımı" decoding="async" width="1500" height="1000">
           </div>
           <div class="timeline-card-body">
             <h3>Çin'in Güneş Enerjisi Atılımı</h3>
@@ -1075,7 +1277,7 @@
         <div class="timeline-marker">4</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/progress/electric-vehicle.jpg" alt="Norveç'te elektrikli araç devrimi">
+            <img loading="lazy" src="/assets/image/progress/electric-vehicle.jpg" alt="Norveç'te elektrikli araç devrimi" decoding="async" width="275" height="183">
           </div>
           <div class="timeline-card-body">
             <h3>Norveç'te Elektrikli Araç Devrimi</h3>
@@ -1094,7 +1296,7 @@
         <div class="timeline-marker">5</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/progress/european-green-deal.jpg" alt="Avrupa Yeşil Mutabakatı">
+            <img loading="lazy" src="/assets/image/progress/european-green-deal.jpg" alt="Avrupa Yeşil Mutabakatı" decoding="async" width="800" height="500">
           </div>
           <div class="timeline-card-body">
             <h3>Avrupa Yeşil Mutabakatı</h3>
@@ -1112,7 +1314,7 @@
         <div class="timeline-marker">6</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/progress/lithium-ion-battery.jpeg" alt="Batarya Teknolojisi">
+            <img loading="lazy" src="/assets/image/progress/lithium-ion-battery.jpeg" alt="Batarya Teknolojisi" decoding="async" width="1200" height="588">
           </div>
           <div class="timeline-card-body">
             <h3>Bataryada Atılım</h3>
@@ -1130,7 +1332,7 @@
         <div class="timeline-marker">7</div>
         <div class="timeline-card">
           <div class="timeline-card-media">
-            <img loading="lazy" src="assets/image/progress/karbon-yakalama-teknolojisi.webp" alt="Climeworks'ün karbon yakalama tesisi">
+            <img loading="lazy" src="/assets/image/progress/karbon-yakalama-teknolojisi.webp" alt="Climeworks'ün karbon yakalama tesisi" decoding="async" width="1024" height="576">
           </div>
           <div class="timeline-card-body">
             <h3>Climeworks'ün Karbon Yakalama Tesisi</h3>
@@ -1181,7 +1383,7 @@
           </div>
           <p class="bento-card-desc">NASA'nın uydu gözlemleriyle beslenen, sürekli güncellenen küresel iklim verileri ve görselleştirmeleri.</p>
           <div class="bento-counter">
-            <span class="bento-counter-value" data-counter-end="1.2" data-counter-decimals="1">0</span><span
+            <span class="bento-counter-value" data-counter-end="1.2" data-counter-decimals="1" aria-live="off">1.2</span><span
               class="bento-counter-suffix">°C</span>
           </div>
           <span class="bento-counter-label">1880'den bu yana küresel ortalama ısınma</span>
@@ -1253,6 +1455,26 @@
     </div>
   </section>
 
+  <!--========================================================================= Çağrı-Eylem ============================================================================= -->
+
+  <section id="cta-section" class="cta-section theme-gray">
+    <div class="container cta-inner">
+      <h2>Bu sayfayı okudun. Şimdi ne yapacaksın?</h2>
+      <p>İklim krizi büyük bir sorun ama tek başına değilsin — harekete geçen bir topluluğun parçası olabilirsin.</p>
+      <div class="cta-buttons">
+        <a class="cta-btn cta-btn-primary" href="https://iklimdd.org/contact">
+          <i class="fa-solid fa-people-group"></i> Gönüllü Ekibimize Katıl
+        </a>
+        <a class="cta-btn" href="https://iklimdd.org/campaings">
+          <i class="fa-solid fa-bullhorn"></i> Kampanyalarımızı Keşfet
+        </a>
+        <button type="button" class="cta-btn" id="ctaShareBtn">
+          <i class="fa-solid fa-share-nodes"></i> Bu Sayfayı Paylaş
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!--========================================================================= Kaynakça ============================================================================= -->
 
   <section id="sources-section" class="sources-section theme-green">
@@ -1267,13 +1489,15 @@
     </div>
   </section>
 
+  </main>
+
   <!--========================================================================= Footer ============================================================================= -->
 
   <footer class="bg-dark text-white py-5">
     <div class="container">
       <div class="row">
         <div class="col-md-7">
-          <img loading="lazy" src="https://iklimdd.org/idd-logo.png" alt="idd-logo" class="img-fluid mb-3 footer-logo">
+          <img loading="lazy" decoding="async" width="500" height="500" src="/assets/image/idd-logo.webp" alt="İklim Değişmeden Değiş logosu" class="img-fluid mb-3 footer-logo">
           <h5>İklim Değişmeden Değiş (IDD ORG)</h5>
           <p>İklim için harekete geçmek; bilimin, sanatın, teknolojinin ve dayanışmanın ortak
             sorumluluğudur. Değişim, birlikte düşündüğümüzde, ürettiğimizde ve harekete geçtiğimizde mümkün olur.
@@ -1285,23 +1509,23 @@
             <div class="contact-info mb-4">
               <h5 class="mb-3">İletişim</h5>
               <p class="mb-2">
-                <i class="bi bi-envelope me-2"></i>iklimdegismedendegis@gmail.com
+                <i class="bi bi-envelope me-2" aria-hidden="true"></i><a href="mailto:iklimdegismedendegis@gmail.com" class="text-white text-decoration-none">iklimdegismedendegis@gmail.com</a>
               </p>
               <p class="mb-0">
-                <i class="bi bi-geo-alt me-2"></i>İstanbul, Türkiye
+                <i class="bi bi-geo-alt me-2" aria-hidden="true"></i>İstanbul, Türkiye
               </p>
             </div>
             <div class="social-links-wrapper">
               <h5 class="mb-3">Bizi Takip Edin</h5>
               <div class="social-links">
-                <a href="https://www.instagram.com/idd.org.tr/" class="text-white me-3 fs-4"><i
-                    class="bi bi-instagram"></i></a>
+                <a href="https://www.instagram.com/idd.org.tr/" class="text-white me-3 fs-4" aria-label="Instagram'da bizi takip edin" target="_blank" rel="noopener"><i
+                    class="bi bi-instagram" aria-hidden="true"></i></a>
                 <a href="https://www.linkedin.com/company/i%CC%87klim-de%C4%9Fi%C5%9Fmeden-de%C4%9Fi%C5%9F-%C5%9Firket"
-                  class="text-white me-3 fs-4"><i class="bi bi-linkedin"></i></a>
+                  class="text-white me-3 fs-4" aria-label="LinkedIn'de bizi takip edin" target="_blank" rel="noopener"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
                 <a href="https://open.spotify.com/show/0FnjKhFwwugAHvTSIOiVS0?si=5fe08b0c2dde4414&amp;nd=1&amp;dlsi=b1f7cc70aa8e45e4"
-                  class="text-white me-3 fs-4"><i class="bi bi-spotify"></i></a>
-                <a href="https://www.youtube.com/@iklimdegismedendegis" class="text-white me-3 fs-4"><i
-                    class="bi bi-youtube"></i></a>
+                  class="text-white me-3 fs-4" aria-label="Spotify'da podcast'imizi dinleyin" target="_blank" rel="noopener"><i class="bi bi-spotify" aria-hidden="true"></i></a>
+                <a href="https://www.youtube.com/@iklimdegismedendegis" class="text-white me-3 fs-4" aria-label="YouTube'da bizi takip edin" target="_blank" rel="noopener"><i
+                    class="bi bi-youtube" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
