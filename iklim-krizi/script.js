@@ -1,3 +1,20 @@
+/* ── Dikey scrollbar genişliği (--scrollbar-width) ──
+   `100vw` her zaman scrollbar'ı da sayar, `%`/`clientWidth` saymaz; bu fark
+   .cause-fullwidth-header gibi "100vw + negatif margin" ile tam genişliğe
+   taşan öğelerin her iki kenardan da (scrollbar genişliğinin yarısı kadar)
+   taşıp body'nin overflow-x:clip'i tarafından sessizce kırpılmasına yol
+   açıyordu — en belirgini "İklim Krizinin Sebebi" başlığıydı. Gerçek
+   scrollbar genişliği ancak JS ile ölçülebiliyor (CSS'in kendi başına
+   erişimi yok); ölçülen değer style.css'teki ilgili calc()'lara giriyor. */
+(function () {
+  function updateScrollbarWidth() {
+    const width = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', width + 'px');
+  }
+  updateScrollbarWidth();
+  window.addEventListener('resize', updateScrollbarWidth);
+})();
+
 /* ── BAŞLIKLARDA YEAR EKSENİ (Climate Crisis fontunun "zamanın etkisini
    metaforik gösteren" YEAR ekseni) ──
    Google Fonts'un Climate Crisis açıklamasındaki fikir birebir uygulanıyor:
