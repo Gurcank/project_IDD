@@ -57,8 +57,8 @@
   const sdgData = [
     {
       id: 1, title: "Yoksulluğa Son", color: "#E5243B", tag: "SOSYAL",
-      status: "Küresel yoksullukla mücadelede ilerleme neredeyse durma noktasında: dünya nüfusunun yaklaşık onda biri hâlâ aşırı yoksulluk içinde yaşıyor. 3,8 milyar insanın hiçbir sosyal koruma kapsamı yok — bu oran düşük gelirli ülkelerde %9,7'ye inerken yüksek gelirli ülkelerde %85,9'a çıkıyor.",
-      aim: "Bu hedef, 2030'a kadar yoksulluğu her biçimiyle ve her yerde sona erdirmeyi amaçlıyor — sadece aşırı yoksulluğu değil, her ülkenin kendi tanımına göre yoksulluğu da en az yarıya indirmeyi. Yoksullara gerçekten ulaşan sosyal koruma sistemleri kurmayı, ekonomik kaynaklara ve toprağa eşit erişimi, iklim ve ekonomik şoklara karşı dayanıklılığı hedefliyor.",
+      status: "Küresel yoksullukla mücadelede ilerleme neredeyse durma noktasında: dünya nüfusunun yaklaşık onda biri hâlâ aşırı yoksulluk içinde yaşıyor. 3,8 milyar insanın hiçbir sosyal koruma kapsamı yok; bu oran düşük gelirli ülkelerde %9,7'ye inerken yüksek gelirli ülkelerde %85,9'a çıkıyor.",
+      aim: "Bu hedef, 2030'a kadar yoksulluğu her biçimiyle ve her yerde sona erdirmeyi amaçlıyor: sadece aşırı yoksulluğu değil, her ülkenin kendi tanımına göre yoksulluğu da en az yarıya indirmeyi. Yoksullara gerçekten ulaşan sosyal koruma sistemleri kurmayı, ekonomik kaynaklara ve toprağa eşit erişimi, iklim ve ekonomik şoklara karşı dayanıklılığı hedefliyor.",
       stat: "847M", statLabel: "kişi 2024'te günlük 3 doların altında yaşıyordu"
     },
     {
@@ -69,14 +69,14 @@
     },
     {
       id: 3, title: "Sağlıklı Bireyler", color: "#4C9F38", tag: "SAĞLIK",
-      status: "Sağlıkta ilerleme dengesiz: 5 yaş altı ölümler 2015'teki 6,1 milyondan 2024'te 4,9 milyona geriledi, ama bulaşıcı olmayan hastalıklar (kalp hastalığı, kanser, diyabet vb.) 2021'de 70 yaş altı 18 milyon kişinin ölümüne yol açtı — her 2 saniyede bir erken ölüm demek. 2030'a kadar 11,1 milyon sağlık çalışanı açığı öngörülüyor.",
+      status: "Sağlıkta ilerleme dengesiz: 5 yaş altı ölümler 2015'teki 6,1 milyondan 2024'te 4,9 milyona geriledi, ama bulaşıcı olmayan hastalıklar (kalp hastalığı, kanser, diyabet vb.) 2021'de 70 yaş altı 18 milyon kişinin ölümüne yol açtı; bu da her 2 saniyede bir erken ölüm demek. 2030'a kadar 11,1 milyon sağlık çalışanı açığı öngörülüyor.",
       aim: "Bu hedef, her yaştan insan için sağlıklı bir yaşamı ve refahı güvence altına almayı amaçlıyor: anne ve çocuk ölümlerini keskin biçimde azaltmak, AIDS/tüberküloz/sıtma salgınlarını sona erdirmek, bulaşıcı olmayan hastalıklardan erken ölümleri azaltmak ve herkesin mali zorluk yaşamadan kaliteli sağlık hizmetine erişebildiği evrensel sağlık kapsayıcılığına ulaşmak.",
       stat: "197", statLabel: "her 100.000 canlı doğumda anne ölümü (2023)"
     },
     {
       id: 4, title: "Nitelikli Eğitim", color: "#C5192D", tag: "EĞİTİM",
       status: "Okullaşma arttı ama öğrenme çıktıları geriliyor: 57 ülkede ortaokul sonunda okuma yeterliliği 2012-2022 arasında %59'dan %47'ye, matematik yeterliliği %41'den %36'ya düştü. 754 milyon yetişkin hâlâ okuma yazma bilmiyor (%63'ü kadın) ve ilkokulların beşte birinden fazlasında elektrik, su ya da sanitasyon gibi temel hizmetler yok.",
-      aim: "Bu hedef, herkes için kapsayıcı, hakkaniyetli ve nitelikli eğitimi, yaşam boyu öğrenme fırsatlarını güvence altına almayı amaçlıyor — her kız ve erkek çocuğun sadece okula gitmesini değil, gerçek öğrenme çıktılarıyla ücretsiz ilk ve orta öğretimi tamamlamasını, evrensel okuryazarlığı hedefliyor.",
+      aim: "Bu hedef, herkes için kapsayıcı, hakkaniyetli ve nitelikli eğitimi, yaşam boyu öğrenme fırsatlarını güvence altına almayı amaçlıyor: her kız ve erkek çocuğun sadece okula gitmesini değil, gerçek öğrenme çıktılarıyla ücretsiz ilk ve orta öğretimi tamamlamasını, evrensel okuryazarlığı hedefliyor.",
       stat: "%58", statLabel: "öğrenci ilkokul sonunda asgari okuma yeterliliğine ulaşabiliyor (2019)"
     },
     {
@@ -88,7 +88,7 @@
     {
       id: 6, title: "Temiz Su ve Sanitasyon", color: "#26BDE2", tag: "SU",
       status: "2,1 milyar insan güvenle yönetilen içme suyuna, 3,4 milyar insan güvenli sanitasyona, 1,7 milyar insan ise temel hijyen hizmetlerine erişemiyor. Evsel atık suların yalnızca %56'sı güvenli şekilde arıtılıyor. BM'nin kendi değerlendirmesi açık: Hedef 6'nın hiçbir alt hedefi 2030 rotasında değil.",
-      aim: "Bu hedef, herkes için güvenli içme suyuna, yeterli sanitasyon ve hijyene evrensel ve uygun fiyatlı erişimi güvence altına almayı amaçlıyor — özellikle kadınlar, kız çocukları ve kırılgan gruplar gözetilerek. Su kirliliğini azaltmayı, suyu verimli kullanmayı, nehir/göl/sulak alan gibi tatlı su ekosistemlerini sürdürülebilir yönetmeyi hedefliyor.",
+      aim: "Bu hedef, herkes için güvenli içme suyuna, yeterli sanitasyon ve hijyene evrensel ve uygun fiyatlı erişimi güvence altına almayı amaçlıyor; bu hedefte özellikle kadınlar, kız çocukları ve kırılgan gruplar gözetiliyor. Su kirliliğini azaltmayı, suyu verimli kullanmayı, nehir/göl/sulak alan gibi tatlı su ekosistemlerini sürdürülebilir yönetmeyi hedefliyor.",
       stat: "2,1B", statLabel: "kişi güvenle yönetilen içme suyuna hâlâ erişemiyor"
     },
     {
@@ -100,7 +100,7 @@
     {
       id: 8, title: "İnsana Yakışır İş", color: "#A21942", tag: "EKONOMİ",
       status: "Küresel işsizlik 2025'te yaklaşık %4,9'da sabit kaldı, ama gençler yetişkinlere kıyasla neredeyse 4 kat daha fazla işsizlik riskiyle karşı karşıya. Kayıt dışı istihdam küresel iş gücünün %57,9'unu oluşturuyor. 2024'te yaklaşık 138 milyon çocuk (tüm çocukların %8'i) çocuk işçiliğine maruz kaldı.",
-      aim: "Bu hedef, sürdürülen ve kapsayıcı ekonomik büyümeyi, tam ve üretken istihdamı, herkes için insana yakışır işi bir arada sağlamayı amaçlıyor — büyümeyi her ne pahasına olursa olsun değil, güvenli koşullar, adil ücret ve yasal korumayla. Zorla çalıştırma, modern kölelik ve çocuk işçiliğini tamamen ortadan kaldırmayı hedefliyor.",
+      aim: "Bu hedef, sürdürülen ve kapsayıcı ekonomik büyümeyi, tam ve üretken istihdamı, herkes için insana yakışır işi bir arada sağlamayı amaçlıyor; büyüme her ne pahasına olursa olsun değil, güvenli koşullar, adil ücret ve yasal korumayla gerçekleşmeli. Zorla çalıştırma, modern kölelik ve çocuk işçiliğini tamamen ortadan kaldırmayı hedefliyor.",
       stat: "138M", statLabel: "çocuk 2024'te çocuk işçiliğine maruz kaldı"
     },
     {
@@ -111,49 +111,49 @@
     },
     {
       id: 10, title: "Eşitsizliklerin Azaltılması", color: "#DD1367", tag: "ADALET",
-      status: "Dünya nüfusunun %13'ü kendi ülkesinin medyan gelirinin yarısından azıyla yaşıyor (Latin Amerika'da bu oran %20'ye çıkıyor). Neredeyse her 5 kişiden biri ayrımcılığa maruz kaldığını bildiriyor. 2024 ortası itibarıyla 37,8 milyon kişi mülteci statüsünde — 2015'e göre iki kattan fazla artış.",
+      status: "Dünya nüfusunun %13'ü kendi ülkesinin medyan gelirinin yarısından azıyla yaşıyor (Latin Amerika'da bu oran %20'ye çıkıyor). Neredeyse her 5 kişiden biri ayrımcılığa maruz kaldığını bildiriyor. 2024 ortası itibarıyla 37,8 milyon kişi mülteci statüsünde (2015'e göre iki kattan fazla artış).",
       aim: "Bu hedef, ülkeler içindeki ve ülkeler arasındaki gelir uçurumunu kapatmayı amaçlıyor. En yoksul %40'lık kesimin gelirinin ulusal ortalamadan daha hızlı artmasını, yaş/cinsiyet/engellilik/ırk fark etmeksizin eşit fırsatı, gelişmekte olan ülkelerin küresel ekonomik kurumlarda daha güçlü sesini hedefliyor.",
       stat: "37,8M", statLabel: "kişi 2024 ortası itibarıyla mülteci statüsündeydi"
     },
     {
       id: 11, title: "Sürdürülebilir Şehirler", color: "#FD9D24", tag: "KENTSEL",
-      status: "Dünya nüfusunun yarısından fazlası zaten şehirlerde yaşıyor, bu oranın 2050'ye kadar %70'e çıkması bekleniyor. 2022'de 1,12 milyar insan gecekondu ya da benzeri koşullarda yaşıyordu — 2015'e göre 130 milyon fazla. Kentlilerin yalnızca %61,5'i toplu taşımaya rahat erişebiliyor.",
+      status: "Dünya nüfusunun yarısından fazlası zaten şehirlerde yaşıyor, bu oranın 2050'ye kadar %70'e çıkması bekleniyor. 2022'de 1,12 milyar insan gecekondu ya da benzeri koşullarda yaşıyordu (2015'e göre 130 milyon fazla). Kentlilerin yalnızca %61,5'i toplu taşımaya rahat erişebiliyor.",
       aim: "Bu hedef, büyümeye devam eden şehirleri kapsayıcı, güvenli, dayanıklı ve sürdürülebilir kılmayı amaçlıyor. Herkesin uygun fiyatlı konuta ve iyileştirilmiş gecekondu alanlarına erişimini, güvenli ve erişilebilir toplu taşımayı, şehirlerin çevresel ayak izinin azaltılmasını hedefliyor.",
       stat: "1,12B", statLabel: "kişi 2022'de gecekondu benzeri koşullarda yaşıyordu"
     },
     {
       id: 12, title: "Sorumlu Tüketim", color: "#BF8B2E", tag: "TÜKETİM",
-      status: "Her yıl yaklaşık 1,05 milyar ton gıda israf ediliyor (bunun %60'ı hane halkı kaynaklı) — yüz milyonlarca insan aç yaşarken. 2023'te dünya 65 milyon ton e-atık üretti (kişi başına 8,1 kg), bunun sadece 15,5 milyon tonu (dörtte birinden azı) resmi olarak geri dönüştürüldü.",
+      status: "Her yıl yaklaşık 1,05 milyar ton gıda israf ediliyor (bunun %60'ı hane halkı kaynaklı); bu, yüz milyonlarca insan aç yaşarken gerçekleşiyor. 2023'te dünya 65 milyon ton e-atık üretti (kişi başına 8,1 kg), bunun sadece 15,5 milyon tonu (dörtte birinden azı) resmi olarak geri dönüştürüldü.",
       aim: "Bu hedef, ekonomik büyüme ile çevresel tahribat arasındaki bağı koparmayı amaçlıyor. Kişi başına küresel gıda israfını perakende ve tüketici düzeyinde yarıya indirmeyi, kimyasalların ve atıkların çevreye duyarlı yönetimini, büyük şirketlerin sürdürülebilir ve şeffaf uygulamalar benimsemesini hedefliyor.",
       stat: "65M ton", statLabel: "e-atık üretildi (2023), sadece %24'ü geri dönüştürüldü"
     },
     {
       id: 13, title: "İklim Eylemi", color: "#3F7E44", tag: "ACİL",
-      status: "2025'te küresel ortalama sıcaklık, sanayi öncesi döneme göre 1,43°C daha yüksek — Paris Anlaşması'nın 1,5°C sınırına doğrudan dayanıyor. Atmosferdeki CO₂ seviyesi 2024'te 2 milyon yılın en yüksek noktasına ulaştı (sanayi öncesinin %152 üzerinde). İklim afetleri her yıl ortalama 123 milyon insanı etkiliyor.",
-      aim: "Bu hedef, iklim değişikliğiyle ve etkileriyle mücadele için acil eylemi amaçlıyor — bu on yılda hızlı ve derin emisyon azaltımı olmazsa 1,5°C sınırının aşılacağı ve milyarlarca hayatın risk altına gireceği öngörülüyor. İklim afetlerine dayanıklılığı, iklim eylemini ulusal politikalara entegre etmeyi, gelişmekte olan ülkelere iklim finansmanını hedefliyor.",
+      status: "2025'te küresel ortalama sıcaklık, sanayi öncesi döneme göre 1,43°C daha yüksek; bu da Paris Anlaşması'nın 1,5°C sınırına doğrudan dayanıyor. Atmosferdeki CO₂ seviyesi 2024'te 2 milyon yılın en yüksek noktasına ulaştı (sanayi öncesinin %152 üzerinde). İklim afetleri her yıl ortalama 123 milyon insanı etkiliyor.",
+      aim: "Bu hedef, iklim değişikliğiyle ve etkileriyle mücadele için acil eylemi amaçlıyor. Bu on yılda hızlı ve derin emisyon azaltımı olmazsa 1,5°C sınırının aşılacağı ve milyarlarca hayatın risk altına gireceği öngörülüyor. İklim afetlerine dayanıklılığı, iklim eylemini ulusal politikalara entegre etmeyi, gelişmekte olan ülkelere iklim finansmanını hedefliyor.",
       stat: "1,43°C", statLabel: "2025'te sanayi öncesi döneme göre küresel sıcaklık artışı"
     },
     {
       id: 14, title: "Sudaki Yaşam", color: "#0A97D9", tag: "OKYANUS",
-      status: "Okyanuslar sanayi öncesi döneme kıyasla yaklaşık %30 daha asidik — mercanları ve deniz canlılarını doğrudan tehdit ediyor. Küresel balık stoklarının %37,7'si 2021'de aşırı avlanmaya maruz kaldı (2019'da %35,4 idi). Deniz alanı planlaması yapan 126 ülkeden sadece 45'inin resmi onaylı planı var (2024).",
-      aim: "Bu hedef, okyanusları ve deniz kaynaklarını korumayı ve sürdürülebilir kullanmayı amaçlıyor — dünya yüzeyinin %70'inden fazlasını kaplayan okyanuslara 3 milyardan fazla insan geçim kaynağı için bağımlı. Deniz kirliliğini azaltmayı, kıyı ve deniz ekosistemlerini korumayı, aşırı avlanmayı sona erdirmeyi, kıyı/deniz alanlarının en az %10'unu koruma altına almayı hedefliyor.",
+      status: "Okyanuslar sanayi öncesi döneme kıyasla yaklaşık %30 daha asidik; bu da mercanları ve deniz canlılarını doğrudan tehdit ediyor. Küresel balık stoklarının %37,7'si 2021'de aşırı avlanmaya maruz kaldı (2019'da %35,4 idi). Deniz alanı planlaması yapan 126 ülkeden sadece 45'inin resmi onaylı planı var (2024).",
+      aim: "Bu hedef, okyanusları ve deniz kaynaklarını korumayı ve sürdürülebilir kullanmayı amaçlıyor; dünya yüzeyinin %70'inden fazlasını kaplayan okyanuslara 3 milyardan fazla insan geçim kaynağı için bağımlı durumda. Deniz kirliliğini azaltmayı, kıyı ve deniz ekosistemlerini korumayı, aşırı avlanmayı sona erdirmeyi, kıyı/deniz alanlarının en az %10'unu koruma altına almayı hedefliyor.",
       stat: "%37,7", statLabel: "küresel balık stoku 2021'de aşırı avlanmaya maruz kaldı"
     },
     {
       id: 15, title: "Karasal Yaşam", color: "#56C02B", tag: "EKOSİSTEM",
-      status: "Küresel orman örtüsü 2025'te kara alanının %31,8'ine geriledi (4,14 milyar hektar) — 1990'dan bu yana 203,1 milyon hektar (%4,7) kayıp yaşandı. Tarımsal genişleme, küresel ormansızlaşmanın neredeyse %90'ının doğrudan nedeni. 2015-2019 arasında her yıl en az 100 milyon hektar verimli arazi kayboldu; bu durum 1,3 milyar insanı doğrudan etkiliyor.",
+      status: "Küresel orman örtüsü 2025'te kara alanının %31,8'ine geriledi (4,14 milyar hektar); 1990'dan bu yana 203,1 milyon hektar (%4,7) kayıp yaşandı. Tarımsal genişleme, küresel ormansızlaşmanın neredeyse %90'ının doğrudan nedeni. 2015-2019 arasında her yıl en az 100 milyon hektar verimli arazi kayboldu; bu durum 1,3 milyar insanı doğrudan etkiliyor.",
       aim: "Bu hedef, karasal ekosistemleri korumayı, eski haline getirmeyi ve sürdürülebilir kullanımını desteklemeyi amaçlıyor: ormanları sürdürülebilir yönetmek, çölleşmeyle mücadele etmek, arazi bozulmasını durdurup tersine çevirmek, biyoçeşitlilik kaybını durdurmak. BM'nin kendi ifadesiyle biyoçeşitlilik \"insanlığın yaşam destek sistemi.\"",
       stat: "1,3B", statLabel: "kişi arazi bozulmasından doğrudan etkileniyor"
     },
     {
       id: 16, title: "Barış ve Adalet", color: "#00689D", tag: "YÖNETİŞİM",
-      status: "Şiddetli çatışmalar on yılların en yüksek seviyesine ulaştı. Haziran 2025 itibarıyla 117,3 milyon insan zorla yerinden edildi, bunların 42,5 milyonu mülteci. Küresel cinayet oranı 2015'teki 100.000 kişide 5,9'dan 2024'te 5,1'e geriledi — 2030 hedefi olan %50 azalmanın çok gerisinde.",
+      status: "Şiddetli çatışmalar on yılların en yüksek seviyesine ulaştı. Haziran 2025 itibarıyla 117,3 milyon insan zorla yerinden edildi, bunların 42,5 milyonu mülteci. Küresel cinayet oranı 2015'teki 100.000 kişide 5,9'dan 2024'te 5,1'e geriledi; bu, 2030 hedefi olan %50 azalmanın çok gerisinde.",
       aim: "Bu hedef, barışçıl ve kapsayıcı toplumları, herkes için adalete erişimi, her düzeyde etkili ve hesap verebilir kurumları amaçlıyor. Şiddeti ve ölüm oranlarını azaltmayı, çocuk istismarı ve insan kaçakçılığını sona erdirmeyi, yolsuzluğu ve yasa dışı mali akışları önemli ölçüde kısmayı hedefliyor.",
       stat: "117,3M", statLabel: "kişi dünya genelinde zorla yerinden edildi (Haziran 2025)"
     },
     {
       id: 17, title: "Hedefler İçin Ortaklık", color: "#19486A", tag: "ORTAKLIK",
-      status: "Büyük bağışçı ülkelerin resmi kalkınma yardımı 2025'te 174,3 milyar dolara geriledi — 2024'e göre %23,1'lik düşüşle \"kayıtlardaki en büyük yıllık azalış.\" Gelişmekte olan ülkelerin toplam dış borcu 2024'te rekor kırarak 8,9 trilyon dolara ulaştı.",
+      status: "Büyük bağışçı ülkelerin resmi kalkınma yardımı 2025'te 174,3 milyar dolara geriledi; 2024'e göre %23,1'lik bu düşüş \"kayıtlardaki en büyük yıllık azalış\" oldu. Gelişmekte olan ülkelerin toplam dış borcu 2024'te rekor kırarak 8,9 trilyon dolara ulaştı.",
       aim: "Bu hedef, diğer tüm hedefleri finanse edecek ve hayata geçirecek küresel ortaklıkları güçlendirmeyi amaçlıyor. Zengin ülkelerin uzun süredir taahhüt ettiği yardım hedeflerini (gayri safi milli hasılanın %0,7'si) karşılamasını, borç yönetimine destek olmasını, teknoloji ve bilgi paylaşımını, adil bir küresel ticaret sistemini hedefliyor.",
       stat: "$4T", statLabel: "gelişmekte olan ülkelerdeki yıllık SKH yatırım açığı"
     }
@@ -895,7 +895,6 @@
   const HEADING_RESIZE_DEBOUNCE_MS = 150;
   const HEADING_FIT_MOBILE_BREAKPOINT = 769;
   const HEADING_FIT_MIN_SCALE = 0.7;
-  const HEADING_FIT_MAX_SCALE = 3;
 
   function playDipAndSweep() {
     suffixText.classList.remove('dip', 'sweep-in');
@@ -908,15 +907,17 @@
 
   /* Başlık (sabit metin + değişen sekme adı) en soldan en sağa kadar uzansın:
      doğal genişliği ölçüp mevcut alana sığacak şekilde font-size'ı ölçekler.
-     İki düzeltme gerekti:
-     1) .cause-heading-suffix'in overflow-x:hidden'ı yüzünden headingEl'in
-        kendi scrollWidth'i gerçek (taşan) genişliği yansıtmıyordu — bunun
-        yerine iki iç metin öğesinin kendi scrollWidth'lerini topluyoruz.
-     2) headingEl'e (kapsayıcı flex div'ine) font-size yazmak hiçbir işe
-        yaramıyordu, çünkü çocuklar (.cause-heading-static / -suffix-text)
-        kendi clamp(rem/vw) tabanlı font-size'larını tanımlıyor — bunlar
-        ebeveynden miras almıyor. Ölçeklenmiş font-size'ı artık doğrudan bu
-        iki çocuk öğeye, kendi taban punto ölçümlerine göre yazıyoruz. */
+     Genişlik toplamını önceden hesaplayıp tek seferde bir ölçek uygulamak
+     güvenilir çıkmadı: .cause-heading-suffix flex item'ı (overflow-x:hidden,
+     min-width:0) bazı genişliklerde, statik metin + suffix'in toplamı
+     kapsayıcıya rahatça sığsa bile kendi içeriğinden daha dar render
+     edilebiliyor (Chromium'un flex "resolving flexible lengths" algoritmasının
+     bu kombinasyonda ürettiği bir sonuç — kesin nedeni CSS uzmanlığı
+     gerektiriyor). Kesin/döngüsel biçim yerine EMPIRİK bir yaklaşım
+     kullanıyoruz: gerçek taşmayı (suffixText'in sağ kenarı, onu kırpan
+     .cause-heading-suffix'in sağ kenarını ne kadar geçiyor) doğrudan ölçüp,
+     sığana kadar ikili arama (binary search) ile küçültüyoruz — sebep ne
+     olursa olsun sonucu garanti eder. */
   const staticEl = document.querySelector('.cause-heading-static');
   const headingEl = document.querySelector('.cause-heading');
   function fitHeadingWidth() {
@@ -928,15 +929,31 @@
     }
     staticEl.style.fontSize = '';
     suffixText.style.fontSize = '';
-    const available = headingEl.clientWidth;
-    const gap = parseFloat(getComputedStyle(headingEl).columnGap || getComputedStyle(headingEl).gap || '0') || 0;
-    const staticBaseSize = parseFloat(getComputedStyle(staticEl).fontSize);
-    const suffixBaseSize = parseFloat(getComputedStyle(suffixText).fontSize);
-    const natural = staticEl.scrollWidth + gap + suffixText.scrollWidth;
-    if (!available || !natural) return;
-    const scale = Math.max(HEADING_FIT_MIN_SCALE, Math.min(available / natural, HEADING_FIT_MAX_SCALE));
-    staticEl.style.fontSize = `${staticBaseSize * scale}px`;
-    suffixText.style.fontSize = `${suffixBaseSize * scale}px`;
+    const naturalStaticBase = parseFloat(getComputedStyle(staticEl).fontSize);
+    const naturalSuffixBase = parseFloat(getComputedStyle(suffixText).fontSize);
+
+    function applyScale(scale) {
+      staticEl.style.fontSize = `${naturalStaticBase * scale}px`;
+      suffixText.style.fontSize = `${naturalSuffixBase * scale}px`;
+    }
+
+    function overflowPx() {
+      const textRight = suffixText.getBoundingClientRect().right;
+      const wrapRight = suffix.getBoundingClientRect().right;
+      return textRight - wrapRight;
+    }
+
+    applyScale(1);
+    if (overflowPx() <= 0.5) return; // doğal boyutta zaten sığıyor
+
+    let lo = HEADING_FIT_MIN_SCALE;
+    let hi = 1;
+    for (let i = 0; i < 14; i++) {
+      const mid = (lo + hi) / 2;
+      applyScale(mid);
+      if (overflowPx() > 0.5) hi = mid; else lo = mid;
+    }
+    applyScale(lo);
   }
 
   document.querySelectorAll('#causeTabsNav .cause-tab-btn').forEach((btn) => {
@@ -968,6 +985,22 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(fitHeadingWidth, HEADING_RESIZE_DEBOUNCE_MS);
   });
+
+  // Başlık ".cause-fullwidth-heading" üzerinden "YEAR" değişken font eksenini
+  // miras alıyor (bkz. dosyanın başındaki YEAR ekseni bloğu, --yr) — section
+  // scroll ile aktifleşince YEAR değeri 1.2s'lik bir geçişle değişiyor ve
+  // harfler "eriyerek" şekil değiştiriyor. Bu şekil değişimi glifin doğal
+  // genişliğini de değiştirdiğinden, sayfa ilk yüklendiğinde (henüz hiçbir
+  // section aktifleşmeden, YEAR başlangıç değerindeyken) yapılan tek seferlik
+  // ölçüm, kullanıcı gerçekten bu section'a kaydırdığında geçersiz kalıyordu
+  // — metin, ölçümden SONRA değişen glif genişliğiyle taşıyordu. Geçiş
+  // bittiğinde ("transitionend") ölçümü tazeleyerek bunu düzeltiyoruz.
+  const fullwidthHeading = document.querySelector('.cause-fullwidth-heading');
+  if (fullwidthHeading) {
+    fullwidthHeading.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'font-variation-settings') fitHeadingWidth();
+    });
+  }
 })();
 
 /* ── Sebep Örnekleri: CardStack (fanlanmış kart istifi) ──
@@ -1426,7 +1459,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const individualSteps = [
     { icon: 'fa-bolt', color: 'green', photo: 'assets/image/actions/energy-saving.avif', title: 'Enerji Tasarrufu',
-      desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor — bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
+      desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor. Bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
       examples: ["Çamaşırı 30°C'de ve tam dolu makinede yıka", 'Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar', 'Mümkünse enerji tedarikçini yenilenebilire geçir'] },
     { icon: 'fa-bicycle', color: 'blue', photo: 'assets/image/actions/transportation-preferences.avif', title: 'Ulaşım Tercihleri',
       desc: 'Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.',
@@ -1919,39 +1952,15 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(section);
 })();
 
-/* ── Kahraman videosu: mobilde/hareket kısıtlıyken hiç oynatma, aksi halde
-   oynat + durdur/oynat kontrolü sun (WCAG 2.2.2). preload="none" olduğu için
-   play() çağrılmadığı sürece tarayıcı video verisini indirmiyor — mobilde bu
-   fonksiyon hiç çalışmadığından kullanıcı yalnızca poster görselini indirir. */
+/* ── Kahraman videosu: hareket kısıtlıyken hiç oynatma (poster kalır). ── */
 (function () {
   const video = document.getElementById('heroVideo');
-  const toggle = document.getElementById('heroVideoToggle');
   if (!video) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isMobile = window.matchMedia('(max-width: 767px)').matches;
-
-  if (prefersReducedMotion || isMobile) {
-    if (toggle) toggle.hidden = true;
-    return;
-  }
+  if (prefersReducedMotion) return;
 
   video.play().catch(() => {});
-
-  if (toggle) {
-    const icon = toggle.querySelector('i');
-    toggle.addEventListener('click', () => {
-      if (video.paused) {
-        video.play().catch(() => {});
-        toggle.setAttribute('aria-label', 'Arka plan videosunu duraklat');
-        if (icon) icon.className = 'fa-solid fa-pause';
-      } else {
-        video.pause();
-        toggle.setAttribute('aria-label', 'Arka plan videosunu oynat');
-        if (icon) icon.className = 'fa-solid fa-play';
-      }
-    });
-  }
 })();
 
 /* ── Okuma ilerleme çubuğu + Başa dön butonu + Bölüm nokta menüsü ── */
@@ -2049,73 +2058,6 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('sekme', slug);
       window.history.replaceState(null, '', url);
     });
-  });
-})();
-
-/* ── Bölüm başlıklarına "bağlantıyı kopyala" düğmesi ekle ──
-   Her ana section'ın (zaten id'si olan) ilk h2 başlığının yanına küçük bir
-   zincir ikonu ekliyor; tıklanınca o bölümün URL'sini panoya kopyalıyor. Bu
-   sayede "Türkiye'deki orman yangını verisi" gibi tek bir bölüm, tüm sayfa
-   yerine doğrudan paylaşılabiliyor. */
-(function () {
-  const sectionIds = [
-    'sdg-section', 'happening-section', 'causes-section',
-    'consequences-section', 'actions-section', 'progress-section', 'resources-section',
-    'indicator-orman-yanginlari', 'indicator-deniz-sicakligi', 'indicator-global-isinma'
-  ];
-
-  sectionIds.forEach((id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const heading = el.querySelector('h2, h3');
-    if (!heading || heading.querySelector('.section-anchor-btn')) return;
-
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'section-anchor-btn';
-    btn.setAttribute('aria-label', 'Bu bölümün bağlantısını kopyala');
-    btn.innerHTML = '<i class="fa-solid fa-link" aria-hidden="true"></i>';
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const url = window.location.origin + window.location.pathname + '#' + id;
-      try {
-        await navigator.clipboard.writeText(url);
-      } catch (err) {
-        window.prompt('Bağlantıyı kopyala:', url);
-        return;
-      }
-      const icon = btn.querySelector('i');
-      icon.className = 'fa-solid fa-check';
-      setTimeout(() => { icon.className = 'fa-solid fa-link'; }, 1800);
-    });
-    heading.appendChild(btn);
-  });
-})();
-
-/* ── CTA: "Bu Sayfayı Paylaş" — Web Share API varsa native paylaşım sayfası,
-   yoksa adresi panoya kopyalayıp butonda kısa bir onay gösterir. ── */
-(function () {
-  const btn = document.getElementById('ctaShareBtn');
-  if (!btn) return;
-  const originalHTML = btn.innerHTML;
-
-  btn.addEventListener('click', async () => {
-    const shareData = {
-      title: document.title,
-      text: 'İklim krizi: veriler, kanıtlar ve Türkiye',
-      url: window.location.href
-    };
-    if (navigator.share) {
-      try { await navigator.share(shareData); } catch (e) { /* kullanıcı iptal etti */ }
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      btn.innerHTML = '<i class="fa-solid fa-check"></i> Bağlantı kopyalandı';
-      setTimeout(() => { btn.innerHTML = originalHTML; }, 2200);
-    } catch (e) {
-      window.prompt('Bağlantıyı kopyala:', window.location.href);
-    }
   });
 })();
 
