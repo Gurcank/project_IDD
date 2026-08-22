@@ -1,20 +1,3 @@
-/* ── Dikey scrollbar genişliği (--scrollbar-width) ──
-   `100vw` her zaman scrollbar'ı da sayar, `%`/`clientWidth` saymaz; bu fark
-   .cause-fullwidth-header gibi "100vw + negatif margin" ile tam genişliğe
-   taşan öğelerin her iki kenardan da (scrollbar genişliğinin yarısı kadar)
-   taşıp body'nin overflow-x:clip'i tarafından sessizce kırpılmasına yol
-   açıyordu — en belirgini "İklim Krizinin Sebebi" başlığıydı. Gerçek
-   scrollbar genişliği ancak JS ile ölçülebiliyor (CSS'in kendi başına
-   erişimi yok); ölçülen değer style.css'teki ilgili calc()'lara giriyor. */
-(function () {
-  function updateScrollbarWidth() {
-    const width = window.innerWidth - document.documentElement.clientWidth;
-    document.documentElement.style.setProperty('--scrollbar-width', width + 'px');
-  }
-  updateScrollbarWidth();
-  window.addEventListener('resize', updateScrollbarWidth);
-})();
-
 /* ── BAŞLIKLARDA YEAR EKSENİ (Climate Crisis fontunun "zamanın etkisini
    metaforik gösteren" YEAR ekseni) ──
    Google Fonts'un Climate Crisis açıklamasındaki fikir birebir uygulanıyor:
@@ -364,6 +347,14 @@
     autoRotate = true;
     updatePositions();
   }
+
+  /* ── 10b. KAPATMA DÜĞMESİ (tam ekran mobil kart) ────────── */
+  infoCard.addEventListener('click', (e) => {
+    if (e.target.closest('.sdg-card-close')) {
+      e.stopPropagation();
+      resetState();
+    }
+  });
 
   /* ── 11. DIŞARI TIKLAMA → SIFIRLA ──────────────────────── */
   const sectionEl = document.getElementById('sdg-section');
@@ -1063,22 +1054,49 @@
 })();
 
 /* ── "Tabs card" (Orman Yangınları / Deniz Sıcaklığı / Global Isınma) ──
-   Framer'ın Tabs-card bileşeninin aynısı: solda isim+açıklama listesi,
-   sağda tıklanan öğenin fotoğrafı çapraz geçişle (cross-fade) görünüyor.
-   Çerçeve her sekmede/her bileşende sabit boyutta (style.css); görsel
-   object-fit:cover ile boşluksuz ama deforme olmadan dolduruyor. */
+   Masaüstünde Framer'ın Tabs-card bileşeninin aynısı: solda isim+açıklama
+   listesi, sağda tıklanan öğenin fotoğrafı çapraz geçişle (cross-fade)
+   görünüyor. ≤767px'te satır düzeni sütuna dönüyor (style.css) ama ortak
+   fotoğraf çerçevesi kendi genişliğini absolute konumlu <img>'lardan
+   alamadığından (normal akıştan çıkmış elemanlar üst kapsayıcı boyutuna
+   katkı vermez) genişliği sıfıra çöküp görünmez oluyordu — düzeltmek
+   yetmiyordu, kullanıcı isteği: mobilde çerçeve tıklanan başlığın hemen
+   altında, akordeon gibi görünsün. Tek fotoğraf çerçevesi DOM'da tıklanan
+   sekmenin (tabs-list içindeki) hemen ardına taşınıyor; masaüstünde
+   card'ın son çocuğu olarak (özgün konumu) geri veriliyor. Görsellerin
+   kendisi zaten aynı elemanlar olduğundan lightbox/crossfade bağlı kalıyor. */
 (function () {
+  const mobileQuery = window.matchMedia('(max-width: 767px)');
+
   document.querySelectorAll('.indicator-tabs-card').forEach((card) => {
     const tabs = Array.prototype.slice.call(card.querySelectorAll('.indicator-tab-item'));
     const photos = Array.prototype.slice.call(card.querySelectorAll('.indicator-tab-photo-img'));
+    const photoPanel = card.querySelector('.indicator-tabs-photo');
     if (!tabs.length) return;
 
+    let activeIndex = 0;
+
+    function positionPhotoPanel() {
+      if (!photoPanel) return;
+      if (mobileQuery.matches) {
+        const activeTab = tabs[activeIndex];
+        if (activeTab && activeTab.nextElementSibling !== photoPanel) {
+          activeTab.insertAdjacentElement('afterend', photoPanel);
+        }
+      } else if (card.lastElementChild !== photoPanel) {
+        card.appendChild(photoPanel);
+      }
+    }
+
     function setActive(index) {
+      activeIndex = index;
       tabs.forEach((tab, i) => tab.classList.toggle('active', i === index));
       photos.forEach((photo, i) => photo.classList.toggle('active', i === index));
+      positionPhotoPanel();
     }
 
     tabs.forEach((tab, i) => tab.addEventListener('click', () => setActive(i)));
+    mobileQuery.addEventListener('change', positionPhotoPanel);
     setActive(0);
   });
 })();
@@ -2038,42 +2056,52 @@ document.addEventListener('DOMContentLoaded', () => {
   update();
 })();
 
-/* ── Sebepler sekmesi ↔ URL senkronizasyonu ──
-   Aktif sekme ?sekme=ulasim gibi bir sorgu parametresine yazılır (sayfa
-   yeniden yüklenmeden, history.replaceState ile) — böylece biri "Ulaşım"
-   sekmesindeyken linki paylaştığında karşı taraf da aynı sekmede açılır.
-   Sayfa da o parametreyle açılırsa ilgili sekmeyi baştan aktif eder. */
+/* ── Site tek sayfa: hiçbir tıklama adres çubuğunu değiştirmesin ──
+   Önceden iki ayrı mekanizma URL'yi yazıyordu: (1) Sebepler sekmeleri
+   ?sekme=ulasim sorgu parametresine, (2) dot-nav/skip-link gibi href="#id"
+   bağlantıları native tarayıcı davranışıyla #id'ye. İkisi bağımsız çalışıp
+   birbirini temizlemediğinden, bir sekmeye tıklayıp sonra bir bölüme
+   kaydırıldığında ?sekme=ormansizlasma#resources-section gibi tutarsız,
+   paylaşılması anlamsız linkler birikiyordu. Kullanıcı isteği: tek sayfa
+   için tek, sabit link — hiçbiri adres çubuğunu değiştirmesin.
+   Sekme senkronizasyonu (1) tamamen kaldırıldı. (2) için: tüm href="#id"
+   bağlantıları yakalanıp preventDefault ile native atlama engelleniyor,
+   kaydırma JS'e devrediliyor (Lenis varsa onunla — sitenin geri kalanıyla
+   aynı akıcı his — yoksa native smooth scroll). Native çapa davranışının
+   kaybolan tek gerçek faydası olan "hedefe odak taşıma" (klavye/ekran
+   okuyucu için, özellikle skip-link'te önemli) manuel olarak korunuyor. */
 (function () {
-  const tablist = document.getElementById('causeTabsNav');
-  if (!tablist) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const slugToPaneId = {
-    enerji: 'cause-energy',
-    ormansizlasma: 'cause-deforestation',
-    sanayi: 'cause-industry',
-    tarim: 'cause-agriculture',
-    ulasim: 'cause-transport'
-  };
-  const paneIdToSlug = Object.fromEntries(Object.entries(slugToPaneId).map(([k, v]) => [v, k]));
+  function scrollToTarget(target) {
+    if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+      window.lenis.scrollTo(target, { immediate: reducedMotion });
+    } else {
+      target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+    }
 
-  const params = new URLSearchParams(window.location.search);
-  const requestedSlug = params.get('sekme');
-  const requestedPaneId = requestedSlug && slugToPaneId[requestedSlug];
-  if (requestedPaneId) {
-    const trigger = tablist.querySelector('[data-bs-target="#' + requestedPaneId + '"]');
-    if (trigger && window.bootstrap && window.bootstrap.Tab) {
-      window.bootstrap.Tab.getOrCreateInstance(trigger).show();
+    // Section/main gibi doğal olarak odaklanamayan hedefler için geçici
+    // tabindex — native "#id" atlamasının odak taşıma tarafını taklit eder.
+    const addedTabindex = !target.hasAttribute('tabindex');
+    if (addedTabindex) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+    if (addedTabindex) {
+      target.addEventListener('blur', function onBlur() {
+        target.removeAttribute('tabindex');
+        target.removeEventListener('blur', onBlur);
+      });
     }
   }
 
-  tablist.querySelectorAll('[data-bs-toggle="tab"]').forEach((btn) => {
-    btn.addEventListener('shown.bs.tab', (e) => {
-      const targetId = (e.target.getAttribute('data-bs-target') || '').replace('#', '');
-      const slug = paneIdToSlug[targetId];
-      if (!slug) return;
-      const url = new URL(window.location.href);
-      url.searchParams.set('sekme', slug);
-      window.history.replaceState(null, '', url);
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    const id = link.getAttribute('href').slice(1);
+    if (!id) return; // href="#" (ör. navbar dropdown-toggle) — dokunma
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToTarget(target);
     });
   });
 })();

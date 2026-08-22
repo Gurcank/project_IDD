@@ -492,6 +492,16 @@ footer .social-links a::after {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  transition: opacity 0.3s ease;
+}
+
+/* SDG kartı (.sdg-card-panel'in kendi z-index'i yok, "auto") açılınca
+   dot-nav'ın z-index:900'ü onun ÜSTÜNE biniyordu — sağdaki noktalar açılan
+   beyaz kartın üzerinde asılı kalıyordu. Bir SDG kartı görünürken dot-nav'ı
+   arka plana (görünmez + tıklanamaz) alıyoruz; kart kapanınca normale döner. */
+body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .section-dotnav a {
@@ -756,7 +766,6 @@ footer .social-links a::after {
   justify-content: space-between;
   gap: 30px;
   width: 100%;
-  position: relative;
 }
 
 /* Sol taraf: Sabit başlık/açıklama metni
@@ -771,28 +780,50 @@ footer .social-links a::after {
   text-align: left;
 }
 
-/* Orta: Orbital alanı */
+/* Orta: Orbital alanı
+   min-width artık 0 değil: .sdg-orbit-ring (halka) her zaman bu kutudan
+   biraz taşacak şekilde tasarlanmış (bkz. aşağıdaki .sdg-orbit-ring
+   yorumu), min-width:0 satır sıkıştığında bu kutuyu halkanın kendi
+   ihtiyacının altına düşürebiliyordu — 1280x800 (Nest Hub Max) gibi
+   yaygın bir genişlikte dünya/node'lar sol taraftaki başlık metnine
+   biniyordu. 350px, halkanın alt sınırının (300px) + node taşma payının
+   güvenli tabanı. */
 .sdg-orbit-wrapper {
   flex: 1 1 clamp(340px, 38vw, 500px);
-  min-width: 0;
+  min-width: 375px;
   position: relative;
   display: flex;
   justify-content: center;
 }
 
-/* Sağ taraf: Tıklanan node'un bilgi kartı (başlangıçta gizli) */
+/* Tıklanan node'un bilgi kartı (başlangıçta gizli) — kullanıcı isteğiyle
+   artık satırın bir sütunu değil, dünyanın/orbit'in TAM ÖNÜNE gelen
+   ortalanmış bir kaplama. Konumlanma referansı artık .sdg-zone değil,
+   doğrudan #sdg-section (position:relative kaldırıldı .sdg-zone'dan) —
+   bu sayede yüzde ölçüleri section'ın TÜM yeşil alanına göre hesaplanıyor.
+   width/max-height %100'ün altında tutulduğu ve top/left:50% + -50%
+   transform ile ortalandığı sürece kartın kenarları matematiksel olarak
+   asla section'ın (yeşil arka planın) dışına taşamaz. .sdg-section normal
+   akışın içinde (fixed değil) olduğundan bu absolute konum da sayfayla
+   birlikte dünyayla AYNI hızda kayar — sadece artık dünyanın yanında
+   değil, üstünde duruyor. */
 .sdg-card-panel {
-  flex: 1 1 clamp(280px, 26vw, 420px);
-  margin-right: 48px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(960px, 90%);
+  max-height: 88%;
+  overflow-y: auto;
+  z-index: 600;
   opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  transform: translate(-50%, -50%) translateY(20px);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sdg-card-panel.sdg-card-visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate(-50%, -50%) translateY(0);
   pointer-events: auto;
 }
 
@@ -950,6 +981,29 @@ footer .social-links a::after {
   object-fit: cover;
 }
 
+/* Kart artık her genişlikte dünyanın/orbit'in önünde durduğundan aktif
+   node kartın altında kalıyor — tekrar tıklayıp kapatma yolu erişilemez
+   olduğundan × düğmesi tüm ekranlarda görünür (kart dışına tıklamak da
+   hâlâ çalışıyor, bkz. script.js "DIŞARI TIKLAMA"). */
+.sdg-card-close {
+  display: flex;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: #333;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+}
+
 .sdg-card-titles h3 {
   font-family: 'Montserrat', sans-serif !important;
   font-size: 1.65rem !important;
@@ -1059,23 +1113,9 @@ footer .social-links a::after {
     text-align: center;
   }
 
-  .sdg-card-panel {
-    position: absolute;
-    left: 50%;
-    bottom: 24px;
-    width: 90%;
-    max-width: 340px;
-    max-height: calc(100vh - 280px);
-    margin-right: 0;
-    overflow-y: auto;
-    transform: translate(-50%, 16px);
-    z-index: 30;
-  }
-
-  .sdg-card-panel.sdg-card-visible {
-    transform: translate(-50%, 0);
-  }
-
+  /* Base kuraldaki width:min(960px,90%) bu dar ekranlarda zaten %90'a
+     iniyor (960px hiçbir zaman devreye girmiyor) — ayrı bir override
+     gerekmiyor, sadece iç boşluğu küçültüyoruz. */
   .sdg-card-inner {
     padding: 28px 24px;
   }
@@ -1126,6 +1166,17 @@ footer .social-links a::after {
     font-size: 1.2rem !important;
   }
 
+  /* Telefonda da base kuraldaki gibi dünyanın önünde ortalanmış kaplama —
+     % değerler her zaman #sdg-section'a (yeşil alana) göre, viewport'a
+     göre değil, bu yüzden asla section'ın dışına taşamaz. */
+  .sdg-card-panel {
+    width: 92%;
+    max-height: 88%;
+  }
+
+  .sdg-card-inner {
+    padding: 26px 20px;
+  }
 }
 
 /* Yatay telefon (kısa yükseklik): genişlik bazlı breakpoint'ler tek başına
@@ -1677,6 +1728,23 @@ footer .social-links a::after {
 
   .cause-heading-static {
     white-space: normal;
+    /* Kelimeler arası kırma (white-space:normal) tek başına, kelimenin
+       KENDİSİ kapsayıcıdan geniş olduğu bir durumu (çok dar ekranda uzun
+       bir sözcük) kapsamaz — bu yalnızca gerektiğinde kelime içi kırmaya
+       izin veren son bir güvenlik ağı. */
+    overflow-wrap: break-word;
+    /* ASIL taşmanın kaynağı buydu: masaüstü kuralındaki flex-shrink:0
+       ("asla küçülme") burada da miras kalıyordu — white-space:normal satır
+       kırmaya izin verse bile flex-shrink:0, öğeyi kendi TEK SATIRLIK doğal
+       (unwrapped, ~497px) genişliğinde kilitli tutmaya devam ediyordu;
+       min-width:0 eklemek (ilk denemem) işe yaramadı çünkü mesele min-width
+       değil doğrudan flex-shrink:0'ın kendisiydi. Burada 1'e çevirmek öğenin
+       kendi flex satırının genişliğine küçülmesine (ve dolayısıyla asıl
+       satır kırmasına) izin veriyor. Kullanıcının dört kez bildirdiği "hala
+       sığmıyor" — width:100vw düzeltmesinden TAMAMEN ayrı, bambaşka bir kök
+       nedenmiş. */
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .cause-heading-suffix {
@@ -1686,6 +1754,7 @@ footer .social-links a::after {
 
   .cause-heading-suffix-text {
     white-space: normal;
+    overflow-wrap: break-word;
   }
 }
 
@@ -1695,39 +1764,56 @@ footer .social-links a::after {
 
 /* Başlık + açıklama, sekmeli component'ten (.container içindeki nav+tab-content)
    yapısal olarak ayrılmış, ekranın tüm genişliğine (viewport kenarından
-   kenarına) uzanan kendi bloğu. */
+   kenarına) uzanan kendi bloğu.
+   ÖNCEKİ (kaldırılan) sürüm width:100vw + left/right:50% + margin:-50vw
+   "tam genişliğe taşma" hilesini kullanıyordu — bu teknik, elemanı dar bir
+   .container'ın padding/max-width'inden KURTARMAK için var. Ama bu eleman
+   zaten .container'ın DIŞINDA, doğrudan <section>'ın çocuğu (bkz. HTML) ve
+   section'ın kendisi yatayda sıfır padding taşıyor (.section-dark:
+   padding:100px 0) — yani kurtulacağı bir kısıtlama hiç yoktu. 100vw
+   scrollbar'ı sayıyor, %/width:100% saymıyor; bu gereksiz teknik olmasaydı
+   var olmayacak bir fark yüzünden başlık her iki kenardan da (scrollbar
+   genişliğinin yarısı kadar) taşıp body'nin overflow-x:clip'i tarafından
+   sessizce kırpılıyordu — kullanıcı üç kez "hala sığmıyor" dedi çünkü
+   önceki iki düzeltme (script.js'te scrollbar ölçümü) bu asıl taşmayı
+   telafi etmeye çalışıyordu, kaynağını ortadan kaldırmıyordu. Artık
+   width:100% (normal blok davranışıyla zaten aynı) yeterli; scrollbar
+   payının JS ile ölçülmesine hiç gerek kalmadı. */
 .cause-fullwidth-header {
-  /* 100vw dikey scrollbar'ı da içeriyor, left:50%'nin dayandığı üst kapsayıcı
-     genişliği (clientWidth) içermiyor — script.js'in ölçtüğü --scrollbar-width
-     olmadan bu fark her iki kenarda da (scrollbar genişliğinin yarısı kadar)
-     gerçek viewport dışına taşmaya, dolayısıyla body'nin overflow-x:clip'i
-     tarafından "İklim Krizinin Sebebi" başlığının kenarlarının sessizce
-     kırpılmasına yol açıyordu. */
-  width: calc(100vw - var(--scrollbar-width, 0px));
+  width: 100%;
   position: relative;
-  /* left:50% dokunulmadan kalıyor — düzeltme tek bir yerde (margin-left)
-     yapılmalı; ikisine birden eklemek (önceki deneme) taşmayı ortadan
-     kaldırmak yerine sağa doğru kaydırıyordu. right/margin-right, left
-     ayarlıyken position:relative'te (LTR) etkisiz — olduğu gibi bırakıldı. */
-  left: 50%;
-  right: 50%;
-  margin-left: calc(-50vw + var(--scrollbar-width, 0px) / 2);
-  margin-right: -50vw;
   padding: 0 0 44px;
   text-align: center;
   z-index: 2;
 }
 
+/* Dar ekranlarda (kutu genişliği tam viewport'a değince) başlığın kendi
+   metni hâlâ kırpılmış görünüyordu — kutu ölçümü (getBoundingClientRect)
+   0'dan viewport genişliğine tam sığıyordu, yani bu bir layout taşması
+   değildi. Sebep muhtemelen "Climate Crisis" fontunun (dekoratif, "eriyen"
+   glif tasarımlı) letter-spacing:-1px ile birleşince satır kenarındaki
+   ilk/son karakterin mürekkep izinin (glyph ink) hesaplanan kutudan taşması
+   — normal fontlarda görülmeyen, bu fonta özgü bir kenar taşması. Bu pay
+   artık .cause-fullwidth-header'da değil, doğrudan başlıkta (aşağıda) —
+   çünkü açıklama metni normal bir fontla yazıldığından bu paya ihtiyacı
+   yok ve header'ın ortak padding'i onu gereksiz yere daraltıyordu. */
+
 .cause-fullwidth-heading {
   font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
   margin: 0 0 8px !important;
+  padding: 0 16px;
   font-size: clamp(1.8rem, 4.2vw, 3.4rem) !important;
   letter-spacing: -1px !important;
 }
 
 .cause-fullwidth-desc {
-  max-width: 760px;
+  /* Kullanıcı isteğiyle satır uzunluğu genişletildi — hem üst sınır
+     yükseltildi (760 → 1100) hem de artık başlığın kendi koruma payını
+     miras almıyor (yalnızca küçük, kendi 8px'i var), bu yüzden iPad Air
+     gibi orta genişlikteki ekranlarda da gerçekten daha geniş görünüyor. */
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 0 8px;
   text-align: center;
   font-size: 0.82rem;
   color: rgba(255, 255, 255, 0.6);
@@ -2342,7 +2428,10 @@ footer .social-links a::after {
 }
 
 .indicator-tab-item.active .indicator-tab-desc {
-  max-height: 160px;
+  /* 160px, ~820-834px (iPad Air/Pro 11" dikey) genişlikte dar sekme
+     sütununda en uzun açıklamaların (Kasırgalar/Ekosistemler Değişiyor,
+     168px'e ölçüldü) son satırını kırpıyordu — "sonları yarım gözüküyor". */
+  max-height: 200px;
 }
 
 .indicator-tabs-photo {
@@ -2414,14 +2503,42 @@ footer .social-links a::after {
   object-fit: cover;
 }
 
-/* Global Isınma'daki medyalar fotoğraf değil veri grafiği (sıcaklık spirali,
-   çizgi grafikler, harita) — "cover" ay etiketlerini/eksenleri üstten
-   alttan kırpıyordu. Bu blokta "contain" ile tamamı görünür kalıyor; kalan
-   boşluk zaten kartın koyu zeminiyle (arka planlar yukarıda #000/rgba(0,0,0,..))
-   doluyor. */
+/* Global Isınma'daki VE Orman Yangınları'ndaki medyalar fotoğraf değil veri
+   grafiği (sıcaklık spirali, çizgi grafikler, harita) — "cover" eksenleri/
+   etiketleri kırpıyordu (iPad Pro'da 678×290'lık bir grafik 373×434'lük
+   neredeyse kare bir çerçeveye "cover" ile sığdırılınca genişliğinin
+   ~%63'ü kırpılıyordu). "contain" ile tamamı görünür kalıyor. */
 #indicator-global-isinma .indicator-video-standalone video,
-#indicator-global-isinma .indicator-tab-photo-img {
+#indicator-global-isinma .indicator-tab-photo-img,
+#indicator-orman-yanginlari .indicator-tab-photo-img {
   object-fit: contain;
+}
+
+/* contain tek başına yeterli değildi: çerçeve hep sabit 434px yükseklikti,
+   dar/orta genişliklerde (ör. iPad Air 820px) neredeyse kareye yaklaşıp
+   grafiğin gerçek en-boy oranından (~2:1-2,3:1, yatay/geniş) çok uzaklaşıyor,
+   üstte/altta veya yanlarda büyük boş alan bırakıyordu ("çerçeve çok
+   büyük"). aspect-ratio ile çerçeve, genişliği ne olursa olsun grafiğin
+   gerçek oranına yakın kalıyor — sabit yükseklik yerine ondan türüyor.
+   Değer, ilgili grafiklerin gerçek piksel oranlarının ortalaması: Orman
+   Yangınları 678×290 (2,34) ve 670×306 (2,19); Global Isınma 674×292 (2,31)
+   ve 570×308 (1,85).
+   ≥768px ile sınırlı: #id kullanan bu seçicilerin özgüllüğü (1,1,0),
+   ≤767px'teki .indicator-tabs-photo{height:220px} kuralınınkinden (0,1,0)
+   yüksek — media query'siz bırakılsaydı mobildeki sabit yüksekliği (ve
+   akordeon modundaki .indicator-tabs-list > .indicator-tabs-photo flex:none
+   kuralını) kaynak sırasından bağımsız ezip mobil paneli 220px yerine
+   ~138px'e küçültüyordu (test sırasında yakalandı). */
+@media (min-width: 768px) {
+  #indicator-orman-yanginlari .indicator-tabs-photo {
+    aspect-ratio: 2.26;
+    height: auto;
+  }
+
+  #indicator-global-isinma .indicator-tabs-photo {
+    aspect-ratio: 2.08;
+    height: auto;
+  }
 }
 
 @media (max-width: 767px) {
@@ -2450,7 +2567,25 @@ footer .social-links a::after {
   }
 
   .indicator-tabs-photo {
+    /* flex:1 1 0 (masaüstü) satır yönünde genişliği yönetiyordu; sütun
+       yönünde bu artık yükseklik ekseni olduğundan genişlik hiçbir yerden
+       gelmiyordu — tek içeriği (indicator-tab-photo-img) position:absolute
+       olduğu için üst kapsayıcı boyutuna katkı vermiyor, çerçeve görünmez
+       bir kılcala çöküyordu. */
+    width: 100%;
     height: 220px;
+  }
+
+  /* script.js bu çerçeveyi (aynı eleman, kopyalanmıyor) tıklanan sekmenin
+     hemen ardına, .indicator-tabs-list'in İÇİNE taşıyor — orada üstteki
+     başlık/açıklamadan ve alttaki bir sonraki sekmeden nefes payı. */
+  .indicator-tabs-list > .indicator-tabs-photo {
+    margin: 4px 0 12px;
+    /* Masaüstünün flex:1 1 0'ı (satırda genişliği yönetiyordu) sütun
+       yönünde artık YÜKSEKLİK ekseninde geçerli oluyor: flex-basis:0,
+       height:220px'i eziyor (flex-basis auto olmadığında height'tan önce
+       gelir) ve çerçeve neredeyse sıfır yüksekliğe çöküyordu. */
+    flex: none;
   }
 
   .indicator-tab-item.active .indicator-tab-desc {
@@ -2636,7 +2771,7 @@ footer .social-links a::after {
 
 .cause-tab-btn-label {
   display: inline-block;
-  max-width: 0;
+  max-width: 260px;
   overflow: hidden;
   transition: max-width 1.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2647,9 +2782,23 @@ footer .social-links a::after {
   padding-right: 18px;
 }
 
-.cause-tab-btn:hover .cause-tab-btn-label,
-.cause-tab-btn.active .cause-tab-btn-label {
-  max-width: 260px;
+/* "İkon-sadece, hover'da etiket açılır" deseni gerçek (fare) hover'ı olan
+   cihazlara özgü — dokunmatikte kalıcı bir hover hâli yok, yani aktif
+   olmayan 4 sekmenin etiketi (Ormansızlaşma, Sanayi Üretimi, Tarım ve
+   Hayvancılık, Ulaşım) iPad/telefonda KEŞFEDİLEMEZ şekilde daralı
+   kalıyordu (max-width:0 kalıcıydı) — kullanıcının "1-2 kelime yazıp alt
+   satıra geçiyor" dediği tam olarak bu. Temel/varsayılan kural artık hep
+   açık; sadece gerçek imleçli hover cihazlarında daraltılıp hover/aktifte
+   açılıyor. */
+@media (hover: hover) and (pointer: fine) {
+  .cause-tab-btn-label {
+    max-width: 0;
+  }
+
+  .cause-tab-btn:hover .cause-tab-btn-label,
+  .cause-tab-btn.active .cause-tab-btn-label {
+    max-width: 260px;
+  }
 }
 
 .cause-tab-btn:hover {
@@ -2682,19 +2831,27 @@ footer .social-links a::after {
 
 /* Kutu/"cam kart" arka planı kaldırıldı: grafikler ve orta metin artık
    doğrudan sayfanın yeşil zemininde duruyor, aralarında kutu sınırı yerine
-   bol boşluk var — "birbirinden ayrışsın, rahat gözüksün" isteği. */
+   bol boşluk var — "birbirinden ayrışsın, rahat gözüksün" isteği.
+   Kullanıcı isteğiyle düzen değişti: metin ÜSTTE (tam genişlik), 2 grafik
+   ALTINDA yan yana. HTML sırası hâlâ grafik/metin/grafik (değiştirmeye
+   gerek yok) — .cause-tab-text'e order:-1 vererek görsel sırayı flex ile
+   çeviriyoruz; flex-wrap:wrap + metnin flex-basis:100% olması, ondan
+   sonra gelen iki grafiği otomatik olarak bir alt "satıra" itip yan yana
+   bırakıyor. Dar ekranlarda grafikler için yer kalmazsa (ör. çok küçük
+   telefon) aynı wrap mekanizması onları da alt alta düşürür — ayrı bir
+   breakpoint gerekmiyor. */
 .cause-tab-row {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 32px;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 12px;
 }
 
 .cause-tab-chart {
-  /* flex:1 değil flex:0 0 auto — grafik kendi (chart-wrapper'ın belirlediği)
-     doğal genişliğinde kalıp satırın gerçek kenarına yaslanıyor; ortada
-     kalan tüm alan .cause-tab-text'e (flex:1) geçiyor. */
-  flex: 0 0 auto;
+  flex: 1 1 260px;
+  max-width: 360px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -2726,10 +2883,12 @@ footer .social-links a::after {
 }
 
 .cause-tab-text {
-  /* Grafikler artık kenarlara yaslandığı için ortadaki metin sütunu
-     genişleyebildiği kadar genişliyor — dar/dikey bir şerit yerine daha
-     yatay akan, az satırlı bir paragraf okuma deneyimi hedefleniyor. */
-  flex: 1 1 auto;
+  /* order:-1, HTML'deki grafik/metin/grafik sırasını değiştirmeden metni
+     görsel olarak en üste taşıyor; flex:1 1 100% ile tam genişlik alıp
+     satırı sarmaya (wrap) zorluyor, böylece ondan sonra gelen iki grafik
+     otomatik olarak bir alt satıra düşüp yan yana duruyor. */
+  order: -1;
+  flex: 1 1 100%;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -2744,7 +2903,11 @@ footer .social-links a::after {
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.65;
   margin: 0;
-  max-width: 560px;
+  /* 560px, dikey istif düzeninde (≤1300px, bkz. .cause-tab-row) mevcut
+     sütun genişliğinin (ör. iPad Air'de ~756px) çoğunu boşa harcıyordu —
+     kullanıcı isteğiyle satır uzunluğu gerçekten genişledi. */
+  max-width: 720px;
+  width: 100%;
   text-align: left;
 }
 
@@ -2837,16 +3000,6 @@ footer .social-links a::after {
 }
 
 @media (max-width: 991px) {
-  .cause-tab-row {
-    flex-direction: column;
-  }
-
-  .cause-tab-text,
-  .cause-tab-chart {
-    flex: 0 0 auto;
-    width: 100%;
-  }
-
   .cause-stack-cards {
     height: 260px;
   }
@@ -2863,12 +3016,20 @@ footer .social-links a::after {
 
 /*  ========================================================================= Consequences Section Styles (Karşılaşabileceğimiz Gelecek — "CardShowcase") =============================================================================== */
 
-/* Framer'ın CardShowcase referansı: yatay kart şeridi, aktif kart genişleyip
-   açıklamayı gösterirken diğerleri ince şeritlere daralıyor; bir ilerleme
-   çubuğu dolup otomatik bir sonraki karta geçiyor, karta tıklamak da doğrudan
-   o karta atlıyor (script.js: initFutureCardShowcase). 9 kart tek satırda
-   sığmadığından şerit yatay olarak kaydırılabilir; aktif kart değiştiğinde
-   görünüme kaydırılıyor. */
+/* Framer'ın CardShowcase referansı aslen yatay bir kart şeridiydi (aktif
+   kart genişleyip açıklamayı gösterirken diğerleri ince dikey şeritlere
+   daralıyordu, 9 kart yan yana kaydırılıyordu) — kullanıcı isteğiyle dikeye
+   çevrildi: kartlar üst üste yığılı, aktif kart YANA değil AŞAĞI doğru
+   büyüyor, diğerleri ince YATAY şeritlere daralıyor. Bir ilerleme çubuğu
+   dolup otomatik bir sonraki karta geçiyor, karta tıklamak doğrudan o karta
+   atlıyor (script.js: initFutureCardShowcase — scrollIntoView zaten yön
+   bağımsız olduğundan JS tarafında değişiklik gerekmedi).
+   width:100% burada kritik: .card-showcase-photo/-body position:absolute
+   olduğundan (normal akıştan çıkmış), üst kapsayıcıya kendiliğinden hiç
+   genişlik vermiyor — eskiden bunu satır yönünde flex-basis üstleniyordu,
+   sütun yönünde ise (önceden sadece ≤767px'te) genişlik hiçbir yerden
+   gelmeyip track/kartlar 0 genişliğe çöküyordu (aynı sınıf hata bu oturumda
+   .indicator-tabs-photo'da da bulunup düzeltildi). */
 #consequences-section.section-dark {
   padding: 60px 0;
 }
@@ -2881,30 +3042,32 @@ footer .social-links a::after {
 
 .card-showcase-track {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  height: 520px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  padding-bottom: 4px;
-}
-
-.card-showcase-track::-webkit-scrollbar {
-  display: none;
+  width: 100%;
+  max-width: 760px;
 }
 
 .card-showcase-card {
   position: relative;
-  flex: 0 0 100px;
+  width: 100%;
+  flex: none;
+  height: 140px;
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   background: #0a140a;
-  transition: flex-basis 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card-showcase-card.active {
-  flex: 0 0 min(600px, 66vw);
+  height: 340px;
+}
+
+@media (min-width: 768px) {
+  .card-showcase-card.active {
+    height: 420px;
+  }
 }
 
 .card-showcase-photo {
@@ -2973,9 +3136,13 @@ footer .social-links a::after {
   font-size: 1.8rem;
 }
 
+/* Boyutlar artık "inactive = dar" değil "inactive = kısa" mantığına göre:
+   kartlar yönden bağımsız hep tam genişlikte, sadece pasifken (140px) az
+   yükseklik var — eski değerler (0.85rem gibi) 100px'lik dar şerit için
+   ayarlanmıştı, artık geçerli değil. */
 .card-showcase-body h3 {
   font-family: 'Montserrat', sans-serif !important;
-  font-size: 0.85rem !important;
+  font-size: 1rem !important;
   font-weight: 700 !important;
   color: #fff;
   margin: 6px 0 0 !important;
@@ -2984,9 +3151,55 @@ footer .social-links a::after {
 }
 
 .card-showcase-card.active .card-showcase-body h3 {
-  font-size: 1.35rem !important;
+  font-size: 1.2rem !important;
   margin: 10px 0 0 !important;
   line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+  .card-showcase-card.active .card-showcase-body h3 {
+    font-size: 1.4rem !important;
+  }
+}
+
+/* PC'de (geniş + yatay ekran) kullanıcı isteğiyle özgün yatay şeride
+   dönüyor: kartlar yan yana, aktif kart YANA genişliyor, diğerleri ince
+   DİKEY şeride daralıyor. Dikey/dar/portre ekranlı cihazlarda (yukarıdaki
+   temel kural) değişiklik yok. */
+@media (min-width: 1100px) and (orientation: landscape) {
+  .card-showcase-track {
+    flex-direction: row;
+    width: auto;
+    max-width: none;
+    height: 520px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .card-showcase-card {
+    width: auto;
+    height: auto;
+    flex: 0 0 100px;
+    transition: flex-basis 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .card-showcase-card.active {
+    height: auto;
+    flex: 0 0 min(600px, 66vw);
+  }
+
+  /* 100px'lik dar pasif şeritte tam boy metin sığmaz — özgün dar/geniş
+     yazı tipi ölçeği (0.85rem → 1.35rem) geri geliyor. */
+  .card-showcase-body h3 {
+    font-size: 0.85rem !important;
+  }
+
+  .card-showcase-card.active .card-showcase-body h3 {
+    font-size: 1.35rem !important;
+  }
 }
 
 .card-showcase-body p {
@@ -3001,37 +3214,20 @@ footer .social-links a::after {
 }
 
 .card-showcase-card.active .card-showcase-body p {
-  max-height: 160px;
+  max-height: 240px;
   opacity: 1;
   margin-top: 12px;
 }
 
+/* Dikey düzen artık her genişlikte aynı (yukarıda); telefonlarda sadece
+   dikey alan daha kısıtlı olduğundan yükseklikler biraz küçültülüyor. */
 @media (max-width: 767px) {
-  .card-showcase {
-    padding: 0 18px;
-  }
-
-  .card-showcase-track {
-    flex-direction: column;
-    height: auto;
-    overflow-x: visible;
-  }
-
   .card-showcase-card {
-    flex: none !important;
     height: 130px;
   }
 
   .card-showcase-card.active {
     height: 320px;
-  }
-
-  .card-showcase-body h3 {
-    font-size: 1rem !important;
-  }
-
-  .card-showcase-card.active .card-showcase-body h3 {
-    font-size: 1.15rem !important;
   }
 }
 
