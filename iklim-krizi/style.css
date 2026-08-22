@@ -759,28 +759,64 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
 }
 
+/* Kullanıcı isteği: metin solda, dünya section'ın TAM ortasında, açılan
+   kart sağda. 2 sütunlu flex + justify-content:center, metin ile
+   dünyayı TEK bir blok olarak ortalıyordu — bu da metnin genişliğine
+   göre dünyanın gerçek merkezden kaymasına yol açıyordu. 3 sütunlu grid
+   (1fr auto 1fr) bunu yapısal olarak çözüyor: orta sütun (dünya) içeriği
+   kadar dar, iki yanındaki 1fr sütunlar HER ZAMAN eşit — üçüncü sütunda
+   hiç öğe olmasa bile (kart normal akışın dışında, position:absolute)
+   grid onu boş bırakıp genişliğini birinci sütunla eşitliyor, bu da
+   ortadaki dünyayı satırın tam merkezine sabitliyor. */
 .sdg-zone {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  /* minmax(0,1fr) — düz "1fr" sütunları varsayılan olarak kendi
+     içeriğinin min-content genişliğinin altına inemiyor (flex'teki
+     min-width:auto'nun grid karşılığı); metin sütununun içeriği varken
+     boş üçüncü sütununkinin olmaması, iki "1fr"yi eşitsiz yapıp ortadaki
+     dünyayı yine merkezden kaydırıyordu. minmax(0,1fr) bu örtük alt
+     sınırı kaldırıp iki yan sütunun HER ZAMAN piksel piksel eşit
+     olmasını garanti ediyor. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 30px;
   width: 100%;
 }
 
-/* Sol taraf: Sabit başlık/açıklama metni
-   flex-basis artık sabit piksel değil clamp(): 1101-1436px aralığındaki
-   (ör. 1366x768, 1280x800 gibi çok yaygın laptop çözünürlükleri) satır
-   düzeni, üç panelin toplam sabit genişliği (1436px) sığmadığı için
-   sıkışıyordu — clamp() ile panel genişlikleri viewport'a göre akışkan
-   daralıyor, satır düzeni erken bir breakpoint'e sıçramadan korunuyor. */
+/* Sol taraf: Sabit başlık/açıklama metni.
+   justify-self kasıtlı olarak stretch (varsayılan, tekrar belirtmeye
+   gerek yok): start yaparsak öğe grid sütununun genişliğini yok sayıp
+   kendi max-width'ine göre boyutlanır, dar sütunlarda (ör. 1101px'te
+   ~313px) 420px'lik metin kutusu sığmayıp orbit'in üstüne taşardı.
+   stretch ile kutu her zaman sütunun gerçek genişliğine sabit kalıyor,
+   metin onun İÇİNDE text-align:left ile sola yaslanıyor — aynı görünüm,
+   taşma riski yok. min-width:0 da aynı taşma sınıfına karşı ek güvence
+   (grid sütunlarının örtük içerik-tabanlı asgari genişliğini kaldırır). */
 .sdg-text-panel {
-  flex: 1 1 clamp(240px, 22vw, 360px);
+  max-width: 420px;
+  min-width: 0;
   margin-left: 48px;
   text-align: left;
 }
 
-/* Orta: Orbital alanı
+/* Satır düzeninde (≥1101px) metin sütunu artık gerçek bir akışkan grid
+   parçası (minmax(0,1fr), max-width:420px) — dar viewport'larda (ör.
+   1101px'te sütun ~265px'e iniyor) küçük, geniş viewport'larda 420px'lik
+   üst sınırına kadar büyüyor. .sdg-main-title'ın kendi 5vw tabanlı
+   font-size'ı bu sütun genişliğiyle orantılı değildi (viewport'un
+   tamamına göre ölçekleniyordu), bu yüzden "Sürdürülebilir" ya dar
+   sütunda taşıyor ya da geniş viewport'ta gereksiz büyüyüp yine
+   sığmıyordu. Burada sütunun gerçek büyüme oranına yakın, daha ölçülü
+   bir vw katsayısı kullanılıyor. Kullanıcı isteğiyle önceki sabit
+   değerden (2.15rem) genel olarak büyütüldü. */
+@media (min-width: 1101px) {
+  .sdg-text-panel .sdg-main-title {
+    font-size: clamp(2.7rem, 1.6vw, 2.5rem) !important;
+  }
+}
+
+/* Orta: Orbital alanı — grid'in auto sütununda, artık flex-grow/margin
+   hesaplarıyla uğraşmıyor; genişliği doğrudan clamp() ile veriliyor.
    min-width artık 0 değil: .sdg-orbit-ring (halka) her zaman bu kutudan
    biraz taşacak şekilde tasarlanmış (bkz. aşağıdaki .sdg-orbit-ring
    yorumu), min-width:0 satır sıkıştığında bu kutuyu halkanın kendi
@@ -789,7 +825,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
    biniyordu. 350px, halkanın alt sınırının (300px) + node taşma payının
    güvenli tabanı. */
 .sdg-orbit-wrapper {
-  flex: 1 1 clamp(340px, 38vw, 500px);
+  width: clamp(340px, 38vw, 500px);
   min-width: 375px;
   position: relative;
   display: flex;
@@ -825,6 +861,25 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   opacity: 1;
   transform: translate(-50%, -50%) translateY(0);
   pointer-events: auto;
+}
+
+/* Kullanıcı isteği: satır düzeninde (≥1101px, metin sol + dünya ortada)
+   açılan kart artık ortalanmış bir kaplama değil, section'ın SAĞ
+   tarafına yerleşiyor — yatay ortalamayı (-50%) kaldırıp left yerine
+   right kullanıyoruz, dikey ortalama (top:50% + translateY(-50%)) aynen
+   kalıyor. Genişlik de daha dar: tam genişlik yerine sağ şeride oturan,
+   metin sütunuyla görsel olarak dengeli bir kart. */
+@media (min-width: 1101px) {
+  .sdg-card-panel {
+    left: auto;
+    right: 48px;
+    width: min(520px, 42%);
+    transform: translateY(calc(-50% + 20px));
+  }
+
+  .sdg-card-panel.sdg-card-visible {
+    transform: translateY(-50%);
+  }
 }
 
 /* Genişlik ve halka çapı artık clamp() ile akışkan: 1101-1436px aralığında
@@ -1079,6 +1134,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 
   .sdg-zone {
+    display: flex;
     flex-direction: column;
     padding: 40px 20px 80px;
     gap: 44px;
@@ -1088,6 +1144,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
     flex: none;
     width: 360px;
     height: 360px;
+    /* Sütun düzeninde align-items:center orbit'i ortalıyor zaten — satır
+       düzeninden miras kalan margin-right burada gereksiz, üstelik
+       kutuyu merkezden hafifçe sola kaydırır. */
+    margin-right: 0;
   }
 
   .sdg-orbit-canvas {

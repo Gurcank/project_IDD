@@ -1987,7 +1987,17 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(section);
 })();
 
-/* ── Kahraman videosu: hareket kısıtlıyken hiç oynatma (poster kalır). ── */
+/* ── Kahraman videosu: hareket kısıtlıyken hiç oynatma (poster kalır). ──
+   Tek bir play() çağrısı yeterli olmayabiliyor: tarayıcının otomatik
+   oynatma politikası ilk çağrıyı (sayfa henüz tam hazır değilken, veya
+   video verisi henüz gelmemişken) reddedebiliyor ve .catch(() => {}) bu
+   reddi sessizce yutup video kalıcı olarak poster karede donuk kalıyordu.
+   Aşağıdaki üç yeniden deneme yolu birbirinden bağımsız, herhangi biri
+   başarılı olduğunda diğerleri zaten gereksiz kalır (play() zaten
+   oynatılan bir videoda no-op'tur): (1) hemen, (2) video verisi gelince
+   (canplay), (3) kullanıcı sayfayla ilk etkileşime geçtiğinde — tarayıcı
+   politikaları bir kullanıcı hareketinden sonra oynatmaya neredeyse her
+   zaman izin verir. */
 (function () {
   const video = document.getElementById('heroVideo');
   if (!video) return;
@@ -1995,7 +2005,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
-  video.play().catch(() => {});
+  function tryPlay() {
+    if (!video.paused) return;
+    video.play().catch(() => {});
+  }
+
+  tryPlay();
+  video.addEventListener('canplay', tryPlay, { once: true });
+
+  const interactionEvents = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+  function onFirstInteraction() {
+    tryPlay();
+    interactionEvents.forEach((evt) => window.removeEventListener(evt, onFirstInteraction));
+  }
+  interactionEvents.forEach((evt) => window.addEventListener(evt, onFirstInteraction, { passive: true, once: true }));
 })();
 
 /* ── Okuma ilerleme çubuğu + Başa dön butonu + Bölüm nokta menüsü ── */
