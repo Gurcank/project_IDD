@@ -1493,43 +1493,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const CHAR_STAGGER_MS = 6;
 
   const individualSteps = [
-    { icon: 'fa-bolt', color: 'green', photo: 'assets/image/actions/energy-saving.avif', title: 'Enerji Tasarrufu',
+    { icon: 'fa-bolt', color: 'green', photo: 'assets/image/wikipedia/enerji-tasarrufu.jpg', title: 'Enerji Tasarrufu',
       desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor. Bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
       examples: ["Çamaşırı 30°C'de ve tam dolu makinede yıka", 'Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar', 'Mümkünse enerji tedarikçini yenilenebilire geçir'] },
-    { icon: 'fa-bicycle', color: 'blue', photo: 'assets/image/actions/transportation-preferences.avif', title: 'Ulaşım Tercihleri',
+    { icon: 'fa-bicycle', color: 'blue', photo: 'assets/image/wikipedia/ulasim-tercihleri.jpg', title: 'Ulaşım Tercihleri',
       desc: 'Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.',
       examples: ['Haftada 3 gün toplu taşıma = yılda ~1 ton CO₂ az', '3 km altındaki mesafeleri yürüyerek ya da bisikletle git', 'Mümkün olan seyahatlerde uçuş yerine tren tercih et'] },
-    { icon: 'fa-carrot', color: 'orange', photo: 'assets/image/actions/eating-habits.avif', title: 'Beslenme Alışkanlıkları',
+    { icon: 'fa-carrot', color: 'orange', photo: 'assets/image/wikipedia/beslenme-aliskanliklari.jpg', title: 'Beslenme Alışkanlıkları',
       desc: 'Gıda üretimi küresel sera gazı emisyonlarının önemli bir kısmından sorumlu; kırmızı et bu payın en büyük tekil kaynağı. Tüketimini azaltıp yerel, mevsimsel ve bitki ağırlıklı beslenmeye yönelmek bireysel karbon ayak izini belirgin biçimde küçültüyor.',
       examples: ['Haftada 1 gün etsiz beslenme = ~200 kg CO₂/yıl az', 'Yerel pazardan alışveriş yap, nakliye emisyonunu kır', 'Plan yap, porsiyonu küçült, gıda israfını sıfırla'] },
-    { icon: 'fa-recycle', color: 'emerald', photo: 'assets/image/actions/conscious-consumption.avif', title: 'Bilinçli Tüketim',
+    { icon: 'fa-recycle', color: 'emerald', photo: 'assets/image/wikipedia/bilincli-tuketim.jpg', title: 'Bilinçli Tüketim',
       desc: 'Her ürünün üretiminde harcanan enerji ve hammadde, satın alma kararlarını iklim açısından önemli kılıyor. Daha az ve bilinçli satın almak, ürünleri uzun süre kullanmak; onarmak ve ikinci eli tercih etmek hem atığı hem de üretim kaynaklı emisyonları azaltıyor.',
       examples: ['Almadan önce "gerçekten ihtiyacım var mı?" diye sor', 'Elektronikte önce onarımı dene, değiştirmeyi son çare yap', 'Tekli plastik ambalaj yerine dökme/büyük boy al'] },
-    { icon: 'fa-seedling', color: 'lightgreen', photo: 'assets/image/actions/living-in-harmony-with-nature.avif', title: 'Doğayla Birlikte Yaşamak',
+    { icon: 'fa-seedling', color: 'lightgreen', photo: 'assets/image/wikipedia/dogayla-birlikte-yasamak.jpg', title: 'Doğayla Birlikte Yaşamak',
       desc: 'Yeşil alanlar hem karbon depoluyor hem de yerel biyoçeşitliliği destekliyor. Balkonunda ya da bahçende bitki yetiştirmek küçük bir adım gibi görünse de, olgun bir ağacın yılda ortalama 21-25 kg CO₂ emdiği düşünülürse toplu etkisi büyüyor.',
       examples: ['Mutfak atığını kompostlayıp toprağa besin olarak ver', 'Yerel ağaçlandırma projelerine gönüllü katıl', 'Damlayan bir musluk yılda 20.000L suyu boşa akıtabilir'] },
-    { icon: 'fa-bullhorn', color: 'purple', photo: 'assets/image/actions/advocacy-and-awareness.avif', title: 'Savunuculuk ve Farkındalık',
+    { icon: 'fa-bullhorn', color: 'purple', photo: 'assets/image/wikipedia/savunuculuk-ve-farkindalik.jpg', title: 'Savunuculuk ve Farkındalık',
       desc: 'Bireysel adımlar önemli, ama en büyük etki toplu sesle ortaya çıkıyor. Çevrendeki insanları bilinçlendirmek ve oy verirken iklim politikasını önceliklendirmek, sistemsel değişimi hızlandıran dolaylı ama güçlü bir yol.',
       examples: ['Yaşadığın şehrin iklim eylem planını takip et', 'İş yerinde sürdürülebilirlik odaklı öneriler sun', 'Bilimsel kaynaklara dayanan iklim içeriklerini paylaş'] }
   ];
 
   const societalSteps = [
-    { icon: 'fa-solar-panel', color: 'orange', photo: 'assets/image/actions/transition-to-renewable-energy.avif', title: 'Yenilenebilir Enerjiye Geçiş',
+    { icon: 'fa-solar-panel', color: 'orange', photo: 'assets/image/un/UN7436150.jpg', title: 'Yenilenebilir Enerjiye Geçiş',
       desc: 'Küresel enerji üretiminin fosil yakıtlardan güneş, rüzgâr ve diğer temiz kaynaklara kaydırılması, emisyonları azaltmanın en yüksek etkili yollarından biri. Hükümetlerin ve şirketlerin yatırım önceliklerini bu yönde değiştirmesi dönüşümün hızını doğrudan belirliyor.',
       examples: ['Devlet teşvikleri çatı üstü güneş enerjisini yaygınlaştırabilir', 'Fosil yakıt sübvansiyonlarının kademeli kaldırılması kritik', 'Enerji depolama teknolojilerine Ar-Ge yatırımı şart'] },
-    { icon: 'fa-scale-balanced', color: 'red', photo: 'assets/image/actions/carbon-pricing.avif', title: 'Karbon Fiyatlandırması',
+    { icon: 'fa-scale-balanced', color: 'red', photo: 'assets/image/wikipedia/karbon-fiyatlandirmasi.png', title: 'Karbon Fiyatlandırması',
       desc: 'Karbon vergisi ve emisyon ticaret sistemleri, sera gazı salımının gerçek maliyetini fiyatlara yansıtarak "kirleten öder" ilkesini işletir. Bu mekanizmalar, temiz teknolojilere geçişi piyasa içinden hızlandıran güçlü araçlar.',
       examples: ['Ton başına $50-100 CO₂ fiyatı dönüşümü tetikleyecek düzeyde', 'Vergi gelirleri yeşil altyapıya ayrılabilir', 'Sınır karbon mekanizmaları haksız rekabeti önler'] },
-    { icon: 'fa-tree', color: 'emerald', photo: 'assets/image/actions/protection-of-forests.avif', title: 'Ormanların Korunması',
+    { icon: 'fa-tree', color: 'emerald', photo: 'assets/image/wikipedia/ormanlarin-korunmasi.jpg', title: 'Ormanların Korunması',
       desc: 'Ormanlar dünyanın en büyük doğal karbon yutaklarından biri; hem ormansızlaşmayı durdurmak hem de büyük ölçekli ağaçlandırma projeleri yürütmek, atmosferdeki karbonu dengelemenin en doğrudan yollarından biri.',
       examples: ['Orman tahribatına yol açan ürünlere ithalat kısıtlaması', 'Yerel halklara ormanlık arazide mülkiyet hakkı tanınmalı', 'REDD+ gibi karbon kredisi mekanizmaları yaygınlaşmalı'] },
-    { icon: 'fa-handshake', color: 'blue', photo: 'assets/image/actions/international-cooperation.avif', title: 'Uluslararası İşbirliği',
+    { icon: 'fa-handshake', color: 'blue', photo: 'assets/image/wikipedia/uluslararasi-isbirligi.jpg', title: 'Uluslararası İşbirliği',
       desc: 'İklim krizi sınır tanımıyor; Paris Anlaşması gibi küresel çerçeveler, ülkelerin ortak, ölçülebilir ve denetlenebilir hedefler etrafında birleşmesini sağlayarak bireysel çabaların toplamından daha büyük bir etki yaratıyor.',
       examples: ['Ulusal Katkı Beyanlarının (NDC) güçlendirilmesi zorunlu', 'Gelişmekte olan ülkelere iklim finansmanı artmalı', 'Teknoloji transferi yeşil dönüşümü demokratikleştirir'] },
-    { icon: 'fa-industry', color: 'yellow', photo: 'assets/image/actions/industrial-transformation.avif', title: 'Sanayi Dönüşümü',
+    { icon: 'fa-industry', color: 'yellow', photo: 'assets/image/wikipedia/sanayi-donusumu.jpg', title: 'Sanayi Dönüşümü',
       desc: 'Çimento, çelik ve kimya gibi ağır sanayiler, üretim süreçlerinin doğası gereği kolayca elektrifiye edilemiyor. Yeşil hidrojen ve karbon yakalama teknolojileri, bu sektörlerin emisyonlarını azaltmanın önündeki en kritik açık.',
       examples: ['Kamu ihalelerinde düşük karbonlu "yeşil çelik" şartı aranmalı', 'H₂ altyapısına kamu yatırımı ölçek ekonomisiyle maliyeti düşürür', 'Sanayi emisyonlarına sektörel denetim mekanizması gerekiyor'] },
-    { icon: 'fa-city', color: 'teal', photo: 'assets/image/actions/sustainable-cities.avif', title: 'Sürdürülebilir Şehirler',
+    { icon: 'fa-city', color: 'teal', photo: 'assets/image/wikipedia/surdurulebilir-sehirler.jpg', title: 'Sürdürülebilir Şehirler',
       desc: '2050\'de dünya nüfusunun %68\'inin kentlerde yaşayacağı öngörülüyor; bu da şehir planlamasını iklim mücadelesinin merkezine taşıyor. Toplu taşımayı, yaya bölgelerini ve yeşil alanları bütünleştiren akıllı şehirler hem emisyonu azaltıyor hem yaşam kalitesini artırıyor.',
       examples: ['15 dakikalık şehir konsepti trafiği belirgin biçimde düşürür', 'Mevcut binaların enerji verimliliğine yükseltilmesi teşvik edilmeli', 'Kent ormanları gibi doğa tabanlı çözümler standart hale gelmeli'] }
   ];
@@ -2165,5 +2165,582 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       nextTab.click();
     }
+  });
+})();
+
+
+/* ── GÖRSEL KÜNYESİ ──
+   CC BY ve CC BY-SA lisansları fotoğrafçının adının ve lisansın belirtilmesini
+   zorunlu kılıyor; Kaynakça'daki genel kaynak bağlantısı bunu karşılamıyor.
+   Künyeyi görselin üstündeki küçük bir düğmeye bağladık: neden kartlarında
+   tıklama zaten kartlar arasında geçiş yaptığı için fotoğrafın kendisini
+   tıklanabilir yapmak mevcut etkileşimi bozardı. Düğme her görselde aynı yerde
+   duruyor, bu yüzden keşfedilebilir ve dokunmatikte de çalışıyor. */
+(function () {
+  const CREDITS = {
+    "assets/image/wikipedia/garzweiler-acik-maden-ocagi.jpg": {
+      "title": "Garzweiler Açık Maden Ocağı",
+      "author": "Martin Falbisoner",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Garzweiler_surface_mine%2C_October_2018%2C_-02.jpg"
+    },
+    "assets/image/wikipedia/komur-termik-santrali.jpg": {
+      "title": "Çin Termik Santralleri / CO₂ göstergesi",
+      "author": "Tobixen",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:ChineseCoalPower_opt.jpg"
+    },
+    "assets/image/wikipedia/nijer-deltasi.jpg": {
+      "title": "Nijer Deltası",
+      "author": "Luka Tomac / Friends of the Earth International",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kegbara-_dere_community_oil_spill%2C_Ogoniland%2C_Nigeria_(22707273700).jpg"
+    },
+    "assets/image/wikipedia/avustralya-lng-tesisleri.jpg": {
+      "title": "Avustralya LNG Tesisleri",
+      "author": "Ken Hodge",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:LNG_Carrier_Excel_at_Wickham_Point_in_April_2016_(25732343124).jpg"
+    },
+    "assets/image/wikipedia/hindistan-komur-madenleri.jpg": {
+      "title": "Hindistan Kömür Madenleri",
+      "author": "Rosehubwiki, Kuber Patel",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:NCL_Singrauli_Nigahi_Coal_Mine_at_Night.jpg"
+    },
+    "assets/image/wikipedia/bati-teksas-permian-havzasi.png": {
+      "title": "Batı Teksas Permian Havzası",
+      "author": "Emmanuel Roquette",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:PermianBasin-02.png"
+    },
+    "assets/image/wikipedia/amazon-yagmur-ormanlari.jpg": {
+      "title": "Amazon Yağmur Ormanları",
+      "author": "NASA (Jesse Allen, Robert Simmon)",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fires_and_Deforestation_on_the_Amazon_Frontier%2C_Rondonia%2C_Brazil_-_August_12%2C_2007.jpg"
+    },
+    "assets/image/wikipedia/borneo-adasi.jpg": {
+      "title": "Borneo Adası",
+      "author": "T. R. Shankar Raman",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:OilPalm_DSC_9183.JPG"
+    },
+    "assets/image/wikipedia/kongo-havzasi.jpg": {
+      "title": "Kongo Havzası",
+      "author": "Photokadaffi",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dans_la_for%C3%AAt_d'Eseka.jpg"
+    },
+    "assets/image/wikipedia/endonezya-turbaliklari.jpg": {
+      "title": "Endonezya Turbalıkları",
+      "author": "Muhammad Pasya Ramadhan",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peatland_Forest_fires.jpg"
+    },
+    "assets/image/wikipedia/cerrado-savanalari-brezilya.jpg": {
+      "title": "Cerrado Savanaları",
+      "author": "Rafael Ribeiro",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pasto_do_Cerrado_Mineiro_ao_p%C3%B4r_do_sol.jpg"
+    },
+    "assets/image/wikipedia/ruhr-bolgesi-celik-tesisleri.jpg": {
+      "title": "Ruhr Bölgesi Çelik Tesisleri",
+      "author": "Andreas Schiblon",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hochofen-8---DU-Hubertusstrasse.jpg"
+    },
+    "assets/image/wikipedia/cin-aluminyum-tesisleri.jpg": {
+      "title": "Çin Alüminyum Tesisleri",
+      "author": "Bilinmeyen fotoğrafçı",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aluminium-4.jpg"
+    },
+    "assets/image/wikipedia/hindistan-tugla-ocaklari.jpg": {
+      "title": "Hindistan Tuğla Ocakları",
+      "author": "McKay Savage",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:India_-_Sights_%26_Culture_-_Rural_Brick_Making_Kiln_03_(4040765932).jpg"
+    },
+    "assets/image/wikipedia/brezilya-sigir-ciftlikleri.jpg": {
+      "title": "Brezilya Sığır Çiftlikleri",
+      "author": "Christopher Borges",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tocando_a_Boiada.jpg"
+    },
+    "assets/image/wikipedia/guneydogu-asya-pirinc-tarlalari.jpg": {
+      "title": "Güneydoğu Asya Pirinç Tarlaları",
+      "author": "Quangpraha",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Terraced_paddy_fields%2C_Sonla%2C_Vietnam.jpg"
+    },
+    "assets/image/wikipedia/avrupa-yogun-tarim-alanlari.jpg": {
+      "title": "Avrupa Yoğun Tarım Alanları",
+      "author": "Axel Hartmann",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Agricultural_landscape_Mergelland.jpg"
+    },
+    "assets/image/wikipedia/meksika-avokado-bahceleri.png": {
+      "title": "Meksika Avokado Bahçeleri",
+      "author": "El Comandante",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Municipios_michoacanos_productores_de_aguacate_en_2004.svg"
+    },
+    "assets/image/wikipedia/abd-buyuk-ovalarda-mono-kultur.jpg": {
+      "title": "ABD Büyük Ovalarda Mono-Kültür",
+      "author": "formulanone",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Concentric_Circle_Farmland_(50902375916).jpg"
+    },
+    "assets/image/wikipedia/hollanda-yogun-hayvancilik-tesisleri.jpg": {
+      "title": "Hollanda Yoğun Hayvancılık Tesisleri",
+      "author": "Agnes Monkelbaan",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Melkveebedrijf_kattewaardweg_Kampen_02-03-2021_(actm.)_01.jpg"
+    },
+    "assets/image/wikipedia/los-angeles-otoyol-agi.jpg": {
+      "title": "Los Angeles Otoyol Ağı",
+      "author": "Bilinmiyor",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Los_Angeles_Freeway_Interchange.jpg"
+    },
+    "assets/image/wikipedia/kuresel-konteyner-gemiciligi.jpg": {
+      "title": "Küresel Konteyner Gemiciliği",
+      "author": "Martin Dörsch",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Container_ship_in_Koper_2013.jpg"
+    },
+    "assets/image/wikipedia/atlantik-hava-trafigi.jpg": {
+      "title": "Atlantik Hava Trafiği",
+      "author": "AlixSaz",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Contrails_in_the_sky_at_sunset.jpg"
+    },
+    "assets/image/wikipedia/dubai-havalimani.jpg": {
+      "title": "Dubai Havalimanı",
+      "author": "Andy Mabbett",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dubai_International_Airport_-_2024-10-24_-_Andy_Mabbett_-_51.jpg"
+    },
+    "assets/image/wikipedia/suveys-panama-kanali.jpg": {
+      "title": "Süveyş ve Panama Kanalı",
+      "author": "NASA",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Suez_Canal%2C_Port_Said_-_ISS.jpg"
+    },
+    "assets/image/pexels/endonezya-iki-tekerlekli-tasit.jpg": {
+      "title": "Endonezya İki Tekerlekli Taşıt Sorunu",
+      "author": "Ary Wibowo",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "source": "Pexels",
+      "sourceUrl": "https://www.pexels.com/photo/30865547/"
+    },
+    "assets/image/wikipedia/enerji-tasarrufu.jpg": {
+      "title": "Enerji Tasarrufu",
+      "author": "NIST",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Assorted_LED_Lamps.jpg"
+    },
+    "assets/image/wikipedia/ulasim-tercihleri.jpg": {
+      "title": "Ulaşım Tercihleri",
+      "author": "Tony Webster",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Holmens_Kanal_Cyclists_(15325678721).jpg"
+    },
+    "assets/image/wikipedia/beslenme-aliskanliklari.jpg": {
+      "title": "Beslenme Alışkanlıkları",
+      "author": "Rexness",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:InSeason_Farmer's_Market%2C_North_Melbourne_Australia_(4570521176).jpg"
+    },
+    "assets/image/wikipedia/bilincli-tuketim.jpg": {
+      "title": "Bilinçli Tüketim",
+      "author": "Tiia Monto",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Second_hand_clothes.jpg"
+    },
+    "assets/image/wikipedia/dogayla-birlikte-yasamak.jpg": {
+      "title": "Doğayla Birlikte Yaşamak",
+      "author": "Dietmar Rabich",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vancouver_(BC%2C_Canada)%2C_Comox_Street%2C_Urban_gardening_--_2022_--_1938.jpg"
+    },
+    "assets/image/wikipedia/savunuculuk-ve-farkindalik.jpg": {
+      "title": "Savunuculuk ve Farkındalık",
+      "author": "Leonhard Lenz",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:3rd_Global_Climate_Strike_Berlin_FridaysForFuture_demonstration_view_from_stage_50.jpg"
+    },
+    "assets/image/wikipedia/karbon-fiyatlandirmasi.png": {
+      "title": "Karbon Fiyatlandırması",
+      "author": "World Bank Staff and contributors",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carbon_taxes_and_emission_trading_worldwide.svg"
+    },
+    "assets/image/wikipedia/ormanlarin-korunmasi.jpg": {
+      "title": "Ormanların Korunması",
+      "author": "Michael hunter",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Reforestation_Near_Kings_Forest_Hamilton_Ontario.JPG"
+    },
+    "assets/image/wikipedia/uluslararasi-isbirligi.jpg": {
+      "title": "Uluslararası İşbirliği",
+      "author": "Press Information Department",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:COP_22_High_Level_Segment_Opening_Session_Prime_Minister_Sheikh_Hasina_Marrakech_Morocco_2016-11-15.jpg"
+    },
+    "assets/image/wikipedia/sanayi-donusumu.jpg": {
+      "title": "Sanayi Dönüşümü",
+      "author": "T. Allom (illüstrasyon), J. Tingle (gravür)",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Powerloom_weaving_in_1835.jpg"
+    },
+    "assets/image/wikipedia/surdurulebilir-sehirler.jpg": {
+      "title": "Sürdürülebilir Şehirler",
+      "author": "USDA",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_York_City_High_Line_-_Urban_Forestry_-_20150915-OSEC-LSC-0161_(20974909154).jpg"
+    },
+    "assets/image/wikipedia/paris-anlasmasi.jpg": {
+      "title": "Paris Anlaşması",
+      "author": "Presidencia de la República Mexicana",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:COP21_participants_-_30_Nov_2015_(23430273715).jpg"
+    },
+    "assets/image/wikipedia/cin-gunes-enerjisi.jpg": {
+      "title": "Çin'in Güneş Enerjisi Atılımı",
+      "author": "NASA Earth Observatory",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Building_a_Great_Solar_Wall_in_China_(153759_-_2_20241208_lrg).jpg"
+    },
+    "assets/image/wikipedia/norvec-elektrikli-arac.jpg": {
+      "title": "Norveç'te Elektrikli Araç Devrimi",
+      "author": "Wolfmann",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Electric_vehicle_charging_station_Ladestasjon_for_elbil_Nissan_VW_e-golf_Storgaten_T%C3%B8nsberg_kommune_Norway_2017-09-20_04.jpg"
+    },
+    "assets/image/wikipedia/avrupa-yesil-mutabakati.jpg": {
+      "title": "Avrupa Yeşil Mutabakatı",
+      "author": "almathias",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Berlaymont_building_in_Brussels.jpg"
+    },
+    "assets/image/wikipedia/batarya-teknolojisi.jpg": {
+      "title": "Bataryada Atılım",
+      "author": "RudolfSimon",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lithium-Ion_Battery_for_BMW_i3_-_SB-LiMotive_Cells.JPG"
+    },
+    "assets/image/wikipedia/karbon-yakalama-teknolojisi.jpg": {
+      "title": "Climeworks'ün Karbon Yakalama Tesisi",
+      "author": "TRx340",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.tr",
+      "source": "Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Climeworks-Anlage.jpg"
+    },
+    "assets/image/un/UN7262680.jpg": {
+      "title": "Grönland buz tabakası",
+      "author": "UN Photo",
+      "license": "BM Fotoğraf Arşivi kullanım şartları",
+      "licenseUrl": "https://media.un.org/photo/en/terms-and-conditions",
+      "source": "BM Fotoğraf Arşivi",
+      "sourceUrl": "https://media.un.org/photo/en"
+    },
+    "assets/image/un/UN7319884.jpg": {
+      "title": "Doğu Afrika Miombo Ormanları",
+      "author": "UN Photo",
+      "license": "BM Fotoğraf Arşivi kullanım şartları",
+      "licenseUrl": "https://media.un.org/photo/en/terms-and-conditions",
+      "source": "BM Fotoğraf Arşivi",
+      "sourceUrl": "https://media.un.org/photo/en"
+    },
+    "assets/image/un/UN7417696.jpg": {
+      "title": "Teksas Körfez Kıyısı",
+      "author": "UN Photo",
+      "license": "BM Fotoğraf Arşivi kullanım şartları",
+      "licenseUrl": "https://media.un.org/photo/en/terms-and-conditions",
+      "source": "BM Fotoğraf Arşivi",
+      "sourceUrl": "https://media.un.org/photo/en"
+    },
+    "assets/image/un/UN7417711.jpg": {
+      "title": "Macaristan PVC ve Plastik Sektörü",
+      "author": "UN Photo",
+      "license": "BM Fotoğraf Arşivi kullanım şartları",
+      "licenseUrl": "https://media.un.org/photo/en/terms-and-conditions",
+      "source": "BM Fotoğraf Arşivi",
+      "sourceUrl": "https://media.un.org/photo/en"
+    },
+    "assets/image/un/UN7436150.jpg": {
+      "title": "Yenilenebilir Enerjiye Geçiş",
+      "author": "UN Photo",
+      "license": "BM Fotoğraf Arşivi kullanım şartları",
+      "licenseUrl": "https://media.un.org/photo/en/terms-and-conditions",
+      "source": "BM Fotoğraf Arşivi",
+      "sourceUrl": "https://media.un.org/photo/en"
+    },
+    "assets/image/un/UN7771324.jpg": {
+      "title": "Çimento Fabrikaları",
+      "author": "UN Photo",
+      "license": "BM Fotoğraf Arşivi kullanım şartları",
+      "licenseUrl": "https://media.un.org/photo/en/terms-and-conditions",
+      "source": "BM Fotoğraf Arşivi",
+      "sourceUrl": "https://media.un.org/photo/en"
+    }
+  };
+
+  const POPOVER_CLASS = 'media-credit-popover';
+  let openPopover = null;
+
+  function closePopover() {
+    if (!openPopover) return;
+    openPopover.button.setAttribute('aria-expanded', 'false');
+    openPopover.node.remove();
+    document.body.classList.remove('media-credit-open');
+    openPopover = null;
+  }
+
+  function buildPopover(credit) {
+    const box = document.createElement('div');
+    box.className = POPOVER_CLASS;
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-label', 'Görsel künyesi');
+
+    const title = document.createElement('strong');
+    title.className = 'media-credit-title';
+    title.textContent = credit.title;
+    box.appendChild(title);
+
+    const rows = [
+      ['Fotoğraf', credit.author, null],
+      ['Lisans', credit.license, credit.licenseUrl],
+      ['Kaynak', credit.source, credit.sourceUrl]
+    ];
+    rows.forEach(([label, value, href]) => {
+      const row = document.createElement('p');
+      row.className = 'media-credit-row';
+      const key = document.createElement('span');
+      key.className = 'media-credit-key';
+      key.textContent = label;
+      row.appendChild(key);
+      if (href) {
+        const link = document.createElement('a');
+        link.href = href;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = value;
+        row.appendChild(link);
+      } else {
+        const span = document.createElement('span');
+        span.textContent = value;
+        row.appendChild(span);
+      }
+      box.appendChild(row);
+    });
+
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'media-credit-close';
+    close.setAttribute('aria-label', 'Künyeyi kapat');
+    close.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+    close.addEventListener('click', (e) => { e.stopPropagation(); closePopover(); });
+    box.appendChild(close);
+
+    return box;
+  }
+
+  /* Kutu body'ye basılıyor: reel küçük resmi ve şerit kartları overflow:hidden
+     olduğu için görselin içine eklenirse kırpılıyordu. Konum her seferinde
+     rozetin ekrandaki yerinden hesaplanıyor. */
+  function placePopover(button, node) {
+    const badge = button.getBoundingClientRect();
+    const box = node.getBoundingClientRect();
+    const margin = 12;
+
+    let left = badge.right - box.width;
+    left = Math.max(margin, Math.min(left, window.innerWidth - box.width - margin));
+
+    let top = badge.top - box.height - 8;
+    if (top < margin) top = badge.bottom + 8;
+
+    node.style.left = `${Math.round(left)}px`;
+    node.style.top = `${Math.round(top)}px`;
+  }
+
+  function togglePopover(button, credit) {
+    const wasOpen = openPopover && openPopover.button === button;
+    closePopover();
+    if (wasOpen) return;
+    const node = buildPopover(credit);
+    document.body.appendChild(node);
+    placePopover(button, node);
+    button.setAttribute('aria-expanded', 'true');
+    // Şerit (hover-ticker) kayarken künye okunamaz; açıkken durduruyoruz.
+    document.body.classList.add('media-credit-open');
+    openPopover = { button, node };
+  }
+
+  function makeBadge(credit) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'media-credit-badge';
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', credit.title + ' — görsel künyesi');
+    button.innerHTML = '<i class="fa-solid fa-info" aria-hidden="true"></i>';
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      togglePopover(button, credit);
+    });
+    return button;
+  }
+
+  function creditFor(text) {
+    if (!text) return null;
+    const match = Object.keys(CREDITS).find((path) => text.indexOf(path) !== -1);
+    return match ? CREDITS[match] : null;
+  }
+
+  function attach(host, credit) {
+    if (!host || host.querySelector(':scope > .media-credit-badge')) return;
+    if (host.closest('[aria-hidden="true"]')) return;
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    host.appendChild(makeBadge(credit));
+  }
+
+  function scan(root) {
+    (root || document).querySelectorAll('.cause-stack-card').forEach((card) => {
+      const credit = creditFor(card.getAttribute('style'));
+      if (credit) attach(card, credit);
+    });
+
+    (root || document).querySelectorAll('.vital-sign-card-bg').forEach((bg) => {
+      const credit = creditFor(bg.getAttribute('style'));
+      if (credit) attach(bg.parentNode, credit);
+    });
+
+    (root || document).querySelectorAll('.timeline-card-media').forEach((media) => {
+      const img = media.querySelector('img');
+      const credit = img && creditFor(img.getAttribute('src'));
+      if (credit) attach(media, credit);
+    });
+
+    (root || document).querySelectorAll('.reel-featured').forEach((featured) => {
+      const credit = creditFor(featured.getAttribute('style'));
+      if (credit) attach(featured, credit);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (openPopover && !e.target.closest('.' + POPOVER_CLASS)) closePopover();
+  });
+
+  let reflowQueued = false;
+  function reflowPopover() {
+    if (!openPopover || reflowQueued) return;
+    reflowQueued = true;
+    requestAnimationFrame(() => {
+      reflowQueued = false;
+      if (openPopover) placePopover(openPopover.button, openPopover.node);
+    });
+  }
+  window.addEventListener('scroll', reflowPopover, { passive: true });
+  window.addEventListener('resize', reflowPopover);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && openPopover) {
+      const button = openPopover.button;
+      closePopover();
+      button.focus();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    scan();
+    // Reel görselleri JS ile sonradan basılıyor; eklendiklerinde rozetlerini al.
+    const reel = document.getElementById('actions-section');
+    if (reel) new MutationObserver(() => scan(reel)).observe(reel, { childList: true, subtree: true });
   });
 })();
