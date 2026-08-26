@@ -1509,8 +1509,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: var(--light-ink-soft);
 }
 
-.theme-white .indicator-tab-item:hover,
-.theme-gray .indicator-tab-item:hover{
+/* :not(.active) — bu seçici .indicator-tab-item.active'ten daha spesifik
+   olduğu için, dışlanmazsa seçili sekmenin yeşili üzerine gelindiğinde griye
+   dönüyordu. Seçili sekme her durumda yeşil kalmalı. */
+.theme-white .indicator-tab-item:not(.active):hover,
+.theme-gray .indicator-tab-item:not(.active):hover{
   background: rgba(20, 33, 15, 0.05);
 }
 
@@ -2453,7 +2456,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   transition: background 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.indicator-tab-item:hover {
+.indicator-tab-item:not(.active):hover {
   background: rgba(255, 255, 255, 0.04);
 }
 
