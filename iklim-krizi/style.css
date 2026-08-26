@@ -9,6 +9,8 @@
      aynı ton. */
   --idd-accent-blue: #0a97d9;
   --idd-dark-bg: #16201a;
+  /* Acik gri yuzey tonu — theme-gray section zemini ve gosterge kartlari. */
+  --surface-gray: #e8e9eb;
   --sdg12-color: #d87624;
   --sdg13-color: #3f7e44;
   --sdg14-color: #0a97d9;
@@ -1312,7 +1314,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .theme-gray {
-  background: #e8e9eb;
+  background: var(--surface-gray);
 }
 
 .theme-green {
@@ -2344,31 +2346,15 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .indicator-block {
-  /* Orman Yangınları / Deniz Sıcaklığı / Global Isınma artık kendi yeşil
-     (--idd-green) kartında duruyor; aralarındaki boşlukta section'ın kendi
-     zemini (theme-white → beyaz) görünür kalıyor. Kart yeşile dönünce metin
-     katmanları da bu kapsamda tekrar beyaza dönsün diye tema sisteminin
-     kullandığı --light-ink* değişkenleri burada eziliyor (bkz. #happening-
-     section .indicator-block override'ları aşağıda). */
+  /* Orman Yangınları / Deniz Sıcaklığı / Global Isınma, section'ın beyaz
+     zemininde açık gri kartlarda duruyor; aralarındaki boşlukta section'ın
+     kendi beyazı görünür kalıyor. Kart zemini açık olduğu için metin
+     katmanları tema sisteminin --light-ink* değerlerini (siyah) devralıyor,
+     burada ezilmiyor. */
   margin-bottom: 160px;
-  background: var(--idd-green);
+  background: var(--surface-gray);
   border-radius: 32px;
   padding: 56px clamp(20px, 5vw, 64px);
-  --light-ink: #ffffff;
-  --light-ink-soft: rgba(255, 255, 255, 0.8);
-  --light-ink-faint: rgba(255, 255, 255, 0.6);
-}
-
-/* İstatistik pilleri ve alt-blok ayraç çizgileri, theme-white kuralları
-   tarafından açık zemine göre koyulaştırılmıştı (bkz. yukarıdaki .theme-
-   white .indicator-stat vb.); yeşil kartta bunlar yerine orijinal koyu-
-   zemin değerlerine (beyaza yakın/az saydam siyah) dönüyor. */
-#happening-section .indicator-block .indicator-stat {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-#happening-section .indicator-block .indicator-subblock {
-  border-top-color: rgba(255, 255, 255, 0.12);
 }
 
 .indicator-block-header {
