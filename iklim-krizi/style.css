@@ -1,13 +1,8 @@
 :root {
   --idd-green: #2c7933;
   --idd-accent-green: #56c02b;
-  /* Yeşil sayfa zemininde vurgu/çarpıcı nokta rengi — grafik paletiyle
-     (script.js MODERN_CHART_COLORS) aynı sarı/amber ton, tek kaynaktan. */
+  /* Odak halkası vurgusu (adım karuseli, görsel künyesi düğmeleri). */
   --idd-accent-yellow: #ffb648;
-  /* Okuma ilerleme çubuğu, bölüm nokta-menüsü gibi gezinme öğelerinde
-     kullanılan mavi vurgu — sitede zaten kullanılan sdg14/timeline mavisiyle
-     aynı ton. */
-  --idd-accent-blue: #0a97d9;
   --idd-dark-bg: #16201a;
   /* Acik gri yuzey tonu — theme-gray section zemini ve gosterge kartlari. */
   --surface-gray: #e8e9eb;
@@ -17,8 +12,72 @@
   --sdg15-color: var(--idd-accent-green);
   --white-08: rgba(255, 255, 255, 0.08);
   --white-10: rgba(255, 255, 255, 0.1);
+  --white-60: rgba(255, 255, 255, 0.6);
   --white-65: rgba(255, 255, 255, 0.65);
+  --white: #ffffff;
   --black-70: rgba(0, 0, 0, 0.7);
+  /* Sitenin navbar/footer koyusu (iklimdd.org); bölüm göstergesi kapsülü
+     ve etiketi bu tondan türüyor. */
+  --site-dark: #212529;
+  --site-dark-80: rgba(33, 37, 41, 0.8);
+  /* WCAG 2.5.8 asgari dokunma hedefi. */
+  --target-min: 24px;
+  /* Dosyada en çok kullanılan yumuşak yavaşlama eğrisi. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 200ms;
+  --dur-base: 400ms;
+
+  /* Bileşen dili: iki seviye köşe (küçük kart/sekme ve medya/panel) ve iki
+     seviye yükselti (yerinde duran kart, öne çıkan kart/kaplama). Önceden
+     10–32px arası yedi farklı köşe ve her kartta ayrı gölge vardı. */
+  --radius-s: 12px;
+  --radius-l: 20px;
+  --shadow-1: 0 4px 18px rgba(0, 0, 0, 0.08);
+  --shadow-2: 0 20px 50px rgba(0, 0, 0, 0.18);
+
+  /* Veri renkleri — dataviz doğrulayıcısından gri (#e8e9eb) zeminde geçti.
+     Kategorik dilimler sabit sırayla atanır; üçü 3:1'in altında kaldığı için
+     grafiklerde görünür etiket (lejant) zorunlu. İyi/kritik yalnızca anlamı
+     iyi/kötü olan serilerde ve etiketle birlikte kullanılır. */
+  --data-series-1: #2a78d6;
+  --data-series-2: #eb6834;
+  --data-series-3: #1baf7a;
+  --data-series-4: #eda100;
+  --status-critical: #d03b3b;
+  --status-good: var(--idd-green);
+  /* Grafik işaretleri: vurgulanmayan (bağlam) sütunlar gri zeminde 3,26:1,
+     vurgu sıcaklık ölçeğinin turuncu-kırmızısı 3,07:1; ikisi de grafik
+     öğeleri için gereken 3:1'i geçiyor. Sütunlar en çok 24px, aralar 2px,
+     veri ucu 4px yuvarlak. */
+  --chart-context: #7d8086;
+  --chart-accent: var(--anomaly-8);
+  --chart-grid: rgba(0, 0, 0, 0.12);
+  --chart-gap: 2px;
+  --chart-bar-max: 24px;
+  --chart-bar-radius: 4px;
+
+  /* Sıcaklık anomalisi ıraksak ölçeği (ColorBrewer RdBu, 11 adım): 0 en
+     soğuk, 5 nötr orta nokta (baz dönem ortalaması), 10 en sıcak. Isınma
+     şeridi dikişleri ve Global Isınma sahnesi aynı ölçeği okur. */
+  --anomaly-0: #053061;
+  --anomaly-1: #2166ac;
+  --anomaly-2: #4393c3;
+  --anomaly-3: #92c5de;
+  --anomaly-4: #d1e5f0;
+  --anomaly-5: #f7f7f7;
+  --anomaly-6: #fddbc7;
+  --anomaly-7: #f4a582;
+  --anomaly-8: #d6604d;
+  --anomaly-9: #b2182b;
+  --anomaly-10: #67001f;
+  /* Deniz haritası: veri taşımayan su (İyon Denizi, boğazlar) nötr, kara
+     beyaz; dört deniz artışa göre sıcaklık ölçeğinden renk alıyor. */
+  --map-water: #cfd8df;
+  --map-land: var(--white);
+  --map-coast: rgba(0, 0, 0, 0.25);
+  /* Sabit üst menünün yüksekliği; yapışık sahne görselleri bunun altında
+     duruyor. script.js menüyü ölçüp güncelliyor, bu değer ilk boyama için. */
+  --ik-header-offset: 76px;
   /* Climate Crisis fontunun değişken "YEAR" ekseni (fonts.google.com/specimen/
      Climate+Crisis) — "zamanın seçilen bir konu üzerindeki etkisini metaforik
      şekilde gösterir": eksen değeri arttıkça harfler daha çok "eriyor". Sadece
@@ -73,7 +132,7 @@ body {
 
 /* responsive-plan.md §5.2 — genel güvenlik ağı: hiçbir medya kendi
    kapsayıcısını taşırmaz, hiçbir uzun kelime/URL metni yatayda kırmaz.
-   Element seçicileri (düşük özgüllük) kullanıldığından, .hero-video gibi
+   Element seçicileri (düşük özgüllük) kullanıldığından, .ik-hero-video gibi
    sınıf bazlı boyut kuralları bunun üzerine yazmaya devam eder — bu sadece
    ölçüsü tanımlanmamış durumlar için bir taban. */
 img, picture, video, canvas, svg, iframe {
@@ -85,120 +144,15 @@ p, h1, h2, h3, h4, h5, h6, li, a {
   overflow-wrap: break-word;
 }
 
-footer {
-  position: relative;
-}
-
-/* ── "Ambient Background" (Framer referansı) ──
-   Orijinali Framer Motion ile üç yarı saydam, çok bulanık dairenin
-   konumunu ve rengini sonsuz döngüde yumuşakça değiştiriyor; burada aynı
-   fikir saf CSS @keyframes ile (transform + background-color, ikisi de
-   güvenilir biçimde animasyonlanabilir) ve sitenin yeşil paletiyle yeniden
-   kuruldu. position:fixed + z-index:0 + body içinde ilk eleman olması,
-   #liquidBgCanvas'ta olduğu gibi bloblari body'nin düz zemininin ÜZERİNDE
-   ama tüm section'ların ARKASINDA tutuyor (footer'ın position:relative
-   alması da aynı nedenle gerekiyor — bkz. yukarıdaki kural). */
-.ambient-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.ambient-blob {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.6;
-  filter: blur(70px);
-  will-change: transform, background-color;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-.ambient-blob-1 {
-  width: 60vw;
-  aspect-ratio: 1;
-  top: -15%;
-  left: -10%;
-  background-color: #56c02b66;
-  animation-name: ambientFloat1, ambientColor1;
-  animation-duration: 16s, 22s;
-}
-
-.ambient-blob-2 {
-  width: 52vw;
-  aspect-ratio: 1;
-  bottom: -20%;
-  right: -8%;
-  background-color: #0a97d94d;
-  animation-name: ambientFloat2, ambientColor2;
-  animation-duration: 13s, 22s;
-}
-
-.ambient-blob-3 {
-  width: 44vw;
-  aspect-ratio: 1;
-  top: 35%;
-  left: 32%;
-  background-color: #ffb64840;
-  animation-name: ambientFloat3, ambientColor3;
-  animation-duration: 15s, 22s;
-}
-
-@keyframes ambientFloat1 {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(12vw, 10vh) scale(1.15); }
-}
-
-@keyframes ambientFloat2 {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(-10vw, -14vh) scale(1.1); }
-}
-
-@keyframes ambientFloat3 {
-  from { transform: translate(-8vw, 6vh) scale(0.95); }
-  to { transform: translate(8vw, -6vh) scale(1.1); }
-}
-
-@keyframes ambientColor1 {
-  0%, 100% { background-color: #56c02b66; }
-  50% { background-color: #2c793366; }
-}
-
-@keyframes ambientColor2 {
-  0%, 100% { background-color: #0a97d94d; }
-  50% { background-color: #56c02b4d; }
-}
-
-@keyframes ambientColor3 {
-  0%, 100% { background-color: #ffb64840; }
-  50% { background-color: #0a97d940; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ambient-blob {
-    animation: none;
-  }
-}
-
-@media (max-width: 767px) {
-  .ambient-blob {
-    filter: blur(50px);
-  }
-}
-
 /* Başlık/alt başlık öğelerinin ortak "eriyen yıl" davranışı — font-family
    Climate Crisis olan her başlık bu kuralı miras alır (font-variation-settings
    inherited bir özellik), tek tek tekrar etmek gerekmiyor. */
-.hero-title,
+.ik-hero-title,
 .rotator-text,
 .section-title,
 .sdg-main-title,
 .cause-fullwidth-heading,
-.indicator-block-header h3,
-.indicator-subblock h4,
+.ik-scene-title,
 .steps-group-title {
   font-variation-settings: "YEAR" var(--yr);
   transition: font-variation-settings 1.2s ease;
@@ -217,7 +171,7 @@ h3,
 h4,
 h5,
 h6,
-.hero-title {
+.ik-hero-title {
   font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
   font-weight: 800;
   letter-spacing: -0.5px;
@@ -271,7 +225,7 @@ h6,
    yüzden metin rengi de (varsayılan koyu yerine) açık tona çevrildi. Hover/
    focus'ta zemin site genelinde kart arka planı olarak kullanılan yeşile
    (--idd-green) dönüyor; bu tonda beyaz metin zaten yeterli kontrastı
-   sağladığından (bkz. .indicator-block) metin rengi hover'da değişmiyor. */
+   sağladığından metin rengi hover'da değişmiyor. */
 .dropdown-menu {
   background-color: #212529;
   border-color: rgba(255, 255, 255, 0.1);
@@ -419,7 +373,7 @@ footer .social-links a::after {
 
 /*  ========================================================================= Hero Section Styles =============================================================================== */
 
-.hero-section {
+.ik-hero-section {
   position: relative;
   height: 100vh;
   /* svh, adres çubuğu en açık haldeyken (en küçük) görünür yüksekliği temel
@@ -441,7 +395,7 @@ footer .social-links a::after {
 }
 
 /* Tam Ekran Responsive Video Modülü */
-.hero-video {
+.ik-hero-video {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -491,20 +445,35 @@ footer .social-links a::after {
 .reading-progress-fill {
   height: 100%;
   width: 0%;
-  background: var(--idd-accent-blue);
+  /* Koyu navbar'ın üst kenarında duruyor: marka yeşilinin açık tonu orada
+     6,6:1 kontrast veriyor (koyu #2c7933 yalnızca 2,9:1). */
+  background: var(--idd-accent-green);
   transition: width 0.1s linear;
 }
 
-/* ── Bölüm hızlı gezinme (nokta menü) — sadece geniş ekranlarda ── */
+/* ── Bölüm göstergesi (kapsül) — sadece geniş ekranlarda ──
+   Kullanıcının verdiği referans: koyu yarı saydam dikey kapsül, içinde küçük
+   noktalar; bulunulan bölümün noktası dikeyde uzayıp kapsüle dönüşüyor.
+   Kapsül koyu olduğu için beyaz, gri ve yeşil bölümlerin hepsinde seçiliyor.
+   Bölüm adı sade görünümü bozmasın diye yalnızca hover/klavye odağında
+   kapsülün solunda çıkıyor. Yuvalar 24px (dokunma hedefi), aktif yuva 40px;
+   toplam yükseklik hep aynı kaldığı için kapsül boyu oynamıyor. */
 .section-dotnav {
   position: fixed;
-  right: 22px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 900;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  padding: 8px;
+  border-radius: 999px;
+  background: var(--site-dark-80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  /* Aktif yuvanın yükseklik geçişi yalnızca bu küçük kutunun içini yeniden
+     yerleştirsin, sayfanın geri kalanına yayılmasın. */
+  contain: layout;
   transition: opacity 0.3s ease;
 }
 
@@ -518,51 +487,79 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .section-dotnav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-
-.section-dotnav-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  /* Beyaz temelli yarı saydam renk, açık (theme-white) section'larda
-     görünmez oluyordu — koyu ve açık zeminlerin ikisinde de seçilebilen
-     dolgun bir açık mavi kullanıyoruz. */
-  background: #8ec9f0;
-  border: 1px solid #4a9bd6;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  flex-shrink: 0;
-}
-
-.section-dotnav-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(6px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  background: rgba(0, 0, 0, 0.55);
-  padding: 3px 10px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--target-min);
+  height: var(--target-min);
   border-radius: 999px;
-  backdrop-filter: blur(4px);
+  text-decoration: none;
+  transition: height 0.25s var(--ease-out);
 }
 
-.section-dotnav a:hover .section-dotnav-label,
-.section-dotnav a:focus-visible .section-dotnav-label {
-  opacity: 1;
-  transform: translateX(0);
+.section-dotnav a.is-active {
+  height: 40px;
+}
+
+/* Kapsül biçimi transform:scaleY ile büyütülünce yuvarlak uçlar elipse
+   dönüşüyordu; bu yüzden 7 minik öğede bilinçli olarak height anime ediliyor. */
+.section-dotnav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--white-60);
+  transition: height 0.25s var(--ease-out), background-color 0.2s ease;
 }
 
 .section-dotnav a:hover .section-dotnav-dot,
 .section-dotnav a:focus-visible .section-dotnav-dot,
 .section-dotnav a.is-active .section-dotnav-dot {
-  background: var(--idd-accent-blue);
-  border-color: var(--idd-accent-blue);
-  transform: scale(1.3);
+  background: var(--white);
+}
+
+.section-dotnav a.is-active .section-dotnav-dot {
+  height: var(--target-min);
+}
+
+.section-dotnav-label {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 16px);
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--site-dark-80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(8px, -50%);
+  transition: opacity 0.2s ease, transform 0.2s var(--ease-out);
+}
+
+.section-dotnav a:hover .section-dotnav-label,
+.section-dotnav a:focus-visible .section-dotnav-label {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* İki tonlu odak halkası: beyaz çizgi koyu kapsülde, koyu gölge beyaz ve
+   yeşil zeminde görünür kalıyor. */
+.section-dotnav a:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--site-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-dotnav a,
+  .section-dotnav-dot,
+  .section-dotnav-label {
+    transition: none;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -620,7 +617,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 /* Kahraman videosu durdur/oynat kontrolü — WCAG 2.2.2: 5 sn'den uzun süren
    otomatik hareketli içerik için durdurma imkânı zorunlu. */
 /* Ön Plan İçerik Katmanı */
-.hero-content {
+.ik-hero-content {
   position: relative;
   z-index: 3;
   /* En üst katman, böylece etkileşime açık (tıklanabilir) olur */
@@ -631,7 +628,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 /* Tipografi ve Buton Tasarımı */
-.hero-title {
+.ik-hero-title {
   /* fonts.google.com/specimen/Climate+Crisis — "eriyen" görünümlü tematik
      variable font; sadece en büyük/vitrin başlıklarda kullanılıyor
      (küçük punto/kart başlıklarında okunabilirlik düşer). */
@@ -645,22 +642,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.hero-subtitle {
+.ik-hero-subtitle {
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1.2rem;
-}
-
-.hero-reading-time {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 2.5rem;
-}
-
-.hero-reading-time i {
-  margin-right: 0.4em;
 }
 
 /* Text Rotator Styles */
@@ -715,17 +702,17 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
    4rem'lik masaüstü başlığın overflow:hidden'lı 100svh kutuda kırpılma
    riski taşımasına yol açıyordu. */
 @media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
-  .hero-title {
+  .ik-hero-title {
     font-size: 2.5rem;
   }
 
-  .hero-subtitle {
+  .ik-hero-subtitle {
     font-size: 1rem;
   }
 
-  .hero-section {
+  .ik-hero-section {
     height: 100vh;
-    /* Taban kuraldaki (.hero-section, yukarıda) 100svh düzeltmesi bu media
+    /* Taban kuraldaki (.ik-hero-section, yukarıda) 100svh düzeltmesi bu media
        query'de height'ı tekrar yazdığı için kayboluyordu — adres çubuğu
        görünürken içerik tam da mobilde kırpılıyordu. svh burada da tekrar
        edilmeli (bkz. responsive-plan.md §8.1). */
@@ -747,14 +734,23 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   touch-action: auto;
 }
 
+/* Climate Crisis çok geniş bir font: "Sürdürülebilir" ~10,1em tutuyor ve
+   metin sütunu dar ekranlarda bu genişliğin altında kalınca global
+   overflow-wrap:break-word kelimeyi harfinden bölüyordu. Başlık artık
+   sütunun kendi genişliğine (cqi) göre küçülüyor, böylece kelime her ekranda
+   tek satıra sığıyor; overflow-wrap:normal bölmeyi bu başlıkta kapatıyor.
+   9.5cqi, fontun glif taşması için ~%10 pay bırakıyor. İlk font-size, cqi
+   desteklemeyen tarayıcılar için yedek. */
 .sdg-main-title {
   font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
   font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-size: min(clamp(2rem, 5vw, 3.5rem), 9.5cqi) !important;
   font-weight: 900 !important;
   color: #fff;
   line-height: 1.05 !important;
   letter-spacing: -1px !important;
   margin: 0 0 20px !important;
+  overflow-wrap: normal;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
 }
 
@@ -799,32 +795,27 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 /* Sol taraf: Sabit başlık/açıklama metni.
    justify-self kasıtlı olarak stretch (varsayılan, tekrar belirtmeye
    gerek yok): start yaparsak öğe grid sütununun genişliğini yok sayıp
-   kendi max-width'ine göre boyutlanır, dar sütunlarda (ör. 1101px'te
-   ~313px) 420px'lik metin kutusu sığmayıp orbit'in üstüne taşardı.
+   kendi max-width'ine göre boyutlanır, dar sütunlarda (ör. 1440px'te
+   ~372px) 420px'lik metin kutusu sığmayıp orbit'in üstüne taşardı.
    stretch ile kutu her zaman sütunun gerçek genişliğine sabit kalıyor,
    metin onun İÇİNDE text-align:left ile sola yaslanıyor — aynı görünüm,
    taşma riski yok. min-width:0 da aynı taşma sınıfına karşı ek güvence
    (grid sütunlarının örtük içerik-tabanlı asgari genişliğini kaldırır). */
 .sdg-text-panel {
+  container-type: inline-size;
   max-width: 420px;
   min-width: 0;
   margin-left: 48px;
   text-align: left;
 }
 
-/* Satır düzeninde (≥1101px) metin sütunu artık gerçek bir akışkan grid
-   parçası (minmax(0,1fr), max-width:420px) — dar viewport'larda (ör.
-   1101px'te sütun ~265px'e iniyor) küçük, geniş viewport'larda 420px'lik
-   üst sınırına kadar büyüyor. .sdg-main-title'ın kendi 5vw tabanlı
-   font-size'ı bu sütun genişliğiyle orantılı değildi (viewport'un
-   tamamına göre ölçekleniyordu), bu yüzden "Sürdürülebilir" ya dar
-   sütunda taşıyor ya da geniş viewport'ta gereksiz büyüyüp yine
-   sığmıyordu. Burada sütunun gerçek büyüme oranına yakın, daha ölçülü
-   bir vw katsayısı kullanılıyor. Kullanıcı isteğiyle önceki sabit
-   değerden (2.15rem) genel olarak büyütüldü. */
-@media (min-width: 1101px) {
+/* Satır düzeninde (≥1440px) üst sınır kullanıcı isteğiyle büyütülmüş
+   2.7rem; metin sütunu bu boyuta dar geldiğinde başlık yine sütun
+   genişliğine göre küçülüyor (1440px'te ~35px). */
+@media (min-width: 1440px) {
   .sdg-text-panel .sdg-main-title {
-    font-size: clamp(2.7rem, 1.6vw, 2.5rem) !important;
+    font-size: 2.7rem !important;
+    font-size: min(2.7rem, 9.5cqi) !important;
   }
 }
 
@@ -876,13 +867,13 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   pointer-events: auto;
 }
 
-/* Kullanıcı isteği: satır düzeninde (≥1101px, metin sol + dünya ortada)
+/* Kullanıcı isteği: satır düzeninde (≥1440px, metin sol + dünya ortada)
    açılan kart artık ortalanmış bir kaplama değil, section'ın SAĞ
    tarafına yerleşiyor — yatay ortalamayı (-50%) kaldırıp left yerine
    right kullanıyoruz, dikey ortalama (top:50% + translateY(-50%)) aynen
    kalıyor. Genişlik de daha dar: tam genişlik yerine sağ şeride oturan,
    metin sütunuyla görsel olarak dengeli bir kart. */
-@media (min-width: 1101px) {
+@media (min-width: 1440px) {
   .sdg-card-panel {
     left: auto;
     right: 48px;
@@ -895,11 +886,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Genişlik ve halka çapı artık clamp() ile akışkan: 1101-1436px aralığında
-   (bkz. .sdg-text-panel yorumu) sabit 560px canvas, .sdg-zone satırının
-   sığmasını engelliyordu. ≤1100px ve ≤575px breakpoint'lerindeki sabit
-   piksel override'lar (aşağıda) değişmedi; clamp()'in alt sınırı onlarla
-   aynı değerde olduğundan geçiş kesintisiz. */
+/* Genişlik ve halka çapı clamp() ile akışkan: sabit 560px canvas satır
+   düzeninde .sdg-zone satırının sığmasını engelliyordu. ≤1439px ve ≤575px
+   breakpoint'lerindeki sabit piksel override'lar aşağıda. */
 .sdg-orbit-canvas {
   position: relative;
   width: clamp(360px, 33vw, 560px);
@@ -1009,12 +998,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .sdg-card-inner {
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 20px;
+  border-radius: var(--radius-l);
   padding: 30px 36px;
   border-left: 5px solid var(--sdg-color, var(--idd-green));
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-2);
 }
 
 /* Subtle color glow top-right */
@@ -1043,9 +1032,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .sdg-card-logo {
   width: 76px;
   height: 76px;
-  border-radius: 10px;
+  border-radius: var(--radius-s);
   flex-shrink: 0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-1);
   object-fit: cover;
 }
 
@@ -1139,13 +1128,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 /* ── Responsive ──
-   1100px ve altında orbit/metin/kart üç bölgesi tek satıra sığmadığı için
-   doğrudan dikey istife geçiliyor (ayrı bir ara breakpoint bırakmıyoruz). */
-@media (max-width: 1100px), (max-height: 500px) and (orientation: landscape) {
-  .sdg-section {
-    padding: 60px 20px;
-  }
-
+   Satır düzeni (metin sol, dünya orta) 1440px altında dikey istife geçiyor:
+   daha dar genişliklerde metin sütunu "Sürdürülebilir" kelimesini başlık
+   boyutunda taşıyamıyor, başlık 1280px'te ~28px'e iniyordu (kullanıcı
+   kararı). Küçük ekrana özgü boyut ayarları ayrıca ≤1100px'te. */
+@media (max-width: 1439px), (max-height: 500px) and (orientation: landscape) {
   .sdg-zone {
     display: flex;
     flex-direction: column;
@@ -1173,17 +1160,23 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
     height: 300px;
   }
 
-  .sdg-node-logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-  }
-
   .sdg-text-panel {
     flex: none;
     width: 100%;
     margin-left: 0;
     text-align: center;
+  }
+}
+
+@media (max-width: 1100px), (max-height: 500px) and (orientation: landscape) {
+  .sdg-section {
+    padding: 60px 20px;
+  }
+
+  .sdg-node-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
   }
 
   /* Base kuraldaki width:min(960px,90%) bu dar ekranlarda zaten %90'a
@@ -1227,7 +1220,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
   .sdg-card-inner {
     padding: 22px 18px;
-    border-radius: 14px;
   }
 
   .sdg-card-logo {
@@ -1259,7 +1251,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
    orientation:landscape genişlikten bağımsız olduğu için bu kural, dar bir
    masaüstü penceresi kısaltıldığında da (aynı taşma riski) devreye girer —
    bu kasıtlı: cihaz değil, mevcut dikey alan esas alınıyor. flex:0 0 220px
-   hem satır (geniş-ama-kısa) hem sütun (≤1100px) düzeninde .sdg-orbit-wrapper
+   hem satır (geniş-ama-kısa) hem sütun (≤1439px) düzeninde .sdg-orbit-wrapper
    boyutunu garanti eder; script.js'teki getRadius() halkanın gerçek render
    genişliğini okuduğundan node yarıçapı bu boyutları otomatik takip eder. */
 @media (max-height: 500px) and (orientation: landscape) {
@@ -1327,15 +1319,77 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   position: relative;
 }
 
-/* ── SDG (beyaz section) koyu metin uyarlaması ── */
-#sdg-section.theme-green .sdg-main-title,
-#sdg-section.theme-green .sdg-main-title em {
-  color: #000000;
-  text-shadow: none;
+/* ── Isınma şeridi dikişleri ──
+   Bölümler arasındaki sert renk kesimlerini, NASA'nın yıllık sıcaklık
+   anomalisinden çizilen ince bir şeritle dikiyor. Her dikiş bir sonraki
+   dönemi gösterdiği için sayfa boyunca tekrar eden, veri taşıyan tek motif.
+   Şerit renklerini script.js basıyor; JS yoksa site koyusunda sade bir ayraç
+   olarak kalıyor. Dönem etiketi komşu bölümlere taşabildiği için z-index. */
+.ik-seam {
+  position: relative;
+  z-index: 6;
+  height: 8px;
+  background: var(--site-dark);
 }
 
+.ik-seam-stripes {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+}
+
+.ik-seam-label {
+  position: absolute;
+  top: 50%;
+  right: var(--gutter);
+  transform: translateY(-50%);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--site-dark);
+  color: var(--white);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ik-seam.is-waiting .ik-seam-stripes {
+  transform: scaleX(0);
+}
+
+.ik-seam.is-waiting .ik-seam-label {
+  opacity: 0;
+}
+
+.ik-seam.is-drawn .ik-seam-stripes {
+  transform: scaleX(1);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.ik-seam.is-drawn .ik-seam-label {
+  opacity: 1;
+  transition: opacity var(--dur-fast) ease var(--dur-base);
+}
+
+@media (min-width: 768px) {
+  .ik-seam {
+    height: 12px;
+  }
+
+  .ik-seam-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Yeşil bölümlerde metin beyaz: sitenin ana sayfasındaki yeşil blog
+   bandıyla aynı desen. Siyah gövde metni bu yeşilde 3,9:1 ile WCAG AA'nın
+   (4,5:1) altında kalıyordu; beyaz 5,4:1. Gölge kaldırıldı, düz yeşilde
+   okunurluğa katkısı yok. ── */
+#sdg-section.theme-green .sdg-main-title,
+#sdg-section.theme-green .sdg-main-title em,
 #sdg-section.theme-green .sdg-main-desc {
-  color: #000000;
+  color: var(--white);
   text-shadow: none;
 }
 
@@ -1357,11 +1411,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
    uyarlaması — Neler Oluyor, Sebepler, Karşılaşabileceğimiz Gelecek,
    Şu An Neler Yapılıyor, Kaynaklar section'larının ortak sınıflarını
    kapsıyor. Kendi arka planı olan (fotoğraf/gradient) kartlar — cause-
-   stack-card, expanded-card-label, card-showcase, evidence fotoğrafları —
+   stack-card, card-showcase, evidence fotoğrafları —
    zaten kendi koyu katmanlarını taşıdığından burada dokunulmuyor. */
 .theme-white,
-.theme-gray,
-.theme-green {
+.theme-gray {
   /* Açık (beyaz/gri) zeminli section'larda tüm metin katmanları (başlık,
      gövde, alt bilgi) düz siyah — önceden farklı opaklıklarla kademelenmiş
      "ink" tonları kullanılıyordu, artık üçü de tam siyah. */
@@ -1369,6 +1422,13 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   --light-ink-soft: #000000;
   --light-ink-faint: #000000;
   --light-hair: rgba(0, 0, 0, 0.14);
+}
+
+.theme-green {
+  --light-ink: var(--white);
+  --light-ink-soft: var(--white);
+  --light-ink-faint: var(--white);
+  --light-hair: rgba(255, 255, 255, 0.2);
 }
 
 .theme-white .section-title,
@@ -1379,10 +1439,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .theme-gray .cause-heading-static,
 .theme-white .dynamic-heading-word,
 .theme-gray .dynamic-heading-word,
-.theme-white .indicator-block-header h3,
-.theme-gray .indicator-block-header h3,
-.theme-white .indicator-subblock h4,
-.theme-gray .indicator-subblock h4,
 .theme-white .evidence-row-text h4,
 .theme-gray .evidence-row-text h4,
 .theme-white .steps-group-title,
@@ -1395,8 +1451,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .theme-gray .section-desc,
 .theme-white .cause-fullwidth-desc,
 .theme-gray .cause-fullwidth-desc,
-.theme-white .indicator-lead,
-.theme-gray .indicator-lead,
 .theme-white .steps-group-desc,
 .theme-gray .steps-group-desc,
 .theme-white .cause-tab-text p,
@@ -1446,11 +1500,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   text-decoration: none;
 }
 
-.theme-white .indicator-lead a,
-.theme-gray .indicator-lead a{
-  color: var(--idd-accent-green);
-}
-
 /* Sebepler sekme çubuğu: pasif pil açık gri, aktif pil koyu yeşil dolgu */
 .theme-white .cause-tab-btn,
 .theme-gray .cause-tab-btn{
@@ -1482,47 +1531,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: #fff;
 }
 
-/* Gösterge istatistik kutuları (Orman Yangınları) */
-.theme-white .indicator-stat,
-.theme-gray .indicator-stat{
-  background: rgba(20, 33, 15, 0.06);
-}
-
-.theme-white .indicator-stat-value,
-.theme-gray .indicator-stat-value{
-  color: var(--light-ink);
-}
-
-.theme-white .indicator-stat-label,
-.theme-gray .indicator-stat-label{
-  color: var(--light-ink-faint);
-}
-
-/* Tabs-card sekme listesi (Orman Yangınları/Deniz Sıcaklığı/Global Isınma) */
-.theme-white .indicator-tab-name,
-.theme-gray .indicator-tab-name{
-  color: var(--light-ink);
-}
-
-.theme-white .indicator-tab-desc,
-.theme-gray .indicator-tab-desc{
-  color: var(--light-ink-soft);
-}
-
-/* :not(.active) — bu seçici .indicator-tab-item.active'ten daha spesifik
-   olduğu için, dışlanmazsa seçili sekmenin yeşili üzerine gelindiğinde griye
-   dönüyordu. Seçili sekme her durumda yeşil kalmalı. */
-.theme-white .indicator-tab-item:not(.active):hover,
-.theme-gray .indicator-tab-item:not(.active):hover{
-  background: rgba(20, 33, 15, 0.05);
-}
-
-.theme-white .indicator-subblock,
-.theme-gray .indicator-subblock{
-  border-top-color: rgba(20, 33, 15, 0.12);
-}
-
-/* Adım karuseli (Ne Yapmalıyız — Bireysel/Toplumsal Adımlar) — koyu cam
+/* Adım karuseli (Neler Yapmalıyız — Bireysel/Toplumsal Adımlar) — koyu cam
    kart açık zeminde neredeyse görünmez oluyordu, açık temaya uyarlandı. */
 .theme-white .reel,
 .theme-gray .reel{
@@ -1536,8 +1545,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   border-color: rgba(20, 33, 15, 0.1);
 }
 
-.theme-white .reel-eyebrow-number,
-.theme-gray .reel-eyebrow-number,
 .theme-white .reel-title,
 .theme-gray .reel-title{
   color: var(--light-ink);
@@ -1612,13 +1619,13 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 #progress-section.theme-white .timeline-card {
   background: #ffffff;
   border-color: rgba(20, 33, 15, 0.1);
-  box-shadow: 0 4px 18px rgba(20, 33, 15, 0.08);
+  box-shadow: var(--shadow-1);
 }
 
 #progress-section.theme-white .timeline-card:hover,
 #progress-section.theme-white .timeline-card.active {
   border-color: rgba(20, 33, 15, 0.18);
-  box-shadow: 0 20px 50px rgba(20, 33, 15, 0.16);
+  box-shadow: var(--shadow-2);
 }
 
 #progress-section.theme-white .timeline-card h3 {
@@ -1629,22 +1636,36 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: var(--light-ink-soft);
 }
 
+/* Bölüm başlığı tek bileşen: Neler Oluyor, Gelecek, Yapmalıyız, Yapılıyor ve
+   Kaynaklar aynı ölçeği, boşluğu ve girişi (AOS fade-up, iklimdd.org'un kendi
+   bölüm girişi) kullanıyor. Ortalı hizalama sitenin sayfa başlıklarıyla aynı.
+   SDG (madde 1 düzeni) ve Sebep (dinamik başlık) bilinçli istisna. */
 .section-header {
   text-align: center;
   max-width: 720px;
-  margin: 0 auto 20px;
+  margin: 0 auto var(--space-m);
   position: relative;
   z-index: 5;
 }
 
 .section-title {
   font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
-  font-size: clamp(1.5rem, 3.2vw, 2.5rem) !important;
+  font-size: var(--step-2) !important;
   font-weight: 900 !important;
   color: #fff;
   line-height: 1.1 !important;
   letter-spacing: -1px !important;
-  margin: 0 0 8px !important;
+  margin: 0 0 var(--space-xs) !important;
+}
+
+/* AOS girişleri hareket kısıtlı modda kapalı. iklimdd.org'daki AOS.init bunu
+   kendisi yapmadığı için kural sayfanın CSS'inde duruyor. */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 .section-title em {
@@ -1653,7 +1674,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 /* ── Dynamic Heading: dil dil hızlı geçiş yapıp son dilde (Türkçe) duran
-   başlık — "Ne Yapmalıyız?" için. ── */
+   başlık — "Neler Yapmalıyız?" için. ── */
 .dynamic-heading {
   display: flex;
   align-items: center;
@@ -1665,7 +1686,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .dynamic-heading-word {
   display: inline-block;
-  font-size: clamp(2.4rem, 5vw, 4rem) !important;
 }
 
 /* Haber bandı gibi soldan sağa akış: yeni metin soldan girer, eskisi
@@ -1910,17 +1930,22 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
+/* Giriş cümlesi gövde ölçeğinde: önceki 13px, altındaki 15–16px'lik
+   paragraflardan küçük kaldığı için hiyerarşiyi tersine çeviriyordu. Açık
+   zeminlerde tema kuralı siyaha çekiyor; bu taban renk yeşil zemin için. */
 .section-desc {
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.5;
+  font-size: var(--step-0);
+  color: var(--white);
+  line-height: 1.6;
 }
 
+/* Rengi tema mürekkebinden: sabit yarı saydam beyaz, beyaz zeminli
+   "Neler Oluyor?" bölümünde metni görünmez yapıyordu. */
 .section-data-freshness {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.4);
+  font-size: var(--step--1);
+  color: var(--light-ink-soft, var(--white));
   line-height: 1.5;
-  margin-top: 10px;
+  margin-top: var(--space-xs);
   max-width: 680px;
   margin-left: auto;
   margin-right: auto;
@@ -1993,7 +2018,48 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   font-size: 1.9rem;
   font-weight: 900;
   line-height: 1;
-  transition: color 0.2s ease;
+  color: var(--light-ink, var(--white));
+}
+
+/* Metin mürekkep renginde, seri rengi yalnızca yanındaki kutucukta: değerin
+   rengi dilim rengine bağlanınca açık dilimlerde (sarı, turuncu) okunmuyordu. */
+.donut-legend {
+  list-style: none;
+  width: min(320px, 100%);
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs) var(--space-s);
+}
+
+.donut-legend li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  font-size: var(--step--1);
+  line-height: 1.3;
+  color: var(--light-ink, var(--white));
+}
+
+.donut-legend-swatch {
+  align-self: center;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.donut-legend-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.donut-legend-value {
+  margin-left: auto;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .donut-center-label {
@@ -2172,11 +2238,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   flex: 0 0 auto;
   width: 230px;
   padding: 20px 18px;
-  border-radius: 24px;
+  border-radius: var(--radius-l);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
@@ -2212,7 +2276,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .vital-sign-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-2);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -2300,27 +2364,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: 100%;
   height: clamp(220px, 30vw, 340px);
   object-fit: cover;
-  border-radius: 20px;
-}
-
-/* Gösterge bloklarının (ör. Orman Yangınları) grafik/istatistik öncesindeki
-   tek kapak fotoğrafı — evidence-row-photo ile aynı oran/köşe dili. */
-.indicator-lead-photo {
-  margin: 20px 0 28px;
-}
-
-.indicator-lead-photo img {
-  display: block;
-  width: 100%;
-  height: clamp(200px, 26vw, 320px);
-  object-fit: cover;
-  border-radius: 20px;
-}
-
-.indicator-lead-photo figcaption {
-  margin-top: 8px;
-  font-size: 0.76rem;
-  color: var(--light-ink-faint);
+  border-radius: var(--radius-l);
 }
 
 @media (max-width: 767px) {
@@ -2343,441 +2387,1059 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* ── Yeni alt bölümler: Orman Yangınları / Deniz Sıcaklığı / Global Isınma ── */
-.indicator-container {
-  margin-top: 30px;
+/* ── Veri sahneleri: Global Isınma / Okyanusların Isınması / Orman Yangınları ──
+   Üç sahne tek iskeleti paylaşıyor: başlık → (varsa) açılış → yapışık görsel +
+   anlatım adımları. Mobilde görsel üstte yapışık kalıyor, adımlar altından
+   geçiyor; geniş ekranda adımlar solda, görsel sağda yapışık. script.js'teki
+   "Veri sahneleri" modülü sahneye .is-ready ekleyip aktif adımı yazıyor; JS
+   yoksa canlı grafikler gizleniyor, <noscript> içindeki ÇŞB grafikleri
+   görünüyor ve adımlar düz metin olarak okunuyor. */
+.ik-scenes {
+  margin-top: var(--space-xl);
 }
 
-.indicator-block {
-  /* Orman Yangınları / Deniz Sıcaklığı / Global Isınma, section'ın beyaz
-     zemininde açık gri kartlarda duruyor; aralarındaki boşlukta section'ın
-     kendi beyazı görünür kalıyor. Kart zemini açık olduğu için metin
-     katmanları tema sisteminin --light-ink* değerlerini (siyah) devralıyor,
-     burada ezilmiyor. */
-  margin-bottom: 160px;
-  background: var(--surface-gray);
-  border-radius: 32px;
-  padding: 56px clamp(20px, 5vw, 64px);
+.ik-scene + .ik-scene {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-l);
+  border-top: 1px solid var(--light-hair);
 }
 
-.indicator-block-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 18px;
+/* Sahneler "Neler Oluyor?" bölümünün alt başlıkları: ortalı bölüm başlığından
+   ayrışsın diye sola, anlatım sütunuyla aynı hizaya yaslı. */
+.ik-scene-header {
+  max-width: var(--measure);
+  margin-bottom: var(--space-m);
 }
 
-.indicator-block-header h3 {
+.ik-scene-title {
   font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
-  font-size: clamp(1.2rem, 2.2vw, 1.5rem) !important;
+  font-size: var(--step-1) !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+  color: var(--light-ink);
+  margin: 0 0 var(--space-xs) !important;
+}
+
+.ik-scene-lead,
+.ik-seas-text p,
+.ik-scene-step p {
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--light-ink-soft);
+  margin: 0;
+}
+
+.ik-scene-subtitle,
+.ik-seas-title,
+.ik-scene-step-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: var(--step-1) !important;
   font-weight: 800 !important;
-  color: #fff;
-  margin: 0 0 4px !important;
+  line-height: 1.25;
+  color: var(--light-ink);
+  margin: 0 0 var(--space-xs) !important;
 }
 
-.indicator-lead {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  max-width: 100%;
-  margin: 0 0 20px;
+.ik-scene-subtitle {
+  margin-top: var(--space-l) !important;
 }
 
-.indicator-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.indicator-stat {
-  padding: 14px 16px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.indicator-stat-value {
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: #fff;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.indicator-stat-label {
-  display: block;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-/* ── "Tabs card" bileşeni — framerusercontent.com/modules/.../qs9tZHZbw.js'in
-   HAM kaynağından (curl ile indirilip okundu) birebir alınan değerler:
-   dış kapsayıcı gap:0px padding:0px; liste padding:40px 0 0 0, sekmeler
-   arası gap:0; her sekme width:300px padding:18px 14px 22px 22px, başlık+
-   açıklama arası gap:8px; başlık 26px/600/letter-spacing:-0.02em/line-
-   height:1.25; açıklama SADECE seçiliyken görünür (isDisplayed() === seçili
-   varyant), 14px/-0.04em/line-height:1.5; seçili sekme sadece SAĞ köşeleri
-   yuvarlak (borderBottomRightRadius/borderTopRightRadius:12) bir dolgu
-   rengi alıyor. Fotoğraf: dış çerçeve padding:8px radius:24px, iç görsel
-   radius:16px, height:434px (satırın kendi yüksekliği). Geçiş
-   spring{damping:50,stiffness:300} — en yakın CSS karşılığı "aşan"
-   cubic-bezier. Referansın kendisi AÇIK renk temalı (bg rgb(226,232,240),
-   metin siyah) — koyu temamıza uyarlanan tek şey renkler; fotoğrafın
-   object-fit'i de referanstaki "fill" (deforme eden gerdirme) yerine
-   kullanıcı isteğiyle "cover" (kırpan, deforme etmeyen) tutuluyor. */
-.indicator-tabs-card {
-  display: flex;
-  gap: 0;
-  align-items: flex-start;
-}
-
-.indicator-tabs-list {
-  flex: 0 0 clamp(240px, 26vw, 300px);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 40px 0 0 0;
-}
-
-.indicator-tab-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: none;
-  border-radius: 0 12px 12px 0;
-  padding: 12px 14px 12px 18px;
-  cursor: pointer;
-  transition: background 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.indicator-tab-item:not(.active):hover {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.indicator-tab-item.active {
-  background: rgba(86, 192, 43, 0.16);
-}
-
-.indicator-tab-name {
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 0.98rem;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-  color: #fff;
-  margin: 0;
-}
-
-.indicator-tab-desc {
-  display: block;
-  font-size: 0.875rem;
-  letter-spacing: -0.02em;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.55);
-  max-height: 0;
-  overflow: hidden;
-  margin: 0;
-  transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.indicator-tab-item.active .indicator-tab-desc {
-  /* 160px, ~820-834px (iPad Air/Pro 11" dikey) genişlikte dar sekme
-     sütununda en uzun açıklamaların (Kasırgalar/Ekosistemler Değişiyor,
-     168px'e ölçüldü) son satırını kırpıyordu — "sonları yarım gözüküyor". */
-  max-height: 200px;
-}
-
-.indicator-tabs-photo {
+.ik-scene-body {
   position: relative;
-  flex: 1 1 0;
-  height: 434px;
-  padding: 8px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
 }
 
-.indicator-tab-photo-img {
+.ik-scene-media {
+  position: sticky;
+  top: var(--ik-header-offset);
+  z-index: 2;
+  padding-block: var(--space-xs);
+  background: var(--white);
+}
+
+/* Adımlar yapışık görselin altına girerken sert bir kesik yerine kısa bir
+   geçiş: metnin görselin arkasından geçtiğini gösteriyor. */
+.ik-scene-media::after {
+  content: "";
   position: absolute;
-  inset: 8px;
-  width: calc(100% - 16px);
-  height: calc(100% - 16px);
-  border-radius: 16px;
-  object-fit: cover;
-  background: rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  transform: scale(1.03);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: var(--space-s);
+  background: linear-gradient(var(--white), rgba(255, 255, 255, 0));
   pointer-events: none;
 }
 
-.indicator-tab-photo-img.active {
+.ik-scene-steps {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-m) 0 0;
+}
+
+.ik-scene-step {
+  max-width: var(--measure);
+  padding-left: var(--space-s);
+  border-left: 2px solid var(--light-hair);
+}
+
+.ik-scene-step + .ik-scene-step {
+  margin-top: var(--space-m);
+}
+
+.ik-scene-step p + p {
+  margin-top: var(--space-xs);
+}
+
+/* JS varken adımlar birbirinden uzak duruyor ki her biri okuma çizgisini tek
+   başına geçsin; sondaki boşluk son adımın da çizgiye ulaşabilmesi için.
+   Sönük adımda siyah metin %60 opaklıkla beyaz zeminde 5,7:1, yani AA. */
+.ik-scene.is-ready .ik-scene-steps {
+  padding-bottom: 30vh;
+  padding-bottom: 30svh;
+}
+
+/* 40svh: bir adım okuma çizgisindeyken sıradakinin başı ekranın altında
+   kalıyor, yani ekranda aynı anda tek adım var; daha fazlası yalnızca
+   sayfayı uzatıyordu. */
+.ik-scene.is-ready .ik-scene-step + .ik-scene-step {
+  margin-top: 40vh;
+  margin-top: 40svh;
+}
+
+.ik-scene.is-ready .ik-scene-step {
+  opacity: 0.6;
+  transition: opacity var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+
+.ik-scene.is-ready .ik-scene-step.is-active {
   opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
+  border-left-color: var(--idd-green);
 }
 
-.indicator-tab-photo-img.zoomable-chart.active {
-  cursor: zoom-in;
+.ik-scene-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-xs) var(--space-m);
+  margin-top: var(--space-m);
 }
 
-.indicator-video-embed {
+.ik-scene-footer:empty {
+  display: none;
+}
+
+/* ── Grafik paneli ── */
+.ik-chart {
+  position: relative;
+  margin: 0;
+  padding: var(--space-s);
+  border-radius: var(--radius-l);
+  background: var(--surface-gray);
+  color: var(--light-ink);
+}
+
+.ik-scene:not(.is-ready) .ik-chart-live {
+  display: none;
+}
+
+.ik-chart-fallback {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-s);
+  background: var(--white);
+}
+
+.ik-chart-title {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--light-ink);
+}
+
+.ik-chart-source {
+  margin: var(--space-xs) 0 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--light-ink-soft);
+}
+
+.ik-chart-source a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ik-chart-tooltip {
   position: absolute;
-  inset: 8px;
-  width: calc(100% - 16px);
-  height: calc(100% - 16px);
-  border-radius: 16px;
-  overflow: hidden;
-  background: #000;
+  z-index: 3;
+  padding: calc(var(--space-xs) / 2) var(--space-xs);
+  border-radius: var(--radius-s);
+  background: var(--site-dark);
+  color: var(--white);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - var(--space-xs)));
 }
 
-.indicator-video-embed video {
+/* ── Global Isınma: ısınma şeritleri ── */
+/* Okuma satırı kırılmıyor: kaydırırken alt satıra düşseydi yapışık görselin
+   yüksekliği değişip altındaki metni oynatırdı. */
+.ik-stripes-readout {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+/* Yıl, Climate Crisis'in YEAR ekseniyle yazılıyor: 1979'dan sonra şeritler
+   kızarırken rakamlar da eriyor (script.js yılı eksene bağlıyor). Kutu en
+   geniş yıl kadar sabit ("2000", eksenin her değerinde ≤4,38em ölçüldü):
+   yıl değiştikçe yanındaki değer yana kaymıyor. */
+.ik-stripes-year {
+  flex: 0 0 auto;
+  min-width: 4.4em;
+  font-family: 'Climate Crisis', 'Montserrat', sans-serif;
+  font-size: var(--step-3);
+  line-height: 1;
+  font-variation-settings: "YEAR" 1979;
+}
+
+.ik-stripes-value {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Kaydırırken her karede değişen bir okuma: rakam genişlikleri sabit olmazsa
+   "°C" yerinde titriyor, bu yüzden büyük boyutta da tabular rakam. */
+.ik-stripes-value-number {
+  font-size: var(--step-1);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ik-stripes-value-label {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.ik-stripes-frame {
+  position: relative;
+}
+
+.ik-stripes-marks {
+  position: relative;
+  height: 1.5rem;
+}
+
+/* Rekor yıl etiketi sağ ucunu o yılın şeridine hizalıyor; alttaki çentik
+   şeride iniyor. Konumu script.js veriden yazıyor. */
+.ik-stripes-record {
+  position: absolute;
+  bottom: calc(var(--space-xs) / 2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.ik-stripes-record::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 2px;
+  height: calc(var(--space-xs) / 2);
+  background: currentColor;
+}
+
+.ik-stripes-frame.shows-record .ik-stripes-record {
+  opacity: 1;
+}
+
+.ik-stripes {
+  position: relative;
+  height: clamp(6rem, 20vw, 14rem);
+  overflow: hidden;
+  border-radius: var(--radius-s);
+  background: var(--white);
+}
+
+.ik-stripes-fill,
+.ik-stripes-cover {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
-/* Sekme/liste bileşeni olmadan, metnin hemen altında duran tekil video
-   (bkz. "NASA: Sıcaklık Nasıl Ölçülüyor?") — .indicator-tabs-photo ile
-   aynı yükseklik/köşe ölçülerini kullanıyor ki bölüm içinde tutarlı görünsün. */
-.indicator-video-standalone {
-  width: 100%;
-  height: 434px;
-  border-radius: 24px;
+/* Henüz çizilmemiş yıllar beyaz bir zaman çizgisi olarak kalıyor. Örtü
+   transform ile daraldığı için kaydırma karesi başına yalnızca kompozisyon.
+   Kenarlardan 1px taşıyor: yuvarlak köşede kenar yumuşatması son yılın
+   koyu kırmızısını ince bir çizgi olarak sızdırıyordu. */
+.ik-stripes-cover {
+  inset: -1px;
+  background: var(--white);
+  transform-origin: right center;
+}
+
+.ik-stripes-axis {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  min-height: 2.5rem;
+  padding-top: calc(var(--space-xs) / 2);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Referans dönemi (1951-1980) şeritlerin altında köşeli parantezle
+   işaretleniyor. Etiket paranteze sığmadığında flex ortalaması onu iki
+   yana eşit taşırıyor. */
+.ik-stripes-baseline {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-xs);
+  border-top: 2px solid currentColor;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.ik-stripes-baseline::before,
+.ik-stripes-baseline::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 2px;
+  height: calc(var(--space-xs) / 2 + 2px);
+  background: currentColor;
+}
+
+.ik-stripes-baseline::before {
+  left: 0;
+}
+
+.ik-stripes-baseline::after {
+  right: 0;
+}
+
+.ik-stripes-frame.shows-baseline .ik-stripes-baseline {
+  opacity: 1;
+}
+
+.ik-scale-legend {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-xs);
+  row-gap: calc(var(--space-xs) / 2);
+  max-width: 28rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.ik-scale-legend-ramp {
+  display: flex;
+  height: 0.75rem;
   overflow: hidden;
-  background: #000;
+  border-radius: var(--chart-bar-radius);
 }
 
-.indicator-video-standalone video {
+.ik-scale-legend-ramp > span {
+  flex: 1 1 0;
+}
+
+.ik-scale-legend-ticks {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Okyanusların Isınması: dört deniz haritası ── */
+.ik-seas {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.ik-seas-map {
+  position: relative;
+}
+
+.ik-seas-map-svg {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  border-radius: var(--radius-s);
 }
 
-/* Global Isınma'daki VE Orman Yangınları'ndaki medyalar fotoğraf değil veri
-   grafiği (sıcaklık spirali, çizgi grafikler, harita) — "cover" eksenleri/
-   etiketleri kırpıyordu (iPad Pro'da 678×290'lık bir grafik 373×434'lük
-   neredeyse kare bir çerçeveye "cover" ile sığdırılınca genişliğinin
-   ~%63'ü kırpılıyordu). "contain" ile tamamı görünür kalıyor. */
-#indicator-global-isinma .indicator-video-standalone video,
-#indicator-global-isinma .indicator-tab-photo-img,
-#indicator-orman-yanginlari .indicator-tab-photo-img {
+.ik-map-water {
+  fill: var(--map-water);
+}
+
+.ik-map-land {
+  fill: var(--map-land);
+  stroke: var(--map-coast);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.ik-map-leader {
+  stroke: var(--light-ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Renk, 1970-1980 ile 2014-2024 arasındaki artışın lejanttaki 0 → +2,5 °C
+   ölçeğindeki yeri. Ölçek anomali token'larının sıcak yarısı (5 → 10), her
+   adım 0,5 °C: ör. Marmara +2,2 °C, 9. ve 10. adım arasında %40. İlk bildirim
+   color-mix desteklemeyen tarayıcılar için en yakın adım. */
+.ik-map-sea[data-sea="karadeniz"] {
+  fill: var(--anomaly-8);
+  fill: color-mix(in srgb, var(--anomaly-7) 20%, var(--anomaly-8));
+}
+
+.ik-map-sea[data-sea="marmara"] {
+  fill: var(--anomaly-9);
+  fill: color-mix(in srgb, var(--anomaly-9) 60%, var(--anomaly-10));
+}
+
+.ik-map-sea[data-sea="ege"] {
+  fill: var(--anomaly-8);
+  fill: color-mix(in srgb, var(--anomaly-8) 80%, var(--anomaly-9));
+}
+
+.ik-map-sea[data-sea="akdeniz"] {
+  fill: var(--anomaly-8);
+  fill: color-mix(in srgb, var(--anomaly-7) 40%, var(--anomaly-8));
+}
+
+.ik-seas-label {
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  margin: 0;
+  padding: 2px var(--space-xs);
+  border-radius: var(--radius-s);
+  background: var(--white);
+  box-shadow: var(--shadow-1);
+  color: var(--light-ink);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+
+.ik-seas-label strong {
+  display: block;
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.ik-seas-legend {
+  display: grid;
+  gap: calc(var(--space-xs) / 2);
+  max-width: 20rem;
+  margin-top: var(--space-xs);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.ik-seas-legend-ramp {
+  height: 0.75rem;
+  border-radius: var(--chart-bar-radius);
+  background: linear-gradient(90deg, var(--anomaly-5), var(--anomaly-6), var(--anomaly-7), var(--anomaly-8), var(--anomaly-9), var(--anomaly-10));
+}
+
+/* Ölçek 0 → +2,5 °C: +1 ve +2 °C etiketleri gerçek konumlarında (%40, %80). */
+.ik-seas-legend-ticks {
+  position: relative;
+  height: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ik-seas-legend-ticks > span {
+  position: absolute;
+  top: 0;
+}
+
+.ik-seas-legend-ticks > span:nth-child(2) {
+  left: 40%;
+  transform: translateX(-50%);
+}
+
+.ik-seas-legend-ticks > span:nth-child(3) {
+  left: 80%;
+  transform: translateX(-50%);
+}
+
+.ik-seas-text .ik-doc-links-label {
+  margin-top: var(--space-s);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+/* ── Belge düğmeleri (ÇŞB grafikleri lightbox'ta açılıyor) ── */
+.ik-doc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-s);
+}
+
+.ik-doc-links-label + .ik-doc-links {
+  margin-top: var(--space-xs);
+}
+
+.ik-doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: var(--target-min);
+  padding: var(--space-xs) var(--space-s);
+  border: 1px solid var(--light-hair);
+  /* Hap değil küçük köşe: dar sütunda iki satıra kırılan etiketler de düzgün duruyor. */
+  border-radius: var(--radius-s);
+  background: var(--white);
+  color: var(--light-ink);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  cursor: zoom-in;
+  transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease;
+}
+
+.ik-doc-link:hover {
+  border-color: var(--idd-green);
+  background: var(--surface-gray);
+}
+
+/* Açık zeminde sarı odak halkası seçilmiyor; koyu halka her iki zeminde net. */
+.ik-doc-link:focus-visible,
+.ik-data summary:focus-visible,
+.ik-data-scroll:focus-visible {
+  outline: 2px solid var(--site-dark);
+  outline-offset: 2px;
+}
+
+/* ── Tablo ikizleri ve ek içerik ── */
+.ik-data {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ik-data[open] {
+  flex-basis: 100%;
+}
+
+.ik-data summary {
+  width: fit-content;
+  min-height: var(--target-min);
+  cursor: pointer;
+  color: var(--light-ink);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ik-seas-text .ik-data {
+  margin-top: var(--space-s);
+}
+
+.ik-data-scroll {
+  max-width: 40rem;
+  max-height: 20rem;
+  margin-top: var(--space-xs);
+  overflow: auto;
+  border: 1px solid var(--light-hair);
+  border-radius: var(--radius-s);
+}
+
+.ik-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--light-ink);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+}
+
+.ik-data-table th,
+.ik-data-table td {
+  padding: calc(var(--space-xs) / 2) var(--space-xs);
+  border-bottom: 1px solid var(--light-hair);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ik-data-table th:first-child,
+.ik-data-table td:first-child {
+  text-align: left;
+}
+
+.ik-data-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--white);
+}
+
+.ik-data-table tbody th {
+  font-weight: 400;
+}
+
+.ik-data-table tfoot th,
+.ik-data-table tfoot td {
+  border-bottom: 0;
+  font-weight: 700;
+}
+
+.ik-data-video {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+  margin-top: var(--space-xs);
+  border-radius: var(--radius-l);
+  background: var(--site-dark);
+}
+
+/* ── Okyanus ısınmasının etkileri: fotoğraf geçişleri ── */
+.ik-photos {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.ik-photo {
+  margin: 0;
+}
+
+.ik-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
   object-fit: contain;
+  border-radius: var(--radius-l);
+  background: var(--site-dark);
 }
 
-/* contain tek başına yeterli değildi: çerçeve hep sabit 434px yükseklikti,
-   dar/orta genişliklerde (ör. iPad Air 820px) neredeyse kareye yaklaşıp
-   grafiğin gerçek en-boy oranından (~2:1-2,3:1, yatay/geniş) çok uzaklaşıyor,
-   üstte/altta veya yanlarda büyük boş alan bırakıyordu ("çerçeve çok
-   büyük"). aspect-ratio ile çerçeve, genişliği ne olursa olsun grafiğin
-   gerçek oranına yakın kalıyor — sabit yükseklik yerine ondan türüyor.
-   Değer, ilgili grafiklerin gerçek piksel oranlarının ortalaması: Orman
-   Yangınları 678×290 (2,34) ve 670×306 (2,19); Global Isınma 674×292 (2,31)
-   ve 570×308 (1,85).
-   ≥768px ile sınırlı: #id kullanan bu seçicilerin özgüllüğü (1,1,0),
-   ≤767px'teki .indicator-tabs-photo{height:220px} kuralınınkinden (0,1,0)
-   yüksek — media query'siz bırakılsaydı mobildeki sabit yüksekliği (ve
-   akordeon modundaki .indicator-tabs-list > .indicator-tabs-photo flex:none
-   kuralını) kaynak sırasından bağımsız ezip mobil paneli 220px yerine
-   ~138px'e küçültüyordu (test sırasında yakalandı). */
-@media (min-width: 768px) {
-  #indicator-orman-yanginlari .indicator-tabs-photo {
-    aspect-ratio: 2.26;
-    height: auto;
+.ik-photo figcaption,
+.ik-fire-opener-photo figcaption {
+  margin-top: var(--space-xs);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--light-ink-soft);
+}
+
+/* JS yoksa fotoğraflar alt alta akıyor. JS varken üst üste biniyor ve aktif
+   adımın fotoğrafı çapraz geçişle öne çıkıyor; görünmeyenler visibility ile
+   erişilebilirlik ağacından da çıkıyor. */
+.ik-scene.is-ready .ik-photo {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+
+.ik-scene.is-ready .ik-photo.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--dur-base) var(--ease-out), visibility 0s;
+}
+
+/* ── Orman Yangınları: açılış ve grafikler ── */
+.ik-fire-opener {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.ik-hero-figure-value {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: max(3rem, var(--step-3));
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--light-ink);
+}
+
+.ik-hero-figure-unit {
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.ik-hero-figure-label {
+  max-width: 34ch;
+  margin: var(--space-xs) 0 0;
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--light-ink-soft);
+}
+
+.ik-fire-opener-photo {
+  margin: 0;
+}
+
+.ik-fire-opener-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-l);
+}
+
+.ik-fire-opener + .ik-scene-body {
+  margin-top: var(--space-m);
+}
+
+.ik-fires-views {
+  display: grid;
+}
+
+/* Görünümler üst üste; panel en uzun görünüm kadar yüksek, kısa olanlar
+   ortalanıyor. Sönen görünüm geçiş boyunca görünür kaldığı için fare
+   olaylarını almıyor, yoksa alttaki grafiğin ipucunu engelliyordu. */
+.ik-fires-view {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+
+.ik-fires-view.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity var(--dur-base) var(--ease-out), visibility 0s;
+}
+
+.ik-fires-view > .ik-hbars,
+.ik-fires-view > .ik-stack {
+  margin-block: auto;
+  padding-top: var(--space-s);
+}
+
+/* Sütunlar düz HTML: yükseklik veriden (--value, eksen üst sınırına oran),
+   aralar 2px yüzey boşluğu, uçlar 4px yuvarlak, taban düz. SVG viewBox
+   ölçeklemesi olmadığı için her genişlikte boşluk ve köşe aynı kalıyor. */
+.ik-columns {
+  position: relative;
+  height: clamp(10rem, 26vw, 17rem);
+  margin-top: var(--space-m);
+}
+
+.ik-columns-grid,
+.ik-columns-plot {
+  position: absolute;
+  inset: 0;
+}
+
+.ik-columns-gridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--chart-grid);
+}
+
+.ik-columns-gridline:first-child {
+  background: var(--chart-context);
+}
+
+.ik-columns-tick {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--space-xs) / 4);
+  font-size: 0.75rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ik-columns-plot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--chart-gap);
+}
+
+.ik-column {
+  flex: 1 1 0;
+  max-width: var(--chart-bar-max);
+  height: calc(var(--value) * 100%);
+  min-height: 1px;
+  border-radius: var(--chart-bar-radius) var(--chart-bar-radius) 0 0;
+  background: var(--chart-context);
+  transition: background-color var(--dur-fast) ease;
+}
+
+.ik-column.is-highlighted {
+  background: var(--chart-accent);
+}
+
+/* Dar ekranda kenara yaslanan etiket komşu uzun sütunun (2021) üstüne
+   biniyor; panel renginde zemin sütunu etiketin arkasında bırakıyor. */
+.ik-column-label {
+  position: absolute;
+  z-index: 1;
+  padding: 0 calc(var(--space-xs) / 2);
+  border-radius: var(--chart-bar-radius);
+  background: var(--surface-gray);
+  font-size: var(--step--1);
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.ik-columns-axis {
+  position: relative;
+  height: 1.5rem;
+  margin-top: calc(var(--space-xs) / 2);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.ik-columns-axis > span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.ik-columns-axis > span:first-child {
+  transform: none;
+}
+
+.ik-columns-axis > span:last-child {
+  transform: translateX(-100%);
+}
+
+.ik-hbars,
+.ik-stack {
+  display: grid;
+  gap: var(--space-s);
+  margin-top: var(--space-m);
+}
+
+.ik-hbar-row,
+.ik-stack-row {
+  display: grid;
+  gap: calc(var(--space-xs) / 2);
+}
+
+.ik-hbar-label,
+.ik-stack-label {
+  font-size: var(--step--1);
+  line-height: 1.3;
+}
+
+.ik-hbar-track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Değer etiketi çubuğun ucunda: çubuğa etiket genişliği kadar yer bırakılıyor. */
+.ik-hbar {
+  flex: 0 0 auto;
+  width: calc(var(--value) * (100% - 5rem));
+  height: var(--chart-bar-max);
+  border-radius: 0 var(--chart-bar-radius) var(--chart-bar-radius) 0;
+  background: var(--chart-context);
+}
+
+.ik-hbar.is-highlighted {
+  background: var(--chart-accent);
+}
+
+.ik-hbar-value {
+  font-size: var(--step-0);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ik-stack-bar {
+  display: flex;
+  gap: var(--chart-gap);
+  height: var(--chart-bar-max);
+}
+
+.ik-stack-segment {
+  flex: 0 1 0;
+}
+
+.ik-stack-segment:last-child {
+  border-radius: 0 var(--chart-bar-radius) var(--chart-bar-radius) 0;
+}
+
+.ik-stack-legend {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.ik-stack-legend th,
+.ik-stack-legend td {
+  padding: 0;
+  text-align: right;
+}
+
+.ik-stack-legend th {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ik-stack-legend th:first-child,
+.ik-stack-legend td:first-child {
+  text-align: left;
+}
+
+.ik-stack-swatch {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: var(--space-xs);
+  border-radius: var(--chart-bar-radius);
+  vertical-align: -0.05em;
+}
+
+@media (min-width: 992px) {
+  .ik-seas,
+  .ik-fire-opener {
+    align-items: center;
+    column-gap: var(--space-l);
   }
 
-  #indicator-global-isinma .indicator-tabs-photo {
-    aspect-ratio: 2.08;
-    height: auto;
+  .ik-seas {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  .ik-fire-opener {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 }
 
-@media (max-width: 767px) {
-  .indicator-block {
-    margin-bottom: 64px;
-    border-radius: 24px;
-    padding: 32px 20px;
+/* Geniş düzen: adımlar solda (%40), görsel sağda yapışık (%60). Yatay tutulan
+   kısa telefonlarda da yan yana, çünkü üstte yapışık görsel ekranı kapatırdı. */
+@media (min-width: 992px), (orientation: landscape) and (max-height: 500px) and (min-width: 640px) {
+  .ik-scene-body {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: var(--space-l);
+    align-items: start;
   }
 
-  .indicator-video-standalone {
-    height: 220px;
+  /* Görsel menünün altındaki alanda dikey ortalı; --ik-media-top'u script.js
+     görselin yüksekliğinden hesaplıyor. */
+  .ik-scene-media {
+    grid-column: 2;
+    grid-row: 1;
+    top: var(--ik-media-top, calc(var(--ik-header-offset) + var(--space-m)));
+    padding-block: 0;
+    background: none;
   }
 
-  .indicator-tabs-card {
-    flex-direction: column;
-    gap: 16px;
+  .ik-scene-media::after {
+    content: none;
   }
 
-  .indicator-tabs-list {
-    flex: none;
+  .ik-scene-steps {
+    grid-column: 1;
+    grid-row: 1;
     padding-top: 0;
   }
 
-  .indicator-tab-item {
-    border-radius: 12px;
-  }
-
-  .indicator-tabs-photo {
-    /* flex:1 1 0 (masaüstü) satır yönünde genişliği yönetiyordu; sütun
-       yönünde bu artık yükseklik ekseni olduğundan genişlik hiçbir yerden
-       gelmiyordu — tek içeriği (indicator-tab-photo-img) position:absolute
-       olduğu için üst kapsayıcı boyutuna katkı vermiyor, çerçeve görünmez
-       bir kılcala çöküyordu. */
-    width: 100%;
-    height: 220px;
-  }
-
-  /* script.js bu çerçeveyi (aynı eleman, kopyalanmıyor) tıklanan sekmenin
-     hemen ardına, .indicator-tabs-list'in İÇİNE taşıyor — orada üstteki
-     başlık/açıklamadan ve alttaki bir sonraki sekmeden nefes payı. */
-  .indicator-tabs-list > .indicator-tabs-photo {
-    margin: 4px 0 12px;
-    /* Masaüstünün flex:1 1 0'ı (satırda genişliği yönetiyordu) sütun
-       yönünde artık YÜKSEKLİK ekseninde geçerli oluyor: flex-basis:0,
-       height:220px'i eziyor (flex-basis auto olmadığında height'tan önce
-       gelir) ve çerçeve neredeyse sıfır yüksekliğe çöküyordu. */
-    flex: none;
-  }
-
-  .indicator-tab-item.active .indicator-tab-desc {
-    max-height: 200px;
+  .ik-scene.is-ready .ik-scene-steps {
+    padding-top: 10vh;
+    padding-top: 10svh;
   }
 }
 
-/* ── "Expanded Card" bileşeni (Framer referansı: yan yana şeritler, biri
-   flex:1 0 0px ile genişlerken diğerleri %10'a daralıyor, spring geçiş).
-   Masaüstünde hover ile genişleme (script.js: initExpandedCard, sadece
-   .active sınıfını yönetir — flex oranını CSS üstleniyor), fotoğrafa
-   tıklamak lightbox'ı açıyor; 768px altında hepsi zaten dikey açık. ── */
-.expanded-card {
-  display: flex;
-  gap: 10px;
-  height: 440px;
-  margin-bottom: 28px;
-}
-
-.expanded-card-item {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
-  transition: flex 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: pointer;
-}
-
-.expanded-card-item.active {
-  flex: 5;
-}
-
-.expanded-card-bg {
-  /* Bu bileşende genişlik sürekli animasyonla değiştiği (flex 1↔5) için
-     çerçeveyi fotoğrafın oranına sabitlemek mümkün değil. Daraltılmış
-     şeritlerde (sadece "teaser") fotoğraf kutuyu tamamen dolduruyor
-     (cover) — boşluk kalmıyor. Aktif/genişlemiş kartta ise grafiğin
-     tamamı (alttaki lejant/denklem dahil) okunabilir kalsın diye contain
-     kullanılıyor (bkz. .active override altta). */
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  background: rgba(0, 0, 0, 0.25);
-  cursor: zoom-in;
-}
-
-.expanded-card-item.active .expanded-card-bg {
-  object-fit: contain;
-  object-position: center;
-}
-
-.expanded-card-label {
-  flex: 0 0 auto;
-  padding: 14px 16px;
-  background: rgba(0, 0, 0, 0.45);
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.expanded-card-name {
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  color: #fff;
-}
-
-.expanded-card-desc {
-  display: block;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 4px;
-  max-width: 420px;
-  white-space: normal;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.4s ease 0.15s;
-}
-
-.expanded-card-item.active .expanded-card-desc {
-  opacity: 1;
-  max-height: 80px;
-}
-
-@media (max-width: 767px) {
-  .expanded-card {
-    flex-direction: column;
-    height: auto;
+/* Yatay tutulan telefonlarda yapışık görsel menünün altındaki ~300px'e
+   sığmalı: panel ve grafik aralıkları sıkılaşıyor, çubuklar inceliyor. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .ik-chart {
+    padding: var(--space-xs) var(--space-s);
   }
 
-  .expanded-card-item {
-    flex: none !important;
-    height: 260px;
+  .ik-chart-source {
+    margin-top: calc(var(--space-xs) / 2);
   }
 
-  .expanded-card-desc {
-    opacity: 1;
-    max-height: none;
-    white-space: normal;
+  .ik-stripes-year {
+    font-size: var(--step-2);
   }
 
-  .expanded-card-label {
-    white-space: normal;
+  .ik-stripes-marks {
+    height: 1.1rem;
+  }
+
+  .ik-stripes {
+    height: 4.5rem;
+  }
+
+  .ik-stripes-axis {
+    min-height: 2.1rem;
+  }
+
+  .ik-columns {
+    height: 7rem;
+  }
+
+  .ik-fires-view > .ik-hbars,
+  .ik-fires-view > .ik-stack {
+    padding-top: 0;
+  }
+
+  .ik-hbars,
+  .ik-stack {
+    gap: var(--space-xs);
+  }
+
+  .ik-hbar,
+  .ik-stack-bar {
+    height: 1rem;
+  }
+
+  .ik-stack-legend {
+    line-height: 1.25;
+  }
+
+  .ik-photo img {
+    aspect-ratio: 2 / 1;
   }
 }
 
-.indicator-subblock {
-  padding-top: 20px;
-  margin-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.indicator-subblock:first-of-type {
-  padding-top: 0;
-  margin-top: 0;
-  border-top: none;
-}
-
-.indicator-subblock h4 {
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
-  font-size: 1.05rem !important;
-  font-weight: 800 !important;
-  color: #fff;
-  margin: 0 0 10px !important;
+@media (prefers-reduced-motion: reduce) {
+  .ik-scene.is-ready .ik-scene-step,
+  .ik-scene.is-ready .ik-photo,
+  .ik-fires-view,
+  .ik-column,
+  .ik-stripes-record,
+  .ik-stripes-baseline,
+  .ik-doc-link {
+    transition: none !important;
+  }
 }
 
 /*  ========================================================================= Causes Section Styles (Sekmeli Yapı) =============================================================================== */
@@ -2788,16 +3450,29 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   z-index: 1;
 }
 
+/* justify-content:center kaydırılabilir bir kapsayıcıda taşan içeriği iki
+   yana eşit taşırıyor ve sol taraf kaydırma alanının dışında kalıyordu
+   (mobilde "Enerji ve Fosil Yakıtlar" hiç görünmüyordu). Ortalamayı ilk/son
+   öğenin auto margin'i yapıyor: sığdığında boşluğu paylaşıp ortalıyor,
+   taşınca 0'a inip içeriği kaydırma başlangıcından başlatıyor. */
 .cause-tabs-nav {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto;
   gap: 10px;
   margin-bottom: 40px;
   padding-bottom: 4px;
   border-bottom: none;
   scrollbar-width: thin;
+}
+
+.cause-tabs-nav > .nav-item:first-child {
+  margin-inline-start: auto;
+}
+
+.cause-tabs-nav > .nav-item:last-child {
+  margin-inline-end: auto;
 }
 
 .cause-tab-btn {
@@ -3009,7 +3684,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   background-size: cover;
   background-position: center;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 14px;
+  border-radius: var(--radius-s);
   cursor: pointer;
   /* --offset: aktif karta göre (sonsuz döngü olacak şekilde en kısa
      mesafe üzerinden, JS tarafından) hesaplanır. |offset|>1 olan kartlar
@@ -3034,7 +3709,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   z-index: 5;
   pointer-events: auto;
   border-color: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-2);
   transform: translate(-50%, -8px) translateX(calc(var(--offset) * 290px)) rotate(calc(var(--offset) * 6deg)) scale(1.05);
 }
 
@@ -3088,8 +3763,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
    olduğundan (normal akıştan çıkmış), üst kapsayıcıya kendiliğinden hiç
    genişlik vermiyor — eskiden bunu satır yönünde flex-basis üstleniyordu,
    sütun yönünde ise (önceden sadece ≤767px'te) genişlik hiçbir yerden
-   gelmeyip track/kartlar 0 genişliğe çöküyordu (aynı sınıf hata bu oturumda
-   .indicator-tabs-photo'da da bulunup düzeltildi). */
+   gelmeyip track/kartlar 0 genişliğe çöküyordu. */
 #consequences-section.section-dark {
   padding: 60px 0;
 }
@@ -3113,7 +3787,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: 100%;
   flex: none;
   height: 140px;
-  border-radius: 20px;
+  border-radius: var(--radius-l);
   overflow: hidden;
   cursor: pointer;
   background: #0a140a;
@@ -3179,21 +3853,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .card-showcase-card.active .card-showcase-body {
   padding: 22px 26px 26px;
-}
-
-.card-showcase-num {
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: -0.02em;
-  transition: color 0.4s ease, font-size 0.4s ease;
-}
-
-.card-showcase-card.active .card-showcase-num {
-  color: var(--idd-accent-green);
-  font-size: 1.8rem;
 }
 
 /* Boyutlar artık "inactive = dar" değil "inactive = kısa" mantığına göre:
@@ -3299,11 +3958,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 /*  ========================================================================= Actions Section Styles (Adım Listesi) =============================================================================== */
 
-#actions-section .section-title {
-  color: #fff !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
 #actions-section.section-dark .container {
   position: relative;
   z-index: 1;
@@ -3355,11 +4009,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   align-items: stretch;
   gap: 36px;
   min-height: 380px;
-  border-radius: 20px;
+  border-radius: var(--radius-l);
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   overflow: hidden;
   outline: none;
 }
@@ -3379,7 +4031,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .reel-fallback-item {
   padding: 20px 22px;
-  border-radius: 16px;
+  border-radius: var(--radius-s);
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.18);
 }
@@ -3443,7 +4095,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   flex-shrink: 0;
   width: 130px;
   height: 130px;
-  border-radius: 14px;
+  border-radius: var(--radius-s);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
   border: 1px solid rgba(255, 255, 255, 0.1);
   filter: blur(1px);
@@ -3454,11 +4106,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   flex-shrink: 0;
   width: 130px;
   height: 130px;
-  border-radius: 14px;
+  border-radius: var(--radius-s);
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-2);
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
@@ -3481,21 +4133,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .reel-stage {
   position: relative;
-}
-
-.reel-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.reel-eyebrow-number {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #fff;
 }
 
 .reel-title {
@@ -3652,28 +4289,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-.action-step-icon-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.action-step-icon-badge--green { background: rgba(86, 192, 43, 0.25); color: var(--idd-accent-green); }
-.action-step-icon-badge--blue { background: rgba(52, 152, 219, 0.25); color: #3498db; }
-.action-step-icon-badge--orange { background: rgba(243, 156, 18, 0.25); color: #f39c12; }
-.action-step-icon-badge--emerald { background: rgba(39, 174, 96, 0.25); color: #27ae60; }
-.action-step-icon-badge--lightgreen { background: rgba(139, 195, 74, 0.25); color: #8bc34a; }
-.action-step-icon-badge--purple { background: rgba(155, 89, 182, 0.25); color: #9b59b6; }
-.action-step-icon-badge--red { background: rgba(231, 76, 60, 0.25); color: #e74c3c; }
-.action-step-icon-badge--yellow { background: rgba(252, 195, 11, 0.25); color: #fcc30b; }
-.action-step-icon-badge--teal { background: rgba(26, 188, 156, 0.25); color: #1abc9c; }
-
 @media (max-width: 991px) {
   .steps-group {
     margin-top: 60px;
@@ -3720,7 +4335,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   top: 0;
   width: 100%;
   height: 0%;
-  background: #0a97d9;
+  background: var(--idd-green);
 }
 
 .timeline-item {
@@ -3742,25 +4357,21 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   justify-content: flex-end;
 }
 
+/* Kilometre taşları gerçek bir sıra izlemediği için (2015, 2023, 2024,
+   2019…) numara taşımıyor; işaret yalnızca omurga üzerindeki konumu gösteriyor.
+   24px, kartla aynı işi yapan ikincil dokunma hedefi için asgari boyut. */
 .timeline-marker {
   position: absolute;
   left: 50%;
-  top: 36px;
-  width: 34px;
-  height: 34px;
+  top: 41px;
+  width: var(--target-min);
+  height: var(--target-min);
   border-radius: 50%;
   background: var(--idd-accent-green);
   transform: translate(-50%, 0) scale(0.7);
   border: 4px solid var(--idd-green);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 0.8rem;
-  color: #08130a;
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
 }
@@ -3782,10 +4393,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   position: relative;
   width: min(460px, 44%);
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border-radius: var(--radius-l);
   overflow: hidden;
   cursor: pointer;
   transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
@@ -3795,7 +4404,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .timeline-card:hover,
 .timeline-card.active {
   border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-2);
 }
 
 .timeline-card-media {
@@ -3863,7 +4472,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   bottom: 0;
   height: 3px;
   width: 0%;
-  background: var(--item-color, var(--idd-accent-green));
+  background: var(--idd-green);
   transition: width 0.5s ease;
 }
 
@@ -3940,13 +4549,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   gap: 4px;
   min-height: 200px;
   padding: 20px 22px;
-  border-radius: 16px;
+  border-radius: var(--radius-s);
   text-decoration: none;
   background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-1);
   transform: perspective(900px) rotateX(var(--ry)) rotateY(var(--rx));
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
@@ -3966,7 +4573,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .bento-card:hover {
   border-color: rgba(0, 0, 0, 0.16);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-2);
 }
 
 .bento-card-head {
@@ -4217,7 +4824,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   font-size: 0.74rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--white);
 }
 
 .sources-links {
@@ -4233,8 +4840,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--white);
   font-size: 0.8rem;
   text-decoration: none;
   transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
@@ -4242,13 +4849,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .sources-links a i {
   font-size: 0.75rem;
-  color: var(--idd-accent-green);
+  color: var(--white);
 }
 
 .sources-links a:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /*  ========================================================================= Lightbox (grafik/chart görsellerine tıkla-büyüt) =============================================================================== */
@@ -4267,20 +4873,25 @@ body.lightbox-open {
   padding: clamp(20px, 5vw, 60px);
   background: rgba(5, 10, 5, 0.92);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
+/* Kapalı katman görünmez olsa da odaklanabilir kalıyordu; visibility onu
+   sekme sırasından çıkarıyor. */
 .lightbox-overlay.active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition: opacity 0.3s ease, visibility 0s;
 }
 
 .lightbox-img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-2);
   cursor: zoom-out;
   transform: scale(0.96);
   transition: transform 0.3s ease;
@@ -4385,8 +4996,8 @@ body.lightbox-open {
   color: #000;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.14);
-  border-radius: 10px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-2);
   cursor: default;
 }
 

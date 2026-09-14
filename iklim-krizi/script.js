@@ -1,3 +1,93 @@
+/* ── Küresel sıcaklık anomalisi verisi ──
+   NASA GISS GISTEMP v4, yıllık küresel ortalama (J-D sütunu), 1951-1980
+   ortalamasına göre °C. Kaynak:
+   https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv
+   (son güncelleme 2026-09-08, erişim 2026-09-13). Değerler dosyadan birebir;
+   ısınma şeridi dikişleri ve Global Isınma sahnesi aynı diziyi kullanıyor. */
+const GISTEMP_FIRST_YEAR = 1880;
+const GISTEMP_ANNUAL = [
+  -0.18, -0.09, -0.12, -0.18, -0.29, -0.34, -0.32, -0.37, -0.18, -0.11, // 1880–1889
+  -0.36, -0.23, -0.28, -0.32, -0.31, -0.23, -0.12, -0.12, -0.28, -0.18, // 1890–1899
+  -0.09, -0.16, -0.29, -0.38, -0.48, -0.27, -0.23, -0.39, -0.43, -0.49, // 1900–1909
+  -0.44, -0.45, -0.37, -0.36, -0.17, -0.15, -0.37, -0.46, -0.30, -0.28, // 1910–1919
+  -0.28, -0.19, -0.29, -0.27, -0.27, -0.22, -0.11, -0.22, -0.20, -0.36, // 1920–1929
+  -0.16, -0.09, -0.16, -0.29, -0.13, -0.20, -0.15, -0.03, -0.01, -0.02, // 1930–1939
+   0.12,  0.18,  0.06,  0.09,  0.20,  0.09, -0.07, -0.03, -0.11, -0.11, // 1940–1949
+  -0.18, -0.07,  0.01,  0.08, -0.13, -0.14, -0.19,  0.05,  0.06,  0.03, // 1950–1959
+  -0.02,  0.06,  0.03,  0.05, -0.20, -0.11, -0.06, -0.02, -0.08,  0.05, // 1960–1969
+   0.03, -0.08,  0.01,  0.16, -0.07, -0.01, -0.10,  0.18,  0.07,  0.16, // 1970–1979
+   0.26,  0.32,  0.14,  0.31,  0.16,  0.12,  0.18,  0.32,  0.39,  0.27, // 1980–1989
+   0.45,  0.41,  0.22,  0.23,  0.32,  0.45,  0.33,  0.47,  0.61,  0.38, // 1990–1999
+   0.39,  0.53,  0.63,  0.62,  0.53,  0.68,  0.64,  0.66,  0.54,  0.66, // 2000–2009
+   0.72,  0.61,  0.65,  0.68,  0.75,  0.90,  1.01,  0.92,  0.85,  0.98, // 2010–2019
+   1.01,  0.85,  0.89,  1.17,  1.29,  1.19 // 2020–2025
+];
+
+/* ── Sıcaklık anomalisi renk ölçeği ──
+   Dikişler ve Global Isınma sahnesi aynı ıraksak ölçeği okuyor: 11 token
+   adımı, orta adım baz dönem ortalaması, iki uç serinin en büyük mutlak
+   sapması. Şeritler sert duraklı tek bir linear-gradient olarak basılıyor:
+   yüzlerce öğe yerine tek arka plan, her genişlikte keskin. */
+const anomalyStripes = (function () {
+  const rootStyle = getComputedStyle(document.documentElement);
+  const SCALE_STEPS = 11;
+  const scale = Array.from({ length: SCALE_STEPS }, (_, step) => rootStyle.getPropertyValue(`--anomaly-${step}`).trim());
+  const middleStep = (SCALE_STEPS - 1) / 2;
+  const bound = Math.max(...GISTEMP_ANNUAL.map((value) => Math.abs(value)));
+
+  function colorFor(value) {
+    const step = Math.round((value / bound) * middleStep) + middleStep;
+    return scale[Math.min(SCALE_STEPS - 1, Math.max(0, step))];
+  }
+
+  function gradient(values) {
+    const width = 100 / values.length;
+    const stops = values.map((value, i) => `${colorFor(value)} ${(i * width).toFixed(3)}% ${((i + 1) * width).toFixed(3)}%`);
+    return `linear-gradient(90deg, ${stops.join(', ')})`;
+  }
+
+  return { scale, bound, gradient };
+})();
+
+/* ── Isınma şeridi dikişleri ──
+   Bölüm sınırlarındaki .ik-seam öğeleri seriyi ardışık dönemlere bölüyor:
+   ilk dikiş 1880'lerden, son dikiş son yıllardan, yani sayfa aşağı indikçe
+   şeritler kızarıyor. */
+(function () {
+  const seams = Array.prototype.slice.call(document.querySelectorAll('.ik-seam'));
+  if (!seams.length) return;
+
+  const yearsPerSeam = Math.ceil(GISTEMP_ANNUAL.length / seams.length);
+  // Çizilme animasyonu yalnızca görünürlük izlenebiliyorsa: aksi halde şerit
+  // hiç açılmadan gizli kalırdı.
+  const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window;
+
+  seams.forEach((seam, index) => {
+    const values = GISTEMP_ANNUAL.slice(index * yearsPerSeam, (index + 1) * yearsPerSeam);
+    if (!values.length) return;
+    const firstYear = GISTEMP_FIRST_YEAR + index * yearsPerSeam;
+
+    const stripes = document.createElement('span');
+    stripes.className = 'ik-seam-stripes';
+    stripes.style.backgroundImage = anomalyStripes.gradient(values);
+    const label = document.createElement('span');
+    label.className = 'ik-seam-label';
+    label.textContent = `${firstYear}–${firstYear + values.length - 1}`;
+    seam.append(stripes, label);
+    if (animate) seam.classList.add('is-waiting');
+  });
+
+  if (!animate) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.replace('is-waiting', 'is-drawn');
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  seams.forEach((seam) => observer.observe(seam));
+})();
+
 /* ── BAŞLIKLARDA YEAR EKSENİ (Climate Crisis fontunun "zamanın etkisini
    metaforik gösteren" YEAR ekseni) ──
    Google Fonts'un Climate Crisis açıklamasındaki fikir birebir uygulanıyor:
@@ -436,12 +526,12 @@
   gsap.registerPlugin(ScrollTrigger);
 
   // Hero: video arka plana hafif parallax
-  if (document.querySelector('.hero-video')) {
-    gsap.to('.hero-video', {
+  if (document.querySelector('.ik-hero-video')) {
+    gsap.to('.ik-hero-video', {
       yPercent: 8,
       ease: 'none',
       scrollTrigger: {
-        trigger: '.hero-section',
+        trigger: '.ik-hero-section',
         start: 'top top',
         end: 'bottom top',
         scrub: true
@@ -467,14 +557,6 @@
       play: () => {
         if (!document.querySelector('.cause-tab-content')) return;
         gsap.from('.cause-tab-content', { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' });
-      }
-    },
-    {
-      sectionId: 'actions-section',
-      play: () => {
-        const title = document.querySelector('#actions-section .section-title');
-        if (!title) return;
-        gsap.from(title, { opacity: 0, y: 24, duration: 0.5, ease: 'power2.out' });
       }
     },
     {
@@ -519,9 +601,16 @@
   const rendered = {};
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
-  // Modern, tutarlı kategorik palet: 5 donut grafiğinde de aynı 4 renk
-  // kullanılıyor (tutarlı kategorik kodlama, dataviz'de iyi bir pratik).
-  const MODERN_CHART_COLORS = ['#ff6b6b', '#ffb648', '#38bdf8', '#94a3b8'];
+  // Renkler style.css token'larından okunuyor. Önceki palet renk körlüğü ve
+  // okunurluk kontrollerinden geçmiyordu (amber çok açık, slate kimlik
+  // taşımayacak kadar grimsi). Dilimler sabit sırayla en fazla 4 renk alıyor.
+  const rootStyle = getComputedStyle(document.documentElement);
+  const token = (name) => rootStyle.getPropertyValue(name).trim();
+  const SERIES_COLORS = [1, 2, 3, 4].map((slot) => token(`--data-series-${slot}`));
+  // Emisyon artışı kötü, orman alanı artışı iyi: bu anlamı taşıyan eğriler
+  // durum renkleri alıyor ve değişim etiketinde yön işaretiyle birlikte duruyor.
+  const TREND_BAD = token('--status-critical');
+  const TREND_GOOD = token('--status-good');
 
   function svgEl(tag, attrs) {
     const el = document.createElementNS(SVG_NS, tag);
@@ -569,7 +658,6 @@
       if (total === 0 || index < 0) return;
       const pct = Math.round((values[index] / total) * 100);
       centerValue.textContent = `${pct}%`;
-      centerValue.style.color = MODERN_CHART_COLORS[index % MODERN_CHART_COLORS.length];
       centerLabel.textContent = labels[index];
     }
 
@@ -581,7 +669,7 @@
       const fraction = total === 0 ? 0 : value / total;
       const dash = fraction * circumference;
       const targetOffset = -(cumulative * circumference);
-      const color = MODERN_CHART_COLORS[i % MODERN_CHART_COLORS.length];
+      const color = SERIES_COLORS[i];
 
       // fill:"none" (SVG "boyama yok" değeri) — fill:"transparent" (alfa=0
       // ama yine de "boyanmış" sayılır) kullanılsaydı, her segmentin GÖRÜNMEZ
@@ -633,6 +721,27 @@
       center.appendChild(centerLabel);
       container.appendChild(center);
     }
+
+    // Dilimlerin kimliği yalnızca renkle taşınmasın ve hover olmayan dokunmatik
+    // ekranda da okunabilsin diye her dilim etiketi ve payıyla lejantta duruyor.
+    // Grafik kutusunun yüksekliği sabit olduğu için lejant kutunun hemen ardında.
+    const legend = document.createElement('ul');
+    legend.className = 'donut-legend';
+    values.forEach((value, i) => {
+      const item = document.createElement('li');
+      const swatch = document.createElement('span');
+      swatch.className = 'donut-legend-swatch';
+      swatch.style.background = SERIES_COLORS[i];
+      const name = document.createElement('span');
+      name.className = 'donut-legend-label';
+      name.textContent = labels[i];
+      const share = document.createElement('span');
+      share.className = 'donut-legend-value';
+      share.textContent = `${total === 0 ? 0 : Math.round((value / total) * 100)}%`;
+      item.append(swatch, name, share);
+      legend.appendChild(item);
+    });
+    container.parentElement.insertAdjacentElement('afterend', legend);
 
     // Girişte "çizilme" animasyonu: bir sonraki frame'e ertelenip CSS
     // transition tetiklenir (aynı frame'de set edilirse transition atlanır).
@@ -762,7 +871,7 @@
     const metrics = document.createElement('div');
     metrics.className = 'trend-metrics';
     metrics.innerHTML =
-      `<div class="trend-metric"><span class="trend-metric-value">${growthPct > 0 ? '+' : ''}${growthPct}%</span><span class="trend-metric-label">Değişim</span></div>`;
+      `<div class="trend-metric"><span class="trend-metric-value"><span class="trend-metric-icon" aria-hidden="true" style="color: ${color}">${growthPct >= 0 ? '↑' : '↓'}</span> ${growthPct > 0 ? '+' : ''}${growthPct}%</span><span class="trend-metric-label">Değişim</span></div>`;
     container.appendChild(metrics);
 
     // getTotalLength() DOM'a eklendikten sonra çağrılıyor — bazı tarayıcılarda
@@ -804,7 +913,7 @@
       'causeEnergyTrendChart',
       ['1990', '2000', '2010', '2018'],
       [139.6, 216.1, 287.0, 373.1],
-      '#ff6b6b'
+      TREND_BAD
     );
   }
   function initCauseDeforestationTrendChart() {
@@ -816,7 +925,7 @@
       'causeDeforestationTrendChart',
       ['1973', '1999', '2010', '2018'],
       [20.2, 20.76, 21.54, 22.62],
-      '#4ade80'
+      TREND_GOOD
     );
   }
   function initCauseIndustryTrendChart() {
@@ -826,7 +935,7 @@
       'causeIndustryTrendChart',
       ['1990', '2000', '2010', '2018'],
       [22.8, 26.2, 48.1, 65.2],
-      '#a78bfa'
+      TREND_BAD
     );
   }
   function initCauseAgricultureTrendChart() {
@@ -836,7 +945,7 @@
       'causeAgricultureTrendChart',
       ['1990', '2000', '2010', '2018'],
       [45.7, 42.3, 44.0, 64.9],
-      '#34d399'
+      TREND_BAD
     );
   }
   function initCauseTransportTrendChart() {
@@ -846,7 +955,7 @@
       'causeTransportTrendChart',
       ['1990', '2000', '2010', '2017'],
       [27.0, 36.5, 45.4, 84.7],
-      '#38bdf8'
+      TREND_BAD
     );
   }
 
@@ -1053,52 +1162,530 @@
   });
 })();
 
-/* ── "Tabs card" (Orman Yangınları / Deniz Sıcaklığı / Global Isınma) ──
-   Masaüstünde Framer'ın Tabs-card bileşeninin aynısı: solda isim+açıklama
-   listesi, sağda tıklanan öğenin fotoğrafı çapraz geçişle (cross-fade)
-   görünüyor. ≤767px'te satır düzeni sütuna dönüyor (style.css) ama ortak
-   fotoğraf çerçevesi kendi genişliğini absolute konumlu <img>'lardan
-   alamadığından (normal akıştan çıkmış elemanlar üst kapsayıcı boyutuna
-   katkı vermez) genişliği sıfıra çöküp görünmez oluyordu — düzeltmek
-   yetmiyordu, kullanıcı isteği: mobilde çerçeve tıklanan başlığın hemen
-   altında, akordeon gibi görünsün. Tek fotoğraf çerçevesi DOM'da tıklanan
-   sekmenin (tabs-list içindeki) hemen ardına taşınıyor; masaüstünde
-   card'ın son çocuğu olarak (özgün konumu) geri veriliyor. Görsellerin
-   kendisi zaten aynı elemanlar olduğundan lightbox/crossfade bağlı kalıyor. */
+/* ── Veri sahneleri (Global Isınma / Okyanusların Isınması / Orman Yangınları) ──
+   Üç sahne aynı motoru paylaşıyor. Sahne ekrandayken kaydırma başına (rAF ile
+   kısılmış) bir kez, metni okuma çizgisine en yakın adım aktif sayılıyor ve
+   görsel o adımın son hâline doğru ilerliyor (0-1). Okuma çizgisi geniş
+   ekranda menünün altında kalan alanın ortası; mobilde yapışık görselin altında
+   kalan alanın ortası, çünkü adımlar orada okunuyor. Hareket azaltılmışsa
+   ilerleme hep 1: kaydırmaya bağlı ara kare yok, her adım son hâlini gösteriyor.
+   Grafikler düz HTML: veriden oran hesaplanıp CSS değişkeni olarak yazılıyor,
+   böylece her genişlikte 2px boşluk ve 4px köşe aynı kalıyor. */
 (function () {
-  const mobileQuery = window.matchMedia('(max-width: 767px)');
+  const scenes = Array.prototype.slice.call(document.querySelectorAll('.ik-scene[data-scene]'));
+  if (!scenes.length) return;
 
-  document.querySelectorAll('.indicator-tabs-card').forEach((card) => {
-    const tabs = Array.prototype.slice.call(card.querySelectorAll('.indicator-tab-item'));
-    const photos = Array.prototype.slice.call(card.querySelectorAll('.indicator-tab-photo-img'));
-    const photoPanel = card.querySelector('.indicator-tabs-photo');
-    if (!tabs.length) return;
+  /* OGM Ormancılık İstatistikleri 2024, tablo 2.11 "Orman yangınları, 1988-2024"
+     (yayın 26.09.2025): https://www.ogm.gov.tr/tr/e-kutuphane/resmi-istatistikler
+     (erişim 2026-09-13). Satır: [yıl, yangın sayısı, yanan alan (hektar)]. */
+  const FOREST_FIRES = [
+    [1988, 1372, 18210], [1989, 1633, 13099], [1990, 1750, 13742], [1991, 1481, 8081],
+    [1992, 2117, 12232], [1993, 2545, 15393], [1994, 3239, 30828], [1995, 1770, 7676],
+    [1996, 1645, 14922], [1997, 1339, 6317], [1998, 1932, 6764], [1999, 2075, 5804],
+    [2000, 2353, 26353], [2001, 2631, 7394], [2002, 1471, 8514], [2003, 2177, 6644],
+    [2004, 1762, 4876.2], [2005, 1530, 2821], [2006, 2227, 7761.6], [2007, 2829, 11664.4],
+    [2008, 2135, 29749], [2009, 1793, 4679], [2010, 1861, 3317], [2011, 1954, 3612],
+    [2012, 2450, 10454], [2013, 3755, 11456], [2014, 2149, 3117], [2015, 2150, 3219],
+    [2016, 3188, 9156], [2017, 2411, 11993], [2018, 2167, 5644], [2019, 2688, 11332],
+    [2020, 3399, 20971], [2021, 2793, 139503], [2022, 2160, 12799], [2023, 2579, 15520],
+    [2024, 3797, 27485]
+  ];
 
-    let activeIndex = 0;
+  /* Aynı tablonun 2024 satırındaki çıkış nedenleri, tablodaki sütun sırasıyla.
+     Renkler sabit kategorik sırayı izliyor; nedeni bilinmeyen yangınlar bir
+     kimlik taşımadığı için kategorik renk değil nötr gri alıyor. Tablonun
+     İngilizcesi "Doğal"ı "Natural (Lighting)" [yıldırım] olarak açıklıyor. */
+  const FIRE_CAUSES_2024 = [
+    { label: 'Kasıt', count: 127, hectares: 223, color: 'var(--data-series-1)' },
+    { label: 'İhmal ve kaza', count: 1860, hectares: 19906, color: 'var(--data-series-2)' },
+    { label: 'Doğal (yıldırım)', count: 726, hectares: 734, color: 'var(--data-series-3)' },
+    { label: 'Bilinmeyen', count: 1084, hectares: 6622, color: 'var(--chart-context)' }
+  ];
 
-    function positionPhotoPanel() {
-      if (!photoPanel) return;
-      if (mobileQuery.matches) {
-        const activeTab = tabs[activeIndex];
-        if (activeTab && activeTab.nextElementSibling !== photoPanel) {
-          activeTab.insertAdjacentElement('afterend', photoPanel);
-        }
-      } else if (card.lastElementChild !== photoPanel) {
-        card.appendChild(photoPanel);
+  // Yangın başına alanın karşılaştırma dönemi: sayfanın önceki sürümündeki
+  // EFFIS rakamının (3,73 ha) dönemi; OGM verisiyle de aynı sonucu veriyor.
+  const PER_FIRE_REFERENCE = [2007, 2016];
+  const BASELINE_YEARS = [1951, 1980];
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // style.css'teki geniş sahne düzeniyle birebir aynı koşul.
+  const wideLayout = window.matchMedia('(min-width: 992px), (orientation: landscape) and (max-height: 500px) and (min-width: 640px)');
+
+  const formatNumber = (value, decimals = 0) => value.toLocaleString('tr-TR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  const formatSigned = (value, decimals) => `${value > 0 ? '+' : value < 0 ? '−' : ''}${formatNumber(Math.abs(value), decimals)}`;
+  const formatPercent = (share) => `%${formatNumber(Math.round(share * 100))}`;
+
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  let headerOffset = 0;
+
+  // Yapışık görseller sabit üst menünün altında duruyor. Menü sitenin
+  // şablonundan geldiği için yüksekliği ölçülüyor; menü sabit değilse 0.
+  function syncHeaderOffset() {
+    const navbar = document.querySelector('.navbar');
+    headerOffset = navbar && getComputedStyle(navbar).position === 'fixed'
+      ? Math.round(navbar.getBoundingClientRect().bottom)
+      : 0;
+    document.documentElement.style.setProperty('--ik-header-offset', `${headerOffset}px`);
+  }
+
+  // Araç ipucu yalnızca fare ve kalemle: dokunmatikte parmak sayfayı kaydırırken
+  // sürekli açılıp kapanırdı. Gösterdiği her değer tablo ikizinde de var.
+  function attachTooltip(host, target, describe) {
+    const tip = element('div', 'ik-chart-tooltip');
+    tip.hidden = true;
+    host.appendChild(tip);
+
+    target.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return;
+      const content = describe(event);
+      if (!content) {
+        tip.hidden = true;
+        return;
       }
+      tip.replaceChildren(element('strong', '', content.title), document.createTextNode(` · ${content.detail}`));
+      tip.hidden = false;
+      const hostRect = host.getBoundingClientRect();
+      const half = tip.offsetWidth / 2;
+      const x = Math.min(Math.max(event.clientX - hostRect.left, half), hostRect.width - half);
+      tip.style.left = `${x}px`;
+      tip.style.top = `${content.top}px`;
+    });
+    target.addEventListener('pointerleave', () => { tip.hidden = true; });
+  }
+
+  // Her grafiğin tablo ikizi: renk ve yükseklikle okunan değerlerin sayısal hâli.
+  function dataTable({ summary, caption, head, rows }) {
+    const details = element('details', 'ik-data');
+    details.appendChild(element('summary', '', summary));
+
+    const scroll = element('div', 'ik-data-scroll');
+    scroll.tabIndex = 0;
+    scroll.setAttribute('role', 'region');
+    scroll.setAttribute('aria-label', caption);
+
+    const table = element('table', 'ik-data-table');
+    table.appendChild(element('caption', 'visually-hidden', caption));
+    const thead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    head.forEach((label) => {
+      const cell = element('th', '', label);
+      cell.scope = 'col';
+      headRow.appendChild(cell);
+    });
+    thead.appendChild(headRow);
+
+    const tbody = document.createElement('tbody');
+    rows.forEach((cells) => {
+      const row = document.createElement('tr');
+      cells.forEach((value, index) => {
+        const cell = element(index === 0 ? 'th' : 'td', '', value);
+        if (index === 0) cell.scope = 'row';
+        row.appendChild(cell);
+      });
+      tbody.appendChild(row);
+    });
+
+    table.append(thead, tbody);
+    scroll.appendChild(table);
+    details.appendChild(scroll);
+    return details;
+  }
+
+  /* ── Global Isınma: yıl yıl açılan ısınma şeritleri ── */
+  function initStripesScene(scene, steps) {
+    const years = GISTEMP_ANNUAL.length;
+    const lastYear = GISTEMP_FIRST_YEAR + years - 1;
+    const stripeEdge = (index) => (index / years) * 100;
+
+    const frame = scene.querySelector('.ik-stripes-frame');
+    const stripes = scene.querySelector('.ik-stripes');
+    const yearOutput = scene.querySelector('.ik-stripes-year');
+    const valueOutput = scene.querySelector('.ik-stripes-value-number');
+
+    const fill = element('div', 'ik-stripes-fill');
+    fill.style.backgroundImage = anomalyStripes.gradient(GISTEMP_ANNUAL);
+    const cover = element('div', 'ik-stripes-cover');
+    stripes.append(fill, cover);
+
+    scene.querySelector('.ik-stripes-axis-start').textContent = String(GISTEMP_FIRST_YEAR);
+    scene.querySelector('.ik-stripes-axis-end').textContent = String(lastYear);
+
+    const baseline = scene.querySelector('.ik-stripes-baseline');
+    const baselineStart = stripeEdge(BASELINE_YEARS[0] - GISTEMP_FIRST_YEAR);
+    baseline.style.left = `${baselineStart}%`;
+    baseline.style.width = `${stripeEdge(BASELINE_YEARS[1] + 1 - GISTEMP_FIRST_YEAR) - baselineStart}%`;
+
+    const recordValue = Math.max(...GISTEMP_ANNUAL);
+    const recordIndex = GISTEMP_ANNUAL.indexOf(recordValue);
+    const record = scene.querySelector('.ik-stripes-record');
+    record.textContent = `${GISTEMP_FIRST_YEAR + recordIndex}: ${formatSigned(recordValue, 2)} °C`;
+    record.style.right = `${100 - stripeEdge(recordIndex + 1)}%`;
+
+    // Lejant dikişlerle aynı 11 adımı gösteriyor; uçlar serinin en büyük
+    // mutlak sapması, orta adım baz dönem ortalaması.
+    const legend = scene.querySelector('.ik-scale-legend');
+    const ramp = element('span', 'ik-scale-legend-ramp');
+    anomalyStripes.scale.forEach((color) => {
+      const swatch = element('span');
+      swatch.style.background = color;
+      ramp.appendChild(swatch);
+    });
+    const ticks = element('span', 'ik-scale-legend-ticks');
+    ticks.append(
+      element('span', '', `${formatSigned(-anomalyStripes.bound, 1)} °C`),
+      element('span', '', '0'),
+      element('span', '', `${formatSigned(anomalyStripes.bound, 1)} °C`)
+    );
+    legend.append(element('span', '', 'Daha serin'), ramp, element('span', '', 'Daha sıcak'), ticks);
+
+    let shownYear = null;
+
+    attachTooltip(frame, stripes, (event) => {
+      const rect = stripes.getBoundingClientRect();
+      const index = Math.min(years - 1, Math.max(0, Math.floor(((event.clientX - rect.left) / rect.width) * years)));
+      if (shownYear === null || GISTEMP_FIRST_YEAR + index > shownYear) return null;
+      return { title: String(GISTEMP_FIRST_YEAR + index), detail: `${formatSigned(GISTEMP_ANNUAL[index], 2)} °C`, top: stripes.offsetTop };
+    });
+
+    scene.querySelector('.ik-scene-footer').prepend(dataTable({
+      summary: 'Veriyi tablo olarak göster',
+      caption: 'NASA GISTEMP v4: yıllık küresel sıcaklık sapması, 1951-1980 ortalamasına göre (°C)',
+      head: ['Yıl', 'Sapma (°C)'],
+      rows: GISTEMP_ANNUAL.map((value, index) => [String(GISTEMP_FIRST_YEAR + index), formatSigned(value, 2)])
+    }));
+
+    const revealTo = steps.map((step) => Math.min(lastYear, Number(step.dataset.revealTo) || lastYear));
+
+    function render(year) {
+      shownYear = year;
+      const index = year - GISTEMP_FIRST_YEAR;
+      cover.style.transform = `scaleX(${1 - (index + 1) / years})`;
+      yearOutput.textContent = String(year);
+      // Fontun YEAR ekseni 1979-2050 arası; öncesi erimemiş hâlde kalıyor.
+      yearOutput.style.fontVariationSettings = `"YEAR" ${Math.min(2050, Math.max(1979, year))}`;
+      valueOutput.textContent = `${formatSigned(GISTEMP_ANNUAL[index], 2)} °C`;
     }
 
-    function setActive(index) {
-      activeIndex = index;
-      tabs.forEach((tab, i) => tab.classList.toggle('active', i === index));
-      photos.forEach((photo, i) => photo.classList.toggle('active', i === index));
-      positionPhotoPanel();
+    return {
+      update(stepIndex, progress) {
+        const from = stepIndex === 0 ? GISTEMP_FIRST_YEAR : revealTo[stepIndex - 1];
+        const year = Math.round(from + (revealTo[stepIndex] - from) * progress);
+        if (year !== shownYear) render(year);
+        const marks = (steps[stepIndex].dataset.marks || '').split(' ');
+        frame.classList.toggle('shows-baseline', marks.indexOf('baseline') !== -1);
+        frame.classList.toggle('shows-record', marks.indexOf('record') !== -1);
+      }
+    };
+  }
+
+  /* ── Okyanusların Isınması: NASA fotoğrafları arasında çapraz geçiş ── */
+  function initPhotoScene(scene, steps) {
+    const photos = Array.prototype.slice.call(scene.querySelectorAll('.ik-photo'));
+    return {
+      update(stepIndex) {
+        const active = Number(steps[stepIndex].dataset.photo);
+        photos.forEach((photo, index) => photo.classList.toggle('is-active', index === active));
+      }
+    };
+  }
+
+  /* ── Orman Yangınları: yanan alan sütunları, yangın başına alan, nedenler ── */
+  function buildFireColumns(host) {
+    const TICK_STEP = 50000;
+    const axisMax = Math.ceil(Math.max(...FOREST_FIRES.map((row) => row[2])) / TICK_STEP) * TICK_STEP;
+    const years = FOREST_FIRES.map((row) => row[0]);
+
+    const grid = element('div', 'ik-columns-grid');
+    for (let tick = 0; tick <= axisMax; tick += TICK_STEP) {
+      const line = element('span', 'ik-columns-gridline');
+      line.style.bottom = `${(tick / axisMax) * 100}%`;
+      if (tick > 0) line.appendChild(element('span', 'ik-columns-tick', formatNumber(tick)));
+      grid.appendChild(line);
     }
 
-    tabs.forEach((tab, i) => tab.addEventListener('click', () => setActive(i)));
-    mobileQuery.addEventListener('change', positionPhotoPanel);
-    setActive(0);
+    const plot = element('div', 'ik-columns-plot');
+    const bars = FOREST_FIRES.map((row) => {
+      const bar = element('span', 'ik-column');
+      bar.style.setProperty('--value', (row[2] / axisMax).toFixed(4));
+      plot.appendChild(bar);
+      return bar;
+    });
+
+    const label = element('span', 'ik-column-label');
+    label.hidden = true;
+    host.append(grid, plot, label);
+
+    // Eksende ilk ve son yıl ile iki ara on yıl; kalan yıllar ipucunda ve tabloda.
+    const axis = element('div', 'ik-columns-axis');
+    axis.setAttribute('aria-hidden', 'true');
+    [years[0], 2000, 2010, years[years.length - 1]].forEach((year) => {
+      const index = years.indexOf(year);
+      if (index === -1) return;
+      const tick = element('span', '', String(year));
+      tick.style.left = `${((index + 0.5) / years.length) * 100}%`;
+      axis.appendChild(tick);
+    });
+    host.insertAdjacentElement('afterend', axis);
+
+    attachTooltip(host, plot, (event) => {
+      const rect = plot.getBoundingClientRect();
+      const index = Math.min(bars.length - 1, Math.max(0, Math.floor(((event.clientX - rect.left) / rect.width) * bars.length)));
+      const [year, count, hectares] = FOREST_FIRES[index];
+      return {
+        title: String(year),
+        detail: `${formatNumber(Math.round(hectares))} ha · ${formatNumber(count)} yangın`,
+        top: plot.offsetHeight * (1 - hectares / axisMax)
+      };
+    });
+
+    let highlighted = null;
+
+    function placeLabel() {
+      const index = years.indexOf(highlighted);
+      if (index === -1) {
+        label.hidden = true;
+        return;
+      }
+      const hectares = FOREST_FIRES[index][2];
+      label.textContent = `${formatNumber(Math.round(hectares))} ha`;
+      label.hidden = false;
+      // Etiket sütunun üstünde ortalı; grafik kenarına taşacaksa içeri kayıyor.
+      const half = label.offsetWidth / 2;
+      const center = bars[index].offsetLeft + bars[index].offsetWidth / 2;
+      label.style.left = `${Math.min(Math.max(center, half), plot.clientWidth - half)}px`;
+      label.style.bottom = `calc(${((hectares / axisMax) * 100).toFixed(2)}% + var(--space-xs) / 2)`;
+    }
+
+    return {
+      highlight(year) {
+        if (year === highlighted) return;
+        highlighted = year;
+        bars.forEach((bar, index) => bar.classList.toggle('is-highlighted', years[index] === year));
+        placeLabel();
+      },
+      placeLabel
+    };
+  }
+
+  function buildPerFireBars(host) {
+    const perFire = (rows) => rows.reduce((sum, row) => sum + row[2], 0) / rows.reduce((sum, row) => sum + row[1], 0);
+    const reference = FOREST_FIRES.filter((row) => row[0] >= PER_FIRE_REFERENCE[0] && row[0] <= PER_FIRE_REFERENCE[1]);
+    const latest = FOREST_FIRES[FOREST_FIRES.length - 1];
+    const items = [
+      { label: `${PER_FIRE_REFERENCE[0]}-${PER_FIRE_REFERENCE[1]} ortalaması`, value: perFire(reference), highlighted: false },
+      { label: String(latest[0]), value: perFire([latest]), highlighted: true }
+    ];
+    const scaleMax = Math.ceil(Math.max(...items.map((item) => item.value)) / 5) * 5;
+
+    items.forEach((item) => {
+      const row = element('div', 'ik-hbar-row');
+      const track = element('div', 'ik-hbar-track');
+      const bar = element('span', item.highlighted ? 'ik-hbar is-highlighted' : 'ik-hbar');
+      bar.style.setProperty('--value', (item.value / scaleMax).toFixed(4));
+      track.append(bar, element('span', 'ik-hbar-value', `${formatNumber(item.value, 1)} ha`));
+      row.append(element('span', 'ik-hbar-label', item.label), track);
+      host.appendChild(row);
+    });
+  }
+
+  function buildCauseStacks(host) {
+    const totals = FIRE_CAUSES_2024.reduce((sum, cause) => ({
+      count: sum.count + cause.count,
+      hectares: sum.hectares + cause.hectares
+    }), { count: 0, hectares: 0 });
+
+    [['count', 'Yangın sayısı'], ['hectares', 'Yanan alan']].forEach(([key, label]) => {
+      const row = element('div', 'ik-stack-row');
+      const bar = element('div', 'ik-stack-bar');
+      FIRE_CAUSES_2024.forEach((cause) => {
+        const segment = element('span', 'ik-stack-segment');
+        segment.style.flexGrow = (cause[key] / totals[key]).toFixed(4);
+        segment.style.background = cause.color;
+        bar.appendChild(segment);
+      });
+      row.append(element('span', 'ik-stack-label', label), bar);
+      host.appendChild(row);
+    });
+
+    // Lejant, kimliği renkten bağımsız taşıyan küçük bir tablo: her neden
+    // iki çubuktaki payıyla yazılı, ince dilimlerin değeri de okunuyor.
+    const legend = element('table', 'ik-stack-legend');
+    const head = document.createElement('tr');
+    ['Neden', 'Sayı', 'Alan'].forEach((text) => head.appendChild(element('th', '', text)));
+    const thead = document.createElement('thead');
+    thead.appendChild(head);
+    const tbody = document.createElement('tbody');
+    FIRE_CAUSES_2024.forEach((cause) => {
+      const row = document.createElement('tr');
+      const name = document.createElement('td');
+      const swatch = element('span', 'ik-stack-swatch');
+      swatch.style.background = cause.color;
+      name.append(swatch, document.createTextNode(cause.label));
+      row.append(
+        name,
+        element('td', '', formatPercent(cause.count / totals.count)),
+        element('td', '', formatPercent(cause.hectares / totals.hectares))
+      );
+      tbody.appendChild(row);
+    });
+    legend.append(thead, tbody);
+    host.appendChild(legend);
+  }
+
+  function initFireScene(scene, steps) {
+    const views = Array.prototype.slice.call(scene.querySelectorAll('.ik-fires-view'));
+    const columns = buildFireColumns(scene.querySelector('.ik-columns'));
+    buildPerFireBars(scene.querySelector('.ik-hbars'));
+    buildCauseStacks(scene.querySelector('.ik-stack'));
+
+    scene.querySelector('.ik-scene-footer').append(
+      dataTable({
+        summary: 'Veriyi tablo olarak göster',
+        caption: 'OGM: yıllara göre orman yangını sayısı ve yanan alan, 1988-2024',
+        head: ['Yıl', 'Yangın sayısı', 'Yanan alan (ha)'],
+        rows: FOREST_FIRES.map(([year, count, hectares]) => [
+          String(year), formatNumber(count), formatNumber(hectares, Number.isInteger(hectares) ? 0 : 1)
+        ])
+      }),
+      dataTable({
+        summary: '2024 çıkış nedenlerini tablo olarak göster',
+        caption: 'OGM: 2024 yılında çıkış nedenlerine göre orman yangınları',
+        head: ['Neden', 'Yangın sayısı', 'Yanan alan (ha)'],
+        rows: FIRE_CAUSES_2024.map((cause) => [cause.label, formatNumber(cause.count), formatNumber(cause.hectares)])
+      })
+    );
+
+    let activeView = null;
+    return {
+      update(stepIndex) {
+        const { view, highlight } = steps[stepIndex].dataset;
+        if (view !== activeView) {
+          views.forEach((node) => node.classList.toggle('is-active', node.dataset.view === view));
+          activeView = view;
+        }
+        columns.highlight(highlight ? Number(highlight) : null);
+      },
+      resize: columns.placeLabel
+    };
+  }
+
+  /* ── Motor ── */
+  const controllers = { stripes: initStripesScene, photos: initPhotoScene, fires: initFireScene };
+  const entries = [];
+
+  function apply(entry, index, progress) {
+    if (index !== entry.activeIndex) {
+      entry.steps.forEach((step, stepIndex) => step.classList.toggle('is-active', stepIndex === index));
+      entry.activeIndex = index;
+    }
+    entry.controller.update(index, progress);
+  }
+
+  function readingLine(entry) {
+    const viewportHeight = window.innerHeight;
+    if (wideLayout.matches || !entry.media) return headerOffset + (viewportHeight - headerOffset) / 2;
+    const mediaBottom = Math.min(viewportHeight, Math.max(0, entry.media.getBoundingClientRect().bottom));
+    return mediaBottom + (viewportHeight - mediaBottom) / 2;
+  }
+
+  function measure(entry) {
+    const line = readingLine(entry);
+    const centers = entry.steps.map((step) => {
+      const rect = step.getBoundingClientRect();
+      return rect.top + rect.height / 2;
+    });
+    // Metni çizgiye en yakın adım aktif: iki adımın ortası çizgiyi geçince
+    // sıradakine geçiliyor. Önceki kural (adımın üst kenarı) grafiği bir
+    // adımda tutarken o adımın metni çoktan ekranın üstüne kaymış oluyordu.
+    let index = 0;
+    for (let i = 1; i < centers.length; i++) {
+      if ((centers[i - 1] + centers[i]) / 2 <= line) index = i;
+    }
+    // Görsel, adım aktifleştiği andan metni çizgiye ulaşana kadar ilerliyor;
+    // okunurken grafik metnin anlattığı son hâlde duruyor.
+    const spacing = centers.length > 1
+      ? Math.abs(index > 0 ? centers[index] - centers[index - 1] : centers[1] - centers[0])
+      : entry.steps[0].offsetHeight;
+    const start = centers[index] - spacing / 2;
+    const progress = Math.min(1, Math.max(0, (line - start) / Math.max(1, centers[index] - start)));
+    return { index, progress: reducedMotion ? 1 : progress };
+  }
+
+  let frameRequested = false;
+
+  function update() {
+    frameRequested = false;
+    entries.forEach((entry) => {
+      if (!entry.visible) return;
+      const { index, progress } = measure(entry);
+      apply(entry, index, progress);
+    });
+  }
+
+  function requestUpdate() {
+    if (frameRequested) return;
+    frameRequested = true;
+    requestAnimationFrame(update);
+  }
+
+  // Geniş düzende yapışık görsel menünün altında kalan alanda dikey ortalı;
+  // yükseklik sahneye göre değiştiği için her sahne kendi değerini alıyor.
+  function syncMediaTop(entry) {
+    const free = window.innerHeight - headerOffset - entry.media.offsetHeight;
+    entry.media.style.setProperty('--ik-media-top', `${Math.round(headerOffset + Math.max(0, free / 2))}px`);
+  }
+
+  function relayout() {
+    syncHeaderOffset();
+    entries.forEach((entry) => {
+      if (entry.controller.resize) entry.controller.resize();
+      syncMediaTop(entry);
+    });
+    requestUpdate();
+  }
+
+  syncHeaderOffset();
+
+  scenes.forEach((scene) => {
+    const init = controllers[scene.dataset.scene];
+    const steps = Array.prototype.slice.call(scene.querySelectorAll('.ik-scene-step'));
+    if (!init || !steps.length) return;
+    // .is-ready önce: canlı grafikler görünür olmadan etiketler ölçülemiyor.
+    scene.classList.add('is-ready');
+    const entry = {
+      scene,
+      steps,
+      media: scene.querySelector('.ik-scene-media'),
+      controller: init(scene, steps),
+      visible: false,
+      activeIndex: -1
+    };
+    entries.push(entry);
+    apply(entry, 0, reducedMotion ? 1 : 0);
+    syncMediaTop(entry);
   });
+
+  if (!entries.length) return;
+
+  const visibility = new IntersectionObserver((observed) => {
+    observed.forEach((item) => {
+      const entry = entries.find((candidate) => candidate.scene === item.target);
+      if (entry) entry.visible = item.isIntersecting;
+    });
+    requestUpdate();
+  });
+  entries.forEach((entry) => visibility.observe(entry.scene));
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', relayout);
+  // Web fontları geç yüklenince etiket genişlikleri değişiyor.
+  if (document.fonts) document.fonts.ready.then(relayout);
 })();
 
 /* ── Counter FX (Framer referansı: layerInView tetikli, 0'dan hedefe sayan
@@ -1156,7 +1743,7 @@
   // sağa/yukarıdan aşağı bir "dalga" hissi veriyor.
   const groups = new Map();
   counters.forEach((el) => {
-    const group = el.closest('.vital-signs-strip, .indicator-stats') || el;
+    const group = el.closest('.vital-signs-strip') || el;
     if (!groups.has(group)) groups.set(group, []);
     groups.get(group).push(el);
   });
@@ -1170,7 +1757,7 @@
       // taramadığı bir crawler'da kalıcı olarak) — sıfıra sadece tam bu anda,
       // yukarı sayma animasyonunun başlangıç karesi olarak geçiyoruz.
       el.textContent = '0';
-      const group = el.closest('.vital-signs-strip, .indicator-stats') || el;
+      const group = el.closest('.vital-signs-strip') || el;
       const siblings = groups.get(group) || [el];
       const index = siblings.indexOf(el);
       animateCount(el, Math.max(0, index) * 80);
@@ -1264,56 +1851,55 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/* ── "Expanded Card" (Deniz Sıcaklığı — Akdeniz/Ege/Karadeniz/Marmara) ──
-   Flex 1↔5 geçişi CSS'te tanımlı (.active sınıfı); burada sadece hangi
-   kartın .active olacağını yönetiyoruz — masaüstünde üzerine gelinen kart
-   genişliyor, 768px altında CSS zaten hepsini dikey açık gösteriyor. */
+/* ── Lightbox: grafik görsellerine tıkla-büyüt ──
+   data-lightbox-src taşıyan her düğme görseli tam ekran karartılmış bir
+   katmanda açıyor; görsel yalnızca açılınca yükleniyor. Tıklanabilir <img>
+   yerine düğme: klavyeyle de açılıyor. Katmana, X'e veya Esc'e basmak
+   kapatıyor ve odak açan düğmeye dönüyor. */
 (function () {
-  document.querySelectorAll('.expanded-card').forEach((wrap) => {
-    const items = Array.prototype.slice.call(wrap.querySelectorAll('.expanded-card-item'));
-    if (!items.length) return;
-
-    function setActive(index) {
-      items.forEach((item, i) => item.classList.toggle('active', i === index));
-    }
-
-    items.forEach((item, i) => {
-      item.addEventListener('mouseenter', () => setActive(i));
-      item.addEventListener('focus', () => setActive(i));
-    });
-  });
-})();
-
-/* ── Lightbox: grafik/chart görsellerine tıkla-büyüt ──
-   .zoomable-chart sınıflı her <img>, tıklanınca tam ekran karartılmış bir
-   katmanda büyütülmüş halde açılıyor; katmana/X'e/Esc'e tıklamak kapatıyor. */
-(function () {
-  const imgs = Array.prototype.slice.call(document.querySelectorAll('.zoomable-chart'));
-  if (!imgs.length) return;
+  const triggers = Array.prototype.slice.call(document.querySelectorAll('[data-lightbox-src]'));
+  if (!triggers.length) return;
 
   const overlay = document.createElement('div');
   overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Büyütülmüş grafik');
   overlay.innerHTML = '<button type="button" class="lightbox-close" aria-label="Kapat">&times;</button><img class="lightbox-img" alt="">';
   document.body.appendChild(overlay);
   const lightboxImg = overlay.querySelector('.lightbox-img');
   const closeBtn = overlay.querySelector('.lightbox-close');
+  let opener = null;
 
-  function open(img) {
-    lightboxImg.src = img.currentSrc || img.src;
-    lightboxImg.alt = img.alt || '';
+  function open(trigger) {
+    opener = trigger;
+    lightboxImg.src = trigger.dataset.lightboxSrc;
+    lightboxImg.alt = trigger.dataset.lightboxAlt || '';
     overlay.classList.add('active');
     document.body.classList.add('lightbox-open');
+    closeBtn.focus();
   }
 
   function close() {
+    if (!overlay.classList.contains('active')) return;
     overlay.classList.remove('active');
     document.body.classList.remove('lightbox-open');
+    if (opener) opener.focus();
+    opener = null;
   }
 
-  imgs.forEach((img) => img.addEventListener('click', () => open(img)));
+  triggers.forEach((trigger) => trigger.addEventListener('click', () => open(trigger)));
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
   closeBtn.addEventListener('click', close);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!overlay.classList.contains('active')) return;
+    if (e.key === 'Escape') close();
+    // Katmanda odaklanabilir tek öğe kapatma düğmesi; Tab arkadaki sayfaya kaçmasın.
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      closeBtn.focus();
+    }
+  });
 })();
 
 /* ── KARŞILAŞABİLECEĞİMİZ GELECEK: "CardShowcase" (Framer referansı) ──
@@ -1478,7 +2064,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
-/* ── ADIM KARUSELİ (Ne Yapmalıyız?) ──
+/* ── ADIM KARUSELİ (Neler Yapmalıyız?) ──
    Kullanıcının verdiği "ScrollReelTestimonials" React bileşeninin vanilla JS
    portu: ortadaki sütun gerçek fotoğraf + bulanık dolgu hücrelerinden oluşan
    bir "makara", yan sütunlar ters yönde kayarak counter-rotate efekti
@@ -1493,43 +2079,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const CHAR_STAGGER_MS = 6;
 
   const individualSteps = [
-    { icon: 'fa-bolt', color: 'green', photo: 'assets/image/wikipedia/enerji-tasarrufu.jpg', title: 'Enerji Tasarrufu',
+    { photo: 'assets/image/wikipedia/enerji-tasarrufu.jpg', title: 'Enerji Tasarrufu',
       desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor. Bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
       examples: ["Çamaşırı 30°C'de ve tam dolu makinede yıka", 'Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar', 'Mümkünse enerji tedarikçini yenilenebilire geçir'] },
-    { icon: 'fa-bicycle', color: 'blue', photo: 'assets/image/wikipedia/ulasim-tercihleri.jpg', title: 'Ulaşım Tercihleri',
+    { photo: 'assets/image/wikipedia/ulasim-tercihleri.jpg', title: 'Ulaşım Tercihleri',
       desc: 'Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.',
       examples: ['Haftada 3 gün toplu taşıma = yılda ~1 ton CO₂ az', '3 km altındaki mesafeleri yürüyerek ya da bisikletle git', 'Mümkün olan seyahatlerde uçuş yerine tren tercih et'] },
-    { icon: 'fa-carrot', color: 'orange', photo: 'assets/image/wikipedia/beslenme-aliskanliklari.jpg', title: 'Beslenme Alışkanlıkları',
+    { photo: 'assets/image/wikipedia/beslenme-aliskanliklari.jpg', title: 'Beslenme Alışkanlıkları',
       desc: 'Gıda üretimi küresel sera gazı emisyonlarının önemli bir kısmından sorumlu; kırmızı et bu payın en büyük tekil kaynağı. Tüketimini azaltıp yerel, mevsimsel ve bitki ağırlıklı beslenmeye yönelmek bireysel karbon ayak izini belirgin biçimde küçültüyor.',
       examples: ['Haftada 1 gün etsiz beslenme = ~200 kg CO₂/yıl az', 'Yerel pazardan alışveriş yap, nakliye emisyonunu kır', 'Plan yap, porsiyonu küçült, gıda israfını sıfırla'] },
-    { icon: 'fa-recycle', color: 'emerald', photo: 'assets/image/wikipedia/bilincli-tuketim.jpg', title: 'Bilinçli Tüketim',
+    { photo: 'assets/image/wikipedia/bilincli-tuketim.jpg', title: 'Bilinçli Tüketim',
       desc: 'Her ürünün üretiminde harcanan enerji ve hammadde, satın alma kararlarını iklim açısından önemli kılıyor. Daha az ve bilinçli satın almak, ürünleri uzun süre kullanmak; onarmak ve ikinci eli tercih etmek hem atığı hem de üretim kaynaklı emisyonları azaltıyor.',
       examples: ['Almadan önce "gerçekten ihtiyacım var mı?" diye sor', 'Elektronikte önce onarımı dene, değiştirmeyi son çare yap', 'Tekli plastik ambalaj yerine dökme/büyük boy al'] },
-    { icon: 'fa-seedling', color: 'lightgreen', photo: 'assets/image/wikipedia/dogayla-birlikte-yasamak.jpg', title: 'Doğayla Birlikte Yaşamak',
+    { photo: 'assets/image/wikipedia/dogayla-birlikte-yasamak.jpg', title: 'Doğayla Birlikte Yaşamak',
       desc: 'Yeşil alanlar hem karbon depoluyor hem de yerel biyoçeşitliliği destekliyor. Balkonunda ya da bahçende bitki yetiştirmek küçük bir adım gibi görünse de, olgun bir ağacın yılda ortalama 21-25 kg CO₂ emdiği düşünülürse toplu etkisi büyüyor.',
       examples: ['Mutfak atığını kompostlayıp toprağa besin olarak ver', 'Yerel ağaçlandırma projelerine gönüllü katıl', 'Damlayan bir musluk yılda 20.000L suyu boşa akıtabilir'] },
-    { icon: 'fa-bullhorn', color: 'purple', photo: 'assets/image/wikipedia/savunuculuk-ve-farkindalik.jpg', title: 'Savunuculuk ve Farkındalık',
+    { photo: 'assets/image/wikipedia/savunuculuk-ve-farkindalik.jpg', title: 'Savunuculuk ve Farkındalık',
       desc: 'Bireysel adımlar önemli, ama en büyük etki toplu sesle ortaya çıkıyor. Çevrendeki insanları bilinçlendirmek ve oy verirken iklim politikasını önceliklendirmek, sistemsel değişimi hızlandıran dolaylı ama güçlü bir yol.',
       examples: ['Yaşadığın şehrin iklim eylem planını takip et', 'İş yerinde sürdürülebilirlik odaklı öneriler sun', 'Bilimsel kaynaklara dayanan iklim içeriklerini paylaş'] }
   ];
 
   const societalSteps = [
-    { icon: 'fa-solar-panel', color: 'orange', photo: 'assets/image/un/UN7436150.jpg', title: 'Yenilenebilir Enerjiye Geçiş',
+    { photo: 'assets/image/un/UN7436150.jpg', title: 'Yenilenebilir Enerjiye Geçiş',
       desc: 'Küresel enerji üretiminin fosil yakıtlardan güneş, rüzgâr ve diğer temiz kaynaklara kaydırılması, emisyonları azaltmanın en yüksek etkili yollarından biri. Hükümetlerin ve şirketlerin yatırım önceliklerini bu yönde değiştirmesi dönüşümün hızını doğrudan belirliyor.',
       examples: ['Devlet teşvikleri çatı üstü güneş enerjisini yaygınlaştırabilir', 'Fosil yakıt sübvansiyonlarının kademeli kaldırılması kritik', 'Enerji depolama teknolojilerine Ar-Ge yatırımı şart'] },
-    { icon: 'fa-scale-balanced', color: 'red', photo: 'assets/image/wikipedia/karbon-fiyatlandirmasi.png', title: 'Karbon Fiyatlandırması',
+    { photo: 'assets/image/wikipedia/karbon-fiyatlandirmasi.png', title: 'Karbon Fiyatlandırması',
       desc: 'Karbon vergisi ve emisyon ticaret sistemleri, sera gazı salımının gerçek maliyetini fiyatlara yansıtarak "kirleten öder" ilkesini işletir. Bu mekanizmalar, temiz teknolojilere geçişi piyasa içinden hızlandıran güçlü araçlar.',
       examples: ['Ton başına $50-100 CO₂ fiyatı dönüşümü tetikleyecek düzeyde', 'Vergi gelirleri yeşil altyapıya ayrılabilir', 'Sınır karbon mekanizmaları haksız rekabeti önler'] },
-    { icon: 'fa-tree', color: 'emerald', photo: 'assets/image/wikipedia/ormanlarin-korunmasi.jpg', title: 'Ormanların Korunması',
+    { photo: 'assets/image/wikipedia/ormanlarin-korunmasi.jpg', title: 'Ormanların Korunması',
       desc: 'Ormanlar dünyanın en büyük doğal karbon yutaklarından biri; hem ormansızlaşmayı durdurmak hem de büyük ölçekli ağaçlandırma projeleri yürütmek, atmosferdeki karbonu dengelemenin en doğrudan yollarından biri.',
       examples: ['Orman tahribatına yol açan ürünlere ithalat kısıtlaması', 'Yerel halklara ormanlık arazide mülkiyet hakkı tanınmalı', 'REDD+ gibi karbon kredisi mekanizmaları yaygınlaşmalı'] },
-    { icon: 'fa-handshake', color: 'blue', photo: 'assets/image/wikipedia/uluslararasi-isbirligi.jpg', title: 'Uluslararası İşbirliği',
+    { photo: 'assets/image/wikipedia/uluslararasi-isbirligi.jpg', title: 'Uluslararası İşbirliği',
       desc: 'İklim krizi sınır tanımıyor; Paris Anlaşması gibi küresel çerçeveler, ülkelerin ortak, ölçülebilir ve denetlenebilir hedefler etrafında birleşmesini sağlayarak bireysel çabaların toplamından daha büyük bir etki yaratıyor.',
       examples: ['Ulusal Katkı Beyanlarının (NDC) güçlendirilmesi zorunlu', 'Gelişmekte olan ülkelere iklim finansmanı artmalı', 'Teknoloji transferi yeşil dönüşümü demokratikleştirir'] },
-    { icon: 'fa-industry', color: 'yellow', photo: 'assets/image/wikipedia/sanayi-donusumu.jpg', title: 'Sanayi Dönüşümü',
+    { photo: 'assets/image/wikipedia/sanayi-donusumu.jpg', title: 'Sanayi Dönüşümü',
       desc: 'Çimento, çelik ve kimya gibi ağır sanayiler, üretim süreçlerinin doğası gereği kolayca elektrifiye edilemiyor. Yeşil hidrojen ve karbon yakalama teknolojileri, bu sektörlerin emisyonlarını azaltmanın önündeki en kritik açık.',
       examples: ['Kamu ihalelerinde düşük karbonlu "yeşil çelik" şartı aranmalı', 'H₂ altyapısına kamu yatırımı ölçek ekonomisiyle maliyeti düşürür', 'Sanayi emisyonlarına sektörel denetim mekanizması gerekiyor'] },
-    { icon: 'fa-city', color: 'teal', photo: 'assets/image/wikipedia/surdurulebilir-sehirler.jpg', title: 'Sürdürülebilir Şehirler',
+    { photo: 'assets/image/wikipedia/surdurulebilir-sehirler.jpg', title: 'Sürdürülebilir Şehirler',
       desc: '2050\'de dünya nüfusunun %68\'inin kentlerde yaşayacağı öngörülüyor; bu da şehir planlamasını iklim mücadelesinin merkezine taşıyor. Toplu taşımayı, yaya bölgelerini ve yeşil alanları bütünleştiren akıllı şehirler hem emisyonu azaltıyor hem yaşam kalitesini artırıyor.',
       examples: ['15 dakikalık şehir konsepti trafiği belirgin biçimde düşürür', 'Mevcut binaların enerji verimliliğine yükseltilmesi teşvik edilmeli', 'Kent ormanları gibi doğa tabanlı çözümler standart hale gelmeli'] }
   ];
@@ -1587,18 +2173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function renderSlide(step, i, count) {
+  function renderSlide(step) {
     const slide = document.createElement('div');
     slide.className = 'reel-slide';
-
-    const eyebrow = document.createElement('div');
-    eyebrow.className = 'reel-eyebrow';
-    eyebrow.innerHTML = `<span class="action-step-icon-badge action-step-icon-badge--${step.color}"><i class="fa-solid ${step.icon}"></i></span>`;
-    const num = document.createElement('span');
-    num.className = 'reel-eyebrow-number';
-    num.textContent = `ADIM ${String(i + 1).padStart(2, '0')}/${String(count).padStart(2, '0')}`;
-    eyebrow.appendChild(num);
-    slide.appendChild(eyebrow);
 
     const title = document.createElement('h4');
     title.className = 'reel-title';
@@ -1701,7 +2278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (currentSlide) currentSlide.classList.add('is-exiting');
       setTimeout(() => {
-        const newSlide = renderSlide(steps[index], index, count);
+        const newSlide = renderSlide(steps[index]);
         stage.innerHTML = '';
         stage.appendChild(newSlide);
         currentSlide = newSlide;
@@ -1721,7 +2298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     columns.style.transition = 'none';
     updateColumns();
     updateNav();
-    currentSlide = renderSlide(steps[0], 0, count);
+    currentSlide = renderSlide(steps[0]);
     stage.appendChild(currentSlide);
     requestAnimationFrame(() => {
       leftCol.style.transition = '';
@@ -1863,8 +2440,8 @@ document.addEventListener('DOMContentLoaded', () => {
   cards.forEach((card) => observer.observe(card));
 })();
 
-/* ── Ne Yapmalıyız? Dynamic Heading ──
-   "Ne Yapmalıyız?" başlığı, bölüm görünür olduğunda en popüler 5 dilde hızla
+/* ── Neler Yapmalıyız? Dynamic Heading ──
+   "Neler Yapmalıyız?" başlığı, bölüm görünür olduğunda en popüler 5 dilde hızla
    (300ms aralıkla) belirip kaybolur, son adımda Türkçe'de durur ve bir daha
    değişmez — referans DynamicText bileşenindeki "son indekste dur" mantığı. */
 (function () {
@@ -1880,7 +2457,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { text: '我们应该做什么？', dir: 'ltr' },
     { text: 'हमें क्या करना चाहिए?', dir: 'ltr' },
     { text: 'ماذا يجب أن نفعل؟', dir: 'rtl' },
-    { text: 'Ne Yapmalıyız?', dir: 'ltr' }
+    { text: 'Neler Yapmalıyız?', dir: 'ltr' }
   ];
 
   let index = 0;
@@ -1922,67 +2499,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.3 });
-
-  observer.observe(section);
-})();
-
-/* ── Sebepler Başlığı: Scroll Hızına Bağlı Skew (VelocityText esinli) ──
-   Referans bileşen, çok uzun bir scroll alanında metni kaydırma hızına göre
-   eğip kaydıran bir "velocity marquee". Bu sayfa bölüm-bazlı sabit (~100vh)
-   sayfalama kullandığı için aynı uzun-scroll mekaniği yok — ama "metin,
-   scroll hızı ve yönüyle orantılı eğilir" özünü gerçek scroll hızından
-   (px/ms) hesaplayıp başlığa sürekli uygulayan bir yay (spring) animasyonuyla
-   koruyoruz: hızlı scroll = daha çok eğim, durunca yumuşakça düzleşir. */
-(function () {
-  const heading = document.querySelector('.cause-heading');
-  const section = document.getElementById('causes-section');
-  if (!heading || !section) return;
-
-  const SKEW_SENSITIVITY = 60;
-  const SKEW_MAX_DEG = 18;
-  const SPRING_FACTOR = 0.12;
-
-  heading.style.transformOrigin = 'left center';
-
-  let lastY = window.scrollY;
-  let lastT = performance.now();
-  let currentSkew = 0;
-  let frameId = null;
-
-  // Bölüm ekran dışındayken bu döngü sonsuza dek çalışıp her karede
-  // stil yazıp duruyordu (sayfanın geri kalanında hiç görünmese bile) —
-  // diğer bölüm animasyonlarındaki gibi IntersectionObserver ile
-  // sadece görünürken çalıştırıyoruz.
-  function loop() {
-    const now = performance.now();
-    const dt = Math.max(now - lastT, 1);
-    const velocity = (window.scrollY - lastY) / dt;
-
-    const targetSkew = Math.max(-SKEW_MAX_DEG, Math.min(SKEW_MAX_DEG, velocity * SKEW_SENSITIVITY));
-    currentSkew += (targetSkew - currentSkew) * SPRING_FACTOR;
-    if (Math.abs(currentSkew) < 0.01) currentSkew = 0;
-
-    heading.style.transform = `skewX(${currentSkew.toFixed(2)}deg)`;
-
-    lastY = window.scrollY;
-    lastT = now;
-    frameId = requestAnimationFrame(loop);
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        if (!frameId) {
-          lastY = window.scrollY;
-          lastT = performance.now();
-          loop();
-        }
-      } else if (frameId) {
-        cancelAnimationFrame(frameId);
-        frameId = null;
-      }
-    });
-  }, { threshold: 0.08 });
 
   observer.observe(section);
 })();
@@ -2060,7 +2576,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= viewportMid) activeIndex = i;
       });
-      dotLinks.forEach((a, i) => a.classList.toggle('is-active', i === activeIndex));
+      dotLinks.forEach((a, i) => {
+        const isActive = i === activeIndex;
+        a.classList.toggle('is-active', isActive);
+        // Görsel uzama ekran okuyucuya aktarılmıyor; bulunulan bölüm ayrıca bildiriliyor.
+        if (isActive) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
     }
   }
 
@@ -2165,6 +2687,25 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       nextTab.click();
     }
+  });
+
+  // Dar ekranda sekme çubuğu yatay kayıyor; seçilen sekme yarım kalmasın diye
+  // çubuğun ortasına alınıyor. scrollIntoView sayfayı dikeyde de oynatacağı
+  // için yalnızca çubuğun kendi yatay kaydırması kullanılıyor.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function revealTab(tab) {
+    const listRect = tablist.getBoundingClientRect();
+    const tabRect = tab.getBoundingClientRect();
+    const offset = (tabRect.left - listRect.left) - (listRect.width - tabRect.width) / 2;
+    tablist.scrollTo({
+      left: Math.max(0, tablist.scrollLeft + offset),
+      behavior: prefersReducedMotion ? 'auto' : 'smooth'
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('shown.bs.tab', () => revealTab(tab));
   });
 })();
 
