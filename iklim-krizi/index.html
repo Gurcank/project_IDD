@@ -102,7 +102,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css?v=20260913-4">
+  <link rel="stylesheet" href="style.css?v=20260915-6">
 </head>
 
 <!--========================================================================= Body ==============================================================================  -->
@@ -119,6 +119,7 @@
   <!-- Bölüm göstergesi: masaüstünde sağda sabit kapsül; bulunulan bölümün
        noktası uzar, tıklanınca o bölüme kaydırır. -->
   <nav class="section-dotnav" id="sectionDotnav" aria-label="Bölümler arası hızlı gezinme">
+    <a href="#hero-section" data-dot data-section="hero-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Ana Sayfa</span></a>
     <a href="#sdg-section" data-dot data-section="sdg-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Hedefler</span></a>
     <a href="#happening-section" data-dot data-section="happening-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Neler Oluyor?</span></a>
     <a href="#causes-section" data-dot data-section="causes-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Sebebi Ne?</span></a>
@@ -200,7 +201,7 @@
 
   <!--========================================================================= Hero ============================================================================== -->
 
-  <section class="ik-hero-section">
+  <section class="ik-hero-section" id="hero-section">
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/image/hero-poster.webp"
       class="ik-hero-video" aria-hidden="true">
       <source src="assets/video/hero-buzul-erimesi-720p.webm" type="video/webm">
@@ -296,7 +297,6 @@
       <h2 class="section-title">Neler <em>Oluyor?</em></h2>
       <p class="section-desc">Buzullar eriyor, denizler ısınıyor, termometreler rekor kırıyor. Kutuplardan
         Türkiye kıyılarına, gezegenin şu anda verdiği sinyalleri kanıtlarıyla ve rakamlarıyla bir araya getirdik.</p>
-      <p class="section-data-freshness">Veri güncelliği: aşağıdaki küresel göstergeler NASA/NOAA'nın belirttiği tarihlere aittir (bkz. her kartın altındaki etiket); Türkiye verileri: orman yangınları OGM'nin 2024, deniz sıcaklıkları MGM'nin 2024 istatistiklerinden; Türkiye sıcaklık değerleri ÇŞB Çevresel Göstergeler raporuna (2018) dayanır (bkz. <a href="#turkiyede-sicaklik">Türkiye'de Sıcaklık</a>).</p>
     </div>
 
     <!-- Vital Signs ─ science.nasa.gov/climate-change — Framer "Hover Ticker" tarzı
@@ -483,42 +483,39 @@
                 <figcaption class="ik-chart-source">Kaynak: ÇŞB Çevresel Göstergeler</figcaption>
               </figure>
             </noscript>
+            <div class="ik-reveal">
+              <div class="ik-reveal-panel" id="global-isinma-spiral" data-reveal-label="Sıcaklık spirali" data-reveal-title="NASA'nın küresel sıcaklık spirali" data-reveal-meta="1880'den bugüne küresel sıcaklık sapmaları · NASA GISS" data-reveal-icon="fa-circle-play">
+                <video class="ik-data-video" src="assets/video/gistemp-spiral.mp4" controls muted playsinline preload="none"></video>
+              </div>
+            </div>
           </div>
 
           <ol class="ik-scene-steps">
-            <li class="ik-scene-step" data-reveal-to="1950">
+            <li class="ik-scene-step">
               <h4 class="ik-scene-step-title">Her Şerit Bir Yıl</h4>
               <p>Maviler 1951-1980 ortalamasından serin, kırmızılar sıcak geçen yılları gösteriyor; renk koyulaştıkça fark büyüyor. Sayfadaki bölümleri ayıran ince şeritler de bu verinin dönemleri.</p>
             </li>
-            <li class="ik-scene-step" data-reveal-to="1980" data-marks="baseline">
+            <li class="ik-scene-step" data-marks="baseline">
               <h4 class="ik-scene-step-title">Neden Sıcaklık Değil de Sapma?</h4>
               <p>GISS bir yılın sıcaklığını, 1951-1980 ortalamasından ne kadar saptığıyla ölçüyor. Yakın istasyonlardaki sapmalar ~1.300 km'ye kadar güçlü biçimde birbirine benzediği için ölçümün seyrek olduğu bölgeler de güvenilir biçimde hesaplanabiliyor.</p>
             </li>
-            <li class="ik-scene-step" data-reveal-to="2019" data-marks="baseline">
+            <li class="ik-scene-step" data-marks="baseline">
               <h4 class="ik-scene-step-title">Son Kırk Yıl</h4>
               <p>1976, bu ortalamanın altında kalan son yıl oldu; 1977'den bu yana hiçbir yıl altına inmedi. Isınmanın büyük kısmı son 40 yılda yaşandı ve her on yıl bir öncekinden sıcak geçti: 1980'ler <strong>+0,25 °C</strong>, 1990'lar <strong>+0,39 °C</strong>, 2000'ler <strong>+0,59 °C</strong>, 2010'lar <strong>+0,81 °C</strong>.</p>
             </li>
-            <li class="ik-scene-step" data-reveal-to="2025" data-marks="baseline record">
+            <li class="ik-scene-step" data-marks="baseline record">
               <h4 class="ik-scene-step-title">2024: Kayıtların En Sıcak Yılı</h4>
               <p>NASA GISS'e göre 2024, ölçümlerin başladığı 1880'den bu yana en sıcak yıl oldu: 1951-1980 ortalamasına göre <strong>+1,29 °C</strong>, sanayi öncesine (1850-1900) göre <strong>+1,47 °C</strong>. +1 °C'yi aşan beş yılın hepsi 2016 ve sonrasında. Ölçek için: son buzul çağını tetikleyen küresel sıcaklık düşüşü yalnızca 5 °C'ydi.</p>
             </li>
-            <li class="ik-scene-step" id="turkiyede-sicaklik" data-reveal-to="2025" data-marks="baseline record">
+            <li class="ik-scene-step" id="turkiyede-sicaklik" data-marks="baseline record">
               <h4 class="ik-scene-step-title">Türkiye'de Sıcaklık</h4>
               <p>2018'de Türkiye'nin ortalama sıcaklığı 15,4 °C ile 1981-2010 ortalamasının (13,5 °C) <strong>1,9 °C</strong> üzerindeydi; aynı yıl dünya ortalaması kendi bazının 0,36 °C üzerindeydi. 2007'den bu yana (2011 hariç) her yıl pozitif anomali gözleniyor; donlu gün sayısı özellikle doğu ve iç kesimlerde azalıyor.</p>
               <p>Enerji talebi de değişiyor: 2007-2018 ortalamasına göre 2018'de ısıtma gün-derecesi 2.058'den 1.725'e (-%16) düşerken soğutma gün-derecesi 358'den 381'e (+%6) çıktı.</p>
               <div class="ik-doc-links">
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/dunya-turkiye-yillik-sicakliklar.webp" data-lightbox-alt="Grafik: Dünyada ve Türkiye'de yıllık ortalama sıcaklıklar, 1971-2023 (ÇŞB)"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span>Dünya ve Türkiye sıcaklıkları, 1971‑2023</span></button>
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/donlu-gunler-haritasi.webp" data-lightbox-alt="Harita: Türkiye'de donlu gün sayısı, 1991-2020 (ÇŞB)"><i class="fa-solid fa-map" aria-hidden="true"></i><span>Donlu gün sayısı haritası, 1991‑2020</span></button>
+                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/dunya-turkiye-yillik-sicakliklar.webp" data-lightbox-alt="Grafik: Dünyada ve Türkiye'de yıllık ortalama sıcaklıklar, 1971-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Dünya ve Türkiye sıcaklıkları</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1971‑2023</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
               </div>
             </li>
           </ol>
-        </div>
-
-        <div class="ik-scene-footer">
-          <details class="ik-data">
-            <summary>NASA'nın küresel sıcaklık spiralini izle</summary>
-            <video class="ik-data-video" src="assets/video/gistemp-spiral.mp4" controls muted playsinline preload="none"></video>
-          </details>
         </div>
       </article>
 
@@ -553,8 +550,9 @@
           <div class="ik-seas-text">
             <h4 class="ik-seas-title">Dört Denizimiz de Isındı</h4>
             <p>Meteoroloji Genel Müdürlüğü'nün (MGM) 2024 değerlendirmesinde 1970-1980 ve 2014-2024 dönem ortalamaları karşılaştırıldığında en büyük artış Marmara'da: <strong>15,0 °C'den 17,2 °C'ye</strong>. Dört denizde de artışın büyük bölümü son iki dönemde, 2003-2024 arasında gerçekleşti.</p>
-            <details class="ik-data">
-              <summary>Dönem ortalamalarını tablo olarak göster</summary>
+            <div class="ik-reveal">
+              <div class="ik-reveal-panel" id="denizler-donem-ortalamalari" data-reveal-label="Dönem ortalamaları" data-reveal-title="Deniz suyu sıcaklığı dönem ortalamaları (°C)" data-reveal-meta="MGM 2024 değerlendirmeleri, beş dönem" data-reveal-icon="fa-table">
+              <p class="ik-reveal-title">Dönem ortalamaları (°C)</p>
               <div class="ik-data-scroll" tabindex="0" role="region" aria-label="Deniz suyu sıcaklığı dönem ortalamaları">
                 <table class="ik-data-table">
                   <caption class="visually-hidden">MGM'ye göre beş dönemin ortalama deniz suyu sıcaklığı (°C)</caption>
@@ -573,13 +571,14 @@
                   </tfoot>
                 </table>
               </div>
-            </details>
-            <p class="ik-doc-links-label">ÇŞB'nin 1970-2023 yıllık grafikleri:</p>
+              </div>
+            </div>
+            <p class="ik-doc-links-label">ÇŞB'nin yıllık grafikleri, 1970-2023</p>
             <div class="ik-doc-links">
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/karadeniz-suyu-sicakligi.png" data-lightbox-alt="Grafik: Karadeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span>Karadeniz</span></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/marmara-denizi-suyu-sicakligi.png" data-lightbox-alt="Grafik: Marmara Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span>Marmara</span></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/ege-denizi-suyu-sicakligi.png" data-lightbox-alt="Grafik: Ege Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span>Ege</span></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/akdeniz-suyu-sicakligi.webp" data-lightbox-alt="Grafik: Akdeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span>Akdeniz</span></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/karadeniz-suyu-sicakligi.png" data-lightbox-alt="Grafik: Karadeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Karadeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/marmara-denizi-suyu-sicakligi.png" data-lightbox-alt="Grafik: Marmara Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Marmara</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/ege-denizi-suyu-sicakligi.png" data-lightbox-alt="Grafik: Ege Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Ege</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/akdeniz-suyu-sicakligi.webp" data-lightbox-alt="Grafik: Akdeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Akdeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
@@ -674,7 +673,7 @@
                   <div class="ik-stack" role="img" aria-label="Yığılmış çubuk grafik: 2024'te yangın sayısının %49'u ihmal ve kaza, %29'u bilinmeyen, %19'u doğal, %3'ü kasıt kaynaklı; yanan alanın %72'si ihmal ve kaza, %24'ü bilinmeyen, %3'ü doğal, %1'i kasıt kaynaklı yangınlarda."></div>
                 </div>
               </div>
-              <figcaption class="ik-chart-source">Kaynak: <a href="https://www.ogm.gov.tr/tr/e-kutuphane/resmi-istatistikler" target="_blank" rel="noopener">OGM, Ormancılık İstatistikleri 2024</a> (tablo 2.11, orman yangınları 1988-2024).</figcaption>
+              <figcaption class="ik-chart-source">Kaynak: <a href="https://www.ogm.gov.tr/tr/e-kutuphane/resmi-istatistikler" target="_blank" rel="noopener">OGM, Ormancılık İstatistikleri 2024</a> (tablo 2.11).</figcaption>
             </figure>
             <noscript>
               <figure class="ik-chart">
@@ -682,6 +681,7 @@
                 <figcaption class="ik-chart-source">Kaynak: ÇŞB Çevresel Göstergeler</figcaption>
               </figure>
             </noscript>
+            <div class="ik-reveal"></div>
           </div>
 
           <ol class="ik-scene-steps">
@@ -699,16 +699,14 @@
             </li>
             <li class="ik-scene-step" data-view="causes">
               <h4 class="ik-scene-step-title">Yangınlar Nereden Çıkıyor?</h4>
-              <p>2024'teki yangınların <strong>%49'u</strong> ihmal ve kazalardan çıktı; yanan alanın <strong>%72'si</strong> bu yangınlarda kaybedildi. Yıldırım gibi doğal nedenler yangınların %19'unu oluştursa da yanan alanın yalnızca %3'ünde etkili oldu.</p>
+              <p>2024'teki yangınların <strong>%49'u</strong> ihmal ve kazalardan çıktı; yanan alanın <strong>%72'si</strong> bu yangınlarda kaybedildi. Doğal nedenler yangınların %19'unu oluştursa da yanan alanın yalnızca %3'ünde etkili oldu.</p>
               <div class="ik-doc-links">
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/orman-yanginlari-1990-2024.png" data-lightbox-alt="Grafik: Orman yangınları 1990-2024 (ÇŞB)"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>Orman yangınları, 1990‑2024</span></button>
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/yangin-cikis-nedenleri-1997-2024.webp" data-lightbox-alt="Grafik: Çıkış nedenlerine göre yangın sayıları 1997-2024 (ÇŞB)"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>Çıkış nedenlerine göre yangınlar, 1997‑2024</span></button>
+                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/orman-yanginlari-1990-2024.png" data-lightbox-alt="Grafik: Orman yangınları 1990-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Orman yangınları</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1990‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="assets/image/csb/yangin-cikis-nedenleri-1997-2024.webp" data-lightbox-alt="Grafik: Çıkış nedenlerine göre yangın sayıları 1997-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Çıkış nedenleri</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1997‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
               </div>
             </li>
           </ol>
         </div>
-
-        <div class="ik-scene-footer"></div>
       </article>
 
     </div>
@@ -782,17 +780,14 @@
               <span class="cause-chart-caption">Kaynağa göre emisyon payı (%)</span>
             </div>
             <div class="cause-tab-text">
-              <p>Elektrik üretimi, ısınma ve sanayi için kömür, petrol ve doğal gaz yakmak, küresel sera gazı
-                emisyonlarının %75'inden fazlasının kaynağı. Her kilovat saat hâlâ büyük ölçüde fosil yakıtla
-                üretiliyor.</p>
-              <p><em>Türkiye'de emisyon:</em> 2018 yılında Türkiye'nin toplam sera gazı emisyonu, 1990'a göre
-                %137,5, 2015'e göre ise %10,2 artarak 520,9 milyon ton CO₂ eşdeğerine yükseldi; aynı dönemde
-                AB-28 ülkelerinin toplam emisyonu ise %21 azaldı. Kişi başına emisyon 1990'da 4 ton/kişi iken
-                2018'de 6,4 ton/kişiye çıktı (AB-28 ortalaması: 8,6 ton/kişi); enerji sektörü %71,6 ile toplam
-                emisyonların en büyük tek kaynağı.</p>
-              <p><em>Elektrik tüketimi:</em> Kişi başına elektrik tüketimi 1990'da ~1.000 kWh iken 2018'de neredeyse
-                dört katına çıkarak 3.709 kWh'e ulaştı. Toplam elektrik üretimi aynı dönemde %430 arttı (304,8 TWh,
-                2018); yine de yenilenebilirlerin payı (%32,5) AB-28 ortalamasına (%32,1) yakın.</p>
+              <p>Elektrik üretmek, evleri ısıtmak ve fabrikaları çalıştırmak için kömür, petrol ve doğal gaz
+                yakıyoruz. Dünyadaki sera gazlarının dörtte üçünden fazlası bu yakıtlardan geliyor.</p>
+              <p><em>Türkiye'de:</em> 2018'de Türkiye'nin sera gazı salımı 520,9 milyon tona ulaştı. Bu, 1990'daki
+                miktarın yaklaşık 2,4 katı; aynı dönemde AB ülkeleri salımlarını %21 azalttı. Kişi başına düşen
+                salım 4 tondan 6,4 tona çıktı. Bu salımın yaklaşık dörtte üçü (%71,6) enerjiden geliyor.</p>
+              <p><em>Elektrik:</em> Bir kişinin yıllık elektrik tüketimi 1990'dan 2018'e neredeyse dört katına çıktı:
+                yaklaşık 1.000 kWh'ten 3.709 kWh'e, yani günde yaklaşık 10 kWh. İyi haber: elektriğimizin üçte biri
+                (%32,5) yenilenebilir kaynaklardan geliyor; bu oran AB ortalamasıyla (%32,1) aynı düzeyde.</p>
             </div>
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -850,14 +845,13 @@
               <span class="cause-chart-caption">Ormansızlaşma nedenine göre pay (%)</span>
             </div>
             <div class="cause-tab-text">
-              <p>Ormanlar atmosferdeki karbonu emen doğal süngerlerimiz. Her yıl kaybedilen milyonlarca hektar
-                orman, hem bu karbon yutağını yok ediyor hem de depolanmış karbonu atmosfere geri salıyor.</p>
-              <p><em>Türkiye istisnası:</em> ÇŞB Çevresel Göstergeler raporuna göre Türkiye'nin toplam orman alanı
-                küresel eğilimin aksine büyüyor: 1973'te 20,2 milyon hektar iken 2018'de 22,6 milyon hektara
-                (ülke yüzölçümünün %29'u) ulaştı. Sağdaki grafik bu büyümeyi gösteriyor; soldaki grafikteki
-                küresel nedenler (Amazon, Kongo, Borneo) ise dünya genelinde hâlâ geçerliliğini koruyor. Büyüyen
-                orman alanı daha fazla karbon da tutuyor: ormanların ve işlenmiş odun ürünlerinin yıllık karbon
-                tutumu 1990'da 55,8 milyon ton CO₂ eşdeğeriyken 2017'de 102,3 milyon tona ulaştı.</p>
+              <p>Ağaçlar büyürken havadaki karbonu çekip gövdelerinde ve toprakta saklar. Bir orman kesilip
+                yakıldığında bu karbon yeniden havaya karışır ve karbonu temizleyecek ağaç da kalmaz.</p>
+              <p><em>Türkiye'de durum farklı:</em> Ormanlarımız büyüyor. 1973'te 20,2 milyon hektar olan orman
+                alanı 2018'de 22,6 milyon hektara çıktı; bugün ülkenin yaklaşık üçte biri (%29) orman. Pasta grafik
+                dünyadaki orman kaybının nedenlerini, çizgi grafik Türkiye'nin orman alanını gösteriyor. Büyüyen
+                ormanlar daha çok karbon da tutuyor: yıllık tutulan karbon 1990'dan 2017'ye neredeyse iki katına
+                çıktı (55,8 milyon tondan 102,3 milyon tona).</p>
             </div>
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -916,11 +910,12 @@
               <span class="cause-chart-caption">Sektöre göre emisyon payı (%)</span>
             </div>
             <div class="cause-tab-text">
-              <p>Çimento, çelik ve kimyasal üretimi, hem enerji yoğun süreçler hem de üretimin kendisinden
-                kaynaklanan kimyasal reaksiyonlar nedeniyle emisyonların önemli bir kısmını oluşturuyor.</p>
-              <p><em>Türkiye'de emisyon:</em> Endüstriyel işlemler ve ürün kullanımı, Türkiye'nin 2018 toplam sera
-                gazı emisyonunda %12,5 pay ile enerjinin ardından ikinci büyük kaynak: 1990'daki 22,8 milyon
-                tondan 2018'de 65,2 milyon tona çıktı.</p>
+              <p>Çimento, çelik ve kimyasal üretimi iki yoldan sera gazı çıkarır: fırınları çalıştırmak için çok
+                enerji harcanır, üretimin kendisi de gaz açığa çıkarır. Örneğin çimentonun hammaddesi kireçtaşı
+                ısıtıldığında içindeki karbon CO₂ olarak havaya karışır.</p>
+              <p><em>Türkiye'de:</em> Sanayi süreçleri 2018'deki toplam salımın %12,5'ini, yani her 8 tonun 1'ini
+                oluşturuyor. Bu salım 1990'dan 2018'e neredeyse üç katına çıktı: 22,8 milyon tondan 65,2 milyon
+                tona.</p>
             </div>
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -981,15 +976,16 @@
               <span class="cause-chart-caption">Kaynağa göre emisyon payı (%)</span>
             </div>
             <div class="cause-tab-text">
-              <p>Hayvancılık metan, gübre kullanımı ise nitröz oksit salımına yol açıyor. Bu iki gaz, CO₂'den
-                çok daha güçlü ısınma etkisine sahip.</p>
-              <p><em>Türkiye'de emisyon:</em> Tarımsal faaliyetler, Türkiye'nin 2018 toplam sera gazı emisyonunda
-                endüstriyle eşit şekilde %12,5 pay alıyor: 1990'da 45,7 milyon ton olan emisyon 2000'lerde önce
-                gerileyip 2018'de yeniden 64,9 milyon tona yükseldi.</p>
-              <p><em>Arazi ve girdi kullanımı:</em> Kişi başına düşen tarım arazisi 1990-2018 arasında %39,3
-                daraldı (0,76 hektardan 0,46 hektara); nüfus ise aynı dönemde %45,2 arttı. 2018'de gübre kullanımı
-                93,3 kg/ha'ya, pestisit kullanımı ise 60.020 tona (bir önceki yıla göre +%10,9) ulaştı; organik
-                tarım toplam arazinin sadece %2,7'sini kaplıyor (AB ortalaması %7).</p>
+              <p>İnek ve koyunlar sindirim sırasında metan, fazla kullanılan gübre ise toprakta diazot monoksit
+                (N₂O) açığa çıkarır. Bu gazlar havayı CO₂'den çok daha güçlü ısıtır: 100 yıllık süreçte aynı
+                miktar metan yaklaşık 28 kat, N₂O ise yaklaşık 265 kat daha fazla ısıtır (IPCC).</p>
+              <p><em>Türkiye'de:</em> Tarım da toplam salımın %12,5'ini, yani her 8 tonun 1'ini oluşturuyor. 1990'da
+                45,7 milyon ton olan salım 2000'lerde azaldıktan sonra yeniden arttı ve 2018'de 64,9 milyon tona
+                ulaştı.</p>
+              <p><em>Daha az toprak, daha çok gübre:</em> 1990'dan 2018'e nüfus %45 artarken kişi başına düşen
+                tarım arazisi bir futbol sahası büyüklüğünden yaklaşık üçte ikisine indi (0,76 hektardan 0,46
+                hektara). Aynı topraktan daha çok ürün almak için gübre kullanımı arttı: 2018'de hektar başına 93,3
+                kg. Organik tarım ise arazinin yalnızca %2,7'sinde yapılıyor (AB'de %7).</p>
             </div>
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -1047,13 +1043,12 @@
               <span class="cause-chart-caption">Türkiye'de ulaşım türüne göre CO₂ payı, 2017 (TÜİK/ÇŞB)</span>
             </div>
             <div class="cause-tab-text">
-              <p>Karayolu, deniz ve hava taşımacılığı küresel emisyonların beşte birine yakınını oluşturuyor;
-                elektrikli ve düşük karbonlu ulaşıma geçiş bu yükü doğrudan azaltabilir. Türkiye'de bu payın
-                %93'ü tek başına karayolundan kaynaklanıyor.</p>
-              <p><em>Türkiye'de araç filosu:</em> Motorlu taşıt sayısı 1979'da 1,57 milyonken 2018'de 22,87
-                milyona ulaştı, yani 14,6 kat artış. Buna karşın filo yaşlı: kayıtlı otomobillerin %23,4'ü 20 yaşın
-                üzerinde (Almanya'da %7,3, Danimarka'da %4,4, Birleşik Krallık'ta %2,2); eski, verimsiz araçlar
-                aynı yolculuk için daha fazla emisyona yol açıyor.</p>
+              <p>Otomobiller, kamyonlar, gemiler ve uçaklar dünyadaki sera gazı salımının beşte birine yakınını
+                oluşturuyor. Türkiye'de ulaşımdan gelen CO₂'nin %93'ü karayolundan; yani neredeyse tamamı otomobil,
+                otobüs ve kamyonlardan.</p>
+              <p><em>Türkiye'de araç sayısı:</em> 1979'da 1,57 milyon olan motorlu taşıt sayısı 2018'de 22,87 milyona
+                çıktı: yaklaşık 40 yılda 15 kat. Araçlarımız da yaşlı: yaklaşık her 4 otomobilden 1'i (%23,4) 20
+                yaşın üzerinde; bu oran Almanya'da %7,3. Eski araçlar aynı yol için daha fazla yakıt yakıyor.</p>
             </div>
             <div class="cause-tab-chart">
               <div class="chart-wrapper">
@@ -1219,33 +1214,33 @@
           <div class="reel-fallback">
             <article class="reel-fallback-item">
               <h4>1. Enerji Tasarrufu</h4>
-              <p>Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor. Bu küçük alışkanlıklar yılda 200 kg'a kadar CO₂ tasarrufu sağlayabilir.</p>
-              <ul><li>Çamaşırı 30°C'de ve tam dolu makinede yıka</li><li>Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar</li><li>Mümkünse enerji tedarikçini yenilenebilire geçir</li></ul>
+              <p>LED ampuller aynı ışığı eski ampullerden çok daha az elektrikle verir. Kapalı sandığımız ama fişte duran cihazlar da bekleme modunda elektrik çekmeye devam eder. Evde harcanan enerji azaldıkça onu üretmek için yakılan yakıt da azalır.</p>
+              <ul><li>Çamaşırı 30°C'de ve makine doluyken yıka</li><li>Kışın termostatı 1°C düşürmek ısınma faturasını yaklaşık %4-5 azaltır</li><li>Kullanmadığın cihazları prizden çek</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>2. Ulaşım Tercihleri</h4>
-              <p>Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.</p>
-              <ul><li>Haftada 3 gün toplu taşıma = yılda ~1 ton CO₂ az</li><li>3 km altındaki mesafeleri yürüyerek ya da bisikletle git</li><li>Mümkün olan seyahatlerde uçuş yerine tren tercih et</li></ul>
+              <p>Ulaşım, kişisel karbon ayak izinin en büyük kalemlerinden biri. Trende kilometre başına düşen salım benzinli bir otomobilin yaklaşık beşte biri, iç hat uçuşunun ise yedide biri kadar. Kısa yollarda yürümek ya da bisiklet, uzun yollarda tren ve otobüs seçmek fark yaratır.</p>
+              <ul><li>3 km altındaki yolları yürüyerek ya da bisikletle git</li><li>Şehir içinde otomobil yerine toplu taşımayı dene</li><li>Yakın şehirlere uçak yerine tren ya da otobüsle git</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>3. Beslenme Alışkanlıkları</h4>
-              <p>Gıda üretimi küresel sera gazı emisyonlarının önemli bir kısmından sorumlu; kırmızı et bu payın en büyük tekil kaynağı. Tüketimini azaltıp yerel, mevsimsel ve bitki ağırlıklı beslenmeye yönelmek bireysel karbon ayak izini belirgin biçimde küçültüyor.</p>
-              <ul><li>Haftada 1 gün etsiz beslenme = ~200 kg CO₂/yıl az</li><li>Yerel pazardan alışveriş yap, nakliye emisyonunu kır</li><li>Plan yap, porsiyonu küçült, gıda israfını sıfırla</li></ul>
+              <p>Gıda üretimi, dünyadaki sera gazı salımının yaklaşık dörtte birinden sorumlu. En büyük fark tabakta ne olduğundan gelir: 1 kg sığır eti üretmek yaklaşık 60 kg sera gazı çıkarırken 1 kg tavuk 6 kg, 1 kg bezelye ise yalnızca 1 kg çıkarır.</p>
+              <ul><li>Haftada birkaç öğünde kırmızı et yerine baklagil ya da tavuk seç</li><li>Taşımanın payı çoğu gıdada %10'dan az: ne yediğin, nereden geldiğinden daha önemli</li><li>Alışverişini planla, artan yemeği değerlendir</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>4. Bilinçli Tüketim</h4>
-              <p>Her ürünün üretiminde harcanan enerji ve hammadde, satın alma kararlarını iklim açısından önemli kılıyor. Daha az ve bilinçli satın almak, ürünleri uzun süre kullanmak; onarmak ve ikinci eli tercih etmek hem atığı hem de üretim kaynaklı emisyonları azaltıyor.</p>
-              <ul><li>Almadan önce "gerçekten ihtiyacım var mı?" diye sor</li><li>Elektronikte önce onarımı dene, değiştirmeyi son çare yap</li><li>Tekli plastik ambalaj yerine dökme/büyük boy al</li></ul>
+              <p>Aldığımız her ürünün üretimi enerji ve hammadde harcar. Daha az ama daha uzun ömürlü ürünler almak, eşyaları onarmak ve ikinci el kullanmak hem çöpü hem de üretimden gelen salımı azaltır.</p>
+              <ul><li>Almadan önce "gerçekten ihtiyacım var mı?" diye sor</li><li>Bozulan elektroniği atmadan önce tamir ettirmeyi dene</li><li>Tek kullanımlık plastik yerine tekrar kullanılabilir çanta ve şişe kullan</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>5. Doğayla Birlikte Yaşamak</h4>
-              <p>Yeşil alanlar hem karbon depoluyor hem de yerel biyoçeşitliliği destekliyor. Balkonunda ya da bahçende bitki yetiştirmek küçük bir adım gibi görünse de, olgun bir ağacın yılda ortalama 21-25 kg CO₂ emdiği düşünülürse toplu etkisi büyüyor.</p>
-              <ul><li>Mutfak atığını kompostlayıp toprağa besin olarak ver</li><li>Yerel ağaçlandırma projelerine gönüllü katıl</li><li>Damlayan bir musluk yılda 20.000L suyu boşa akıtabilir</li></ul>
+              <p>Ağaçlar ve yeşil alanlar havadaki karbonu tutar, şehirleri serinletir ve canlılara yaşam alanı sağlar. Balkonda bitki yetiştirmek ya da bir ağaçlandırma çalışmasına katılmak küçük görünse de, birçok insan yaptığında etkisi büyür.</p>
+              <ul><li>Mutfak atıklarını kompost yapıp toprağa geri kazandır</li><li>Yerel ağaçlandırma ve temizlik etkinliklerine gönüllü katıl</li><li>Damlayan musluğu tamir et: saniyede bir damla, yılda 11.000 litreden fazla su demek</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>6. Savunuculuk ve Farkındalık</h4>
-              <p>Bireysel adımlar önemli, ama en büyük etki toplu sesle ortaya çıkıyor. Çevrendeki insanları bilinçlendirmek ve oy verirken iklim politikasını önceliklendirmek, sistemsel değişimi hızlandıran dolaylı ama güçlü bir yol.</p>
-              <ul><li>Yaşadığın şehrin iklim eylem planını takip et</li><li>İş yerinde sürdürülebilirlik odaklı öneriler sun</li><li>Bilimsel kaynaklara dayanan iklim içeriklerini paylaş</li></ul>
+              <p>Tek başına attığımız adımlar önemli, ama en büyük değişim birlikte ses çıkardığımızda olur. Çevrendekilerle konuşmak, belediyenin ve şirketlerin iklim planlarını sormak sistemin değişmesini hızlandırır.</p>
+              <ul><li>Yaşadığın şehrin bir iklim eylem planı olup olmadığını öğren</li><li>Okulunda ya da iş yerinde tasarruf ve geri dönüşüm önerileri sun</li><li>Güvenilir bilimsel kaynaklara dayanan içerikleri paylaş</li></ul>
             </article>
           </div>
         </noscript>
@@ -1259,33 +1254,33 @@
           <div class="reel-fallback">
             <article class="reel-fallback-item">
               <h4>1. Yenilenebilir Enerjiye Geçiş</h4>
-              <p>Küresel enerji üretiminin fosil yakıtlardan güneş, rüzgâr ve diğer temiz kaynaklara kaydırılması, emisyonları azaltmanın en yüksek etkili yollarından biri. Hükümetlerin ve şirketlerin yatırım önceliklerini bu yönde değiştirmesi dönüşümün hızını doğrudan belirliyor.</p>
-              <ul><li>Devlet teşvikleri çatı üstü güneş enerjisini yaygınlaştırabilir</li><li>Fosil yakıt sübvansiyonlarının kademeli kaldırılması kritik</li><li>Enerji depolama teknolojilerine Ar-Ge yatırımı şart</li></ul>
+              <p>Elektriği kömür ve doğal gaz yerine güneşten, rüzgârdan ve sudan üretmek, salımları azaltmanın en etkili yollarından biri. Devletlerin ve şirketlerin yatırımlarını bu kaynaklara yönlendirmesi dönüşümü hızlandırır.</p>
+              <ul><li>Çatı üstü güneş panellerinin desteklenmesi</li><li>Fosil yakıtlara verilen desteklerin kademeli olarak kaldırılması</li><li>Güneş ve rüzgâr elektriğini depolayacak bataryalara yatırım yapılması</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>2. Karbon Fiyatlandırması</h4>
-              <p>Karbon vergisi ve emisyon ticaret sistemleri, sera gazı salımının gerçek maliyetini fiyatlara yansıtarak "kirleten öder" ilkesini işletir. Bu mekanizmalar, temiz teknolojilere geçişi piyasa içinden hızlandıran güçlü araçlar.</p>
-              <ul><li>Ton başına $50-100 CO₂ fiyatı dönüşümü tetikleyecek düzeyde</li><li>Vergi gelirleri yeşil altyapıya ayrılabilir</li><li>Sınır karbon mekanizmaları haksız rekabeti önler</li></ul>
+              <p>Havaya salınan her ton karbona bir fiyat koymak "kirleten öder" demektir. Kirletmek pahalılaştıkça temiz üretim daha cazip hâle gelir.</p>
+              <ul><li>Uzmanlara göre Paris hedefleri için 2030'a kadar ton başına 50-100 dolarlık bir karbon fiyatı gerekiyor</li><li>Toplanan gelir temiz enerjiye ve toplu taşımaya harcanabilir</li><li>AB, 2026'dan itibaren çelik, çimento ve alüminyum gibi ürünlerin ithalatında karbon bedeli almaya başladı</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>3. Ormanların Korunması</h4>
-              <p>Ormanlar dünyanın en büyük doğal karbon yutaklarından biri; hem ormansızlaşmayı durdurmak hem de büyük ölçekli ağaçlandırma projeleri yürütmek, atmosferdeki karbonu dengelemenin en doğrudan yollarından biri.</p>
-              <ul><li>Orman tahribatına yol açan ürünlere ithalat kısıtlaması</li><li>Yerel halklara ormanlık arazide mülkiyet hakkı tanınmalı</li><li>REDD+ gibi karbon kredisi mekanizmaları yaygınlaşmalı</li></ul>
+              <p>Ormanlar dünyanın en büyük doğal karbon depolarından. Var olan ormanları korumak ve yeni ağaçlar dikmek, havadaki karbonu azaltmanın en doğal yolu.</p>
+              <ul><li>Orman kesilerek üretilen ürünlerin ticaretinin sınırlanması</li><li>Ormanda yaşayan yerel halkların arazi haklarının korunması</li><li>Ormanlarını koruyan ülkelere mali destek sağlanması (REDD+)</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>4. Uluslararası İşbirliği</h4>
-              <p>İklim krizi sınır tanımıyor; Paris Anlaşması gibi küresel çerçeveler, ülkelerin ortak, ölçülebilir ve denetlenebilir hedefler etrafında birleşmesini sağlayarak bireysel çabaların toplamından daha büyük bir etki yaratıyor.</p>
-              <ul><li>Ulusal Katkı Beyanlarının (NDC) güçlendirilmesi zorunlu</li><li>Gelişmekte olan ülkelere iklim finansmanı artmalı</li><li>Teknoloji transferi yeşil dönüşümü demokratikleştirir</li></ul>
+              <p>İklim krizi sınır tanımaz: bir ülkenin salımı herkesi etkiler. Paris Anlaşması gibi anlaşmalar ülkeleri ortak ve takip edilebilir hedefler etrafında buluşturur.</p>
+              <ul><li>Ülkelerin salım azaltma hedeflerini (NDC) güçlendirmesi</li><li>Gelişmekte olan ülkelere iklim finansmanı sağlanması</li><li>Temiz teknolojilerin ülkeler arasında paylaşılması</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>5. Sanayi Dönüşümü</h4>
-              <p>Çimento, çelik ve kimya gibi ağır sanayiler, üretim süreçlerinin doğası gereği kolayca elektrifiye edilemiyor. Yeşil hidrojen ve karbon yakalama teknolojileri, bu sektörlerin emisyonlarını azaltmanın önündeki en kritik açık.</p>
-              <ul><li>Kamu ihalelerinde düşük karbonlu "yeşil çelik" şartı aranmalı</li><li>H₂ altyapısına kamu yatırımı ölçek ekonomisiyle maliyeti düşürür</li><li>Sanayi emisyonlarına sektörel denetim mekanizması gerekiyor</li></ul>
+              <p>Çimento, çelik ve kimya fabrikaları çok yüksek ısıya ihtiyaç duyar ve bu ısıyı elektrikle üretmek her zaman kolay değildir. Yeşil hidrojen ve karbon yakalama gibi teknolojiler bu sektörlerin salımını azaltmanın başlıca yolları.</p>
+              <ul><li>Kamu ihalelerinde düşük karbonlu çelik ve çimentonun tercih edilmesi</li><li>Yeşil hidrojen altyapısına yatırım yapılması</li><li>Fabrika salımlarının düzenli olarak ölçülüp denetlenmesi</li></ul>
             </article>
             <article class="reel-fallback-item">
               <h4>6. Sürdürülebilir Şehirler</h4>
-              <p>2050'de dünya nüfusunun %68'inin kentlerde yaşayacağı öngörülüyor; bu da şehir planlamasını iklim mücadelesinin merkezine taşıyor. Toplu taşımayı, yaya bölgelerini ve yeşil alanları bütünleştiren akıllı şehirler hem emisyonu azaltıyor hem yaşam kalitesini artırıyor.</p>
-              <ul><li>15 dakikalık şehir konsepti trafiği belirgin biçimde düşürür</li><li>Mevcut binaların enerji verimliliğine yükseltilmesi teşvik edilmeli</li><li>Kent ormanları gibi doğa tabanlı çözümler standart hale gelmeli</li></ul>
+              <p>2050'de dünya nüfusunun %68'inin şehirlerde yaşayacağı öngörülüyor. Toplu taşıması güçlü, yürünebilir ve yeşil alanı bol şehirler hem salımı azaltır hem de günlük yaşamı kolaylaştırır.</p>
+              <ul><li>Okul, market ve parkın kısa yürüme mesafesinde olduğu mahalleler</li><li>Eski binaların yalıtılıp enerji verimli hâle getirilmesi</li><li>Kent ormanları ve yeşil koridorlar</li></ul>
             </article>
           </div>
         </noscript>
@@ -1293,13 +1288,13 @@
     </div>
   </section>
 
-  <!--========================================================================= Şu An Neler Yapılıyor ============================================================================== -->
+  <!--========================================================================= Neler Yapılıyor ============================================================================== -->
 
   <div class="ik-seam" aria-hidden="true"></div>
 
   <section id="progress-section" class="section-dark progress-parallax-section theme-white">
     <div class="section-header" data-aos="fade-up">
-      <h2 class="section-title">Şu An Neler <em>Yapılıyor?</em></h2>
+      <h2 class="section-title">Neler <em>Yapılıyor?</em></h2>
       <p class="section-desc">İklim krizine karşı bugün dünya çapında atılan somut adımlar.</p>
     </div>
 
@@ -1614,7 +1609,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"></script>
 
   <!-- Custom JS -->
-  <script src="script.js?v=20260913-4"></script>
+  <script src="script.js?v=20260915-6"></script>
 
 </body>
 

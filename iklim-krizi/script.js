@@ -1,3 +1,13 @@
+/* ── Sayfa kaydırma kilidi ──
+   Pencereler ve büyütülmüş grafik açıkken arkadaki sayfa kaymamalı. body'ye
+   overflow:hidden yetmiyor: html'de overflow-x:clip olduğu için kilit görünüm
+   alanına aktarılmıyor, ayrıca Lenis tekerleği kendisi işliyor. Kilit html'e
+   yazılıyor ve Lenis modülüne olayla bildiriliyor. */
+function setPageScrollLocked(locked) {
+  document.documentElement.classList.toggle('ik-scroll-locked', locked);
+  document.dispatchEvent(new CustomEvent('ik:scroll-lock', { detail: { locked } }));
+}
+
 /* ── Küresel sıcaklık anomalisi verisi ──
    NASA GISS GISTEMP v4, yıllık küresel ortalama (J-D sütunu), 1951-1980
    ortalamasına göre °C. Kaynak:
@@ -504,6 +514,14 @@ const anomalyStripes = (function () {
     autoRaf: false
   });
 
+  // Pencere ya da büyütülmüş grafik açıkken Lenis tekerleği yakalayıp arkadaki
+  // sayfayı kaydırıyordu. Kilit olayında duruyor; pencerelerin kendi içi
+  // data-lenis-prevent ile tarayıcının normal kaydırmasına bırakılıyor.
+  document.addEventListener('ik:scroll-lock', (event) => {
+    if (event.detail.locked) lenis.stop();
+    else lenis.start();
+  });
+
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
@@ -693,22 +711,65 @@ const anomalyStripes = (function () {
       circle.style.transitionDelay = `${i * 0.05}s, 0s, 0s, 0s`;
       circle.dataset.targetOffset = targetOffset;
 
-      circle.addEventListener('mouseenter', () => {
-        segments.forEach((s) => s.classList.toggle('is-dimmed', s !== circle));
-        showSegment(i);
-      });
+      // Klavyeyle dilimler arasında gezilebiliyor; fare ve dokunma aşağıda
+      // SVG'nin bütününden açıyla çözülüyor.
+      circle.setAttribute('tabindex', '0');
+      circle.setAttribute('role', 'button');
+      circle.setAttribute('aria-label', `${labels[i]}: %${Math.round(fraction * 100)}`);
+      circle.addEventListener('focus', () => selectSegment(i));
 
       svg.appendChild(circle);
-      segments.push(circle);
+      segments.push({ circle, index: i, start: cumulative, end: cumulative + fraction });
       cumulative += fraction;
     });
 
-    // Tek tek segmentler yerine SVG'nin bütününden çıkışta sıfırlanır —
-    // komşu iki dilim arasında geçerken merkezin varsayılana "titreyerek"
-    // dönmesini (ve hemen tekrar değişmesini) önler.
-    svg.addEventListener('mouseleave', () => {
-      segments.forEach((s) => s.classList.remove('is-dimmed'));
+    function selectSegment(index) {
+      segments.forEach((s) => {
+        s.circle.classList.toggle('is-dimmed', s.index !== index);
+        s.circle.classList.toggle('is-active', s.index === index);
+      });
+      showSegment(index);
+    }
+
+    function resetSegments() {
+      segments.forEach((s) => s.circle.classList.remove('is-dimmed', 'is-active'));
       showSegment(maxIndex);
+    }
+
+    // Parmağın/imlecin altındaki dilim açıdan bulunuyor: dilimler 12 hizasından
+    // saat yönünde diziliyor. Telefonda seçim, dokunuşu taklit eden fare
+    // olaylarına bırakılınca bazı tarayıcılar dokunuşun hemen ardından "çıktı"
+    // olayı gönderip seçimi en büyük dilime geri alıyordu; pointer olayları ve
+    // konum hesabı her tarayıcıda aynı çalışıyor.
+    function segmentAt(event) {
+      const rect = svg.getBoundingClientRect();
+      const x = event.clientX - (rect.left + rect.width / 2);
+      const y = event.clientY - (rect.top + rect.height / 2);
+      const distance = (Math.hypot(x, y) / (rect.width / 2)) * (size / 2);
+      if (distance < radius - strokeWidth || distance > radius + strokeWidth) return -1;
+      let angle = Math.atan2(y, x) + Math.PI / 2;
+      if (angle < 0) angle += 2 * Math.PI;
+      const position = angle / (2 * Math.PI);
+      const hit = segments.find((s) => position >= s.start && position < s.end);
+      return hit ? hit.index : -1;
+    }
+
+    svg.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      const index = segmentAt(event);
+      if (index !== -1) selectSegment(index);
+    });
+    // Fareyle grafikten çıkınca en büyük dilime dönüyor; dokunmatikte seçim
+    // ekranda kalıyor ve grafiğin dışına dokununca sıfırlanıyor.
+    svg.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'mouse') resetSegments();
+    });
+    svg.addEventListener('pointerdown', (event) => {
+      const index = segmentAt(event);
+      if (index !== -1) selectSegment(index);
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (event.pointerType !== 'mouse' && !container.contains(event.target)) resetSegments();
     });
 
     container.appendChild(svg);
@@ -722,31 +783,10 @@ const anomalyStripes = (function () {
       container.appendChild(center);
     }
 
-    // Dilimlerin kimliği yalnızca renkle taşınmasın ve hover olmayan dokunmatik
-    // ekranda da okunabilsin diye her dilim etiketi ve payıyla lejantta duruyor.
-    // Grafik kutusunun yüksekliği sabit olduğu için lejant kutunun hemen ardında.
-    const legend = document.createElement('ul');
-    legend.className = 'donut-legend';
-    values.forEach((value, i) => {
-      const item = document.createElement('li');
-      const swatch = document.createElement('span');
-      swatch.className = 'donut-legend-swatch';
-      swatch.style.background = SERIES_COLORS[i];
-      const name = document.createElement('span');
-      name.className = 'donut-legend-label';
-      name.textContent = labels[i];
-      const share = document.createElement('span');
-      share.className = 'donut-legend-value';
-      share.textContent = `${total === 0 ? 0 : Math.round((value / total) * 100)}%`;
-      item.append(swatch, name, share);
-      legend.appendChild(item);
-    });
-    container.parentElement.insertAdjacentElement('afterend', legend);
-
     // Girişte "çizilme" animasyonu: bir sonraki frame'e ertelenip CSS
     // transition tetiklenir (aynı frame'de set edilirse transition atlanır).
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      segments.forEach((s) => { s.style.strokeDashoffset = s.dataset.targetOffset; });
+      segments.forEach((s) => { s.circle.style.strokeDashoffset = s.circle.dataset.targetOffset; });
     }));
   }
 
@@ -827,6 +867,11 @@ const anomalyStripes = (function () {
     tooltip.className = 'trend-tooltip';
     const dots = [];
 
+    function hidePoint() {
+      tooltip.classList.remove('is-visible');
+      dots.forEach((d) => d.setAttribute('r', 3.5));
+    }
+
     points.forEach((p, i) => {
       const dot = svgEl('circle', {
         cx: p.x, cy: p.y, r: 3.5,
@@ -834,19 +879,52 @@ const anomalyStripes = (function () {
       });
       dot.classList.add('trend-dot');
       dot.style.transitionDelay = `${0.6 + i * 0.06}s`;
-      dot.addEventListener('mouseenter', () => {
-        tooltip.textContent = `${labels[i]}: ${values[i]}`;
-        tooltip.style.left = `${(p.x / width) * 100}%`;
-        tooltip.style.top = `${(p.y / height) * 100}%`;
-        tooltip.classList.add('is-visible');
-        dot.setAttribute('r', 5.5);
-      });
-      dot.addEventListener('mouseleave', () => {
-        tooltip.classList.remove('is-visible');
-        dot.setAttribute('r', 3.5);
-      });
       svg.appendChild(dot);
       dots.push(dot);
+
+      // Klavye için odaklanabilir, görünmez nokta; fare ve dokunma aşağıda
+      // SVG'nin bütününden en yakın noktaya çözülüyor.
+      const hit = svgEl('circle', { cx: p.x, cy: p.y, r: 18, fill: 'transparent' });
+      hit.classList.add('trend-hit');
+      hit.setAttribute('tabindex', '0');
+      hit.setAttribute('role', 'button');
+      hit.setAttribute('aria-label', `${labels[i]}: ${values[i]}`);
+      hit.addEventListener('focus', () => showPoint(i));
+      hit.addEventListener('blur', hidePoint);
+      svg.appendChild(hit);
+    });
+
+    function showPoint(index) {
+      hidePoint();
+      const p = points[index];
+      tooltip.textContent = `${labels[index]}: ${values[index]}`;
+      tooltip.style.left = `${(p.x / width) * 100}%`;
+      tooltip.style.top = `${(p.y / height) * 100}%`;
+      tooltip.classList.add('is-visible');
+      dots[index].setAttribute('r', 5.5);
+    }
+
+    // Parmağın/imlecin yatayda en yakın olduğu yıl seçiliyor: nokta telefonda
+    // ~3px'e küçüldüğü için tam üstüne dokunmak gerekmiyor. Dilim grafiğiyle
+    // aynı gerekçe: dokunuşu taklit eden fare olaylarına güvenilmiyor.
+    function nearestPoint(event) {
+      const rect = svg.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * width;
+      let nearest = 0;
+      points.forEach((p, i) => { if (Math.abs(p.x - x) < Math.abs(points[nearest].x - x)) nearest = i; });
+      return nearest;
+    }
+
+    svg.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'mouse') showPoint(nearestPoint(event));
+    });
+    svg.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'mouse') hidePoint();
+    });
+    svg.addEventListener('pointerdown', (event) => showPoint(nearestPoint(event)));
+    // Dokunmatikte ipucu ekranda kalıyor, grafiğin dışına dokununca kapanıyor.
+    document.addEventListener('pointerdown', (event) => {
+      if (event.pointerType !== 'mouse' && !container.contains(event.target)) hidePoint();
     });
 
     labels.forEach((label, i) => {
@@ -1165,10 +1243,10 @@ const anomalyStripes = (function () {
 /* ── Veri sahneleri (Global Isınma / Okyanusların Isınması / Orman Yangınları) ──
    Üç sahne aynı motoru paylaşıyor. Sahne ekrandayken kaydırma başına (rAF ile
    kısılmış) bir kez, metni okuma çizgisine en yakın adım aktif sayılıyor ve
-   görsel o adımın son hâline doğru ilerliyor (0-1). Okuma çizgisi geniş
-   ekranda menünün altında kalan alanın ortası; mobilde yapışık görselin altında
-   kalan alanın ortası, çünkü adımlar orada okunuyor. Hareket azaltılmışsa
-   ilerleme hep 1: kaydırmaya bağlı ara kare yok, her adım son hâlini gösteriyor.
+   sahnenin görseli o adıma göre güncelleniyor. Okuma çizgisi geniş ekranda
+   menünün altında kalan alanın ortası; mobilde yapışık görselin altında kalan
+   alanın ortası, çünkü adımlar orada okunuyor. Şeritlerin açılma hızı kendi
+   denetleyicisinde (initStripesScene) tanımlı.
    Grafikler düz HTML: veriden oran hesaplanıp CSS değişkeni olarak yazılıyor,
    böylece her genişlikte 2px boşluk ve 4px köşe aynı kalıyor. */
 (function () {
@@ -1193,12 +1271,11 @@ const anomalyStripes = (function () {
 
   /* Aynı tablonun 2024 satırındaki çıkış nedenleri, tablodaki sütun sırasıyla.
      Renkler sabit kategorik sırayı izliyor; nedeni bilinmeyen yangınlar bir
-     kimlik taşımadığı için kategorik renk değil nötr gri alıyor. Tablonun
-     İngilizcesi "Doğal"ı "Natural (Lighting)" [yıldırım] olarak açıklıyor. */
+     kimlik taşımadığı için kategorik renk değil nötr gri alıyor. */
   const FIRE_CAUSES_2024 = [
     { label: 'Kasıt', count: 127, hectares: 223, color: 'var(--data-series-1)' },
     { label: 'İhmal ve kaza', count: 1860, hectares: 19906, color: 'var(--data-series-2)' },
-    { label: 'Doğal (yıldırım)', count: 726, hectares: 734, color: 'var(--data-series-3)' },
+    { label: 'Doğal', count: 726, hectares: 734, color: 'var(--data-series-3)' },
     { label: 'Bilinmeyen', count: 1084, hectares: 6622, color: 'var(--chart-context)' }
   ];
 
@@ -1209,7 +1286,7 @@ const anomalyStripes = (function () {
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // style.css'teki geniş sahne düzeniyle birebir aynı koşul.
-  const wideLayout = window.matchMedia('(min-width: 992px), (orientation: landscape) and (max-height: 500px) and (min-width: 640px)');
+  const wideLayout = window.matchMedia('(min-width: 992px), (orientation: landscape) and (max-height: 600px) and (min-width: 640px)');
 
   const formatNumber = (value, decimals = 0) => value.toLocaleString('tr-TR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   const formatSigned = (value, decimals) => `${value > 0 ? '+' : value < 0 ? '−' : ''}${formatNumber(Math.abs(value), decimals)}`;
@@ -1260,9 +1337,15 @@ const anomalyStripes = (function () {
   }
 
   // Her grafiğin tablo ikizi: renk ve yükseklikle okunan değerlerin sayısal hâli.
-  function dataTable({ summary, caption, head, rows }) {
-    const details = element('details', 'ik-data');
-    details.appendChild(element('summary', '', summary));
+  // Pencere panelinin kendisi olarak dönüyor; düğmesini ve penceresini "Ek
+  // içerik pencereleri" modülü data-reveal-* değerlerinden kuruyor.
+  function dataTable({ id, label, title, meta, caption, head, rows }) {
+    const panel = element('div', 'ik-reveal-panel');
+    panel.id = id;
+    panel.dataset.revealLabel = label;
+    panel.dataset.revealTitle = title;
+    panel.dataset.revealMeta = meta;
+    panel.dataset.revealIcon = 'fa-table';
 
     const scroll = element('div', 'ik-data-scroll');
     scroll.tabIndex = 0;
@@ -1293,8 +1376,8 @@ const anomalyStripes = (function () {
 
     table.append(thead, tbody);
     scroll.appendChild(table);
-    details.appendChild(scroll);
-    return details;
+    panel.appendChild(scroll);
+    return panel;
   }
 
   /* ── Global Isınma: yıl yıl açılan ısınma şeritleri ── */
@@ -1342,7 +1425,7 @@ const anomalyStripes = (function () {
       element('span', '', '0'),
       element('span', '', `${formatSigned(anomalyStripes.bound, 1)} °C`)
     );
-    legend.append(element('span', '', 'Daha serin'), ramp, element('span', '', 'Daha sıcak'), ticks);
+    legend.append(ramp, ticks);
 
     let shownYear = null;
 
@@ -1353,14 +1436,85 @@ const anomalyStripes = (function () {
       return { title: String(GISTEMP_FIRST_YEAR + index), detail: `${formatSigned(GISTEMP_ANNUAL[index], 2)} °C`, top: stripes.offsetTop };
     });
 
-    scene.querySelector('.ik-scene-footer').prepend(dataTable({
-      summary: 'Veriyi tablo olarak göster',
+    scene.querySelector('.ik-reveal').prepend(dataTable({
+      id: 'global-isinma-tablo',
+      label: 'Veri tablosu',
+      title: `Yıllık küresel sıcaklık sapması, ${GISTEMP_FIRST_YEAR}-${lastYear}`,
+      meta: '1951-1980 ortalamasına göre, °C · NASA GISS GISTEMP v4',
       caption: 'NASA GISTEMP v4: yıllık küresel sıcaklık sapması, 1951-1980 ortalamasına göre (°C)',
       head: ['Yıl', 'Sapma (°C)'],
       rows: GISTEMP_ANNUAL.map((value, index) => [String(GISTEMP_FIRST_YEAR + index), formatSigned(value, 2)])
     }));
 
-    const revealTo = steps.map((step) => Math.min(lastYear, Number(step.dataset.revealTo) || lastYear));
+    /* Hız: panel ekranda ilk kez tam görününce şeritler kısa bir geçişle
+       INTRO_YEAR'a kadar açılıyor. Sonra yıl kaydırmaya doğrusal bağlı: panelin
+       tam göründüğü konumda INTRO_YEAR, son adımın (Türkiye'de Sıcaklık)
+       aktifleştiği konumda son yıl. Konumlar her karede yeniden ölçülüyor,
+       böylece yazı tipi yüklenmesi ve yeniden boyutlandırma aralığı bozmuyor. */
+    const INTRO_YEAR = 1939;
+    const INTRO_DURATION_MS = 900;
+    const body = scene.querySelector('.ik-scene-body');
+    const media = scene.querySelector('.ik-scene-media');
+    const lastStep = steps.length - 1;
+    const recordYear = GISTEMP_FIRST_YEAR + recordIndex;
+
+    let activeStep = 0;
+    let introStarted = reducedMotion;
+    let introYearsLeft = reducedMotion ? 0 : INTRO_YEAR - GISTEMP_FIRST_YEAR;
+
+    const documentCenter = (step) => {
+      const rect = step.getBoundingClientRect();
+      return rect.top + window.scrollY + rect.height / 2;
+    };
+    // Motorla aynı kural: adım, önceki adımla arasındaki orta nokta okuma
+    // çizgisine geldiğinde aktifleşiyor.
+    const activationScroll = (index) => (documentCenter(steps[index - 1]) + documentCenter(steps[index])) / 2 - stuckReadingLine(media);
+
+    function scrollRange() {
+      const start = body.getBoundingClientRect().top + window.scrollY + media.offsetHeight - window.innerHeight;
+      return { start, end: Math.max(start + 1, activationScroll(lastStep)) };
+    }
+
+    function yearAt(scrollPosition, range) {
+      const progress = Math.min(1, Math.max(0, (scrollPosition - range.start) / (range.end - range.start)));
+      return Math.round(INTRO_YEAR + (lastYear - INTRO_YEAR) * progress);
+    }
+
+    function targetYear(range) {
+      if (!reducedMotion) return yearAt(window.scrollY, range);
+      // Hareket azaltılmışsa yıl kaydırmayla akmıyor: her adım, bir sonraki
+      // adımın başladığı konumdaki yılı tek seferde gösteriyor.
+      if (activeStep >= lastStep) return lastYear;
+      return yearAt(activationScroll(activeStep + 1), range);
+    }
+
+    function draw() {
+      const range = scrollRange();
+      if (!introStarted && window.scrollY >= range.start) {
+        introStarted = true;
+        playIntro();
+      }
+      const year = introStarted ? targetYear(range) - introYearsLeft : GISTEMP_FIRST_YEAR;
+      if (year !== shownYear) render(year);
+      const marks = (steps[activeStep].dataset.marks || '').split(' ');
+      frame.classList.toggle('shows-baseline', marks.indexOf('baseline') !== -1);
+      // Rekor etiketi yalnızca rekor yılın şeridi çizildiyse: çizilmemiş bir
+      // şeridin üstünde etiket görünmesin.
+      frame.classList.toggle('shows-record', marks.indexOf('record') !== -1 && year >= recordYear);
+    }
+
+    function playIntro() {
+      const totalYears = INTRO_YEAR - GISTEMP_FIRST_YEAR;
+      let startTime = null;
+      function tick(now) {
+        if (startTime === null) startTime = now;
+        const t = Math.min(1, (now - startTime) / INTRO_DURATION_MS);
+        introYearsLeft = Math.round(totalYears * Math.pow(1 - t, 3));
+        draw();
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
 
     function render(year) {
       shownYear = year;
@@ -1373,13 +1527,9 @@ const anomalyStripes = (function () {
     }
 
     return {
-      update(stepIndex, progress) {
-        const from = stepIndex === 0 ? GISTEMP_FIRST_YEAR : revealTo[stepIndex - 1];
-        const year = Math.round(from + (revealTo[stepIndex] - from) * progress);
-        if (year !== shownYear) render(year);
-        const marks = (steps[stepIndex].dataset.marks || '').split(' ');
-        frame.classList.toggle('shows-baseline', marks.indexOf('baseline') !== -1);
-        frame.classList.toggle('shows-record', marks.indexOf('record') !== -1);
+      update(stepIndex) {
+        activeStep = stepIndex;
+        draw();
       }
     };
   }
@@ -1544,9 +1694,12 @@ const anomalyStripes = (function () {
     buildPerFireBars(scene.querySelector('.ik-hbars'));
     buildCauseStacks(scene.querySelector('.ik-stack'));
 
-    scene.querySelector('.ik-scene-footer').append(
+    scene.querySelector('.ik-reveal').append(
       dataTable({
-        summary: 'Veriyi tablo olarak göster',
+        id: 'orman-yanginlari-tablo',
+        label: 'Veri tablosu',
+        title: 'Yıllara göre orman yangınları, 1988-2024',
+        meta: 'Yangın sayısı ve yanan alan · OGM Ormancılık İstatistikleri 2024',
         caption: 'OGM: yıllara göre orman yangını sayısı ve yanan alan, 1988-2024',
         head: ['Yıl', 'Yangın sayısı', 'Yanan alan (ha)'],
         rows: FOREST_FIRES.map(([year, count, hectares]) => [
@@ -1554,7 +1707,10 @@ const anomalyStripes = (function () {
         ])
       }),
       dataTable({
-        summary: '2024 çıkış nedenlerini tablo olarak göster',
+        id: 'orman-yanginlari-nedenler',
+        label: 'Çıkış nedenleri',
+        title: '2024 yılında çıkış nedenlerine göre orman yangınları',
+        meta: 'Yangın sayısı ve yanan alan · OGM Ormancılık İstatistikleri 2024',
         caption: 'OGM: 2024 yılında çıkış nedenlerine göre orman yangınları',
         head: ['Neden', 'Yangın sayısı', 'Yanan alan (ha)'],
         rows: FIRE_CAUSES_2024.map((cause) => [cause.label, formatNumber(cause.count), formatNumber(cause.hectares)])
@@ -1579,42 +1735,44 @@ const anomalyStripes = (function () {
   const controllers = { stripes: initStripesScene, photos: initPhotoScene, fires: initFireScene };
   const entries = [];
 
-  function apply(entry, index, progress) {
+  function apply(entry, index) {
     if (index !== entry.activeIndex) {
       entry.steps.forEach((step, stepIndex) => step.classList.toggle('is-active', stepIndex === index));
       entry.activeIndex = index;
     }
-    entry.controller.update(index, progress);
+    entry.controller.update(index);
+  }
+
+  // Görsel yapışmışken okuma çizgisinin ekrandaki yeri. Kaydırma konumu
+  // hesaplayan kod (şerit hızı) bunu kullanıyor: o anlarda görsel zaten yapışık.
+  function stuckReadingLine(media) {
+    const viewportHeight = window.innerHeight;
+    if (wideLayout.matches || !media) return headerOffset + (viewportHeight - headerOffset) / 2;
+    const mediaBottom = Math.min(viewportHeight, headerOffset + media.offsetHeight);
+    return mediaBottom + (viewportHeight - mediaBottom) / 2;
   }
 
   function readingLine(entry) {
     const viewportHeight = window.innerHeight;
-    if (wideLayout.matches || !entry.media) return headerOffset + (viewportHeight - headerOffset) / 2;
+    if (wideLayout.matches || !entry.media) return stuckReadingLine(entry.media);
     const mediaBottom = Math.min(viewportHeight, Math.max(0, entry.media.getBoundingClientRect().bottom));
     return mediaBottom + (viewportHeight - mediaBottom) / 2;
   }
 
-  function measure(entry) {
+  // Metni çizgiye en yakın adım aktif: iki adımın ortası çizgiyi geçince
+  // sıradakine geçiliyor. Önceki kural (adımın üst kenarı) grafiği bir adımda
+  // tutarken o adımın metni çoktan ekranın üstüne kaymış oluyordu.
+  function activeStepIndex(entry) {
     const line = readingLine(entry);
     const centers = entry.steps.map((step) => {
       const rect = step.getBoundingClientRect();
       return rect.top + rect.height / 2;
     });
-    // Metni çizgiye en yakın adım aktif: iki adımın ortası çizgiyi geçince
-    // sıradakine geçiliyor. Önceki kural (adımın üst kenarı) grafiği bir
-    // adımda tutarken o adımın metni çoktan ekranın üstüne kaymış oluyordu.
     let index = 0;
     for (let i = 1; i < centers.length; i++) {
       if ((centers[i - 1] + centers[i]) / 2 <= line) index = i;
     }
-    // Görsel, adım aktifleştiği andan metni çizgiye ulaşana kadar ilerliyor;
-    // okunurken grafik metnin anlattığı son hâlde duruyor.
-    const spacing = centers.length > 1
-      ? Math.abs(index > 0 ? centers[index] - centers[index - 1] : centers[1] - centers[0])
-      : entry.steps[0].offsetHeight;
-    const start = centers[index] - spacing / 2;
-    const progress = Math.min(1, Math.max(0, (line - start) / Math.max(1, centers[index] - start)));
-    return { index, progress: reducedMotion ? 1 : progress };
+    return index;
   }
 
   let frameRequested = false;
@@ -1622,9 +1780,7 @@ const anomalyStripes = (function () {
   function update() {
     frameRequested = false;
     entries.forEach((entry) => {
-      if (!entry.visible) return;
-      const { index, progress } = measure(entry);
-      apply(entry, index, progress);
+      if (entry.visible) apply(entry, activeStepIndex(entry));
     });
   }
 
@@ -1667,7 +1823,7 @@ const anomalyStripes = (function () {
       activeIndex: -1
     };
     entries.push(entry);
-    apply(entry, 0, reducedMotion ? 1 : 0);
+    apply(entry, 0);
     syncMediaTop(entry);
   });
 
@@ -1686,6 +1842,109 @@ const anomalyStripes = (function () {
   window.addEventListener('resize', relayout);
   // Web fontları geç yüklenince etiket genişlikleri değişiyor.
   if (document.fonts) document.fonts.ready.then(relayout);
+})();
+
+/* ── Ek içerik pencereleri (tablo ikizleri, sıcaklık spirali videosu) ──
+   Her .ik-reveal grubundaki paneller için grafiğin altında küçük, yan yana
+   düğmeler kuruluyor; içerik tarayıcının yerel <dialog> penceresinde açılıyor.
+   Böylece sayfa yerinden oynamıyor, odak pencerede tutuluyor, Esc kapatıyor
+   ve kapanınca odak düğmeye dönüyor. Veri sahneleri modülü tablo panellerini
+   eklediği için bu modül ondan sonra çalışmalı. <dialog> desteklenmiyorsa ya
+   da JS yoksa paneller sayfada açık kalıyor. */
+(function () {
+  if (typeof HTMLDialogElement !== 'function') return;
+
+  function icon(className, extraClass) {
+    const glyph = document.createElement('i');
+    glyph.className = `fa-solid ${className}${extraClass ? ` ${extraClass}` : ''}`;
+    glyph.setAttribute('aria-hidden', 'true');
+    return glyph;
+  }
+
+  function buildDialog(panel) {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'ik-dialog';
+    const titleId = `${panel.id}-title`;
+    dialog.setAttribute('aria-labelledby', titleId);
+
+    const header = document.createElement('div');
+    header.className = 'ik-dialog-header';
+    const heading = document.createElement('div');
+    const title = document.createElement('h2');
+    title.className = 'ik-dialog-title';
+    title.id = titleId;
+    title.textContent = panel.dataset.revealTitle || panel.dataset.revealLabel;
+    heading.appendChild(title);
+    if (panel.dataset.revealMeta) {
+      const meta = document.createElement('p');
+      meta.className = 'ik-dialog-meta';
+      meta.textContent = panel.dataset.revealMeta;
+      heading.appendChild(meta);
+    }
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'ik-dialog-close';
+    close.setAttribute('aria-label', 'Pencereyi kapat');
+    close.appendChild(icon('fa-xmark'));
+    close.addEventListener('click', () => dialog.close());
+    header.append(heading, close);
+
+    const body = document.createElement('div');
+    body.className = 'ik-dialog-body';
+    const inPageTitle = panel.querySelector('.ik-reveal-title');
+    if (inPageTitle) inPageTitle.remove();
+    body.appendChild(panel);
+
+    dialog.append(header, body);
+    // Lenis bu öğenin içindeki tekerlek/dokunma olaylarına karışmıyor: tablo
+    // pencerenin içinde tarayıcının normal kaydırmasıyla kayıyor.
+    dialog.setAttribute('data-lenis-prevent', '');
+    // Kenardaki karartılmış alana tıklamak kapatıyor: olay hedefi yalnızca
+    // pencerenin kendisi olduğunda tıklama içeriğin dışındadır.
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener('close', () => {
+      setPageScrollLocked(false);
+      // Kapanan pencerede video arka planda çalmaya devam etmesin.
+      body.querySelectorAll('video').forEach((video) => video.pause());
+    });
+    document.body.appendChild(dialog);
+    return dialog;
+  }
+
+  document.querySelectorAll('.ik-reveal').forEach((group) => {
+    const panels = Array.prototype.slice.call(group.querySelectorAll(':scope > .ik-reveal-panel'));
+    if (!panels.length) return;
+
+    const toggles = document.createElement('div');
+    toggles.className = 'ik-reveal-toggles';
+
+    panels.forEach((panel) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'ik-reveal-toggle';
+      button.setAttribute('aria-haspopup', 'dialog');
+      const label = document.createElement('span');
+      label.textContent = panel.dataset.revealLabel;
+      button.append(icon(panel.dataset.revealIcon, 'ik-reveal-icon'), label);
+
+      const dialog = buildDialog(panel);
+      button.addEventListener('click', () => {
+        dialog.showModal();
+        setPageScrollLocked(true);
+        // Video pencere açılınca kendiliğinden başlıyor (sessiz olduğu için
+        // tarayıcılar izin veriyor). Tarayıcı yine de engellerse denetimler
+        // görünür kalıyor ve kullanıcı oynat düğmesiyle başlatabiliyor.
+        dialog.querySelectorAll('video').forEach((video) => {
+          const attempt = video.play();
+          if (attempt) attempt.catch(() => { video.controls = true; });
+        });
+      });
+      toggles.appendChild(button);
+    });
+
+    group.appendChild(toggles);
+    group.classList.add('is-ready');
+  });
 })();
 
 /* ── Counter FX (Framer referansı: layerInView tetikli, 0'dan hedefe sayan
@@ -1855,38 +2114,102 @@ document.addEventListener('DOMContentLoaded', () => {
    data-lightbox-src taşıyan her düğme görseli tam ekran karartılmış bir
    katmanda açıyor; görsel yalnızca açılınca yükleniyor. Tıklanabilir <img>
    yerine düğme: klavyeyle de açılıyor. Katmana, X'e veya Esc'e basmak
-   kapatıyor ve odak açan düğmeye dönüyor. */
+   kapatıyor ve odak açan düğmeye dönüyor.
+   Görsele tıklamak (dokunmak, Enter/boşluk) tıklanan noktaya yakınlaştırıyor,
+   tekrar tıklamak özgün boyuta döndürüyor. Yakınken fare hareketi ya da
+   parmakla sürükleme görselin görünen kısmını kaydırıyor. */
 (function () {
   const triggers = Array.prototype.slice.call(document.querySelectorAll('[data-lightbox-src]'));
   if (!triggers.length) return;
+
+  const ZOOM_MIN = 2;
+  const ZOOM_MAX = 4;
+  // Bu kadar pikselden fazla sürükleme bir tıklama sayılmıyor (yakınlığı bozmasın).
+  const DRAG_TOLERANCE = 6;
 
   const overlay = document.createElement('div');
   overlay.className = 'lightbox-overlay';
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
   overlay.setAttribute('aria-label', 'Büyütülmüş grafik');
-  overlay.innerHTML = '<button type="button" class="lightbox-close" aria-label="Kapat">&times;</button><img class="lightbox-img" alt="">';
+  overlay.setAttribute('data-lenis-prevent', '');
+  overlay.innerHTML = '<button type="button" class="lightbox-close" aria-label="Kapat">&times;</button><img class="lightbox-img" alt="" tabindex="0" role="button" aria-pressed="false">';
   document.body.appendChild(overlay);
   const lightboxImg = overlay.querySelector('.lightbox-img');
   const closeBtn = overlay.querySelector('.lightbox-close');
   let opener = null;
+  let zoomed = false;
+  let pointerStart = null;
+
+  function setOrigin(clientX, clientY) {
+    const rect = lightboxImg.getBoundingClientRect();
+    // Ölçekli görselin kutusu değil, ölçeksiz yerleşim kutusu esas alınıyor.
+    const baseWidth = lightboxImg.offsetWidth;
+    const baseHeight = lightboxImg.offsetHeight;
+    const left = rect.left + rect.width / 2 - baseWidth / 2;
+    const top = rect.top + rect.height / 2 - baseHeight / 2;
+    const x = Math.min(100, Math.max(0, ((clientX - left) / baseWidth) * 100));
+    const y = Math.min(100, Math.max(0, ((clientY - top) / baseHeight) * 100));
+    lightboxImg.style.setProperty('--zoom-x', `${x}%`);
+    lightboxImg.style.setProperty('--zoom-y', `${y}%`);
+  }
+
+  function setZoom(next, clientX, clientY) {
+    zoomed = next;
+    if (zoomed) {
+      // Küçük grafiklerde en az 2 kat; büyük görselde kendi çözünürlüğüne kadar.
+      const natural = lightboxImg.naturalWidth / Math.max(1, lightboxImg.offsetWidth);
+      lightboxImg.style.setProperty('--zoom-scale', String(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, natural))));
+      if (clientX !== undefined) setOrigin(clientX, clientY);
+    }
+    overlay.classList.toggle('is-zoomed', zoomed);
+    lightboxImg.setAttribute('aria-pressed', String(zoomed));
+    lightboxImg.setAttribute('aria-label', zoomed ? 'Grafiği özgün boyutuna döndür' : 'Grafiği yakınlaştır');
+  }
 
   function open(trigger) {
     opener = trigger;
     lightboxImg.src = trigger.dataset.lightboxSrc;
     lightboxImg.alt = trigger.dataset.lightboxAlt || '';
+    lightboxImg.style.setProperty('--zoom-x', '50%');
+    lightboxImg.style.setProperty('--zoom-y', '50%');
+    setZoom(false);
     overlay.classList.add('active');
-    document.body.classList.add('lightbox-open');
+    setPageScrollLocked(true);
     closeBtn.focus();
   }
 
   function close() {
     if (!overlay.classList.contains('active')) return;
     overlay.classList.remove('active');
-    document.body.classList.remove('lightbox-open');
+    setZoom(false);
+    setPageScrollLocked(false);
     if (opener) opener.focus();
     opener = null;
   }
+
+  lightboxImg.addEventListener('pointerdown', (e) => {
+    pointerStart = { x: e.clientX, y: e.clientY };
+  });
+  lightboxImg.addEventListener('pointermove', (e) => {
+    if (!zoomed) return;
+    // Farede imleç, dokunmatikte parmak (basılıyken) görünen kısmı taşıyor.
+    if (e.pointerType !== 'mouse' && !pointerStart) return;
+    setOrigin(e.clientX, e.clientY);
+  });
+  lightboxImg.addEventListener('pointerup', (e) => {
+    const start = pointerStart;
+    pointerStart = null;
+    if (!start || Math.hypot(e.clientX - start.x, e.clientY - start.y) > DRAG_TOLERANCE) return;
+    setZoom(!zoomed, e.clientX, e.clientY);
+  });
+  lightboxImg.addEventListener('pointercancel', () => { pointerStart = null; });
+  lightboxImg.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    const rect = lightboxImg.getBoundingClientRect();
+    setZoom(!zoomed, rect.left + rect.width / 2, rect.top + rect.height / 2);
+  });
 
   triggers.forEach((trigger) => trigger.addEventListener('click', () => open(trigger)));
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
@@ -1894,10 +2217,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (!overlay.classList.contains('active')) return;
     if (e.key === 'Escape') close();
-    // Katmanda odaklanabilir tek öğe kapatma düğmesi; Tab arkadaki sayfaya kaçmasın.
+    // Odak katmandaki iki öğe (kapat, görsel) arasında dönüyor; arkadaki sayfaya kaçmıyor.
     if (e.key === 'Tab') {
       e.preventDefault();
-      closeBtn.focus();
+      (document.activeElement === closeBtn ? lightboxImg : closeBtn).focus();
     }
   });
 })();
@@ -1972,7 +2295,7 @@ document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(tick);
 })();
 
-/* ── ŞU AN NELER YAPILIYOR: Kronoloji (Zaman Tüneli) ──
+/* ── NELER YAPILIYOR: Kronoloji (Zaman Tüneli) ──
    Omurga hattı üzerindeki dolgu (spine-fill), kullanıcının .timeline
    içinde scroll ile ne kadar ilerlediğini gösterir. Her kilometre taşı
    görünür olduğunda is-in-view sınıfıyla kalıcı olarak belirir, işaretçisi
@@ -1986,12 +2309,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const items = Array.prototype.slice.call(timeline.querySelectorAll('.timeline-item'));
 
   function updateSpineFill() {
+    // Dolgunun ucu hep ekranın ortasında: çizgi kaydırmayla birebir ilerliyor.
+    // Önceki formül payda olarak "yükseklik + ekranın yarısı" kullandığı için
+    // dolgu kaydırmanın gerisinde kalıyordu.
     const rect = timeline.getBoundingClientRect();
     const viewportMid = window.innerHeight * 0.5;
-    const total = rect.height + viewportMid;
-    const passed = viewportMid - rect.top;
-    const progress = Math.max(0, Math.min(1, passed / total));
-    spineFill.style.height = `${(progress * 100).toFixed(1)}%`;
+    const progress = Math.max(0, Math.min(1, (viewportMid - rect.top) / rect.height));
+    // Dolgu hep tam boy; yalnızca görünen kısmı açılıyor. Böylece renk geçişi
+    // omurga boyunca sabit kalıyor, yükseklikle birlikte sıkışmıyor.
+    spineFill.style.setProperty('--spine-progress', progress.toFixed(3));
   }
 
   let ticking = false;
@@ -2017,7 +2343,7 @@ document.addEventListener('DOMContentLoaded', () => {
   items.forEach((item) => observer.observe(item));
 })();
 
-/* ── ŞU AN NELER YAPILIYOR: Kart etkileşimleri (React "Timeline3D" referansı) ──
+/* ── NELER YAPILIYOR: Kart etkileşimleri (React "Timeline3D" referansı) ──
    Karta veya işaretçisine tıklamak açıklamayı sabitliyor (dokunmatik için de
    çalışır); masaüstünde hover aynı .active görünümünü CSS üzerinden zaten
    tetikliyor. Fareyle hafif 3B eğim efekti (referanstaki mousePosition +
@@ -2078,46 +2404,52 @@ document.addEventListener('DOMContentLoaded', () => {
   const SLIDE_MS = 800;
   const CHAR_STAGGER_MS = 6;
 
+  /* Rakamların kaynakları (erişim 2026-09-15): termostat, Energy Saving Trust;
+     trende/otomobile/iç hat uçuşuna göre salım (35 / 170 / 246 g CO₂e/km) ve
+     gıda başına salım, Our World in Data (UK DESNZ; Poore ve Nemecek 2018);
+     damlayan musluk, US EPA WaterSense; karbon fiyatı, Karbon Fiyatlandırması
+     Üst Düzey Komisyonu (2017); AB sınırda karbon düzenlemesi kesin dönemi
+     1 Ocak 2026; kentleşme, BM DESA (2018). */
   const individualSteps = [
     { photo: 'assets/image/wikipedia/enerji-tasarrufu.jpg', title: 'Enerji Tasarrufu',
-      desc: 'Enerji verimli cihazlar ve LED aydınlatma aynı işi çok daha az elektrikle yapar. Bekleme modundaki cihazların çektiği "hayalet enerji" bile boşuna tüketiliyor. Bu küçük alışkanlıklar yılda 200 kg\'a kadar CO₂ tasarrufu sağlayabilir.',
-      examples: ["Çamaşırı 30°C'de ve tam dolu makinede yıka", 'Termostatı 1°C değiştirmek bile ~%5 tasarruf sağlar', 'Mümkünse enerji tedarikçini yenilenebilire geçir'] },
+      desc: 'LED ampuller aynı ışığı eski ampullerden çok daha az elektrikle verir. Kapalı sandığımız ama fişte duran cihazlar da bekleme modunda elektrik çekmeye devam eder. Evde harcanan enerji azaldıkça onu üretmek için yakılan yakıt da azalır.',
+      examples: ['Çamaşırı 30°C\'de ve makine doluyken yıka', 'Kışın termostatı 1°C düşürmek ısınma faturasını yaklaşık %4-5 azaltır', 'Kullanmadığın cihazları prizden çek'] },
     { photo: 'assets/image/wikipedia/ulasim-tercihleri.jpg', title: 'Ulaşım Tercihleri',
-      desc: 'Ulaşım, bireysel karbon ayak izinin en büyük kalemlerinden biri. Toplu taşıma, bisiklet ya da yürüyüşü tercih etmek; uzun mesafelerde de trenin uçağa göre yolcu-km başına ortalama 8 kat daha az CO₂ üretmesi, ulaşım seçimlerini iklim açısından belirleyici kılıyor.',
-      examples: ['Haftada 3 gün toplu taşıma = yılda ~1 ton CO₂ az', '3 km altındaki mesafeleri yürüyerek ya da bisikletle git', 'Mümkün olan seyahatlerde uçuş yerine tren tercih et'] },
+      desc: 'Ulaşım, kişisel karbon ayak izinin en büyük kalemlerinden biri. Trende kilometre başına düşen salım benzinli bir otomobilin yaklaşık beşte biri, iç hat uçuşunun ise yedide biri kadar. Kısa yollarda yürümek ya da bisiklet, uzun yollarda tren ve otobüs seçmek fark yaratır.',
+      examples: ['3 km altındaki yolları yürüyerek ya da bisikletle git', 'Şehir içinde otomobil yerine toplu taşımayı dene', 'Yakın şehirlere uçak yerine tren ya da otobüsle git'] },
     { photo: 'assets/image/wikipedia/beslenme-aliskanliklari.jpg', title: 'Beslenme Alışkanlıkları',
-      desc: 'Gıda üretimi küresel sera gazı emisyonlarının önemli bir kısmından sorumlu; kırmızı et bu payın en büyük tekil kaynağı. Tüketimini azaltıp yerel, mevsimsel ve bitki ağırlıklı beslenmeye yönelmek bireysel karbon ayak izini belirgin biçimde küçültüyor.',
-      examples: ['Haftada 1 gün etsiz beslenme = ~200 kg CO₂/yıl az', 'Yerel pazardan alışveriş yap, nakliye emisyonunu kır', 'Plan yap, porsiyonu küçült, gıda israfını sıfırla'] },
+      desc: 'Gıda üretimi, dünyadaki sera gazı salımının yaklaşık dörtte birinden sorumlu. En büyük fark tabakta ne olduğundan gelir: 1 kg sığır eti üretmek yaklaşık 60 kg sera gazı çıkarırken 1 kg tavuk 6 kg, 1 kg bezelye ise yalnızca 1 kg çıkarır.',
+      examples: ['Haftada birkaç öğünde kırmızı et yerine baklagil ya da tavuk seç', 'Taşımanın payı çoğu gıdada %10\'dan az: ne yediğin, nereden geldiğinden daha önemli', 'Alışverişini planla, artan yemeği değerlendir'] },
     { photo: 'assets/image/wikipedia/bilincli-tuketim.jpg', title: 'Bilinçli Tüketim',
-      desc: 'Her ürünün üretiminde harcanan enerji ve hammadde, satın alma kararlarını iklim açısından önemli kılıyor. Daha az ve bilinçli satın almak, ürünleri uzun süre kullanmak; onarmak ve ikinci eli tercih etmek hem atığı hem de üretim kaynaklı emisyonları azaltıyor.',
-      examples: ['Almadan önce "gerçekten ihtiyacım var mı?" diye sor', 'Elektronikte önce onarımı dene, değiştirmeyi son çare yap', 'Tekli plastik ambalaj yerine dökme/büyük boy al'] },
+      desc: 'Aldığımız her ürünün üretimi enerji ve hammadde harcar. Daha az ama daha uzun ömürlü ürünler almak, eşyaları onarmak ve ikinci el kullanmak hem çöpü hem de üretimden gelen salımı azaltır.',
+      examples: ['Almadan önce "gerçekten ihtiyacım var mı?" diye sor', 'Bozulan elektroniği atmadan önce tamir ettirmeyi dene', 'Tek kullanımlık plastik yerine tekrar kullanılabilir çanta ve şişe kullan'] },
     { photo: 'assets/image/wikipedia/dogayla-birlikte-yasamak.jpg', title: 'Doğayla Birlikte Yaşamak',
-      desc: 'Yeşil alanlar hem karbon depoluyor hem de yerel biyoçeşitliliği destekliyor. Balkonunda ya da bahçende bitki yetiştirmek küçük bir adım gibi görünse de, olgun bir ağacın yılda ortalama 21-25 kg CO₂ emdiği düşünülürse toplu etkisi büyüyor.',
-      examples: ['Mutfak atığını kompostlayıp toprağa besin olarak ver', 'Yerel ağaçlandırma projelerine gönüllü katıl', 'Damlayan bir musluk yılda 20.000L suyu boşa akıtabilir'] },
+      desc: 'Ağaçlar ve yeşil alanlar havadaki karbonu tutar, şehirleri serinletir ve canlılara yaşam alanı sağlar. Balkonda bitki yetiştirmek ya da bir ağaçlandırma çalışmasına katılmak küçük görünse de, birçok insan yaptığında etkisi büyür.',
+      examples: ['Mutfak atıklarını kompost yapıp toprağa geri kazandır', 'Yerel ağaçlandırma ve temizlik etkinliklerine gönüllü katıl', 'Damlayan musluğu tamir et: saniyede bir damla, yılda 11.000 litreden fazla su demek'] },
     { photo: 'assets/image/wikipedia/savunuculuk-ve-farkindalik.jpg', title: 'Savunuculuk ve Farkındalık',
-      desc: 'Bireysel adımlar önemli, ama en büyük etki toplu sesle ortaya çıkıyor. Çevrendeki insanları bilinçlendirmek ve oy verirken iklim politikasını önceliklendirmek, sistemsel değişimi hızlandıran dolaylı ama güçlü bir yol.',
-      examples: ['Yaşadığın şehrin iklim eylem planını takip et', 'İş yerinde sürdürülebilirlik odaklı öneriler sun', 'Bilimsel kaynaklara dayanan iklim içeriklerini paylaş'] }
+      desc: 'Tek başına attığımız adımlar önemli, ama en büyük değişim birlikte ses çıkardığımızda olur. Çevrendekilerle konuşmak, belediyenin ve şirketlerin iklim planlarını sormak sistemin değişmesini hızlandırır.',
+      examples: ['Yaşadığın şehrin bir iklim eylem planı olup olmadığını öğren', 'Okulunda ya da iş yerinde tasarruf ve geri dönüşüm önerileri sun', 'Güvenilir bilimsel kaynaklara dayanan içerikleri paylaş'] }
   ];
 
   const societalSteps = [
     { photo: 'assets/image/un/UN7436150.jpg', title: 'Yenilenebilir Enerjiye Geçiş',
-      desc: 'Küresel enerji üretiminin fosil yakıtlardan güneş, rüzgâr ve diğer temiz kaynaklara kaydırılması, emisyonları azaltmanın en yüksek etkili yollarından biri. Hükümetlerin ve şirketlerin yatırım önceliklerini bu yönde değiştirmesi dönüşümün hızını doğrudan belirliyor.',
-      examples: ['Devlet teşvikleri çatı üstü güneş enerjisini yaygınlaştırabilir', 'Fosil yakıt sübvansiyonlarının kademeli kaldırılması kritik', 'Enerji depolama teknolojilerine Ar-Ge yatırımı şart'] },
+      desc: 'Elektriği kömür ve doğal gaz yerine güneşten, rüzgârdan ve sudan üretmek, salımları azaltmanın en etkili yollarından biri. Devletlerin ve şirketlerin yatırımlarını bu kaynaklara yönlendirmesi dönüşümü hızlandırır.',
+      examples: ['Çatı üstü güneş panellerinin desteklenmesi', 'Fosil yakıtlara verilen desteklerin kademeli olarak kaldırılması', 'Güneş ve rüzgâr elektriğini depolayacak bataryalara yatırım yapılması'] },
     { photo: 'assets/image/wikipedia/karbon-fiyatlandirmasi.png', title: 'Karbon Fiyatlandırması',
-      desc: 'Karbon vergisi ve emisyon ticaret sistemleri, sera gazı salımının gerçek maliyetini fiyatlara yansıtarak "kirleten öder" ilkesini işletir. Bu mekanizmalar, temiz teknolojilere geçişi piyasa içinden hızlandıran güçlü araçlar.',
-      examples: ['Ton başına $50-100 CO₂ fiyatı dönüşümü tetikleyecek düzeyde', 'Vergi gelirleri yeşil altyapıya ayrılabilir', 'Sınır karbon mekanizmaları haksız rekabeti önler'] },
+      desc: 'Havaya salınan her ton karbona bir fiyat koymak "kirleten öder" demektir. Kirletmek pahalılaştıkça temiz üretim daha cazip hâle gelir.',
+      examples: ['Uzmanlara göre Paris hedefleri için 2030\'a kadar ton başına 50-100 dolarlık bir karbon fiyatı gerekiyor', 'Toplanan gelir temiz enerjiye ve toplu taşımaya harcanabilir', 'AB, 2026\'dan itibaren çelik, çimento ve alüminyum gibi ürünlerin ithalatında karbon bedeli almaya başladı'] },
     { photo: 'assets/image/wikipedia/ormanlarin-korunmasi.jpg', title: 'Ormanların Korunması',
-      desc: 'Ormanlar dünyanın en büyük doğal karbon yutaklarından biri; hem ormansızlaşmayı durdurmak hem de büyük ölçekli ağaçlandırma projeleri yürütmek, atmosferdeki karbonu dengelemenin en doğrudan yollarından biri.',
-      examples: ['Orman tahribatına yol açan ürünlere ithalat kısıtlaması', 'Yerel halklara ormanlık arazide mülkiyet hakkı tanınmalı', 'REDD+ gibi karbon kredisi mekanizmaları yaygınlaşmalı'] },
+      desc: 'Ormanlar dünyanın en büyük doğal karbon depolarından. Var olan ormanları korumak ve yeni ağaçlar dikmek, havadaki karbonu azaltmanın en doğal yolu.',
+      examples: ['Orman kesilerek üretilen ürünlerin ticaretinin sınırlanması', 'Ormanda yaşayan yerel halkların arazi haklarının korunması', 'Ormanlarını koruyan ülkelere mali destek sağlanması (REDD+)'] },
     { photo: 'assets/image/wikipedia/uluslararasi-isbirligi.jpg', title: 'Uluslararası İşbirliği',
-      desc: 'İklim krizi sınır tanımıyor; Paris Anlaşması gibi küresel çerçeveler, ülkelerin ortak, ölçülebilir ve denetlenebilir hedefler etrafında birleşmesini sağlayarak bireysel çabaların toplamından daha büyük bir etki yaratıyor.',
-      examples: ['Ulusal Katkı Beyanlarının (NDC) güçlendirilmesi zorunlu', 'Gelişmekte olan ülkelere iklim finansmanı artmalı', 'Teknoloji transferi yeşil dönüşümü demokratikleştirir'] },
+      desc: 'İklim krizi sınır tanımaz: bir ülkenin salımı herkesi etkiler. Paris Anlaşması gibi anlaşmalar ülkeleri ortak ve takip edilebilir hedefler etrafında buluşturur.',
+      examples: ['Ülkelerin salım azaltma hedeflerini (NDC) güçlendirmesi', 'Gelişmekte olan ülkelere iklim finansmanı sağlanması', 'Temiz teknolojilerin ülkeler arasında paylaşılması'] },
     { photo: 'assets/image/wikipedia/sanayi-donusumu.jpg', title: 'Sanayi Dönüşümü',
-      desc: 'Çimento, çelik ve kimya gibi ağır sanayiler, üretim süreçlerinin doğası gereği kolayca elektrifiye edilemiyor. Yeşil hidrojen ve karbon yakalama teknolojileri, bu sektörlerin emisyonlarını azaltmanın önündeki en kritik açık.',
-      examples: ['Kamu ihalelerinde düşük karbonlu "yeşil çelik" şartı aranmalı', 'H₂ altyapısına kamu yatırımı ölçek ekonomisiyle maliyeti düşürür', 'Sanayi emisyonlarına sektörel denetim mekanizması gerekiyor'] },
+      desc: 'Çimento, çelik ve kimya fabrikaları çok yüksek ısıya ihtiyaç duyar ve bu ısıyı elektrikle üretmek her zaman kolay değildir. Yeşil hidrojen ve karbon yakalama gibi teknolojiler bu sektörlerin salımını azaltmanın başlıca yolları.',
+      examples: ['Kamu ihalelerinde düşük karbonlu çelik ve çimentonun tercih edilmesi', 'Yeşil hidrojen altyapısına yatırım yapılması', 'Fabrika salımlarının düzenli olarak ölçülüp denetlenmesi'] },
     { photo: 'assets/image/wikipedia/surdurulebilir-sehirler.jpg', title: 'Sürdürülebilir Şehirler',
-      desc: '2050\'de dünya nüfusunun %68\'inin kentlerde yaşayacağı öngörülüyor; bu da şehir planlamasını iklim mücadelesinin merkezine taşıyor. Toplu taşımayı, yaya bölgelerini ve yeşil alanları bütünleştiren akıllı şehirler hem emisyonu azaltıyor hem yaşam kalitesini artırıyor.',
-      examples: ['15 dakikalık şehir konsepti trafiği belirgin biçimde düşürür', 'Mevcut binaların enerji verimliliğine yükseltilmesi teşvik edilmeli', 'Kent ormanları gibi doğa tabanlı çözümler standart hale gelmeli'] }
+      desc: '2050\'de dünya nüfusunun %68\'inin şehirlerde yaşayacağı öngörülüyor. Toplu taşıması güçlü, yürünebilir ve yeşil alanı bol şehirler hem salımı azaltır hem de günlük yaşamı kolaylaştırır.',
+      examples: ['Okul, market ve parkın kısa yürüme mesafesinde olduğu mahalleler', 'Eski binaların yalıtılıp enerji verimli hâle getirilmesi', 'Kent ormanları ve yeşil koridorlar'] }
   ];
 
   function makeCell() {
