@@ -4,8 +4,7 @@ Sitede kullanılan Wikimedia Commons ve Pexels kaynaklı görsellerin tam listes
 **30 görselin atfı lisans gereği zorunludur** — bu satırların "Atıf metni"
 sütunu görselin yanında veya ayrı bir künye bölümünde yayımlanmalıdır.
 
-Diğer kaynaklar: NASA (`public/assets/iklim-krizi/image/nasa`, kamu malı), ÇŞB Çevresel Göstergeler
-(`public/assets/iklim-krizi/image/csb`), BM Fotoğraf Arşivi (`public/assets/iklim-krizi/image/un`), BM SKA ikonları
+Diğer kaynaklar: NASA (`public/assets/iklim-krizi/image/nasa`, kamu malı), BM Fotoğraf Arşivi (`public/assets/iklim-krizi/image/un`), BM SKA ikonları
 (`public/assets/iklim-krizi/image/sdg`).
 
 | Kart / Bölüm                            | Dosya                                                                                 | Lisans                                                                                                                                                                                    | Atıf metni                                                                                  |

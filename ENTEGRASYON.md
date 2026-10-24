@@ -9,7 +9,7 @@ Bu proje, sayfayı sitenin (Laravel 12, `dogantatarjr/idd-org`) klasör yapısı
 | `resources/views/frontend/iklim-krizi.blade.php`     | aynı yol       |
 | `public/assets/iklim-krizi/` (css, js, image, video) | aynı yol       |
 
-İkisi de yeni; sitenin mevcut hiçbir dosyasının üzerine yazmaz. `public/assets/iklim-krizi/` toplam 11,4 MB, 109 dosya (görseller 5,9 MB, videolar 5,2 MB).
+İkisi de yeni; sitenin mevcut hiçbir dosyasının üzerine yazmaz. `public/assets/iklim-krizi/` toplam 11,2 MB, 101 dosya (görseller 5,7 MB, videolar 5,2 MB).
 
 Yalnızca bu iki yol kopyalanır. `package.json`, `node_modules/` ve lint/format ayarları bu reponun geliştirme araçlarıdır; siteye kopyalanmaz.
 
@@ -93,4 +93,4 @@ Projelerimiz açılır menüsünde, "Kampanyalarımız" öğesinin altına:
 
 İlk bölümdeki iki yolu yeniden kopyalamak yeterli. İkinci bölümdeki eklemeler yalnızca bir kez yapılır.
 
-Sayfanın önceki bir sürümü sunucuya yüklendiyse: bu sürümde `image/csb/` ve `image/sdg/` altındaki PNG'ler ile `image/nasa/oklahoma-sel-yolu.gif` WebP'ye çevrildi. Sunucuda kalan eski `.png`/`.gif` dosyaları artık kullanılmıyor ve silinebilir.
+Sayfanın önceki bir sürümü sunucuya yüklendiyse: bu sürümde `image/sdg/` altındaki PNG'ler ile `image/nasa/oklahoma-sel-yolu.gif` WebP'ye çevrildi. Sunucuda kalan eski `.png`/`.gif` dosyaları ile `image/csb/` klasörü (ÇŞB grafikleri sayfadan kaldırıldı) artık kullanılmıyor ve silinebilir.

@@ -324,7 +324,7 @@
          to our seas and forests. The media stays sticky while the narrative steps
          scroll beside it (below it on mobile); the "Data scenes" module in
          script.js maps the active step and scroll progress onto the media.
-         Without JS the static ÇŞB charts stand in for the live charts. --}}
+         Without JS the live charts are hidden and the steps read as plain text. --}}
     <div class="container ik-scenes">
 
       {{-- Global warming: data.giss.nasa.gov/gistemp + cevreselgostergeler.csb.gov.tr/sicaklik-85727 --}}
@@ -356,12 +356,6 @@
               <div class="ik-scale-legend" aria-hidden="true"></div>
               <figcaption class="ik-chart-source">Kaynak: <a href="https://data.giss.nasa.gov/gistemp/" target="_blank" rel="noopener noreferrer">NASA GISS, GISTEMP v4</a> (yıllık küresel ortalama). Şerit fikri: <a href="https://showyourstripes.info/" target="_blank" rel="noopener noreferrer">Ed Hawkins, #ShowYourStripes</a>.</figcaption>
             </figure>
-            <noscript>
-              <figure class="ik-chart">
-                <img class="ik-chart-fallback" src="{{ asset('assets/iklim-krizi/image/csb/dunya-turkiye-yillik-sicakliklar.webp') }}" alt="Grafik: Dünyada ve Türkiye'de yıllık ortalama sıcaklıklar, 1971-2023" width="674" height="292" loading="lazy" decoding="async">
-                <figcaption class="ik-chart-source">Kaynak: ÇŞB Çevresel Göstergeler</figcaption>
-              </figure>
-            </noscript>
             <div class="ik-reveal">
               <div class="ik-reveal-panel" id="global-isinma-spiral" data-reveal-label="Sıcaklık spirali" data-reveal-title="NASA'nın küresel sıcaklık spirali" data-reveal-meta="1880'den bugüne küresel sıcaklık sapmaları · NASA GISS" data-reveal-icon="fa-circle-play">
                 <video class="ik-data-video" src="{{ asset('assets/iklim-krizi/video/gistemp-spiral.mp4') }}" controls muted playsinline preload="none"></video>
@@ -390,9 +384,6 @@
               <h4 class="ik-scene-step-title">Türkiye'de Sıcaklık</h4>
               <p>2018'de Türkiye'nin ortalama sıcaklığı 15,4 °C ile 1981-2010 ortalamasının (13,5 °C) <strong>1,9 °C</strong> üzerindeydi; aynı yıl dünya ortalaması kendi bazının 0,36 °C üzerindeydi. 2007'den bu yana (2011 hariç) her yıl pozitif anomali gözleniyor; donlu gün sayısı özellikle doğu ve iç kesimlerde azalıyor.</p>
               <p>Enerji talebi de değişiyor: 2007-2018 ortalamasına göre 2018'de ısıtma gün-derecesi 2.058'den 1.725'e (-%16) düşerken soğutma gün-derecesi 358'den 381'e (+%6) çıktı.</p>
-              <div class="ik-doc-links">
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/dunya-turkiye-yillik-sicakliklar.webp') }}" data-lightbox-alt="Grafik: Dünyada ve Türkiye'de yıllık ortalama sıcaklıklar, 1971-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Dünya ve Türkiye sıcaklıkları</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1971‑2023</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              </div>
             </li>
           </ol>
         </div>
@@ -451,13 +442,6 @@
                 </table>
               </div>
               </div>
-            </div>
-            <p class="ik-doc-links-label">ÇŞB'nin yıllık grafikleri, 1970-2023</p>
-            <div class="ik-doc-links">
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/karadeniz-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Karadeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Karadeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/marmara-denizi-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Marmara Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Marmara</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/ege-denizi-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Ege Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Ege</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/akdeniz-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Akdeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Akdeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
@@ -554,12 +538,6 @@
               </div>
               <figcaption class="ik-chart-source">Kaynak: <a href="https://www.ogm.gov.tr/tr/e-kutuphane/resmi-istatistikler" target="_blank" rel="noopener noreferrer">OGM, Ormancılık İstatistikleri 2024</a> (tablo 2.11).</figcaption>
             </figure>
-            <noscript>
-              <figure class="ik-chart">
-                <img class="ik-chart-fallback" src="{{ asset('assets/iklim-krizi/image/csb/orman-yanginlari-1990-2024.webp') }}" alt="Grafik: Orman yangınları 1990-2024" width="678" height="290" loading="lazy" decoding="async">
-                <figcaption class="ik-chart-source">Kaynak: ÇŞB Çevresel Göstergeler</figcaption>
-              </figure>
-            </noscript>
             <div class="ik-reveal"></div>
           </div>
 
@@ -579,10 +557,6 @@
             <li class="ik-scene-step" data-view="causes">
               <h4 class="ik-scene-step-title">Yangınlar Nereden Çıkıyor?</h4>
               <p>2024'teki yangınların <strong>%49'u</strong> ihmal ve kazalardan çıktı; yanan alanın <strong>%72'si</strong> bu yangınlarda kaybedildi. Doğal nedenler yangınların %19'unu oluştursa da yanan alanın yalnızca %3'ünde etkili oldu.</p>
-              <div class="ik-doc-links">
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/orman-yanginlari-1990-2024.webp') }}" data-lightbox-alt="Grafik: Orman yangınları 1990-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Orman yangınları</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1990‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/yangin-cikis-nedenleri-1997-2024.webp') }}" data-lightbox-alt="Grafik: Çıkış nedenlerine göre yangın sayıları 1997-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Çıkış nedenleri</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1997‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              </div>
             </li>
           </ol>
         </div>

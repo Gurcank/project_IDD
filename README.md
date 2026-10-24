@@ -66,7 +66,7 @@ Sayfayı görmek için ana sitenin yerel kopyasına ENTEGRASYON.md'deki adımlar
 ## Erişilebilirlik ve performans
 
 - `prefers-reduced-motion` açıkken videolar oynamaz; kayan şerit, giriş animasyonları ve sayaçlar durur.
-- JavaScript yoksa SDG listesi, adım listesi ve ÇŞB grafikleri düz içerik olarak görünür.
+- JavaScript yoksa SDG listesi ve adım listesi düz içerik olarak görünür; canlı grafikler gizlenir.
 - Hero poster görseli yüksek öncelikle önceden yükleniyor; sayfa altındaki görseller `loading="lazy"`.
 - Bilinen eksik: hero videosu, dönen Dünya videosu ve kayan veri şeridi için görünür bir durdur/oynat düğmesi yok (WCAG 2.2.2).
 
