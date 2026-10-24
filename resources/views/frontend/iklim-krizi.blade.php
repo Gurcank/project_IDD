@@ -1,24 +1,30 @@
-{{-- İklim Krizi: iklimdd.org'da Projelerimiz → İklim Krizi (/iklimkrizi).
-     Sitenin frontend.master şablonunu genişletir. Header, footer, başa dön
-     butonu, Bootstrap, AOS, Font Awesome, Bootstrap Icons, Inter ve Montserrat
-     şablondan gelir; burada yalnızca sayfaya özel olanlar var.
-     Siteye ekleme adımları: ENTEGRASYON.md --}}
+{{-- Climate crisis page: iklimdd.org → Projelerimiz → İklim Krizi (/iklimkrizi).
+     Extends the site's frontend.master layout, which already provides the header,
+     footer, back-to-top button, Bootstrap, AOS, Font Awesome, Bootstrap Icons,
+     Inter and Montserrat; only page-specific markup and assets live here.
+     Integration steps: ENTEGRASYON.md --}}
 @extends('frontend.master')
 
 @section('title', 'İklim Krizi')
 
-{{-- Menüde "Projelerimiz" ve açılır listedeki "İklim Krizi" işaretli görünsün. --}}
+@php
+  // Cache-busting query string: the site serves static files with a 7-day cache,
+  // so a changed file needs a new URL. A missing file must not turn the whole
+  // page into a 500 error, so it falls back to an unversioned URL.
+  $assetVersion = static fn (string $path): string => is_file(public_path($path)) ? (string) filemtime(public_path($path)) : '0';
+@endphp
+
+{{-- Highlights "Projelerimiz" and its "İklim Krizi" dropdown item in the site menu. --}}
 @section('projects-sit', 'active')
 @section('iklimkrizi-sit', 'active')
 
 @push('head')
   <meta name="description" content="Türkiye ve dünya verileriyle iklim krizi: sıcaklık artışı, deniz seviyesi, orman yangınları ve emisyonlar. NASA, IPCC ve ÇŞB kaynaklarıyla hazırlandı.">
 
-  <!-- Kanonik adres sonunda "/" olmadan yazılı: iklimdd.org sonu "/" ile biten
-       adresleri /public/... yoluna yönlendiriyor. -->
+  {{-- No trailing slash: iklimdd.org redirects URLs ending in "/" to /public/... --}}
   <link rel="canonical" href="https://iklimdd.org/iklimkrizi">
 
-  <!-- Open Graph / Facebook, WhatsApp, LinkedIn -->
+  {{-- Open Graph (Facebook, WhatsApp, LinkedIn previews) --}}
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://iklimdd.org/iklimkrizi">
   <meta property="og:title" content="İklim Krizi: Veriler, Kanıtlar ve Türkiye">
@@ -26,19 +32,20 @@
   <meta property="og:image" content="{{ asset('assets/iklim-krizi/image/og-iklim-krizi.jpg') }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sonbahar renklerindeki ağaçlarla kaplı tepeler arasında bir göl ve uzakta dağlar">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="İklim Değişmeden Değiş">
 
-  <!-- Twitter/X Card -->
+  {{-- Twitter/X card --}}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="İklim Krizi: Veriler, Kanıtlar ve Türkiye">
   <meta name="twitter:description" content="Türkiye ve dünya verileriyle iklim krizi: sıcaklık artışı, deniz seviyesi, orman yangınları ve emisyonlar.">
   <meta name="twitter:image" content="{{ asset('assets/iklim-krizi/image/og-iklim-krizi.jpg') }}">
+  <meta name="twitter:image:alt" content="Sonbahar renklerindeki ağaçlarla kaplı tepeler arasında bir göl ve uzakta dağlar">
 
-  {{-- JSON-LD anahtarlarındaki "@@" sayfaya tek "@" olarak basılır. Tek "@" ile
-       yazılan "context" anahtarı Laravel 12'de bir Blade direktifi olarak
-       derlenir ve sayfa açılmaz. --}}
-  <!-- Yapısal veri (JSON-LD) -->
+  {{-- "@@" renders as a single "@". A bare "@context" key is compiled as a
+       Blade directive in Laravel 12 and breaks the page. --}}
+  {{-- Structured data (JSON-LD) --}}
   <script type="application/ld+json">
   {
     "@@context": "https://schema.org",
@@ -72,33 +79,36 @@
   }
   </script>
 
-  <!-- Şablon Google Fonts CSS'ini zaten istiyor; font dosyalarının geldiği
-       sunucuya bağlantı Climate Crisis için önceden açılıyor. -->
+  {{-- The hero poster is the first large paint (and the only one with reduced
+       motion). The browser only discovers a <video> poster late, so it is
+       fetched early with high priority. --}}
+  <link rel="preload" as="image" type="image/webp" fetchpriority="high" href="{{ asset('assets/iklim-krizi/image/hero-poster.webp') }}">
+
+  {{-- The layout already requests Google Fonts CSS; preconnecting to the font
+       file host saves a round trip for the Climate Crisis font below. --}}
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Climate Crisis — başlıklarda kullanılan, "eriyen" görünümlü değişken font
-       (fonts.google.com/specimen/Climate+Crisis). :YEAR@1979..2050 isteği
-       fontun gerçek YEAR eksenini yükler; script.js bunu
-       font-variation-settings ile canlı sürüyor. -->
+  {{-- Climate Crisis: variable "melting" display font used in headings.
+       Requesting YEAR@1979..2050 loads the font's real YEAR axis, which
+       script.js animates through font-variation-settings. --}}
   <link href="https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1979..2050&amp;display=swap"
     rel="stylesheet">
 
-  <!-- Sayfa CSS'i sitenin global stillerinden sonra yüklenir. Sürüm parametresi
-       dosyanın değişme zamanı: site statik dosyaları 7 gün önbellekte tuttuğu
-       için yeni yüklenen CSS hemen görünsün. -->
-  <link rel="stylesheet" href="{{ asset('assets/iklim-krizi/css/style.css') }}?v={{ filemtime(public_path('assets/iklim-krizi/css/style.css')) }}">
+  {{-- Loaded after the site's global styles so page rules win without !important. --}}
+  <link rel="stylesheet" href="{{ asset('assets/iklim-krizi/css/style.css') }}?v={{ $assetVersion('assets/iklim-krizi/css/style.css') }}">
 @endpush
 
 @section('content')
 
   <a href="#main-content" class="skip-link">İçeriğe atla</a>
 
-  <!-- Okuma ilerleme çubuğu: sayfa scroll yüzdesini üstte ince bir çizgiyle gösterir. -->
-  <div class="reading-progress" id="readingProgress" role="progressbar" aria-label="Sayfa okuma ilerlemesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  {{-- Reading progress bar along the top edge. Decorative: the section menu
+       below already exposes the current section to assistive tech. --}}
+  <div class="reading-progress" id="readingProgress" aria-hidden="true">
     <div class="reading-progress-fill" id="readingProgressFill"></div>
   </div>
 
-  <!-- Bölüm göstergesi: masaüstünde sağda sabit kapsül; bulunulan bölümün
-       noktası uzar, tıklanınca o bölüme kaydırır. -->
+  {{-- Section indicator: fixed capsule on the right on desktop; the current
+       section's dot stretches, clicking scrolls to that section. --}}
   <nav class="section-dotnav" id="sectionDotnav" aria-label="Bölümler arası hızlı gezinme">
     <a href="#hero-section" data-dot data-section="hero-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Ana Sayfa</span></a>
     <a href="#sdg-section" data-dot data-section="sdg-section"><span class="section-dotnav-dot"></span><span class="section-dotnav-label">Hedefler</span></a>
@@ -112,7 +122,7 @@
 
   <main id="main-content" data-asset-base="{{ asset('assets/iklim-krizi') }}/">
 
-  <!--========================================================================= Hero ============================================================================== -->
+  {{-- Hero --}}
 
   <section class="ik-hero-section" id="hero-section">
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="{{ asset('assets/iklim-krizi/image/hero-poster.webp') }}"
@@ -136,13 +146,12 @@
     </div>
   </section>
 
-  <!--========================================================================= SDG ============================================================================== -->
+  {{-- Sustainable Development Goals --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
   <section id="sdg-section" class="sdg-section theme-green">
 
-    <!-- Ana İnteraktif Alan -->
     <div class="sdg-zone">
 
       <div class="sdg-text-panel">
@@ -170,9 +179,8 @@
         <div class="sdg-card-inner" id="sdgCardInner"></div>
       </div>
 
-      <!-- 17 hedefin interaktif yörüngesi JavaScript ile çiziliyor; JS
-           çalışmazsa/kapalıysa hedefler bu düz listeyle her durumda okunur
-           kalır. -->
+      {{-- The interactive orbit of the 17 goals is drawn by JavaScript; this plain
+           list keeps the goals readable when JS is unavailable. --}}
       <noscript>
         <ol class="sdg-fallback-list">
           <li>Yoksulluğa Son</li>
@@ -193,14 +201,14 @@
           <li>Barış ve Adalet</li>
           <li>Hedefler İçin Ortaklık</li>
         </ol>
-        <p><a href="https://sdgs.un.org/goals" target="_blank" rel="noopener">BM'nin resmi Sürdürülebilir Kalkınma Hedefleri sayfasını görüntüle →</a></p>
+        <p><a href="https://sdgs.un.org/goals" target="_blank" rel="noopener noreferrer">BM'nin resmi Sürdürülebilir Kalkınma Hedefleri sayfasını görüntüle →</a></p>
       </noscript>
 
     </div>
 
   </section>
 
-  <!--========================================================================= Neler Oluyor ============================================================================== -->
+  {{-- What is happening --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
@@ -212,156 +220,114 @@
         Türkiye kıyılarına, gezegenin şu anda verdiği sinyalleri kanıtlarıyla ve rakamlarıyla bir araya getirdik.</p>
     </div>
 
-    <!-- Vital Signs ─ science.nasa.gov/climate-change — Framer "Hover Ticker" tarzı
-         sonsuz kayan kart şeridi (style.css: @keyframes hoverTickerScroll, salt CSS).
-         Kartlar bir kez (aria-hidden olmayan) + döngü için bir daha (aria-hidden="true")
-         yazılıyor; üstüne gelince şerit duruyor. -->
+    {{-- Vital signs (science.nasa.gov/climate-change): endlessly scrolling card
+         strip driven by pure CSS (@keyframes hover-ticker-scroll). The cards are
+         rendered twice so the loop is seamless; the second copy is aria-hidden so
+         screen readers hear each card once. Hovering pauses the strip. --}}
     <div class="hover-ticker" id="vitalSignsTicker">
       <div class="hover-ticker-track">
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/wikipedia/komur-termik-santrali.webp') }}');"></div>
-          <i class="fa-solid fa-smog"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="431" aria-live="off">431</span>&#8239;<small>ppm</small></span>
-          <span class="vital-sign-label">Atmosferdeki CO₂ yoğunluğu, Haziran 2026 itibarıyla</span>
-        </div>
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/kum-tepeleri-gun-dogumu.webp') }}');"></div>
-          <i class="fa-solid fa-temperature-high"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true" aria-live="off">+1,19</span>&#8239;<small>°C</small></span>
-          <span class="vital-sign-label">1951-1980 dönemi ortalamasına kıyasla 2025 yılı küresel ortalama sıcaklık artışı</span>
-        </div>
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/metan-yogunlugu.webp') }}');"></div>
-          <i class="fa-solid fa-flask"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1938" aria-live="off">1.938</span>&#8239;<small>ppb</small></span>
-          <span class="vital-sign-label">Atmosferdeki metan (CH₄) yoğunluğu, Mart 2026 itibarıyla</span>
-        </div>
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/grace-fo-uydusu.webp') }}');"></div>
-          <i class="fa-solid fa-icicles"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true" aria-live="off">-%12,2</span>&#8239;<small>/on yıl</small></span>
-          <span class="vital-sign-label">Arktik deniz buzunun eylül ayı yıllık en düşük seviyesindeki on yıllık gerileme oranı</span>
-        </div>
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/un/UN7262680.webp') }}');"></div>
-          <i class="fa-solid fa-mountain"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-266" aria-live="off">-266</span> / <span class="count-num" data-count-to="-135" aria-live="off">-135</span>&#8239;<small>Gt/yıl</small></span>
-          <span class="vital-sign-label">Grönland ve Antarktika buz tabakalarının yıllık kütle kaybı</span>
-        </div>
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/sentinel-6-uydusu.webp') }}');"></div>
-          <i class="fa-solid fa-water"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true" aria-live="off">+102,4</span>&#8239;<small>mm</small></span>
-          <span class="vital-sign-label">Küresel ortalama deniz seviyesi yükselişi, uydu ölçümlerinin başladığı 1993'ten bu yana</span>
-        </div>
-        <div class="vital-sign-card">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/mercan-resifi.webp') }}');"></div>
-          <i class="fa-solid fa-droplet"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true" aria-live="off">+372</span>&#8239;<small>ZJ</small></span>
-          <span class="vital-sign-label">Okyanuslarda 1955'ten bu yana biriken fazladan ısı enerjisi</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/wikipedia/komur-termik-santrali.webp') }}');"></div>
-          <i class="fa-solid fa-smog"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="431" aria-live="off">431</span>&#8239;<small>ppm</small></span>
-          <span class="vital-sign-label">Atmosferdeki CO₂ yoğunluğu, Haziran 2026 itibarıyla</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/kum-tepeleri-gun-dogumu.webp') }}');"></div>
-          <i class="fa-solid fa-temperature-high"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true" aria-live="off">+1,19</span>&#8239;<small>°C</small></span>
-          <span class="vital-sign-label">1951-1980 dönemi ortalamasına kıyasla 2025 yılı küresel ortalama sıcaklık artışı</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/metan-yogunlugu.webp') }}');"></div>
-          <i class="fa-solid fa-flask"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="1938" aria-live="off">1.938</span>&#8239;<small>ppb</small></span>
-          <span class="vital-sign-label">Atmosferdeki metan (CH₄) yoğunluğu, Mart 2026 itibarıyla</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/grace-fo-uydusu.webp') }}');"></div>
-          <i class="fa-solid fa-icicles"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true" aria-live="off">-%12,2</span>&#8239;<small>/on yıl</small></span>
-          <span class="vital-sign-label">Arktik deniz buzunun eylül ayı yıllık en düşük seviyesindeki on yıllık gerileme oranı</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/un/UN7262680.webp') }}');"></div>
-          <i class="fa-solid fa-mountain"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="-266" aria-live="off">-266</span> / <span class="count-num" data-count-to="-135" aria-live="off">-135</span>&#8239;<small>Gt/yıl</small></span>
-          <span class="vital-sign-label">Grönland ve Antarktika buz tabakalarının yıllık kütle kaybı</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/sentinel-6-uydusu.webp') }}');"></div>
-          <i class="fa-solid fa-water"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true" aria-live="off">+102,4</span>&#8239;<small>mm</small></span>
-          <span class="vital-sign-label">Küresel ortalama deniz seviyesi yükselişi, uydu ölçümlerinin başladığı 1993'ten bu yana</span>
-        </div>
-        <div class="vital-sign-card" aria-hidden="true">
-          <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/mercan-resifi.webp') }}');"></div>
-          <i class="fa-solid fa-droplet"></i>
-          <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true" aria-live="off">+372</span>&#8239;<small>ZJ</small></span>
-          <span class="vital-sign-label">Okyanuslarda 1955'ten bu yana biriken fazladan ısı enerjisi</span>
-        </div>
+        @foreach ([false, true] as $isLoopCopy)
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/wikipedia/komur-termik-santrali.webp') }}');"></div>
+            <i class="fa-solid fa-smog"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="431" aria-live="off">431</span>&#8239;<small>ppm</small></span>
+            <span class="vital-sign-label">Atmosferdeki CO₂ yoğunluğu, Haziran 2026 itibarıyla</span>
+          </div>
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/kum-tepeleri-gun-dogumu.webp') }}');"></div>
+            <i class="fa-solid fa-temperature-high"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="1.19" data-count-decimals="2" data-count-plus="true" aria-live="off">+1,19</span>&#8239;<small>°C</small></span>
+            <span class="vital-sign-label">1951-1980 dönemi ortalamasına kıyasla 2025 yılı küresel ortalama sıcaklık artışı</span>
+          </div>
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/metan-yogunlugu.webp') }}');"></div>
+            <i class="fa-solid fa-flask"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="1938" aria-live="off">1.938</span>&#8239;<small>ppb</small></span>
+            <span class="vital-sign-label">Atmosferdeki metan (CH₄) yoğunluğu, Mart 2026 itibarıyla</span>
+          </div>
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/grace-fo-uydusu.webp') }}');"></div>
+            <i class="fa-solid fa-icicles"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="-12.2" data-count-decimals="1" data-count-percent="true" aria-live="off">-%12,2</span>&#8239;<small>/on yıl</small></span>
+            <span class="vital-sign-label">Arktik deniz buzunun eylül ayı yıllık en düşük seviyesindeki on yıllık gerileme oranı</span>
+          </div>
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/un/UN7262680.webp') }}');"></div>
+            <i class="fa-solid fa-mountain"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="-266" aria-live="off">-266</span> / <span class="count-num" data-count-to="-135" aria-live="off">-135</span>&#8239;<small>Gt/yıl</small></span>
+            <span class="vital-sign-label">Grönland ve Antarktika buz tabakalarının yıllık kütle kaybı</span>
+          </div>
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/sentinel-6-uydusu.webp') }}');"></div>
+            <i class="fa-solid fa-water"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="102.4" data-count-decimals="1" data-count-plus="true" aria-live="off">+102,4</span>&#8239;<small>mm</small></span>
+            <span class="vital-sign-label">Küresel ortalama deniz seviyesi yükselişi, uydu ölçümlerinin başladığı 1993'ten bu yana</span>
+          </div>
+          <div class="vital-sign-card"@if ($isLoopCopy) aria-hidden="true"@endif>
+            <div class="vital-sign-card-bg" style="background-image:url('{{ asset('assets/iklim-krizi/image/nasa/mercan-resifi.webp') }}');"></div>
+            <i class="fa-solid fa-droplet"></i>
+            <span class="vital-sign-value"><span class="count-num" data-count-to="372" data-count-plus="true" aria-live="off">+372</span>&#8239;<small>ZJ</small></span>
+            <span class="vital-sign-label">Okyanuslarda 1955'ten bu yana biriken fazladan ısı enerjisi</span>
+          </div>
+        @endforeach
       </div>
     </div>
 
-    <!-- Değişimin Kanıtları ─ science.nasa.gov/climate-change/evidence — her örnek
-         doğrudan arka plan üzerinde; satır sırasına göre metin/fotoğraf yönü
-         değişen (zigzag) düzen. -->
+    {{-- Evidence of change (science.nasa.gov/climate-change/evidence): rows
+         alternate text/photo sides (zigzag). --}}
     <div class="container evidence-zigzag">
       <div class="evidence-row">
         <div class="evidence-row-text">
-          <h4>Buz Tabakaları Küçülüyor</h4>
+          <h3>Buz Tabakaları Küçülüyor</h3>
           <p>NASA'nın GRACE uydu verilerine göre Grönland buz tabakası 1993-2019 arasında yılda ortalama 279 milyar ton, Antarktika ise 148 milyar ton buz kaybetti.</p>
         </div>
         <img loading="lazy" class="evidence-row-photo" src="{{ asset('assets/iklim-krizi/image/nasa/thwaites-buzulu.webp') }}" alt="Thwaites buzulu" decoding="async" width="1600" height="900">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
-          <h4>Buzullar Geri Çekiliyor</h4>
+          <h3>Buzullar Geri Çekiliyor</h3>
           <p>Alpler'den Himalayalar'a, Andlar'dan Alaska ve Afrika'ya kadar dünyanın hemen her yerindeki buzullar hızla küçülüyor.</p>
         </div>
         <img loading="lazy" class="evidence-row-photo" src="{{ asset('assets/iklim-krizi/image/nasa/miles-buzulu.webp') }}" alt="Geri çekilen buzul" decoding="async" width="1024" height="683">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
-          <h4>Kar Örtüsü Azalıyor</h4>
+          <h3>Kar Örtüsü Azalıyor</h3>
           <p>Uydu gözlemleri, Kuzey Yarımküre'deki ilkbahar kar örtüsünün son 50 yılda azaldığını ve karların her geçen yıl daha erken eridiğini gösteriyor.</p>
         </div>
         <img loading="lazy" class="evidence-row-photo" src="{{ asset('assets/iklim-krizi/image/nasa/kar-ortusu.webp') }}" alt="Azalan kar örtüsü uydu görüntüsü" decoding="async" width="320" height="240">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
-          <h4>Deniz Seviyesi Yükseliyor</h4>
+          <h3>Deniz Seviyesi Yükseliyor</h3>
           <p>Küresel deniz seviyesi son yüzyılda yaklaşık 20 santimetre yükseldi. Son yirmi yıldaki yükseliş hızı ise geçen yüzyılın neredeyse iki katı ve her yıl biraz daha hızlanıyor.</p>
         </div>
         <img loading="lazy" class="evidence-row-photo" src="{{ asset('assets/iklim-krizi/image/nasa/norfolk-su-baskini.webp') }}" alt="Kıyıda su baskını" decoding="async" width="640" height="480">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
-          <h4>Arktik Deniz Buzu Azalıyor</h4>
+          <h3>Arktik Deniz Buzu Azalıyor</h3>
           <p>Arktik deniz buzunun hem kapladığı alan hem de kalınlığı son birkaç on yılda hızla azaldı.</p>
         </div>
         <img loading="lazy" class="evidence-row-photo" src="{{ asset('assets/iklim-krizi/image/nasa/arktik-deniz-buzu-min.webp') }}" alt="Arktik deniz buzu" decoding="async" width="320" height="240">
       </div>
       <div class="evidence-row">
         <div class="evidence-row-text">
-          <h4>Aşırı Hava Olayları Sıklaşıyor</h4>
+          <h3>Aşırı Hava Olayları Sıklaşıyor</h3>
           <p>ABD'de 1950'den bu yana rekor yüksek sıcaklık olayları artarken rekor düşük sıcaklık olayları azalıyor. Yoğun yağış olaylarının sayısı da giderek artıyor.</p>
         </div>
         <img loading="lazy" class="evidence-row-photo" src="{{ asset('assets/iklim-krizi/image/nasa/belcika-sel.webp') }}" alt="Belçika'da sel" decoding="async" width="768" height="576">
       </div>
     </div>
 
-    <!-- Veri sahneleri ─ Global Isınma → Okyanuslar → Orman Yangınları: gezegenden
-         denizlerimize, oradan ormanlarımıza (belgeseldeki genel plandan yakın plana).
-         Görsel yapışık kalıyor, anlatım adımları yanından (mobilde altından) akıyor;
-         aktif adımı ve kaydırma ilerlemesini script.js'teki "Veri sahneleri" modülü
-         görsele aktarıyor. Grafikler yalnızca doğrulanmış veriden çiziliyor; JS
-         yoksa canlı grafiklerin yerinde ÇŞB grafikleri duruyor. -->
+    {{-- Data scenes: Global warming → Oceans → Forest fires, moving from the planet
+         to our seas and forests. The media stays sticky while the narrative steps
+         scroll beside it (below it on mobile); the "Data scenes" module in
+         script.js maps the active step and scroll progress onto the media.
+         Without JS the static ÇŞB charts stand in for the live charts. --}}
     <div class="container ik-scenes">
 
-      <!-- Global Isınma ─ data.giss.nasa.gov/gistemp + cevreselgostergeler.csb.gov.tr/sicaklik-85727 -->
+      {{-- Global warming: data.giss.nasa.gov/gistemp + cevreselgostergeler.csb.gov.tr/sicaklik-85727 --}}
       <article class="ik-scene" id="global-isinma" data-scene="stripes" aria-labelledby="global-isinma-title">
         <header class="ik-scene-header" data-aos="fade-up">
           <h3 class="ik-scene-title" id="global-isinma-title">Global Isınma</h3>
@@ -388,7 +354,7 @@
                 </div>
               </div>
               <div class="ik-scale-legend" aria-hidden="true"></div>
-              <figcaption class="ik-chart-source">Kaynak: <a href="https://data.giss.nasa.gov/gistemp/" target="_blank" rel="noopener">NASA GISS, GISTEMP v4</a> (yıllık küresel ortalama). Şerit fikri: <a href="https://showyourstripes.info/" target="_blank" rel="noopener">Ed Hawkins, #ShowYourStripes</a>.</figcaption>
+              <figcaption class="ik-chart-source">Kaynak: <a href="https://data.giss.nasa.gov/gistemp/" target="_blank" rel="noopener noreferrer">NASA GISS, GISTEMP v4</a> (yıllık küresel ortalama). Şerit fikri: <a href="https://showyourstripes.info/" target="_blank" rel="noopener noreferrer">Ed Hawkins, #ShowYourStripes</a>.</figcaption>
             </figure>
             <noscript>
               <figure class="ik-chart">
@@ -432,8 +398,8 @@
         </div>
       </article>
 
-      <!-- Okyanusların Isınması ─ MGM 2024 deniz suyu sıcaklığı değerlendirmeleri +
-           cevreselgostergeler.csb.gov.tr/deniz-suyu-sicakligi-85730 + NASA okyanus ısınması -->
+      {{-- Ocean warming: MGM 2024 sea surface temperature reports +
+           cevreselgostergeler.csb.gov.tr/deniz-suyu-sicakligi-85730 + NASA ocean warming --}}
       <article class="ik-scene" id="okyanuslarin-isinmasi" data-scene="photos" aria-labelledby="okyanuslarin-isinmasi-title">
         <header class="ik-scene-header" data-aos="fade-up">
           <h3 class="ik-scene-title" id="okyanuslarin-isinmasi-title">Okyanusların Isınması</h3>
@@ -442,9 +408,9 @@
 
         <div class="ik-seas">
           <figure class="ik-chart ik-seas-figure">
-            <!-- Harita: Natural Earth 1:10m kara ve deniz poligonları (kamu malı),
-                 bu proje için kırpılıp sadeleştirildi. Renk, iki dönem arasındaki
-                 artışa göre (style.css: .ik-map-sea). -->
+            {{-- Map: Natural Earth 1:10m land and sea polygons (public domain), cropped and
+                 simplified for this page. Sea colour encodes the increase between the two
+                 periods (style.css: .ik-map-sea). --}}
             <div class="ik-seas-map" role="img" aria-label="Harita: 1970-1980 ile 2014-2024 dönem ortalamaları arasında deniz suyu sıcaklığındaki artış. Marmara +2,2 °C, Ege +1,6 °C, Karadeniz +1,4 °C, Akdeniz +1,3 °C.">
               <svg class="ik-seas-map-svg" viewBox="0 0 1000 633" aria-hidden="true" focusable="false"><rect class="ik-map-water" width="1000" height="633"/><path class="ik-map-sea" data-sea="karadeniz" d="M834 0l24 19 27 27 29 21 18 6 12 8 3 7 14 5 4 5 8 33 5 12 0 9-3 7-14 18-16 11-13 4-7 6-21 9-7 1-6-2-9 0-19-8-29 5-14 6-9 0-23-5-8-4-34-7-4-6-10-6-7 1-7 6-5-1-6-4-5-6-6-16-7-2-18 5-13-6-8-10-1-5 2-4-7-2-13 6-72-3-49 18-11 9-31 17-5 10-5 4-22 1-23-7-21 3-30-5-13 1-5-2-30-14-7-6-11-19 2-7-2-5-13-20-11-7 13-16 7-2 2-28 10-14 9-2 7 3 5-7 1-19 4-12-1-14z"/><path class="ik-map-sea" data-sea="marmara" d="M344 204l5 0 3 5 13 8 24 3-1 1-44 7-8 6 13 7-2 3-19 0-17-1-16 2-1-1 3-7-6-1-5 0-2 2 6 6-6 3-13 1-7-4-2-5-8 1-6 3-14 0-2-2 4-4 24-12 9-10 3-9 13-2 8 1 13-6 30 7 8-2z"/><path class="ik-map-sea" data-sea="ege" d="M209 263l-4 14 1 13-3 6 1 7 35-7 4 1 0 2-11 15 8 11-2 10 10 5-5 7-7 4 7 15 3 2 9-1-3 3-11 2-7-2-3 5-4-5 0-9-4-5-3-1-3 1-1 4 3 8 0 5-4 0-3 6 15 8 5-3 6 4 4 5 3-1 14 6 1 6-1 10-8 2 0 2 4 4 3 13 4 3 4 0 7 6 1 6-12 2-2 3 1 7 4-3 44-1-12 13-3 1-15 2-8 3-8-7-8 4-6 1-4 3-2 0 2-3-24 11-7 6-3-3 0-3-43-7-1 3-5-5-26-13-2 2-2-4-8-9-4-1 1-4-2-8-1 0-3-15-2 2 0-4-11-8-2-28-3-8-14-5-5-9-10-2-6-9-6 0-5-5-23-8 2-2 10 0 13-9-5 0-4-8-2-6 4-3 3-2 9 5 0 3-3 5 2 2 3 0 6-5-5-11-6-9-7-5-7-15-12-15-1-5 4-16-1-8 9-5 6-1-4 6 2 6 21 12 1 8 3 6 12 4 2-2-10-7-4-10 2-2 11 2 9 13 5 4 3-4-2-6-12-11 1-3 4-2 5 1 12 5 9 8-6-11-9-6-9 0-1-4 2-4-7-9 1-4 16 1 8-4 7-8 5-2 10 5 5 1 16-9 7 4 4-1 8 4 18 3 8 4 4 10 34-1-3 6-14 6-9 8 0 8-2 7zM234 415l6 4 10-4-1-4-10-3-9 2-3 4 7 1zM202 313l-8 1-4 6 3 4 9 2 5-6 5 0-9 7 3 4 11 3 8-1-3-5 5 2 0-5-10-10 1-4-3-3-9 1 0 2-4 2zM193 381l5 5 5-4 1-4 2-1 0-15-7-4-9 2 1 4 7 10-6 5 1 2zM175 448l-9 8 5 9 5-3 1-4 1-7-3-3zM167 267l-4 4-3-3-9 1 1 9 6 1 3-4 1 5 4 1 5-15-4 1zM137 397l-3 2 0 4 13 13 1-4-2-10-5 0-4-5zM131 231l6-2 1-6-3-5-5 0-5 7 0 2 6 4zM70 335l-5-5-3 0-19 11 1 1 7-1 11 4 18 16 2 7 5 3 14 0 7 12 2 6 7 6 9 3 2-3 0-7-1-1-10-1-4-4-5-15 1-5-4-7-1-2-11-1-18-8-5-9zM78 554l-18-16-9-23 3-7-4-4 4-10 3 2-5-13 0-13-10-28-4-7-2-9 2-3 4 3 8 3 4 3 0 5 4 2 16-7-5-9-10-2-2-7 0-5-6-5 8-5 11-2 4-3 4 2 20 21 4-2 11 8 0 4 2-2 3 15 1 0 2 8-1 4 4 1 8 9 2 4 2-2 26 13 5 5 1-3 43 7 0 3 3 3 7-6 24-11-2 3 2 0 4-3 6-1 8-4 8 7-1 2 4 1 6 1 7-4 14-1-3 5 0 3 3-1 3 15-11 4-10 11 2 7-2 7 1 2-28 20 3-13-4 2 0 4-4 8 2 5 0 5-41 8-6 6-7 0-11 6-3-1 1-12-1-1-13 3-18-3-5-4-14-1-14 4-7 0-1-2-1-5-4 1-4-3 5-2-2-4-3 0-4 4-8 0-3-1-3-7-1 7-2 2-3-3-2 2z"/><path class="ik-map-sea" data-sea="akdeniz" d="M0 633l0-139 24 2 0-8 6-14 9 0 10 16 5 4-4 10 4 4-3 7 9 23 18 16-1 8 2 10 2 1 12-1 29 6 12 4 2 9 3 1 51-5 16 0 4-2 4-17 39-8 0-5-2-5 4-8 0-4 4-2-3 13 28-20 5 0 6-8 6-1-1-4 4-5 4-10 0-5-4 2-3-15 6-3 5-8 9 1 16 8 4 0 4-3 3 2 6 19 4 4 6 5 17 6 26-9 8 4 3-2 6-16 1-18 3-4 29 3 6 1 21 12 12 5 18 22 7 6 13 4 7-4 29-3 9-2 13-8 17-19 15-12 5-2 5 1 18 11 11 3 7-1 5-4 1-4 19-12 7 7 0 9-15 16-3 6 7 20-6 10-4 18 7 9 2 13-2 17 4 26-9 7-5 9zM511 591l6 14 12 6 9-1 4 5 3 1 3-7 17-5 14-14 18-1-7-14 1-6 31-23-18 7-7 5-22 7-15 1-18-3-3 14-6 1-6-2-4 2-9 7-4-2 1 8z"/><path class="ik-map-land" d="M676 633l8-9-1-2 5 0 5-5-7-24 2-6 0-6 3-6-2-5 0-9-5-5-2 0 0-2-3-3 3-2 0-4 3-5-2-6 4 0 5-10-9-20 12-14 7-4 2-4-1-8-5-7-6-1-9 9-6 0-3 3 0-1-2 3 3-1 1-2 3 1-5 4 4-3-3 6-4 2-3-2 2 2-4-1-5 4-18-12-4 0 0-1-7-5-4 0-6 3-14 12-5 7-5 4 0 5-4 2-2 6-1-5-3-2-4 5-5 4 0 2-2-3-5 4-5-2-15 1-3 4-7-1-7 4-7-1-15-8-17-24-10-2-4-4-18-8-2-2-19-4-9 1-4-3-6 7 0 16-4 9 2 3-5 8-1 1-1-4-6-3-5 1-2 4-4-1-3 2-7 2-3 3-3-1-2 2-2-4-3 0 2-1-10-2 0-2-3 2-13-10 2-1-2-4 2-1-1-4-5 0 2-5 3 0-1-2-7-6-5 6 1 2 1-3 1 1-2 3-2 1 1-3-5-3-4 0-1-2-1 1-1-7 0 1-3-1-1 2-2-1-2-5-3 2 2 1-1 3-4-2 0 1-2 0 2-2-3-1-1 5 3 3-3 0-10 10-3 0-1-2 4 0 2-3-2 0 0-3-1 1-3-1 8-2-2-2 1-1 1 1-1-3-3 2-6 2-10-1-2 6-6-2-4 3-3-1-3-3 3 0 2-3 8-1 1-2 6 1 7-2 6 2 2-1-3-4 3 0-2-3 2-1-1-1 6 1 0 1 0-2 1 0 2-4 1 1 4-3-10 0-1 1-6-1-10 3-10-1-1 2-6-3-2 0 0 2-1-2-2 0-1 4-2 0-2-7 3-3-2-1 3 0 0-2 1 2 3-1 3 4 6-3-2-4 3 0-1 1 2-1-1-2 1-3-3 0-2 3 0-3-3 1 2-5-1-1-1 3-3-1 0-3 2-2-1-1-5 3 1 1-4 1-3-2 2-3 0-4-3 0 2-8-10-4 1-2 9-1 2-2-1-8 2-4-2-4-4 0-9-5-5 2-5-12-6 1-3 7-3-5-5-3 0 2-2-4-1 2-6-3 3-3 0-3 1-1 0 3 3 1 0-2 5-1-2-4 2 1 1-1-3-3-3 1 1-2-3-9 3-3 5 2 6 8 1 3-3 1 0 3 4 7 2-8 4 4 11-3 4 1 4-4-7 0-5 2-6-7 4 2-3-3 1-3-3 0-3-3 1-1-1-4 5-2 4 1 1-2-2-3 2-1 2 2-1-3 6-2-1-4-3 2-3-2-3 2-3-2-1-5 4-3 0-1-6-7-1-4-6-1 2-3 1 2 7-7 0-2 6-4 0-5-23 3-11 4-8-1 4-11 0-19 2-4 2 1 6-4 2-9 5-1 11-12 13 1 5-4 10-1 2 3-2 1 8 5 15 0 6-4-4-1-6-6 4-3 14 4-7 5 2 2 20-2 15 2 6-2 13 2 3-4 3 0-2-2-5-1-2 1-10-4 10-7 15-2 6-3 1 2 4-3 3 2 10-2 8 1 1-3-8 1-5-3-15 2-3-4-3 1 2-2-1-2-12-7-1-3 3-3 1-4-1-1 5-5 35 5 13 0 7-4 27 8 20 0 8-6 1-9 37-19 5-6 7-2 10-6 16-3 20-9 49 5 8-2 10 2 10-4 3-6 4 1 3 4 4-1 2 1-5 1-1 5 7 11 3 3 14 5 19-7-2 6 3-5 3 2 5 6 0 9 13 13 2 1 4-1 5-7 7 0 11 5 3 7 4 2 8 1 12 6 4-1 4-5 1 1 3 0 0 4 6 5 18 2 3 2 11-1 5-3 4 1 9-5 13-3 5 2 8-4 3 1 7 6 5-1 8 4 5-1 6 4 9-3 8-6 5 1 7-4 6-6 5 0 24-12 16-23 2-5-1-11-5-8-9-36-4-5-8-3-4 1-6-13-5 1-4-5-13-2-9-5-3 2-6-12-14-5-3-6-8-5-19-21-11-8-6-8-7-3-504 0 0 2-2 1 2 10-4 13-1 12 2 4-2 6-5 5-7-4-8 2-3 2-4 9-6 2 2 2-3 9 1 20-8 0 0 3-5 2 1 5-7 0-3 6 1 2 0-2 2 2 1-2 5 1 1 2 3 0-1 1 1 4 3 0-1 5 12 14 2 9-3 1 0 4 6 13 4 4 10 7 26 12 10 2-3 4 1 2-4 8-8 3-10 0-4-8-1 0 2 3-1 3-5-3-14-3-7 3-4 4-10-2-11 1-4 10-7 9-6 4-6 1-3 3-15 7-4 7-13 10 2 3-11 6 5-11-2-7 17-10 5-1 3-4 3 1 2-3-2-4-9 2-5 2-3-1-17 1-5-13 3-2-3 0 0 1-4-2-19-1-12-5-1 1-5-1-2-1 2-2-2-1-5 0-2 4-5 2-4 4-5 0-2-2-2 2-3-6-3-1-6 2-4 3 1 2-1 1 2 0-12 7-6 0-7-4-6 3-1 4 5 6 6 3-5 2 2 6 7 2 1-4 3 5 8 3 8 11-5 1-7-9-7-2-4-4-10 1-2 3 1 3 3 4 11 5-1 5 2 1-2 4 1 0-4 0-4-4-1 1-1-6-6-7-12-4-3 1-2 2 2 5 6 7 9 3 1 3 3 1-3 1-11-4-6 1 1-3-3-6 1-5-2-4-13-5-3-4-4 0-3-8 6-1 2-2-3-5-4 0 0 3-4 1-1 3-4 0-1 3-3 1 4 6-6 13 1 7 7 6 1 5 6 6 5 13 7 5 9 12 4 9-7 3 1 1-1 1-8 0 2-3 1-1-1 4 6-5-4-8-10-4 1 4-5 1-1 4 1 4 1-2 2 1 1 3 3 4-1 4 5-2-4 5-7 2-3 3-5 0-3-2-5 2 0 1 2 0-1 1 2 1 6-1 4 4 13 3 3 7 4-1 0-3 6 3 1 3-2 3 4 1-2 2 9 1 1-1 3 2-1 1 5 7 14 4 5 5 0 5-4 1 3 7-1 5 1 1-1 1 2 2 0 3 1 1 0 7-2 3-4-2-3-7-4-3-2 2-4-9-3 1 0-2-4-1 2-4-4 0-3 1-2 3-9 0-7 4-4-1-1 3 1 2 5 0 4 3 0 2-4 2 3 1 0 7 8 5 1-2-2-3 4-2-1 6 2 2-1 0 4 2 3 3-13 3-2 1 2 2-4 1 1 2-2 0-5-3 0-3 1 0 1-2 2 1-1-2-4-1 0-2-2 2-4-5-4 1-3-5-3 2 2 11 7 13 0 5 2-1 2 3 1 9 4 8-1 2 2 0-1 3-2-1-1 2 0 2 1 0-1 3 2 4 4 3-1 2 4 3-1 2-5-1-2-5-4 0-5-7 1-2-3-2-1 1-1-8-5-1-5 2 0 3-3 3 1 3-1-1 0 3-2 0 1 9-1 5-1-4-5-4 1-2 0-10-1 0-7-12-4-1 1-7-6-1-2 1 0-83 11 8 5 1 18 7 9 8 4 0 1-2-6-4 1-1 4-2 6 2 5-2 2-1-2-3 3 0-5-2 1-1-1-1-3 2-6-3-1 1 2 1-3 0-1-3-4 1-2-2 2-2-6-2-2-5 0 2-3 2 1 2-2 1-5-9-3-2-1 7-8-1-2 3-2-3-7-2 0-371 1000 0 0 633zM128 386l-1 11-4 2-3-4-3 3-4-7-4 0-1-9-3 0 2-4-3 2 1-3-5-2 2-1-1-3-19-1-3-3 2-3-1-3-5-3-3-5-12-10-12-3 1 2-8 2 0-2 10-5 5-5 8-2 7 5 2 8 6 4 6 1 2 2 5 3 11 0 4 2-2 3 5 5-2 3 0 4 4 8 0 4 4 4 7 1 5-1zM228 329l0 3-3-1-3-6-2 1 5 6-1 2-5 1-13-4-4-4 7-3 4-3-1-1-5 0-6 7-8-4-3-2 0-3 4-5 1 2 5-1 6-2 0-4 10 0 0 2 3 1-2 4 8 7 3 7zM246 561l2-1 0 3-7 3-1-1 3-4 3 0zM267 496l0 2 3 0-4 2-1-3-3 0 0-3 3 0 2 2zM79 437l-4 1-1 2-6 1 4-4 7 0zM77 411l-1 5-4 0-1-5 6 0zM280 227l4 0-1 2-6 3-3-2 1-4 5 1zM241 452l1 2-2 0-4-5 4-1 1 4zM258 555l1 3-3 0-2 4-2-3 1-6-2-3 4-8 0-5 3-2 0 7-3 6 3 7zM50 504l5 5-3 1 0 5-3 0-4-4 0-8 2-4 3 5zM216 483l5 4-4 1-3 4-3-5 4 1 3-1-2-4zM122 476l3-1 1 6-11 2 2-7 3 3 2-1-3-2 3 0zM261 466l4 3-7 3-4 4-4-1-3 1-1 5-2-2 0-4 3 0 9-8 5-1zM198 464l4 3-4 0-6 6-6 2-1-2 5 0 0-3 7-3-1-2 2-1zM162 457l-4 4-4-2 2-6 4-2 0 1 1 0 2-1-1 6zM175 448l3 3-1 8-1 3-5 3-6-10 10-7zM168 434l-4 0 0-5 2-1 1 2 1-1 3 1-3 4zM153 423l-5-4 0-2 13 3 0 3-2 3-6-3zM118 416l1 4-6 6 0-7 5-3zM216 416l-7 8-12 3 5-8 6 1 8-4zM250 414l1 1-14 4-4-4-5 2-1-4 4-3 7-2 8 4-1-2 6 1-2 1 1 2zM148 411l-2 5-9-11-1-2-2 1-1-5 5-3 3 6 5 0 0 4 2 2-2 3 2 0zM133 345l-1 2-3-1-2 2-2-3 2 0 0-3-6-2 1-6 5 2 1 4 5 5zM171 266l0 3-5 5 0 8-6-4 2-2-1-2-4 4 2 3-3-1 1-2-6 1 1-5-2-5 10-1 3 3 8-5zM199 258l-1 2-12 2-5-2 5-5 8-2 3 1-1 4 3 0zM183 240l-1 1-5 2-7-5 7-2 5 1 1 3zM138 222l-1 0 1 1 0 6-7 3-3-3-3-1 0-5 6-6 4 1 3 4zM178 357l1 2-1 3-2 0-2-4 4-1zM71 323l-2-1 4-3 2 3-3 2-1-1zM149 296l2 2-3 5-1-5 2-2zM167 494l6 5-2 4-5-2 4-2-3-5zM291 487l0 3-2 0-1-3-3 0 4-4 1 0-2 2 3-1 0 3zM162 478l0-3 2-2 5 6-2 3-5-4zM134 458l3 6-3 2-3-7 0-2 3 1zM243 464l2-6-3-3 8 6 0 3-5 1-2-1zM121 449l4-2 0 5 0-1-1 2-2-1-2 0 1-3zM117 434l4-5-1 3 3 2-2 4-4 2 2-3 0-3-2 0zM146 432l1 3-4 2 0-2-1 0 1-7 3 1 0 3zM70 403l4-5-4 1 2-1-1-1 4-1 3 3-3 4-5 0zM83 325l-4-6 6 5 4 0-4 3-3-1 1-1zM96 318l-2 4-3 1 5-8 2 0-2 3zM309 497l-4 12-5 8 2 1-1 3-4-1-9 10-2 1-2-1-1-3 2-8-4-5 5-2 1-5 5-5 11-5 3 0 2-2 1 2zM206 362l-2 3 2 1 0 11-2 1 0 4-4 2-1 2-2 0-6-5 7-7-3-7-5-4 1-4 8-1 4 4 1-2 2 2zM214 568l-3 4 2 4 1-1-2 7-2 4-5 2-8-2-8 2-23 1-17 4-13 0 0-10-9-2-8-5-18 0-3-3-8-1-7 2-4-1-4-4 2-1 1-17 1-2 1 6 2 1 3-1 0-8 1-3 2 1 0 6 2 3 10 1 4-2-1-3 5 1 0 4-5 1 5 3 4-1 0 6 4 2 19-5 6 1 2-1 3 1 1-1 4 1 1 4 15 0 4 3 10-3 5 1-2 2 2 3-2 4 1 4 3 1 5-5 8-3 3 3 3-1 7-7zM621 545l2-1-1 3-21 15-5 6-3 0-3 2-1 8 10 12-7-1-5 3-5-3-4 1-3 10-9 3-2 0 0 1-7 3-8 1-4 4 1 4-4 0-2-6-12 0-12-6-2-6-3-3-2-13 7 3 6-8 16 1 3-5 0-10 7 2 18 2 11-2 6-4 13-3 7-5 18-8z"/><line class="ik-map-leader" x1="312" y1="222" x2="426" y2="294"/></svg>
               <p class="ik-seas-label" style="--left: 62.4%; --top: 13.1%;">Karadeniz <strong>+1,4 °C</strong></p>
@@ -457,7 +423,7 @@
               <span class="ik-seas-legend-ramp"></span>
               <span class="ik-seas-legend-ticks"><span>0</span><span>+1 °C</span><span>+2 °C</span></span>
             </div>
-            <figcaption class="ik-chart-source">Kaynak: MGM 2024 deniz suyu sıcaklığı değerlendirmeleri (<a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Karadeniz.pdf" target="_blank" rel="noopener">Karadeniz</a>, <a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Marmara.pdf" target="_blank" rel="noopener">Marmara</a>, <a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Ege.pdf" target="_blank" rel="noopener">Ege</a>, <a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Akdeniz.pdf" target="_blank" rel="noopener">Akdeniz</a>). Harita: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>.</figcaption>
+            <figcaption class="ik-chart-source">Kaynak: MGM 2024 deniz suyu sıcaklığı değerlendirmeleri (<a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Karadeniz.pdf" target="_blank" rel="noopener noreferrer">Karadeniz</a>, <a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Marmara.pdf" target="_blank" rel="noopener noreferrer">Marmara</a>, <a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Ege.pdf" target="_blank" rel="noopener noreferrer">Ege</a>, <a href="https://www.mgm.gov.tr/FILES/resmi-istatistikler/denizSuyu/2024-Akdeniz.pdf" target="_blank" rel="noopener noreferrer">Akdeniz</a>). Harita: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener noreferrer">Natural Earth</a>.</figcaption>
           </figure>
 
           <div class="ik-seas-text">
@@ -488,9 +454,9 @@
             </div>
             <p class="ik-doc-links-label">ÇŞB'nin yıllık grafikleri, 1970-2023</p>
             <div class="ik-doc-links">
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/karadeniz-suyu-sicakligi.png') }}" data-lightbox-alt="Grafik: Karadeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Karadeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/marmara-denizi-suyu-sicakligi.png') }}" data-lightbox-alt="Grafik: Marmara Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Marmara</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
-              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/ege-denizi-suyu-sicakligi.png') }}" data-lightbox-alt="Grafik: Ege Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Ege</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/karadeniz-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Karadeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Karadeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/marmara-denizi-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Marmara Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Marmara</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+              <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/ege-denizi-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Ege Denizi'nde yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Ege</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
               <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/akdeniz-suyu-sicakligi.webp') }}" data-lightbox-alt="Grafik: Akdeniz'de yıllık ortalama deniz suyu sıcaklıkları, 1970-2023 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Akdeniz</span><span class="ik-doc-link-meta">Yıllık ortalama</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
             </div>
           </div>
@@ -549,8 +515,8 @@
         </div>
       </article>
 
-      <!-- Orman Yangınları ─ OGM Ormancılık İstatistikleri 2024 (tablo 2.11) +
-           cevreselgostergeler.csb.gov.tr/orman-yanginlari-85850 -->
+      {{-- Forest fires: OGM Forestry Statistics 2024 (table 2.11) +
+           cevreselgostergeler.csb.gov.tr/orman-yanginlari-85850 --}}
       <article class="ik-scene" id="orman-yanginlari" data-scene="fires" aria-labelledby="orman-yanginlari-title">
         <header class="ik-scene-header" data-aos="fade-up">
           <h3 class="ik-scene-title" id="orman-yanginlari-title">Orman Yangınları</h3>
@@ -586,11 +552,11 @@
                   <div class="ik-stack" role="img" aria-label="Yığılmış çubuk grafik: 2024'te yangın sayısının %49'u ihmal ve kaza, %29'u bilinmeyen, %19'u doğal, %3'ü kasıt kaynaklı; yanan alanın %72'si ihmal ve kaza, %24'ü bilinmeyen, %3'ü doğal, %1'i kasıt kaynaklı yangınlarda."></div>
                 </div>
               </div>
-              <figcaption class="ik-chart-source">Kaynak: <a href="https://www.ogm.gov.tr/tr/e-kutuphane/resmi-istatistikler" target="_blank" rel="noopener">OGM, Ormancılık İstatistikleri 2024</a> (tablo 2.11).</figcaption>
+              <figcaption class="ik-chart-source">Kaynak: <a href="https://www.ogm.gov.tr/tr/e-kutuphane/resmi-istatistikler" target="_blank" rel="noopener noreferrer">OGM, Ormancılık İstatistikleri 2024</a> (tablo 2.11).</figcaption>
             </figure>
             <noscript>
               <figure class="ik-chart">
-                <img class="ik-chart-fallback" src="{{ asset('assets/iklim-krizi/image/csb/orman-yanginlari-1990-2024.png') }}" alt="Grafik: Orman yangınları 1990-2024" width="678" height="290" loading="lazy" decoding="async">
+                <img class="ik-chart-fallback" src="{{ asset('assets/iklim-krizi/image/csb/orman-yanginlari-1990-2024.webp') }}" alt="Grafik: Orman yangınları 1990-2024" width="678" height="290" loading="lazy" decoding="async">
                 <figcaption class="ik-chart-source">Kaynak: ÇŞB Çevresel Göstergeler</figcaption>
               </figure>
             </noscript>
@@ -614,7 +580,7 @@
               <h4 class="ik-scene-step-title">Yangınlar Nereden Çıkıyor?</h4>
               <p>2024'teki yangınların <strong>%49'u</strong> ihmal ve kazalardan çıktı; yanan alanın <strong>%72'si</strong> bu yangınlarda kaybedildi. Doğal nedenler yangınların %19'unu oluştursa da yanan alanın yalnızca %3'ünde etkili oldu.</p>
               <div class="ik-doc-links">
-                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/orman-yanginlari-1990-2024.png') }}" data-lightbox-alt="Grafik: Orman yangınları 1990-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Orman yangınları</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1990‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
+                <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/orman-yanginlari-1990-2024.webp') }}" data-lightbox-alt="Grafik: Orman yangınları 1990-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Orman yangınları</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1990‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
                 <button type="button" class="ik-doc-link" aria-haspopup="dialog" data-lightbox-src="{{ asset('assets/iklim-krizi/image/csb/yangin-cikis-nedenleri-1997-2024.webp') }}" data-lightbox-alt="Grafik: Çıkış nedenlerine göre yangın sayıları 1997-2024 (ÇŞB)"><span class="ik-doc-link-icon" aria-hidden="true"><i class="fa-solid fa-chart-column"></i></span><span class="ik-doc-link-text"><span class="ik-doc-link-name">Çıkış nedenleri</span><span class="ik-doc-link-meta">ÇŞB grafiği · 1997‑2024</span></span><i class="fa-solid fa-up-right-and-down-left-from-center ik-doc-link-expand" aria-hidden="true"></i></button>
               </div>
             </li>
@@ -625,7 +591,7 @@
     </div>
   </section>
 
-  <!--========================================================================= İklim Krizinin Sebepleri ============================================================================== -->
+  {{-- Causes of the climate crisis --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
@@ -1013,7 +979,7 @@
     </div>
   </section>
 
-  <!--========================================================================= İki Olası Gelecek (Sonuçlar) ============================================================================== -->
+  {{-- Two possible futures (consequences) --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
@@ -1022,10 +988,9 @@
       <h2 class="section-title">Karşılaşabileceğimiz <em>Gelecek</em></h2>
     </div>
 
-    <!-- Framer "CardShowcase" referansı: yatay kart şeridi, aktif kart flex
-         ile genişleyip açıklamayı gösteriyor, diğerleri daralıyor; belirli
-         aralıkla otomatik ilerliyor, karta tıklayınca da o karta atlıyor
-         (script.js: initFutureCardShowcase). -->
+    {{-- Horizontal card strip: the active card widens to reveal its description
+         while the others narrow; it auto-advances and clicking a card jumps to it
+         (script.js: future card showcase). --}}
     <div class="card-showcase" id="futureCardShowcase">
       <div class="card-showcase-track" id="futureCardShowcaseTrack">
         <div class="card-showcase-card active" style="--cs-img:url('{{ asset('assets/iklim-krizi/image/nasa/solomon-kiyisi.webp') }}');">
@@ -1068,7 +1033,7 @@
             <p>İnsan kaynaklı iklim değişikliğinin son on yıllarda yanan orman alanını zaten iki katına çıkardığı tahmin ediliyor. 2050'ye doğru yangınla yanan alanın 2 ila 6 kat daha artması bekleniyor.</p>
           </div>
         </div>
-        <div class="card-showcase-card" style="--cs-img:url('{{ asset('assets/iklim-krizi/image/nasa/oklahoma-sel-yolu.gif') }}');">
+        <div class="card-showcase-card" style="--cs-img:url('{{ asset('assets/iklim-krizi/image/nasa/oklahoma-sel-yolu.webp') }}');">
           <div class="card-showcase-progress"><span></span></div>
           <div class="card-showcase-photo"></div>
           <div class="card-showcase-body">
@@ -1104,7 +1069,7 @@
     </div>
   </section>
 
-  <!--========================================================================= Neler Yapmalıyız ============================================================================== -->
+  {{-- What we should do --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
@@ -1120,9 +1085,8 @@
         <h3 class="steps-group-title"><i class="fa-solid fa-person-walking"></i> Bireysel Adımlar</h3>
         <p class="steps-group-desc">Her gün attığın küçük adımlar, zamanla büyük bir sonuca dönüşür.</p>
         <div class="reel" id="individualReel"></div>
-        <!-- JavaScript'in oluşturduğu görsel "makara" (reel) karuseli çalışmazsa
-             (tarayıcı JS desteklemiyor/kapalı, arama motoru taraması vb.) adım
-             içeriği aşağıdaki listeyle her durumda okunabilir kalır. -->
+        {{-- Plain-list fallback for the JS step carousel, so the steps stay readable
+             without JavaScript and for crawlers. --}}
         <noscript>
           <div class="reel-fallback">
             <article class="reel-fallback-item">
@@ -1201,7 +1165,7 @@
     </div>
   </section>
 
-  <!--========================================================================= Neler Yapılıyor ============================================================================== -->
+  {{-- What is being done --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
@@ -1348,7 +1312,7 @@
     </div>
   </section>
 
-  <!--========================================================================= Kaynaklar ============================================================================== -->
+  {{-- Resources --}}
 
   <div class="ik-seam" aria-hidden="true"></div>
 
@@ -1364,7 +1328,7 @@
 
       <div class="bento-grid" id="bentoGrid">
         <a class="bento-card bento-span-2" data-bento="spotlight" href="https://www.un.org/climatechange"
-          target="_blank" rel="noopener">
+          target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">UN Climate Action</h3>
             <i class="fa-solid fa-arrow-up-right-from-square bento-card-arrow"></i>
@@ -1378,7 +1342,7 @@
           </ul>
         </a>
 
-        <a class="bento-card" data-bento="counter" href="https://climate.nasa.gov" target="_blank" rel="noopener">
+        <a class="bento-card" data-bento="counter" href="https://climate.nasa.gov" target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">NASA Climate</h3>
             <i class="fa-solid fa-arrow-up-right-from-square bento-card-arrow"></i>
@@ -1391,7 +1355,7 @@
           <span class="bento-counter-label">1880'den bu yana küresel ortalama ısınma</span>
         </a>
 
-        <a class="bento-card" data-bento="timeline" href="https://www.ipcc.ch" target="_blank" rel="noopener">
+        <a class="bento-card" data-bento="timeline" href="https://www.ipcc.ch" target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">IPCC</h3>
             <i class="fa-solid fa-arrow-up-right-from-square bento-card-arrow"></i>
@@ -1410,7 +1374,7 @@
         </a>
 
         <a class="bento-card" data-bento="chart"
-          href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions" target="_blank" rel="noopener">
+          href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions" target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">Our World in Data</h3>
             <i class="fa-solid fa-arrow-up-right-from-square bento-card-arrow"></i>
@@ -1425,7 +1389,7 @@
           </div>
         </a>
 
-        <a class="bento-card" href="https://www.imdb.com/title/tt14539726/" target="_blank" rel="noopener">
+        <a class="bento-card" href="https://www.imdb.com/title/tt14539726/" target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">Breaking Boundaries</h3>
             <span class="bento-card-tag"><i class="fa-solid fa-clapperboard"></i> Belgesel</span>
@@ -1435,7 +1399,7 @@
             verilerle ele alan Netflix belgeseli.</p>
         </a>
 
-        <a class="bento-card" href="https://www.imdb.com/title/tt9253866/" target="_blank" rel="noopener">
+        <a class="bento-card" href="https://www.imdb.com/title/tt9253866/" target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">Our Planet</h3>
             <span class="bento-card-tag"><i class="fa-solid fa-clapperboard"></i> Belgesel</span>
@@ -1445,7 +1409,7 @@
             üzerindeki etkisini gözler önüne seren Netflix belgesel serisi.</p>
         </a>
 
-        <a class="bento-card" href="https://www.imdb.com/title/tt0497116/" target="_blank" rel="noopener">
+        <a class="bento-card" href="https://www.imdb.com/title/tt0497116/" target="_blank" rel="noopener noreferrer">
           <div class="bento-card-head">
             <h3 class="bento-card-title">An Inconvenient Truth</h3>
             <span class="bento-card-tag"><i class="fa-solid fa-clapperboard"></i> Belgesel</span>
@@ -1457,18 +1421,18 @@
     </div>
   </section>
 
-  <!--========================================================================= Kaynakça ============================================================================= -->
+  {{-- Bibliography --}}
 
   <section id="sources-section" class="sources-section theme-green">
     <div class="container sources-inner">
       <span class="sources-label">Kaynakça</span>
       <div class="sources-links">
-        <a href="https://science.nasa.gov/climate-change/" target="_blank" rel="noopener"><i class="fa-solid fa-satellite"></i> NASA: Climate Change</a>
-        <a href="https://cevreselgostergeler.csb.gov.tr/" target="_blank" rel="noopener"><i class="fa-solid fa-landmark"></i> ÇŞB: Çevresel Göstergeler</a>
-        <a href="https://sdgs.un.org/" target="_blank" rel="noopener"><i class="fa-solid fa-earth-europe"></i> BM: Sürdürülebilir Kalkınma Hedefleri</a>
-        <a href="https://media.un.org/photo/en" target="_blank" rel="noopener"><i class="fa-solid fa-camera"></i> BM Fotoğraf Arşivi</a>
-        <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener"><i class="fa-brands fa-wikipedia-w"></i> Wikimedia Commons</a>
-        <a href="https://www.pexels.com/" target="_blank" rel="noopener"><i class="fa-solid fa-image"></i> Pexels</a>
+        <a href="https://science.nasa.gov/climate-change/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-satellite"></i> NASA: Climate Change</a>
+        <a href="https://cevreselgostergeler.csb.gov.tr/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-landmark"></i> ÇŞB: Çevresel Göstergeler</a>
+        <a href="https://sdgs.un.org/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-earth-europe"></i> BM: Sürdürülebilir Kalkınma Hedefleri</a>
+        <a href="https://media.un.org/photo/en" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-camera"></i> BM Fotoğraf Arşivi</a>
+        <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-wikipedia-w"></i> Wikimedia Commons</a>
+        <a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-image"></i> Pexels</a>
       </div>
     </div>
   </section>
@@ -1478,12 +1442,12 @@
 @endsection
 
 @push('scripts')
-  <!-- GSAP + ScrollTrigger (bölüm bazlı giriş animasyonları). Sürüm sabit:
-       CDN'deki genel 3 etiketi yeni sürüme sessizce geçiyor. -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
-  <!-- Lenis (framer.com/m/Lenis) — ataletli/akışkan kaydırma hissi -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"></script>
+  {{-- GSAP + ScrollTrigger for section entrance animations. Versions are pinned
+       and verified with SRI so a CDN change cannot alter or inject code. --}}
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" integrity="sha384-wl5TeDVvOWt30Pbf8aSo2ZrzsOjddu3avOBvHe+p+OhJt9gP6w9YXmDkN5DK2/dF" crossorigin="anonymous"></script>
+  {{-- Lenis: smooth (inertial) scrolling --}}
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js" integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA" crossorigin="anonymous"></script>
 
-  <script src="{{ asset('assets/iklim-krizi/js/script.js') }}?v={{ filemtime(public_path('assets/iklim-krizi/js/script.js')) }}"></script>
+  <script src="{{ asset('assets/iklim-krizi/js/script.js') }}?v={{ $assetVersion('assets/iklim-krizi/js/script.js') }}"></script>
 @endpush

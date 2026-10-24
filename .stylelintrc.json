@@ -1,0 +1,29 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "media-feature-range-notation": "prefix",
+    "no-descending-specificity": null,
+    "selector-id-pattern": null,
+    "custom-property-pattern": [
+      "^[a-z0-9]+(-{1,2}[a-z0-9]+)*$",
+      {
+        "message": "Use kebab-case; a double dash marks a negative fluid-scale step (e.g. --step--1)."
+      }
+    ],
+    "property-no-vendor-prefix": null,
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-syntaxes"]
+      }
+    ],
+    "declaration-property-value-no-unknown": [
+      true,
+      {
+        "ignoreProperties": {
+          "-webkit-mask-composite": ["source-in"]
+        }
+      }
+    ]
+  }
+}

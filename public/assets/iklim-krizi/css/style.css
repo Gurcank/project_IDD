@@ -1,65 +1,69 @@
 :root {
   --idd-green: #2c7933;
   --idd-accent-green: #56c02b;
-  /* Odak halkası vurgusu (adım karuseli, görsel künyesi düğmeleri). */
+
+  /* Focus ring accent (step carousel, image credit buttons). */
   --idd-accent-yellow: #ffb648;
   --idd-dark-bg: #16201a;
-  /* Acik gri yuzey tonu — theme-gray section zemini ve gosterge kartlari. */
+
+  /* Light grey surface: theme-gray section background and indicator cards. */
   --surface-gray: #e8e9eb;
   --sdg12-color: #d87624;
   --sdg13-color: #3f7e44;
   --sdg14-color: #0a97d9;
   --sdg15-color: var(--idd-accent-green);
-  --white-08: rgba(255, 255, 255, 0.08);
-  --white-10: rgba(255, 255, 255, 0.1);
-  --white-60: rgba(255, 255, 255, 0.6);
-  --white-65: rgba(255, 255, 255, 0.65);
-  --white: #ffffff;
-  --black: #000000;
-  --black-70: rgba(0, 0, 0, 0.7);
-  /* Sitenin navbar/footer koyusu (iklimdd.org); bölüm göstergesi kapsülü
-     ve etiketi bu tondan türüyor. */
+  --white-08: rgb(255 255 255 / 8%);
+  --white-10: rgb(255 255 255 / 10%);
+  --white-60: rgb(255 255 255 / 60%);
+  --white-65: rgb(255 255 255 / 65%);
+  --white: #fff;
+  --black: #000;
+  --black-70: rgb(0 0 0 / 70%);
+
+  /* The site's navbar/footer dark (iklimdd.org); the section indicator capsule
+     and its label derive from it. */
   --site-dark: #212529;
-  --site-dark-80: rgba(33, 37, 41, 0.8);
-  /* WCAG 2.5.8 asgari dokunma hedefi. */
+  --site-dark-80: rgb(33 37 41 / 80%);
+
+  /* WCAG 2.5.8 minimum target size. */
   --target-min: 24px;
-  /* Dosyada en çok kullanılan yumuşak yavaşlama eğrisi. */
+
+  /* The most used soft ease-out curve in this file. */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 200ms;
   --dur-base: 400ms;
 
-  /* Bileşen dili: iki seviye köşe (küçük kart/sekme ve medya/panel) ve iki
-     seviye yükselti (yerinde duran kart, öne çıkan kart/kaplama). Önceden
-     10–32px arası yedi farklı köşe ve her kartta ayrı gölge vardı. */
+  /* Component language: two corner radii (small card/tab, media/panel) and two
+     elevations (resting card, raised card/overlay). */
   --radius-s: 12px;
   --radius-l: 20px;
-  --shadow-1: 0 4px 18px rgba(0, 0, 0, 0.08);
-  --shadow-2: 0 20px 50px rgba(0, 0, 0, 0.18);
+  --shadow-1: 0 4px 18px rgb(0 0 0 / 8%);
+  --shadow-2: 0 20px 50px rgb(0 0 0 / 18%);
 
-  /* Veri renkleri — dataviz doğrulayıcısından gri (#e8e9eb) zeminde geçti.
-     Kategorik dilimler sabit sırayla atanır; üçü 3:1'in altında kaldığı için
-     grafiklerde görünür etiket (lejant) zorunlu. İyi/kritik yalnızca anlamı
-     iyi/kötü olan serilerde ve etiketle birlikte kullanılır. */
+  /* Data colours, validated on the grey (#e8e9eb) surface. Categorical slices
+     are assigned in a fixed order; three of them are below 3:1, so charts must
+     show visible labels (legend). Good/critical are only used for series whose
+     meaning is good/bad, and always with a label. */
   --data-series-1: #2a78d6;
   --data-series-2: #eb6834;
   --data-series-3: #1baf7a;
   --data-series-4: #eda100;
   --status-critical: #d03b3b;
   --status-good: var(--idd-green);
-  /* Grafik işaretleri: vurgulanmayan (bağlam) sütunlar gri zeminde 3,26:1,
-     vurgu sıcaklık ölçeğinin turuncu-kırmızısı 3,07:1; ikisi de grafik
-     öğeleri için gereken 3:1'i geçiyor. Sütunlar en çok 24px, aralar 2px,
-     veri ucu 4px yuvarlak. */
+
+  /* Chart marks: context columns 3.26:1 on grey, the highlight (warm end of the
+     temperature scale) 3.07:1; both pass the 3:1 required for graphics.
+     Columns at most 24px wide, 2px gaps, 4px rounded data end. */
   --chart-context: #7d8086;
   --chart-accent: var(--anomaly-8);
-  --chart-grid: rgba(0, 0, 0, 0.12);
+  --chart-grid: rgb(0 0 0 / 12%);
   --chart-gap: 2px;
   --chart-bar-max: 24px;
   --chart-bar-radius: 4px;
 
-  /* Sıcaklık anomalisi ıraksak ölçeği (ColorBrewer RdBu, 11 adım): 0 en
-     soğuk, 5 nötr orta nokta (baz dönem ortalaması), 10 en sıcak. Isınma
-     şeridi dikişleri ve Global Isınma sahnesi aynı ölçeği okur. */
+  /* Diverging temperature anomaly scale (ColorBrewer RdBu, 11 steps): 0 is the
+     coldest, 5 the neutral midpoint (baseline mean), 10 the warmest. The seams
+     and the Global Warming scene read the same scale. */
   --anomaly-0: #053061;
   --anomaly-1: #2166ac;
   --anomaly-2: #4393c3;
@@ -71,72 +75,67 @@
   --anomaly-8: #d6604d;
   --anomaly-9: #b2182b;
   --anomaly-10: #67001f;
-  /* Deniz haritası: veri taşımayan su (İyon Denizi, boğazlar) nötr, kara
-     beyaz; dört deniz artışa göre sıcaklık ölçeğinden renk alıyor. */
+
+  /* Sea map: water without data (Ionian Sea, straits) is neutral, land white;
+     the four seas are coloured from the temperature scale by their increase. */
   --map-water: #cfd8df;
   --map-land: var(--white);
-  --map-coast: rgba(0, 0, 0, 0.25);
-  /* Sabit üst menünün yüksekliği; yapışık sahne görselleri bunun altında
-     duruyor. script.js menüyü ölçüp güncelliyor, bu değer ilk boyama için. */
+  --map-coast: rgb(0 0 0 / 25%);
+
+  /* Height of the fixed site menu; sticky scene media sits below it. script.js
+     measures the menu and updates this; the value is for the first paint. */
   --ik-header-offset: 76px;
-  /* Climate Crisis fontunun değişken "YEAR" ekseni (fonts.google.com/specimen/
-     Climate+Crisis) — "zamanın seçilen bir konu üzerindeki etkisini metaforik
-     şekilde gösterir": eksen değeri arttıkça harfler daha çok "eriyor". Sadece
-     başlık/alt başlık öğeleri buna bağlanıyor (script.js: her section'ın
-     ortası viewport'un ortasından geçtiğinde --yr, 2000-2040 aralığında o
-     section'ın index'ine göre güncelleniyor); diğer tüm metinler düz fontta
-     kalıyor. */
+
+  /* The Climate Crisis font's variable YEAR axis: the higher the value, the
+     more the letters "melt". Only headings and lead paragraphs are bound to it
+     (script.js sets --yr between 2000 and 2040 as each section passes the
+     middle of the viewport); all other text keeps the regular font. */
   --yr: 2000;
 
-  /* responsive-plan.md §6 — akışkan tipografi/aralık ölçeği (320→1440px).
-     Bu proje zaten çoğu bileşende kendi clamp() değerlerini kullanıyor
-     (SDG orbit, hero vb.) ve onlar dokunulmadan bırakıldı — burası, YENİ
-     kod için tek-kaynaklı bir ölçek sağlayan, saf ek altyapı. Formül ve
-     değerler plan dosyasındaki örnekle birebir aynı (utopia.fyi tipi
-     hesap): clamp(minPx/16rem, kesişim/16rem + eğim×100vw, maxPx/16rem). */
-  --step--1: clamp(0.875rem, 0.839rem + 0.179vw, 1rem);      /* 14 → 16 */
-  --step-0:  clamp(1rem,     0.929rem + 0.357vw, 1.25rem);   /* 16 → 20 */
-  --step-1:  clamp(1.25rem,  1.107rem + 0.714vw, 1.75rem);   /* 20 → 28 */
-  --step-2:  clamp(1.5rem,   1.143rem + 1.786vw, 2.75rem);   /* 24 → 44 */
-  --step-3:  clamp(2rem,     1.286rem + 3.571vw, 4.5rem);    /* 32 → 72 */
-
-  --space-xs: clamp(0.5rem,  0.429rem + 0.357vw, 0.75rem);   /*  8 → 12 */
-  --space-s:  clamp(1rem,    0.857rem + 0.714vw, 1.5rem);    /* 16 → 24 */
-  --space-m:  clamp(1.5rem,  1.143rem + 1.786vw, 2.75rem);   /* 24 → 44 */
-  --space-l:  clamp(2.5rem,  1.786rem + 3.571vw, 5rem);      /* 40 → 80 */
-  --space-xl: clamp(4rem,    2.571rem + 7.143vw, 9rem);      /* 64 → 144 */
-
+  /* Fluid type/space scale (320 → 1440px, utopia.fyi style):
+     clamp(min/16 rem, intercept/16 rem + slope × 100vw, max/16 rem).
+     Existing components keep their own clamp() values; this scale is for new
+     code. */
+  --step--1: clamp(0.875rem, 0.839rem + 0.179vw, 1rem); /* 14 → 16 */
+  --step-0: clamp(1rem, 0.929rem + 0.357vw, 1.25rem); /* 16 → 20 */
+  --step-1: clamp(1.25rem, 1.107rem + 0.714vw, 1.75rem); /* 20 → 28 */
+  --step-2: clamp(1.5rem, 1.143rem + 1.786vw, 2.75rem); /* 24 → 44 */
+  --step-3: clamp(2rem, 1.286rem + 3.571vw, 4.5rem); /* 32 → 72 */
+  --space-xs: clamp(0.5rem, 0.429rem + 0.357vw, 0.75rem); /*  8 → 12 */
+  --space-s: clamp(1rem, 0.857rem + 0.714vw, 1.5rem); /* 16 → 24 */
+  --space-m: clamp(1.5rem, 1.143rem + 1.786vw, 2.75rem); /* 24 → 44 */
+  --space-l: clamp(2.5rem, 1.786rem + 3.571vw, 5rem); /* 40 → 80 */
+  --space-xl: clamp(4rem, 2.571rem + 7.143vw, 9rem); /* 64 → 144 */
   --measure: 65ch;
-  --container: 75rem;   /* 1200px — genel varsayılan; bölümlerin kendi
-                            max-width'leri (760/900/1080/1560px vb.) kasıtlı
-                            farklı ve değiştirilmedi */
+  --container: 75rem; /* 1200px general default; sections with their own max-width
+   (760/900/1080/1560px, etc.) differ on purpose. */
   --gutter: var(--space-s);
 }
 
-/* margin, padding (üstte 32px) ve Inter yazı ailesi sitenin global
-   stillerinden (frontend.partials.styles) geliyor; burada yalnızca bu
-   sayfanın farkları var. */
+/* Margin, padding (32px top) and the Inter family come from the site's global
+   styles (frontend.partials.styles); only this page's differences are here. */
 html,
 body {
-  /* Sayfanın zemini. Section'lar kendi (siyah/fotoğraf) arka planlarını
-     taşımıyor — hero hariç tüm sayfa bu zemin üzerinde akıyor. */
+  /* Page background. Sections do not carry their own backgrounds (except the
+     hero), so the whole page flows on this colour. */
   background: #133700;
-  /* Sitenin global stili overflow-x:hidden veriyor. hidden, overflow-y'yi de
-     örtük olarak "auto"ya çevirip body'yi yeni bir kaydırma kabına
-     dönüştürüyor ve position:sticky'yi (veri sahneleri, kart yığını) kırıyor.
-     Bu dosya global stillerden sonra yüklendiği için "clip" onu eziyor; 100vw
-     kullanan tam genişlik bölümlerin yatay taşması da yine engelleniyor. */
+
+  /* The site's global style sets overflow-x:hidden. hidden implicitly turns
+     overflow-y into auto, making <body> a scroll container that breaks
+     position:sticky (data scenes, card stack). This file loads after the global
+     styles, so clip overrides it while still preventing horizontal overflow
+     from full-width 100vw sections. */
   overflow-x: clip;
 }
 
-/* responsive-plan.md §5.2 — genel güvenlik ağı: hiçbir medya kendi
-   kapsayıcısını taşırmaz, hiçbir uzun kelime/URL metni yatayda kırmaz.
-   :where() özgüllüğü sıfırlıyor; .ik-hero-video gibi sınıf bazlı boyut
-   kuralları bunun üzerine yazmaya devam eder, bu yalnızca ölçüsü
-   tanımlanmamış durumlar için bir taban. Sitenin header'ı, footer'ı ve başa
-   dön butonu kapsam dışı: diğer sayfalardakiyle birebir aynı kalmaları
-   gerekiyor (taban kural logonun genişliğini piksel altı değiştiriyordu). */
-:where(img, picture, video, canvas, svg, iframe):not(:where(body > .navbar *, body > footer *, body > .scroll-to-top *)) {
+/* Safety net: media never overflows its container and long words/URLs never
+   break the layout horizontally. :where() keeps specificity at zero so class
+   based sizes (e.g. .ik-hero-video) still win. The site header, footer and
+   back-to-top button are excluded so they stay identical to every other page
+   (the base rule changed the logo width by a sub-pixel). */
+:where(img, picture, video, canvas, svg, iframe):not(
+  :where(body > .navbar *, body > footer *, body > .scroll-to-top *)
+) {
   max-width: 100%;
   height: auto;
 }
@@ -145,9 +144,8 @@ body {
   overflow-wrap: break-word;
 }
 
-/* Başlık/alt başlık öğelerinin ortak "eriyen yıl" davranışı — font-family
-   Climate Crisis olan her başlık bu kuralı miras alır (font-variation-settings
-   inherited bir özellik), tek tek tekrar etmek gerekmiyor. */
+/* Shared "melting year" behaviour for headings: font-variation-settings is
+   inherited, so every Climate Crisis heading picks it up without repetition. */
 .ik-hero-title,
 .rotator-text,
 .section-title,
@@ -155,34 +153,34 @@ body {
 .cause-fullwidth-heading,
 .ik-scene-title,
 .steps-group-title {
-  font-variation-settings: "YEAR" var(--yr);
+  font-variation-settings: 'YEAR' var(--yr);
   transition: font-variation-settings 1.2s ease;
 }
 
-/*  ========================================================================= Hero Section Styles =============================================================================== */
-
+/* Hero */
 .ik-hero-section {
   position: relative;
   height: 100vh;
-  /* svh, adres çubuğu en açık haldeyken (en küçük) görünür yüksekliği temel
-     alır — dvh gibi adres çubuğu her kayışta yeniden hesaplanmadığından,
-     scroll sırasında video/section boyutu "titremiyor" (dvh önceden bu
-     titremeye, yani arka plan videosunun sürekli büyüyüp küçülmesine yol
-     açıyordu); çubuk gizlenince altta minik bir boşluk kalabilir ama bu,
-     içeriğin çubuğun arkasında kırpılmasından (klasik sabit vh sorunu) çok
-     daha az rahatsız edici. */
+
+  /* svh is based on the smallest visible height (address bar fully shown).
+     Unlike dvh it is not recomputed while the bar slides, so the video/section
+     does not resize (jitter) during scroll. A small gap may show when the bar
+     hides, which is far less disruptive than content cut off behind the bar
+     (the classic vh problem). */
   height: 100svh;
-  /* Ekran yüksekliğinin %85'i */
+
+  /* 85% of the viewport height. */
   width: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #000;
-  /* Video yüklenene kadar yedek siyah arka plan */
+
+  /* Black fallback until the video loads. */
 }
 
-/* Tam Ekran Responsive Video Modülü */
+/* Full-bleed responsive video */
 .ik-hero-video {
   position: absolute;
   top: 50%;
@@ -193,13 +191,14 @@ body {
   height: auto;
   transform: translate(-50%, -50%);
   object-fit: cover;
-  /* Videonun en-boy oranını koruyarak container'ı kaplar */
+
+  /* Cover the container while keeping the video's aspect ratio. */
   z-index: 1;
-  /* En alt katman */
+
+  /* Bottom layer. */
 }
 
-/* Klavye kullanıcıları için "İçeriğe atla" bağlantısı — odaklanana kadar
-   ekran dışında, Tab ile odaklanınca sol üstte görünür olur. */
+/* Skip link for keyboard users: off-screen until focused, then shown top-left. */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -218,7 +217,7 @@ body {
   top: 0;
 }
 
-/* ── Okuma ilerleme çubuğu ── */
+/* ── Reading progress bar ── */
 .reading-progress {
   position: fixed;
   top: 0;
@@ -233,19 +232,20 @@ body {
 .reading-progress-fill {
   height: 100%;
   width: 0%;
-  /* Koyu navbar'ın üst kenarında duruyor: marka yeşilinin açık tonu orada
-     6,6:1 kontrast veriyor (koyu #2c7933 yalnızca 2,9:1). */
+
+  /* It sits on the dark navbar's top edge: the light brand green gives 6.6:1
+     there (the dark #2c7933 only 2.9:1). */
   background: var(--idd-accent-green);
   transition: width 0.1s linear;
 }
 
-/* ── Bölüm göstergesi (kapsül) — sadece geniş ekranlarda ──
-   Kullanıcının verdiği referans: koyu yarı saydam dikey kapsül, içinde küçük
-   noktalar; bulunulan bölümün noktası dikeyde uzayıp kapsüle dönüşüyor.
-   Kapsül koyu olduğu için beyaz, gri ve yeşil bölümlerin hepsinde seçiliyor.
-   Bölüm adı sade görünümü bozmasın diye yalnızca hover/klavye odağında
-   kapsülün solunda çıkıyor. Yuvalar 24px (dokunma hedefi), aktif yuva 40px;
-   toplam yükseklik hep aynı kaldığı için kapsül boyu oynamıyor. */
+/* ── Section indicator (capsule), wide screens only ──
+   A dark translucent vertical capsule with small dots; the current section's
+   dot stretches into a pill. Being dark, it stands out on white, grey and
+   green sections. The section name appears to the left only on hover or
+   keyboard focus, keeping the default look clean. Slots are 24px (target
+   size), the active one 40px; the total height stays constant so the capsule
+   never changes length. */
 .section-dotnav {
   position: fixed;
   right: 24px;
@@ -259,16 +259,16 @@ body {
   background: var(--site-dark-80);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  /* Aktif yuvanın yükseklik geçişi yalnızca bu küçük kutunun içini yeniden
-     yerleştirsin, sayfanın geri kalanına yayılmasın. */
+
+  /* Keep the active slot's height transition from triggering layout outside
+     this small box. */
   contain: layout;
   transition: opacity 0.3s ease;
 }
 
-/* SDG kartı (.sdg-card-panel'in kendi z-index'i yok, "auto") açılınca
-   dot-nav'ın z-index:900'ü onun ÜSTÜNE biniyordu — sağdaki noktalar açılan
-   beyaz kartın üzerinde asılı kalıyordu. Bir SDG kartı görünürken dot-nav'ı
-   arka plana (görünmez + tıklanamaz) alıyoruz; kart kapanınca normale döner. */
+/* The SDG card (.sdg-card-panel has z-index:auto) would otherwise sit below
+   the dot nav's z-index:900, leaving the dots floating over the open card.
+   While a card is visible, hide the dot nav (invisible and not clickable). */
 body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   opacity: 0;
   pointer-events: none;
@@ -289,14 +289,16 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   height: 40px;
 }
 
-/* Kapsül biçimi transform:scaleY ile büyütülünce yuvarlak uçlar elipse
-   dönüşüyordu; bu yüzden 7 minik öğede bilinçli olarak height anime ediliyor. */
+/* Scaling the pill with transform:scaleY turned the rounded ends into
+   ellipses, so height is animated on purpose (only 7 tiny elements). */
 .section-dotnav-dot {
   width: 8px;
   height: 8px;
   border-radius: 999px;
   background: var(--white-60);
-  transition: height 0.25s var(--ease-out), background-color 0.2s ease;
+  transition:
+    height 0.25s var(--ease-out),
+    background-color 0.2s ease;
 }
 
 .section-dotnav a:hover .section-dotnav-dot,
@@ -325,7 +327,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   opacity: 0;
   pointer-events: none;
   transform: translate(8px, -50%);
-  transition: opacity 0.2s ease, transform 0.2s var(--ease-out);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s var(--ease-out);
 }
 
 .section-dotnav a:hover .section-dotnav-label,
@@ -334,8 +338,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   transform: translate(0, -50%);
 }
 
-/* İki tonlu odak halkası: beyaz çizgi koyu kapsülde, koyu gölge beyaz ve
-   yeşil zeminde görünür kalıyor. */
+/* Two-tone focus ring: the white line shows on the dark capsule, the dark
+   shadow on white and green backgrounds. */
 .section-dotnav a:focus-visible {
   outline: 2px solid var(--white);
   outline-offset: 2px;
@@ -356,55 +360,54 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Koyu Renk Maske (Overlay) */
+/* Dark overlay */
 .video-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.35) 100%);
+  background: linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 35%) 100%);
   z-index: 2;
-  /* Videonun üstünde, metnin altında */
+
+  /* Above the video, below the text. */
 }
 
-/* Kahraman videosu durdur/oynat kontrolü — WCAG 2.2.2: 5 sn'den uzun süren
-   otomatik hareketli içerik için durdurma imkânı zorunlu. */
-/* Ön Plan İçerik Katmanı */
+/* Foreground content layer */
 .ik-hero-content {
   position: relative;
   z-index: 3;
-  /* En üst katman, böylece etkileşime açık (tıklanabilir) olur */
+
+  /* Top layer so it stays interactive. */
   text-align: center;
-  color: #ffffff;
+  color: #fff;
   padding: 0 20px;
   max-width: 800px;
 }
 
-/* Tipografi ve Buton Tasarımı */
+/* Typography */
 .ik-hero-title {
-  /* fonts.google.com/specimen/Climate+Crisis — "eriyen" görünümlü tematik
-     variable font; sadece en büyük/vitrin başlıklarda kullanılıyor
-     (küçük punto/kart başlıklarında okunabilirlik düşer). */
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
+  /* Climate Crisis ("melting" variable display font) is used only for the
+     largest showcase headings; at small sizes it hurts legibility. */
+  font-family: 'Climate Crisis', Montserrat, sans-serif !important;
   font-size: 4rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -1px;
   margin-bottom: 1.5rem;
   color: #fff;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 12px rgb(0 0 0 / 30%);
 }
 
 .ik-hero-subtitle {
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgb(255 255 255 / 90%);
   margin-bottom: 1.2rem;
 }
 
-/* Text Rotator Styles */
+/* Text rotator */
 .text-rotator-wrapper {
   min-height: 4rem;
   margin-bottom: 1.5rem;
@@ -415,7 +418,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .rotator-text {
-  font-family: 'Climate Crisis', 'Montserrat', Arial, Helvetica, sans-serif;
+  font-family: 'Climate Crisis', Montserrat, Arial, Helvetica, sans-serif;
   font-size: 2.5rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -427,11 +430,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Animasyon Durumları */
+/* Animation states */
 .rotator-text.visible {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0px);
+  filter: blur(0);
 }
 
 .rotator-text.exit {
@@ -450,11 +453,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Mobil Breakpoint Uyumluluğu — yatay telefon (kısa yükseklik) de aynı
-   küçük başlık/altyazı boyutlarını kullanır: genişlik ≤767px kuralı tek
-   başına yatay telefonları (genelde 650-930px geniş) yakalamıyordu, bu da
-   4rem'lik masaüstü başlığın overflow:hidden'lı 100svh kutuda kırpılma
-   riski taşımasına yol açıyordu. */
+/* Small screens, including landscape phones (short height): the width-only
+   ≤767px rule missed landscape phones (usually 650-930px wide), so the 4rem
+   desktop title risked being clipped in the overflow:hidden 100svh box. */
 @media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
   .ik-hero-title {
     font-size: 2.5rem;
@@ -466,37 +467,34 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
   .ik-hero-section {
     height: 100vh;
-    /* Taban kuraldaki (.ik-hero-section, yukarıda) 100svh düzeltmesi bu media
-       query'de height'ı tekrar yazdığı için kayboluyordu — adres çubuğu
-       görünürken içerik tam da mobilde kırpılıyordu. svh burada da tekrar
-       edilmeli (bkz. responsive-plan.md §8.1). */
+
+    /* Repeat svh here: this media query rewrites height, which would otherwise
+       drop the base rule's 100svh fix and clip content behind the mobile address
+       bar. */
     height: 100svh;
     padding-top: 44px;
-    /* Mobil navbar yüksekliğine göre güncellendi */
+
+    /* Matches the mobile navbar height. */
   }
 }
 
-/*  ========================================================================= SDG Section Styles =============================================================================== */
+/* SDG section */
 
-/* Section'lara bölme (100vh slayt) mimarisi kaldırıldı: bu bölüm artık
-   sayfanın düz akışında, kendi içeriği kadar yer kaplıyor; fotoğraf arka
-   plan yerine sayfanın genel zeminini (body arkasındaki #liquidBgCanvas)
-   kullanıyor — kendi opak rengini taşımıyor ki akışkan doku altından görünsün. */
+/* Part of the normal page flow and only as tall as its content; it has no
+   opaque background of its own. */
 .sdg-section {
   position: relative;
   padding: 100px 20px;
   touch-action: auto;
 }
 
-/* Climate Crisis çok geniş bir font: "Sürdürülebilir" ~10,1em tutuyor ve
-   metin sütunu dar ekranlarda bu genişliğin altında kalınca global
-   overflow-wrap:break-word kelimeyi harfinden bölüyordu. Başlık artık
-   sütunun kendi genişliğine (cqi) göre küçülüyor, böylece kelime her ekranda
-   tek satıra sığıyor; overflow-wrap:normal bölmeyi bu başlıkta kapatıyor.
-   9.5cqi, fontun glif taşması için ~%10 pay bırakıyor. İlk font-size, cqi
-   desteklemeyen tarayıcılar için yedek. */
+/* Climate Crisis is very wide: "Sürdürülebilir" is ~10.1em, and on narrow
+   columns the global overflow-wrap:break-word split the word mid-letter. The
+   title scales with its column (cqi) so the word always fits on one line, and
+   overflow-wrap:normal disables splitting here. 9.5cqi leaves ~10% for glyph
+   overhang. The first font-size is the fallback without cqi support. */
 .sdg-main-title {
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
+  font-family: 'Climate Crisis', Montserrat, sans-serif !important;
   font-size: clamp(2rem, 5vw, 3.5rem) !important;
   font-size: min(clamp(2rem, 5vw, 3.5rem), 9.5cqi) !important;
   font-weight: 900 !important;
@@ -505,7 +503,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   letter-spacing: -1px !important;
   margin: 0 0 20px !important;
   overflow-wrap: normal;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 2px 12px rgb(0 0 0 / 55%);
 }
 
 .sdg-main-title em {
@@ -515,46 +513,36 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .sdg-main-desc {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgb(255 255 255 / 85%);
   max-width: 560px;
   margin: 0 auto;
   line-height: 1.85;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 2px 12px rgb(0 0 0 / 55%);
 }
 
-/* Kullanıcı isteği: metin solda, dünya section'ın TAM ortasında, açılan
-   kart sağda. 2 sütunlu flex + justify-content:center, metin ile
-   dünyayı TEK bir blok olarak ortalıyordu — bu da metnin genişliğine
-   göre dünyanın gerçek merkezden kaymasına yol açıyordu. 3 sütunlu grid
-   (1fr auto 1fr) bunu yapısal olarak çözüyor: orta sütun (dünya) içeriği
-   kadar dar, iki yanındaki 1fr sütunlar HER ZAMAN eşit — üçüncü sütunda
-   hiç öğe olmasa bile (kart normal akışın dışında, position:absolute)
-   grid onu boş bırakıp genişliğini birinci sütunla eşitliyor, bu da
-   ortadaki dünyayı satırın tam merkezine sabitliyor. */
+/* Text left, globe exactly centred in the section, card on the right. A
+   2-column flex with justify-content:center centred text + globe as one
+   block, so the globe drifted with the text width. A 3-column grid
+   (1fr auto 1fr) fixes this structurally: the side columns are always equal,
+   even when the third is empty (the card is position:absolute), so the globe
+   sits in the exact centre of the row. */
 .sdg-zone {
   display: grid;
-  /* minmax(0,1fr) — düz "1fr" sütunları varsayılan olarak kendi
-     içeriğinin min-content genişliğinin altına inemiyor (flex'teki
-     min-width:auto'nun grid karşılığı); metin sütununun içeriği varken
-     boş üçüncü sütununkinin olmaması, iki "1fr"yi eşitsiz yapıp ortadaki
-     dünyayı yine merkezden kaydırıyordu. minmax(0,1fr) bu örtük alt
-     sınırı kaldırıp iki yan sütunun HER ZAMAN piksel piksel eşit
-     olmasını garanti ediyor. */
+
+  /* minmax(0, 1fr): a plain 1fr column cannot shrink below its min-content
+     width (the grid equivalent of min-width:auto), so the text column outgrew
+     the empty third column and pushed the globe off centre again. */
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 30px;
   width: 100%;
 }
 
-/* Sol taraf: Sabit başlık/açıklama metni.
-   justify-self kasıtlı olarak stretch (varsayılan, tekrar belirtmeye
-   gerek yok): start yaparsak öğe grid sütununun genişliğini yok sayıp
-   kendi max-width'ine göre boyutlanır, dar sütunlarda (ör. 1440px'te
-   ~372px) 420px'lik metin kutusu sığmayıp orbit'in üstüne taşardı.
-   stretch ile kutu her zaman sütunun gerçek genişliğine sabit kalıyor,
-   metin onun İÇİNDE text-align:left ile sola yaslanıyor — aynı görünüm,
-   taşma riski yok. min-width:0 da aynı taşma sınıfına karşı ek güvence
-   (grid sütunlarının örtük içerik-tabanlı asgari genişliğini kaldırır). */
+/* Left: fixed title/description. justify-self stays stretch (the default):
+   with start the item sizes to its own max-width and the 420px box overflows
+   narrow columns (e.g. ~372px at 1440px) onto the orbit. With stretch it
+   matches the column and the text aligns left inside it. min-width:0 removes
+   the grid's implicit content-based minimum for the same reason. */
 .sdg-text-panel {
   container-type: inline-size;
   max-width: 420px;
@@ -563,9 +551,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   text-align: left;
 }
 
-/* Satır düzeninde (≥1440px) üst sınır kullanıcı isteğiyle büyütülmüş
-   2.7rem; metin sütunu bu boyuta dar geldiğinde başlık yine sütun
-   genişliğine göre küçülüyor (1440px'te ~35px). */
+/* In the row layout (≥1440px) the cap is 2.7rem; if the column is too narrow
+   the title still scales down with it (~35px at 1440px). */
 @media (min-width: 1440px) {
   .sdg-text-panel .sdg-main-title {
     font-size: 2.7rem !important;
@@ -573,15 +560,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Orta: Orbital alanı — grid'in auto sütununda, artık flex-grow/margin
-   hesaplarıyla uğraşmıyor; genişliği doğrudan clamp() ile veriliyor.
-   min-width artık 0 değil: .sdg-orbit-ring (halka) her zaman bu kutudan
-   biraz taşacak şekilde tasarlanmış (bkz. aşağıdaki .sdg-orbit-ring
-   yorumu), min-width:0 satır sıkıştığında bu kutuyu halkanın kendi
-   ihtiyacının altına düşürebiliyordu — 1280x800 (Nest Hub Max) gibi
-   yaygın bir genişlikte dünya/node'lar sol taraftaki başlık metnine
-   biniyordu. 350px, halkanın alt sınırının (300px) + node taşma payının
-   güvenli tabanı. */
+/* Centre: orbit area in the grid's auto column, sized directly with clamp().
+   min-width is not 0: the ring is designed to overflow this box slightly, and
+   min-width:0 let a squeezed row shrink it below what the ring needs, so at
+   common widths such as 1280x800 the globe and nodes overlapped the title.
+   350px = the ring's minimum (300px) + node overflow. */
 .sdg-orbit-wrapper {
   width: clamp(340px, 38vw, 500px);
   min-width: 375px;
@@ -590,17 +573,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   justify-content: center;
 }
 
-/* Tıklanan node'un bilgi kartı (başlangıçta gizli) — kullanıcı isteğiyle
-   artık satırın bir sütunu değil, dünyanın/orbit'in TAM ÖNÜNE gelen
-   ortalanmış bir kaplama. Konumlanma referansı artık .sdg-zone değil,
-   doğrudan #sdg-section (position:relative kaldırıldı .sdg-zone'dan) —
-   bu sayede yüzde ölçüleri section'ın TÜM yeşil alanına göre hesaplanıyor.
-   width/max-height %100'ün altında tutulduğu ve top/left:50% + -50%
-   transform ile ortalandığı sürece kartın kenarları matematiksel olarak
-   asla section'ın (yeşil arka planın) dışına taşamaz. .sdg-section normal
-   akışın içinde (fixed değil) olduğundan bu absolute konum da sayfayla
-   birlikte dünyayla AYNI hızda kayar — sadece artık dünyanın yanında
-   değil, üstünde duruyor. */
+/* Info card of the clicked node (hidden at first): a centred overlay on top
+   of the globe/orbit. It is positioned against #sdg-section (not .sdg-zone),
+   so percentages refer to the whole green area; with width/max-height below
+   100% and top/left:50% + -50% translate, its edges can never leave the
+   section. The section is in normal flow, so the card scrolls with the globe. */
 .sdg-card-panel {
   position: absolute;
   top: 50%;
@@ -612,7 +589,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -50%) translateY(20px);
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sdg-card-panel.sdg-card-visible {
@@ -621,12 +600,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   pointer-events: auto;
 }
 
-/* Kullanıcı isteği: satır düzeninde (≥1440px, metin sol + dünya ortada)
-   açılan kart artık ortalanmış bir kaplama değil, section'ın SAĞ
-   tarafına yerleşiyor — yatay ortalamayı (-50%) kaldırıp left yerine
-   right kullanıyoruz, dikey ortalama (top:50% + translateY(-50%)) aynen
-   kalıyor. Genişlik de daha dar: tam genişlik yerine sağ şeride oturan,
-   metin sütunuyla görsel olarak dengeli bir kart. */
+/* In the row layout (≥1440px, text left + globe centre) the card docks on
+   the section's right side instead: no horizontal centring, right instead of
+   left, same vertical centring, and a narrower width that balances the text
+   column. */
 @media (min-width: 1440px) {
   .sdg-card-panel {
     left: auto;
@@ -640,9 +617,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Genişlik ve halka çapı clamp() ile akışkan: sabit 560px canvas satır
-   düzeninde .sdg-zone satırının sığmasını engelliyordu. ≤1439px ve ≤575px
-   breakpoint'lerindeki sabit piksel override'lar aşağıda. */
+/* Width and ring diameter are fluid with clamp(): a fixed 560px canvas kept
+   the .sdg-zone row from fitting. Fixed-pixel overrides for ≤1439px and
+   ≤575px follow below. */
 .sdg-orbit-canvas {
   position: relative;
   width: clamp(360px, 33vw, 560px);
@@ -657,18 +634,16 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   position: absolute;
   width: clamp(300px, 27vw, 480px);
   height: clamp(300px, 27vw, 480px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgb(255 255 255 / 7%);
   border-radius: 50%;
   pointer-events: none;
 }
 
-/* Center Core — halkayla aynı oranda (halka çapının ~%62,5'i) küçülsün diye
-   halkayla aynı clamp() ailesinden, önceden hiçbir breakpoint'te
-   küçülmüyordu; ≤575px'te halka 250px'e inince gif (sabit 300px) halkadan
-   taşıyordu. Artık boyut/köşe/gölge burada: video kaynağının kendisinde
-   dünyanın etrafında geniş bir beyaz boşluk var, bu yüzden kırpma çerçevesi
-   (overflow:hidden) bu elemente taşındı ki aşağıdaki .sdg-center-gif
-   üzerindeki zoom transformu beyazı taşırıp kırpabilsin. */
+/* Centre core: same clamp() family as the ring so it scales with it (~62.5%
+   of the ring diameter); previously it never shrank and overflowed the 250px
+   ring at ≤575px. Size, radius and shadow live here, and so does the clipping
+   (overflow:hidden): the source video has wide white margins around the
+   globe, so the zoom on .sdg-center-gif below can push them out of view. */
 .sdg-center-core {
   width: clamp(190px, 17vw, 300px);
   height: clamp(190px, 17vw, 300px);
@@ -676,13 +651,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   overflow: hidden;
   position: relative;
   z-index: 25;
-  box-shadow: 0 0 30px rgba(44, 121, 51, 0.4);
+  box-shadow: 0 0 30px rgb(44 121 51 / 40%);
 }
 
-/* Kaynak videoda gezegen kareyi doldurmuyor, geniş beyaz kenar boşluğuyla
-   ortada duruyor; object-fit:cover bu boşluğu kırpmadığından (video zaten
-   çerçeveden daha az kare-dışı taşıyor) transform:scale ile içeriği
-   büyütüp beyazı çerçevenin (.sdg-center-core) dışına itiyoruz. */
+/* The planet does not fill the source video's frame; object-fit:cover cannot
+   crop that margin, so the content is scaled up to push the white edge
+   outside .sdg-center-core. */
 .sdg-center-gif {
   width: 100%;
   height: 100%;
@@ -690,7 +664,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   transform: scale(2.05);
 }
 
-/* Arkadaki ping animasyonlarının boyutunu GIF'e uyumlu hale getirmek için: */
+/* Match the background ping animations to the video size. */
 .sdg-center-core::before {
   width: 140px;
   height: 140px;
@@ -708,9 +682,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* ≤1100px/≤575px'te logo 36px/30px'e küçülüyor — dokunma alanı en az
-     44px kalsın diye görünürde değişiklik yaratmadan (arka plan/border yok)
-     kutuyu büyütüyoruz. */
+
+  /* At ≤1100px/≤575px the logo shrinks to 36px/30px; the box is enlarged
+     invisibly (no background/border) so the hit area stays at least 44px. */
   min-width: 44px;
   min-height: 44px;
   will-change: transform, opacity;
@@ -723,17 +697,20 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: 50px;
   height: 50px;
   border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.12);
+  border: 2px solid rgb(255 255 255 / 12%);
   object-fit: cover;
   display: block;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 65%);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   -webkit-user-drag: none;
 }
 
 .sdg-node:hover .sdg-node-logo {
-  border-color: rgba(255, 255, 255, 0.55);
+  border-color: rgb(255 255 255 / 55%);
   transform: scale(1.12);
 }
 
@@ -741,7 +718,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   transform: scale(1.3);
   border-width: 3px;
   border-color: var(--sdg-node-color, #fff);
-  box-shadow: 0 0 22px var(--sdg-node-color, rgba(255, 255, 255, 0.5));
+  box-shadow: 0 0 22px var(--sdg-node-color, rgb(255 255 255 / 50%));
 }
 
 .sdg-node.sdg-dimmed {
@@ -751,7 +728,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .sdg-card-inner {
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid rgb(0 0 0 / 6%);
   border-radius: var(--radius-l);
   padding: 30px 36px;
   border-left: 5px solid var(--sdg-color, var(--idd-green));
@@ -774,7 +751,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   pointer-events: none;
 }
 
-
 /* Top block: logo + title */
 .sdg-card-top {
   display: flex;
@@ -792,10 +768,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   object-fit: cover;
 }
 
-/* Kart artık her genişlikte dünyanın/orbit'in önünde durduğundan aktif
-   node kartın altında kalıyor — tekrar tıklayıp kapatma yolu erişilemez
-   olduğundan × düğmesi tüm ekranlarda görünür (kart dışına tıklamak da
-   hâlâ çalışıyor, bkz. script.js "DIŞARI TIKLAMA"). */
+/* The card covers the globe/orbit at every width, so the active node is
+   hidden behind it and clicking it again is impossible; the × button is
+   therefore visible on all screens (clicking outside the card also closes it,
+   see script.js "Outside click resets"). */
 .sdg-card-close {
   display: flex;
   position: absolute;
@@ -807,7 +783,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   justify-content: center;
   border: none;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.06);
+  background: rgb(0 0 0 / 6%);
   color: #333;
   font-size: 1.6rem;
   line-height: 1;
@@ -816,7 +792,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .sdg-card-titles h3 {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: 1.65rem !important;
   font-weight: 900 !important;
   color: var(--sdg-color, var(--idd-green));
@@ -833,14 +809,14 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   margin: 0;
 }
 
-/* Şu An Dünyada / Bu Hedef Ne Amaçlıyor blokları */
+/* "Şu An Dünyada" / "Bu Hedef Ne Amaçlıyor" blocks */
 .sdg-card-block {
   margin-bottom: 16px;
 }
 
 .sdg-card-eyebrow {
   display: block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -862,11 +838,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   align-items: center;
   gap: 18px;
   padding-top: 16px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgb(0 0 0 / 8%);
 }
 
 .sdg-stat-value {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 2.1rem;
   font-weight: 900;
   color: var(--sdg-color, var(--idd-green));
@@ -882,10 +858,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 /* ── Responsive ──
-   Satır düzeni (metin sol, dünya orta) 1440px altında dikey istife geçiyor:
-   daha dar genişliklerde metin sütunu "Sürdürülebilir" kelimesini başlık
-   boyutunda taşıyamıyor, başlık 1280px'te ~28px'e iniyordu (kullanıcı
-   kararı). Küçük ekrana özgü boyut ayarları ayrıca ≤1100px'te. */
+   Below 1440px the row layout (text left, globe centre) stacks vertically:
+   narrower text columns cannot hold "Sürdürülebilir" at heading size (the
+   title dropped to ~28px at 1280px). Small-screen sizing follows at ≤1100px. */
 @media (max-width: 1439px), (max-height: 500px) and (orientation: landscape) {
   .sdg-zone {
     display: flex;
@@ -898,9 +873,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
     flex: none;
     width: 360px;
     height: 360px;
-    /* Sütun düzeninde align-items:center orbit'i ortalıyor zaten — satır
-       düzeninden miras kalan margin-right burada gereksiz, üstelik
-       kutuyu merkezden hafifçe sola kaydırır. */
+
+    /* align-items:center already centres the orbit in the column layout; the
+       margin-right inherited from the row layout would nudge it left. */
     margin-right: 0;
   }
 
@@ -933,9 +908,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
     border-radius: 6px;
   }
 
-  /* Base kuraldaki width:min(960px,90%) bu dar ekranlarda zaten %90'a
-     iniyor (960px hiçbir zaman devreye girmiyor) — ayrı bir override
-     gerekmiyor, sadece iç boşluğu küçültüyoruz. */
+  /* The base width:min(960px, 90%) already resolves to 90% here, so only the
+     inner padding shrinks. */
   .sdg-card-inner {
     padding: 28px 24px;
   }
@@ -972,10 +946,6 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
     border-width: 1.5px;
   }
 
-  .sdg-card-inner {
-    padding: 22px 18px;
-  }
-
   .sdg-card-logo {
     width: 60px;
     height: 60px;
@@ -985,9 +955,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
     font-size: 1.2rem !important;
   }
 
-  /* Telefonda da base kuraldaki gibi dünyanın önünde ortalanmış kaplama —
-     % değerler her zaman #sdg-section'a (yeşil alana) göre, viewport'a
-     göre değil, bu yüzden asla section'ın dışına taşamaz. */
+  /* Centred overlay over the globe on phones too; percentages refer to
+     #sdg-section, not the viewport, so it can never leave the section. */
   .sdg-card-panel {
     width: 92%;
     max-height: 88%;
@@ -998,16 +967,14 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Yatay telefon (kısa yükseklik): genişlik bazlı breakpoint'ler tek başına
-   yeterli değil — bir yatay telefon 812px genişlikte olup yukarıdaki
-   ≤1100px/≤575px kurallarını hiç tetiklemeyebilir, ama yüksekliği
-   375-430px civarındadır ve .sdg-section 100svh + overflow:hidden'dır.
-   orientation:landscape genişlikten bağımsız olduğu için bu kural, dar bir
-   masaüstü penceresi kısaltıldığında da (aynı taşma riski) devreye girer —
-   bu kasıtlı: cihaz değil, mevcut dikey alan esas alınıyor. flex:0 0 220px
-   hem satır (geniş-ama-kısa) hem sütun (≤1439px) düzeninde .sdg-orbit-wrapper
-   boyutunu garanti eder; script.js'teki getRadius() halkanın gerçek render
-   genişliğini okuduğundan node yarıçapı bu boyutları otomatik takip eder. */
+/* Landscape phones (short height): width breakpoints alone are not enough;
+   an 812px-wide landscape phone never hits the ≤1100px/≤575px rules, yet it
+   is only ~375-430px tall and .sdg-section is 100svh + overflow:hidden.
+   orientation:landscape is width-independent, so this also applies to a
+   short desktop window (same overflow risk): available height is what
+   matters, not the device. flex:0 0 220px fixes .sdg-orbit-wrapper's size in
+   both layouts; getRadius() in script.js reads the ring's rendered width, so
+   the node radius follows automatically. */
 @media (max-height: 500px) and (orientation: landscape) {
   .sdg-zone {
     gap: 20px;
@@ -1036,13 +1003,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/*  ========================================================================= Shared Section Styles (Causes / Consequences / Actions / Progress / Resources) =============================================================================== */
+/* Shared section styles (Causes / Consequences / Actions / Progress / Resources) */
 
-/* Section'lara bölme (100vh slayt + scroll-snap) mimarisi tamamen
-   kaldırıldı: sayfa artık normal, sıradan bir akışta kaydırılıyor —
-   tarayıcının varsayılan scroll davranışı, section'lar arasında zorlama
-   yok. Her section kendi içeriği kadar yer kaplıyor, aralarında rahat
-   nefes alan bir boşluk bırakıyoruz. */
+/* Sections flow normally (no full-height slides or scroll snapping); each is
+   as tall as its content with comfortable spacing between them. */
 .section-dark {
   position: relative;
   padding: 100px 0;
@@ -1052,11 +1016,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: 100%;
 }
 
-/* ── Section arka plan teması (iklimdd.org'un 3 rengi: beyaz/gri/yeşil) ──
-   Her ana section'a bir renk atanıyor, section'lar birbirine bitişik
-   duruyor (aralarda zemin boşluğu yok). */
+/* ── Section background themes (iklimdd.org's three colours: white/grey/green) ──
+   Each main section gets one colour and sections butt against each other
+   (no background gaps between them). */
 .theme-white {
-  background: #ffffff;
+  background: #fff;
 }
 
 .theme-gray {
@@ -1064,6 +1028,11 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .theme-green {
+  --light-ink: var(--white);
+  --light-ink-soft: var(--white);
+  --light-ink-faint: var(--white);
+  --light-hair: rgb(255 255 255 / 20%);
+
   background: #2c7933;
 }
 
@@ -1073,12 +1042,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   position: relative;
 }
 
-/* ── Isınma şeridi dikişleri ──
-   Bölümler arasındaki sert renk kesimlerini, NASA'nın yıllık sıcaklık
-   anomalisinden çizilen ince bir şeritle dikiyor. Her dikiş bir sonraki
-   dönemi gösterdiği için sayfa boyunca tekrar eden, veri taşıyan tek motif.
-   Şerit renklerini script.js basıyor; JS yoksa site koyusunda sade bir ayraç
-   olarak kalıyor. Dönem etiketi komşu bölümlere taşabildiği için z-index. */
+/* ── Warming stripe seams ──
+   The hard colour cuts between sections are stitched with a thin stripe drawn
+   from NASA's annual temperature anomaly. Each seam shows the next period, so
+   it is the one recurring motif that carries data. script.js paints the
+   stripes; without JS it stays a plain divider in the site's dark colour.
+   z-index because the period label can overlap the neighbouring sections. */
 .ik-seam {
   position: relative;
   z-index: 6;
@@ -1136,10 +1105,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* ── Yeşil bölümlerde metin beyaz: sitenin ana sayfasındaki yeşil blog
-   bandıyla aynı desen. Siyah gövde metni bu yeşilde 3,9:1 ile WCAG AA'nın
-   (4,5:1) altında kalıyordu; beyaz 5,4:1. Gölge kaldırıldı, düz yeşilde
-   okunurluğa katkısı yok. ── */
+/* ── Text on green sections is white, matching the green blog band on the
+   site's home page. Black body text on this green is 3.9:1, below WCAG AA
+   (4.5:1); white is 5.4:1. ── */
 #sdg-section.theme-green .sdg-main-title,
 #sdg-section.theme-green .sdg-main-title em,
 #sdg-section.theme-green .sdg-main-desc {
@@ -1147,9 +1115,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   text-shadow: none;
 }
 
-/* Kullanıcı isteğiyle istisna: Hedefler ve Gelecek bölüm başlıkları diğer
-   bölüm başlıkları gibi siyah. Siyah bu yeşilde 3,9:1; büyük başlık için
-   gereken 3:1'in üstünde (gövde metni için yetmezdi, açıklamalar beyaz kalıyor). */
+/* Exception: the Goals and Futures section titles stay black like the other
+   section titles. Black on this green is 3.9:1, above the 3:1 needed for
+   large text (not enough for body text, so descriptions stay white). */
 #sdg-section.theme-green .sdg-main-title,
 #sdg-section.theme-green .sdg-main-title em,
 #consequences-section.theme-green .section-title,
@@ -1158,42 +1126,31 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 #sdg-section.theme-green .sdg-orbit-ring {
-  border-color: rgba(0, 0, 0, 0.08);
+  border-color: rgb(0 0 0 / 8%);
 }
 
 #sdg-section.theme-green .sdg-node-logo {
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  border-color: rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 25%);
 }
 
 #sdg-section.theme-green .sdg-card-inner {
   background: #fafaf8;
-  border-color: rgba(0, 0, 0, 0.08);
+  border-color: rgb(0 0 0 / 8%);
 }
 
-/* ── Beyaz/gri (açık) temalı section'lar için paylaşılan koyu metin
-   uyarlaması — Neler Oluyor, Sebepler, Karşılaşabileceğimiz Gelecek,
-   Neler Yapılıyor, Kaynaklar section'larının ortak sınıflarını
-   kapsıyor. Kendi arka planı olan (fotoğraf/gradient) kartlar — cause-
-   stack-card, card-showcase, evidence fotoğrafları —
-   zaten kendi koyu katmanlarını taşıdığından burada dokunulmuyor. */
+/* ── Dark text for white/grey (light) sections: shared classes of the
+   Happening, Causes, Futures, Progress and Resources sections. Cards with
+   their own photo/gradient background (cause stack cards, card showcase,
+   evidence photos) already carry their own dark layers and are left alone. */
 .theme-white,
 .theme-gray,
 .ik-dialog {
-  /* Açık (beyaz/gri) zeminli section'larda tüm metin katmanları (başlık,
-     gövde, alt bilgi) düz siyah — önceden farklı opaklıklarla kademelenmiş
-     "ink" tonları kullanılıyordu, artık üçü de tam siyah. */
-  --light-ink: #000000;
-  --light-ink-soft: #000000;
-  --light-ink-faint: #000000;
-  --light-hair: rgba(0, 0, 0, 0.14);
-}
-
-.theme-green {
-  --light-ink: var(--white);
-  --light-ink-soft: var(--white);
-  --light-ink-faint: var(--white);
-  --light-hair: rgba(255, 255, 255, 0.2);
+  /* On light sections all text layers (title, body, footnote) are solid black. */
+  --light-ink: #000;
+  --light-ink-soft: #000;
+  --light-ink-faint: #000;
+  --light-hair: rgb(0 0 0 / 14%);
 }
 
 .theme-white .section-title,
@@ -1204,10 +1161,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .theme-gray .cause-heading-static,
 .theme-white .dynamic-heading-word,
 .theme-gray .dynamic-heading-word,
-.theme-white .evidence-row-text h4,
-.theme-gray .evidence-row-text h4,
+.theme-white .evidence-row-text h3,
+.theme-gray .evidence-row-text h3,
 .theme-white .steps-group-title,
-.theme-gray .steps-group-title{
+.theme-gray .steps-group-title {
   color: var(--light-ink) !important;
   text-shadow: none !important;
 }
@@ -1223,31 +1180,32 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .theme-white .cause-chart-caption,
 .theme-gray .cause-chart-caption,
 .theme-white .evidence-row-text p,
-.theme-gray .evidence-row-text p{
+.theme-gray .evidence-row-text p {
   color: var(--light-ink-soft) !important;
 }
 
-/* Sebepler başlığının dinamik kısmı (ör. "ENERJİ VE FOSİL YAKITLAR") normal
-   bir color değil, background-clip:text gradyanıyla boyanıyor — dinlenme
-   hâlindeki (%0-30) beyaz durakları koyu renge çevriliyor, geçiş sırasındaki
-   renkli "süpürme" bandı olduğu gibi kalıyor. */
+/* The dynamic part of the Causes heading (e.g. "ENERJİ VE FOSİL YAKITLAR")
+   is painted with a background-clip:text gradient, not color: the resting
+   (0-30%) white stops become dark here while the coloured sweep band stays. */
 .theme-white .cause-heading-suffix-text,
-.theme-gray .cause-heading-suffix-text{
-  background-image: linear-gradient(90deg,
-      var(--light-ink) 0%,
-      var(--light-ink) 30%,
-      #c679c4 33%,
-      #fa3d1d 35%,
-      #ffb005 37%,
-      #e1e1fe 39%,
-      #0358f7 41%,
-      transparent 44%,
-      transparent 100%);
+.theme-gray .cause-heading-suffix-text {
+  background-image: linear-gradient(
+    90deg,
+    var(--light-ink) 0%,
+    var(--light-ink) 30%,
+    #c679c4 33%,
+    #fa3d1d 35%,
+    #ffb005 37%,
+    #e1e1fe 39%,
+    #0358f7 41%,
+    transparent 44%,
+    transparent 100%
+  );
 }
 
-/* Başlıklardaki vurgulu (em) kelime: arka plan yeşil DEĞİLSE altı yeşille
-   çizili ve kalın — yeşil section'larda ise zaten arka planla aynı renk
-   ailesinde olduğundan sade siyah metin olarak kalıyor. */
+/* Emphasised (em) word in headings: bold with a green underline unless the
+   background is green; on green sections it stays plain because it would
+   blend into the same colour family. */
 .theme-white .section-title em,
 .theme-gray .section-title em {
   font-weight: 900;
@@ -1257,139 +1215,138 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   text-underline-offset: 5px;
 }
 
-/* "Neler Yapılıyor?" ve "Neler Oluyor?" başlıklarındaki vurgu altı
-   çizgisiz kalsın — yukarıdaki paylaşılan kural varsayılan olarak altı
-   çizili bıraksa da bu ikisinde istenmiyor. */
+/* No underline under the emphasis in the "Neler Yapılıyor?" and "Neler
+   Oluyor?" headings, overriding the shared rule above. */
 #progress-section .section-title em,
 #happening-section .section-title em {
   text-decoration: none;
 }
 
-/* Sebepler sekme çubuğu: pasif pil açık gri, aktif pil koyu yeşil dolgu */
+/* Causes tab bar: inactive pill light grey, active pill solid dark green. */
 .theme-white .cause-tab-btn,
-.theme-gray .cause-tab-btn{
-  background: rgba(20, 33, 15, 0.05);
-  border-color: rgba(20, 33, 15, 0.16);
+.theme-gray .cause-tab-btn {
+  background: rgb(20 33 15 / 5%);
+  border-color: rgb(20 33 15 / 16%);
   color: var(--light-ink-faint);
 }
 
 .theme-white .cause-tab-btn-icon,
-.theme-gray .cause-tab-btn-icon{
+.theme-gray .cause-tab-btn-icon {
   color: var(--light-ink-soft);
 }
 
 .theme-white .cause-tab-btn:hover,
-.theme-gray .cause-tab-btn:hover{
-  border-color: rgba(20, 33, 15, 0.4);
+.theme-gray .cause-tab-btn:hover {
+  border-color: rgb(20 33 15 / 40%);
   color: var(--light-ink);
 }
 
 .theme-white .cause-tab-btn.active,
-.theme-gray .cause-tab-btn.active{
+.theme-gray .cause-tab-btn.active {
   background: var(--idd-green);
   border-color: var(--idd-green);
   color: #fff;
 }
 
 .theme-white .cause-tab-btn.active .cause-tab-btn-icon,
-.theme-gray .cause-tab-btn.active .cause-tab-btn-icon{
+.theme-gray .cause-tab-btn.active .cause-tab-btn-icon {
   color: #fff;
 }
 
-/* Adım karuseli (Neler Yapmalıyız — Bireysel/Toplumsal Adımlar) — koyu cam
-   kart açık zeminde neredeyse görünmez oluyordu, açık temaya uyarlandı. */
+/* Step carousel (What we should do: individual/societal steps): the dark
+   glass card nearly disappeared on light backgrounds, so it is adapted here. */
 .theme-white .reel,
-.theme-gray .reel{
-  background: rgba(20, 33, 15, 0.04);
-  border-color: rgba(20, 33, 15, 0.12);
+.theme-gray .reel {
+  background: rgb(20 33 15 / 4%);
+  border-color: rgb(20 33 15 / 12%);
 }
 
 .theme-white .reel-cell,
-.theme-gray .reel-cell{
-  background: linear-gradient(180deg, rgba(20, 33, 15, 0.1), rgba(20, 33, 15, 0.03));
-  border-color: rgba(20, 33, 15, 0.1);
+.theme-gray .reel-cell {
+  background: linear-gradient(180deg, rgb(20 33 15 / 10%), rgb(20 33 15 / 3%));
+  border-color: rgb(20 33 15 / 10%);
 }
 
 .theme-white .reel-title,
-.theme-gray .reel-title{
+.theme-gray .reel-title {
   color: var(--light-ink);
 }
 
 .theme-white .reel-desc,
-.theme-gray .reel-desc{
+.theme-gray .reel-desc {
   color: var(--light-ink-soft);
 }
 
 .theme-white .reel-examples li,
-.theme-gray .reel-examples li{
+.theme-gray .reel-examples li {
   color: var(--light-ink-faint);
 }
 
 .theme-white .reel-nav-btn,
-.theme-gray .reel-nav-btn{
-  border-color: rgba(20, 33, 15, 0.2);
+.theme-gray .reel-nav-btn {
+  border-color: rgb(20 33 15 / 20%);
   color: var(--light-ink);
 }
 
 .theme-white .reel-nav-btn:hover:not(:disabled),
-.theme-gray .reel-nav-btn:hover:not(:disabled){
-  background: rgba(20, 33, 15, 0.08);
+.theme-gray .reel-nav-btn:hover:not(:disabled) {
+  background: rgb(20 33 15 / 8%);
 }
 
 .theme-white .reel-nav-counter,
-.theme-gray .reel-nav-counter{
+.theme-gray .reel-nav-counter {
   color: var(--light-ink-faint);
 }
 
-/* Donut/trend grafikleri (SVG, script.js: renderDonut/renderTrendChart) —
-   segment/çizgi renkleri veriden geliyor ve değişmiyor, sadece arka plan
-   halkası, ızgara çizgileri ve etiket metinleri koyu temaya uyarlanıyor. */
+/* Donut/trend charts (SVG, script.js renderDonut/renderTrendChart): series
+   colours come from the data; only the track ring, grid lines and labels are
+   adapted to the light theme. */
 .theme-white .donut-chart-svg > circle:not(.donut-segment),
-.theme-gray .donut-chart-svg > circle:not(.donut-segment){
-  stroke: rgba(20, 33, 15, 0.1);
+.theme-gray .donut-chart-svg > circle:not(.donut-segment) {
+  stroke: rgb(20 33 15 / 10%);
 }
 
 .theme-white .donut-center-label,
-.theme-gray .donut-center-label{
+.theme-gray .donut-center-label {
   color: var(--light-ink-soft);
 }
 
 .theme-white .trend-chart-svg > line,
-.theme-gray .trend-chart-svg > line{
-  stroke: rgba(20, 33, 15, 0.12);
+.theme-gray .trend-chart-svg > line {
+  stroke: rgb(20 33 15 / 12%);
 }
 
 .theme-white .trend-axis-label,
-.theme-gray .trend-axis-label{
-  fill: rgba(20, 33, 15, 0.55);
+.theme-gray .trend-axis-label {
+  fill: rgb(20 33 15 / 55%);
 }
 
 .theme-white .trend-dot,
-.theme-gray .trend-dot{
-  stroke: rgba(255, 255, 255, 0.95);
+.theme-gray .trend-dot {
+  stroke: rgb(255 255 255 / 95%);
 }
 
 .theme-white .trend-metric-value,
-.theme-gray .trend-metric-value{
+.theme-gray .trend-metric-value {
   color: var(--light-ink);
 }
 
 .theme-white .trend-metric-label,
-.theme-gray .trend-metric-label{
+.theme-gray .trend-metric-label {
   color: var(--light-ink-faint);
 }
 
-/* Zaman çizelgesi kartları (Neler Yapılıyor) — camsı koyu-şeffaf
-   kart beyaz zeminde kayboluyordu, opak açık kart + koyu metne çevrildi. */
+/* Timeline cards (What is being done): the glassy dark card vanished on
+   white, so it becomes an opaque light card with dark text. */
 #progress-section.theme-white .timeline-card {
-  background: #ffffff;
-  border-color: rgba(20, 33, 15, 0.1);
+  background: #fff;
+  border-color: rgb(20 33 15 / 10%);
   box-shadow: var(--shadow-1);
 }
 
 #progress-section.theme-white .timeline-card:hover,
 #progress-section.theme-white .timeline-card.active {
-  border-color: rgba(20, 33, 15, 0.18);
+  border-color: rgb(20 33 15 / 18%);
   box-shadow: var(--shadow-2);
 }
 
@@ -1401,10 +1358,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: var(--light-ink-soft);
 }
 
-/* Bölüm başlığı tek bileşen: Neler Oluyor, Gelecek, Yapmalıyız, Yapılıyor ve
-   Kaynaklar aynı ölçeği, boşluğu ve girişi (AOS fade-up, iklimdd.org'un kendi
-   bölüm girişi) kullanıyor. Ortalı hizalama sitenin sayfa başlıklarıyla aynı.
-   SDG (madde 1 düzeni) ve Sebep (dinamik başlık) bilinçli istisna. */
+/* Section header as one component: Happening, Futures, Actions, Progress and
+   Resources share scale, spacing and entrance (AOS fade-up, iklimdd.org's own
+   section entrance). Centred like the site's page titles. SDG (row layout)
+   and Causes (dynamic heading) are deliberate exceptions. */
 .section-header {
   text-align: center;
   max-width: 720px;
@@ -1414,7 +1371,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .section-title {
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
+  font-family: 'Climate Crisis', Montserrat, sans-serif !important;
   font-size: var(--step-2) !important;
   font-weight: 900 !important;
   color: #fff;
@@ -1423,8 +1380,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   margin: 0 0 var(--space-xs) !important;
 }
 
-/* AOS girişleri hareket kısıtlı modda kapalı. iklimdd.org'daki AOS.init bunu
-   kendisi yapmadığı için kural sayfanın CSS'inde duruyor. */
+/* AOS entrances are disabled with reduced motion. iklimdd.org's AOS.init does
+   not do this itself, so the rule lives in the page CSS. */
 @media (prefers-reduced-motion: reduce) {
   [data-aos] {
     opacity: 1 !important;
@@ -1438,8 +1395,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: #fff;
 }
 
-/* ── Dynamic Heading: dil dil hızlı geçiş yapıp son dilde (Türkçe) duran
-   başlık — "Neler Yapmalıyız?" için. ── */
+/* ── Dynamic heading: cycles through languages and stops on Turkish
+   ("Neler Yapmalıyız?") ── */
 .dynamic-heading {
   display: flex;
   align-items: center;
@@ -1453,18 +1410,17 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   display: inline-block;
 }
 
-/* Haber bandı gibi soldan sağa akış: yeni metin soldan girer, eskisi
-   aynı yönde devam edip sağdan çıkar — tek yönlü, kesintisiz bir akış
-   hissi verir. */
+/* Ticker-like left-to-right flow: the new text enters from the left and the
+   old one continues out to the right, one continuous direction. */
 .dynamic-heading-word.is-leaving {
-  animation: dynamicHeadingExit 0.35s ease-in forwards;
+  animation: dynamic-heading-exit 0.35s ease-in forwards;
 }
 
 .dynamic-heading-word.is-entering {
-  animation: dynamicHeadingEnter 0.35s ease-out forwards;
+  animation: dynamic-heading-enter 0.35s ease-out forwards;
 }
 
-@keyframes dynamicHeadingEnter {
+@keyframes dynamic-heading-enter {
   from {
     transform: translateX(-120%);
     opacity: 0;
@@ -1476,7 +1432,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-@keyframes dynamicHeadingExit {
+@keyframes dynamic-heading-exit {
   from {
     transform: translateX(0);
     opacity: 1;
@@ -1505,15 +1461,15 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   margin: 0;
   font-size: clamp(2rem, 3.2vw, 2.6rem);
   line-height: 1.35;
-  /* DOM'da normal harf büyüklüğüyle yazılıyor (kopyalanabilirlik ve ekran
-     okuyucu uyumluluğu için) — büyük harf görünümü salt CSS ile veriliyor. */
+
+  /* Written in normal case in the DOM (copyable, screen-reader friendly);
+     uppercase is purely visual. */
   text-transform: uppercase;
 }
 
 .cause-heading-suffix {
   min-width: 0;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: hidden visible;
   line-height: 1.35;
 }
 
@@ -1521,21 +1477,22 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   display: inline-block;
   white-space: nowrap;
   text-transform: uppercase;
-  /* DiaTextReveal'daki gerçek mekanik: metin soldan sağa "yazılır" gibi
-     ortaya çıkar — band'ın geride bıraktığı (sol) kısım solid beyaz,
-     band'ın geçtiği yer 5 renkli, band'ın önündeki (sağ) kısım transparent
-     (henüz görünmez). Dinlenme hâli = tamamen beyaz (banttan sonrası);
-     sekmelerin kendine özel renkleri kaldırıldı. */
-  background-image: linear-gradient(90deg,
-      #fff 0%,
-      #fff 30%,
-      #c679c4 33%,
-      #fa3d1d 35%,
-      #ffb005 37%,
-      #e1e1fe 39%,
-      #0358f7 41%,
-      transparent 44%,
-      transparent 100%);
+
+  /* The text is "written" left to right: behind the band (left) it is solid
+     white, under the band it is multicoloured, ahead of it (right)
+     transparent. At rest it is fully white. */
+  background-image: linear-gradient(
+    90deg,
+    #fff 0%,
+    #fff 30%,
+    #c679c4 33%,
+    #fa3d1d 35%,
+    #ffb005 37%,
+    #e1e1fe 39%,
+    #0358f7 41%,
+    transparent 44%,
+    transparent 100%
+  );
   background-size: 400% 100%;
   background-position: 0% 0;
   -webkit-background-clip: text;
@@ -1546,13 +1503,14 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   opacity: 1;
   filter: blur(0);
   transform: translateY(-2px);
-  transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+  transition:
+    opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.34s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Metin değişiminde tam kaybolmaz, DiaTextReveal'daki gibi hafif
-   opaklık/blur/kayma "dip" efekti yapıp hemen geri döner. */
+/* On a text swap it does not disappear; a slight opacity/blur/offset "dip"
+   and straight back. */
 .cause-heading-suffix-text.dip {
   opacity: 0.58;
   filter: blur(8px);
@@ -1560,13 +1518,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .cause-heading-suffix-text.sweep-in {
-  /* DiaTextReveal'daki varsayılan duration=1.5s ve özel sweepEase
-     (easeInOutCubic) eğrisinin CSS karşılığı — "dip" mikro-geçişindeki
-     hızlı ease-out eğrisiyle karıştırılmamalı. */
-  animation: causeHeadingSweep 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+  /* 1.5s with an easeInOutCubic curve for the sweep; not to be confused with
+     the fast ease-out of the "dip" micro-transition. */
+  animation: cause-heading-sweep 1.5s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-@keyframes causeHeadingSweep {
+@keyframes cause-heading-sweep {
   from {
     background-position: 100% 0;
   }
@@ -1576,10 +1533,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* 1200px'e kadar genişletildi: statik başlık + suffix birlikte ~46 karakter
-   olduğundan, tablet ve küçük laptop genişliklerinde de tek satıra sığmayıp
-   viewport kenarından taşıyor/kırpılıyordu (overflow-x:clip yüzünden
-   scrollbar oluşturmadan sessizce metni kesiyordu). */
+/* Up to 1200px: the fixed title + suffix is ~46 characters and did not fit on
+   one line at tablet and small laptop widths either; overflow-x:clip cut the
+   text silently without a scrollbar. */
 @media (max-width: 1200px) {
   .cause-heading {
     flex-wrap: wrap;
@@ -1589,21 +1545,16 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
   .cause-heading-static {
     white-space: normal;
-    /* Kelimeler arası kırma (white-space:normal) tek başına, kelimenin
-       KENDİSİ kapsayıcıdan geniş olduğu bir durumu (çok dar ekranda uzun
-       bir sözcük) kapsamaz — bu yalnızca gerektiğinde kelime içi kırmaya
-       izin veren son bir güvenlik ağı. */
+
+    /* Breaking between words (white-space:normal) does not cover a single word
+       wider than its container (a long word on a very narrow screen); this is
+       the last-resort net that allows breaking inside a word only when needed. */
     overflow-wrap: break-word;
-    /* ASIL taşmanın kaynağı buydu: masaüstü kuralındaki flex-shrink:0
-       ("asla küçülme") burada da miras kalıyordu — white-space:normal satır
-       kırmaya izin verse bile flex-shrink:0, öğeyi kendi TEK SATIRLIK doğal
-       (unwrapped, ~497px) genişliğinde kilitli tutmaya devam ediyordu;
-       min-width:0 eklemek (ilk denemem) işe yaramadı çünkü mesele min-width
-       değil doğrudan flex-shrink:0'ın kendisiydi. Burada 1'e çevirmek öğenin
-       kendi flex satırının genişliğine küçülmesine (ve dolayısıyla asıl
-       satır kırmasına) izin veriyor. Kullanıcının dört kez bildirdiği "hala
-       sığmıyor" — width:100vw düzeltmesinden TAMAMEN ayrı, bambaşka bir kök
-       nedenmiş. */
+
+    /* The actual cause of the overflow: the desktop rule's flex-shrink:0 was
+       inherited here, so even with white-space:normal the item stayed locked at
+       its unwrapped single-line width (~497px). min-width:0 did not help; setting
+       flex-shrink to 1 lets the item shrink to its flex line and wrap. */
     flex-shrink: 1;
     min-width: 0;
   }
@@ -1623,23 +1574,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   max-width: 1560px;
 }
 
-/* Başlık + açıklama, sekmeli component'ten (.container içindeki nav+tab-content)
-   yapısal olarak ayrılmış, ekranın tüm genişliğine (viewport kenarından
-   kenarına) uzanan kendi bloğu.
-   ÖNCEKİ (kaldırılan) sürüm width:100vw + left/right:50% + margin:-50vw
-   "tam genişliğe taşma" hilesini kullanıyordu — bu teknik, elemanı dar bir
-   .container'ın padding/max-width'inden KURTARMAK için var. Ama bu eleman
-   zaten .container'ın DIŞINDA, doğrudan <section>'ın çocuğu (bkz. HTML) ve
-   section'ın kendisi yatayda sıfır padding taşıyor (.section-dark:
-   padding:100px 0) — yani kurtulacağı bir kısıtlama hiç yoktu. 100vw
-   scrollbar'ı sayıyor, %/width:100% saymıyor; bu gereksiz teknik olmasaydı
-   var olmayacak bir fark yüzünden başlık her iki kenardan da (scrollbar
-   genişliğinin yarısı kadar) taşıp body'nin overflow-x:clip'i tarafından
-   sessizce kırpılıyordu — kullanıcı üç kez "hala sığmıyor" dedi çünkü
-   önceki iki düzeltme (script.js'te scrollbar ölçümü) bu asıl taşmayı
-   telafi etmeye çalışıyordu, kaynağını ortadan kaldırmıyordu. Artık
-   width:100% (normal blok davranışıyla zaten aynı) yeterli; scrollbar
-   payının JS ile ölçülmesine hiç gerek kalmadı. */
+/* Title + description form their own full-width block, structurally separate
+   from the tab component inside .container. It is a direct child of
+   <section>, which has no horizontal padding, so width:100% is enough. The
+   old 100vw + negative margin "breakout" trick counted the scrollbar and
+   made the title overflow both edges by half its width, silently clipped by
+   body's overflow-x:clip. */
 .cause-fullwidth-header {
   width: 100%;
   position: relative;
@@ -1648,19 +1588,14 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   z-index: 2;
 }
 
-/* Dar ekranlarda (kutu genişliği tam viewport'a değince) başlığın kendi
-   metni hâlâ kırpılmış görünüyordu — kutu ölçümü (getBoundingClientRect)
-   0'dan viewport genişliğine tam sığıyordu, yani bu bir layout taşması
-   değildi. Sebep muhtemelen "Climate Crisis" fontunun (dekoratif, "eriyen"
-   glif tasarımlı) letter-spacing:-1px ile birleşince satır kenarındaki
-   ilk/son karakterin mürekkep izinin (glyph ink) hesaplanan kutudan taşması
-   — normal fontlarda görülmeyen, bu fonta özgü bir kenar taşması. Bu pay
-   artık .cause-fullwidth-header'da değil, doğrudan başlıkta (aşağıda) —
-   çünkü açıklama metni normal bir fontla yazıldığından bu paya ihtiyacı
-   yok ve header'ın ortak padding'i onu gereksiz yere daraltıyordu. */
-
+/* On narrow screens the title still looked clipped even though its box fit
+   the viewport exactly: Climate Crisis glyph ink, combined with
+   letter-spacing:-1px, extends beyond the computed box at the line edges. The
+   side padding for that lives on the title itself (below), not on
+   .cause-fullwidth-header, because the description uses a normal font and
+   would only be narrowed by it. */
 .cause-fullwidth-heading {
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
+  font-family: 'Climate Crisis', Montserrat, sans-serif !important;
   margin: 0 0 8px !important;
   padding: 0 16px;
   font-size: clamp(1.8rem, 4.2vw, 3.4rem) !important;
@@ -1668,16 +1603,15 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .cause-fullwidth-desc {
-  /* Kullanıcı isteğiyle satır uzunluğu genişletildi — hem üst sınır
-     yükseltildi (760 → 1100) hem de artık başlığın kendi koruma payını
-     miras almıyor (yalnızca küçük, kendi 8px'i var), bu yüzden iPad Air
-     gibi orta genişlikteki ekranlarda da gerçekten daha geniş görünüyor. */
+  /* Wider measure (cap raised from 760 to 1100px) and no longer inheriting the
+     title's glyph padding (only its own 8px), so it is genuinely wider on
+     mid-size screens such as an iPad Air. */
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 8px;
   text-align: center;
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255 255 255 / 60%);
   line-height: 1.5;
 }
 
@@ -1695,9 +1629,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* Giriş cümlesi gövde ölçeğinde: önceki 13px, altındaki 15–16px'lik
-   paragraflardan küçük kaldığı için hiyerarşiyi tersine çeviriyordu. Açık
-   zeminlerde tema kuralı siyaha çekiyor; bu taban renk yeşil zemin için. */
+/* The lead sentence uses the body scale: the previous 13px was smaller than
+   the 15-16px paragraphs below it and inverted the hierarchy. The theme rule
+   makes it black on light backgrounds; this base colour is for green. */
 .section-desc {
   font-size: var(--step-0);
   color: var(--white);
@@ -1710,12 +1644,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: 100%;
 }
 
-/* ── Sebepler Grafikleri: El Yapımı SVG (Chart.js yerine) ──
-   Kullanıcının paylaştığı React DonutChart / CleanWireframeAnalytics
-   referanslarındaki görsel dile sadık: yuvarlak uçlu segmentler + hover'da
-   glow, yumuşak eğrili çizgi + gradient dolgu + animasyonlu "çizilme".
-   Segment/çizgi geometrisi script.js'te hesaplanıyor, burada sadece
-   animasyon/hover davranışı tanımlı. */
+/* ── Causes charts: hand-built SVG ──
+   Rounded slice ends with a hover glow, a smooth curve with gradient fill and
+   an animated draw-in. Geometry is computed in script.js; only animation and
+   hover behaviour are defined here. */
 .donut-chart {
   position: relative;
   width: 100%;
@@ -1734,14 +1666,17 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .donut-segment {
   cursor: pointer;
   transform-origin: center;
-  transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease-out, transform 0.2s ease-out, opacity 0.2s ease;
+  transition:
+    stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.2s ease-out,
+    transform 0.2s ease-out,
+    opacity 0.2s ease;
 }
 
-/* Seçili dilim %3 büyüyor, diğerleri soluklaşıyor (is-dimmed). Seçim :hover
-   yerine sınıfla: dokunmatikte :hover dokunulan dilimde takılı kalıyordu.
-   Renkli parlama (filter: drop-shadow) kaldırıldı: SVG öğesinde filtre
-   bölgesi halkanın kare kutusuna göre hesaplanıyor ve seçilen dilimin
-   etrafında renkli bir kare olarak görünüyordu. */
+/* The selected slice grows 3% and the others dim (is-dimmed). Selection uses
+   a class instead of :hover because :hover stuck on the tapped slice on touch.
+   No coloured drop-shadow: an SVG filter region is the ring's square bounding
+   box and showed up as a coloured square around the selected slice. */
 .donut-segment.is-active {
   transform: scale(1.03);
 }
@@ -1763,7 +1698,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .donut-center-value {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 1.9rem;
   font-weight: 900;
   line-height: 1;
@@ -1772,7 +1707,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .donut-center-label {
   font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgb(255 255 255 / 65%);
   margin-top: 5px;
   line-height: 1.3;
   transition: opacity 0.2s ease;
@@ -1789,8 +1724,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .trend-chart-svg {
   display: block;
   width: 100%;
-  /* flex:1 — metrik satırının kendi doğal yüksekliğini alabilmesi için
-     SVG artık kutunun tamamını değil, geri kalan alanı dolduruyor. */
+
+  /* flex:1 so the SVG fills only the remaining space and the metrics row keeps
+     its natural height. */
   flex: 1;
   min-height: 0;
 }
@@ -1810,16 +1746,18 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .trend-dot {
   opacity: 0;
-  transition: opacity 0.4s ease, r 0.15s ease;
+  transition:
+    opacity 0.4s ease,
+    r 0.15s ease;
 }
 
 .trend-dot.is-visible {
   opacity: 1;
 }
 
-/* Dokunulan dilim/grafik etrafında tarayıcının çizdiği turuncu/mavi kare
-   (dokunma vurgusu ve dokunuşla gelen odak çerçevesi) istenmiyor. Seçim
-   zaten dilimin parlamasıyla ve ortadaki değerle görünüyor. */
+/* Suppress the browser's orange/blue tap highlight and touch focus box around
+   the tapped slice/chart; the selection is already visible from the slice's
+   emphasis and the centre value. */
 .donut-chart-svg,
 .trend-chart-svg {
   -webkit-tap-highlight-color: transparent;
@@ -1831,8 +1769,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   outline: none;
 }
 
-/* Noktaların görünmez odak halkaları yalnızca klavye için: fare ve dokunma
-   SVG'nin bütününden okunuyor (script.js), bu yüzden olayları almıyorlar. */
+/* The points' invisible focus rings are for keyboard only: mouse and touch
+   are read from the whole SVG (script.js), so the points ignore events. */
 .trend-hit {
   pointer-events: none;
 }
@@ -1843,23 +1781,22 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   vector-effect: non-scaling-stroke;
 }
 
-
 .trend-axis-label {
-  fill: rgba(255, 255, 255, 0.5);
+  fill: rgb(255 255 255 / 50%);
   font-size: 10px;
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 .trend-tooltip {
   position: absolute;
   transform: translate(-50%, -130%);
-  background: rgba(15, 15, 15, 0.95);
+  background: rgb(15 15 15 / 95%);
   color: #fff;
   font-size: 0.72rem;
   font-weight: 600;
   padding: 6px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgb(255 255 255 / 15%);
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
@@ -1871,9 +1808,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   opacity: 1;
 }
 
-/* CleanWireframeAnalytics referansındaki alt "Peak/Average/Growth" metrik
-   kartlarının sadeleştirilmiş karşılığı: en yüksek değer + baştan sona
-   büyüme oranı, grafiğin hemen altında. */
+/* Change from the first to the last value, shown right under the chart. */
 .trend-metrics {
   display: flex;
   justify-content: center;
@@ -1893,7 +1828,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .trend-metric-value {
   display: block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 1rem;
   font-weight: 800;
   color: #fff;
@@ -1902,7 +1837,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .trend-metric-label {
   display: block;
   font-size: 0.62rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgb(255 255 255 / 55%);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-top: 2px;
@@ -1924,14 +1859,14 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/*  ========================================================================= Neler Oluyor Section Styles =============================================================================== */
+/* What is happening */
 
-/* ── Vital Signs şeridi (NASA science.nasa.gov/climate-change) ── */
-/* ── "Hover Ticker" (Framer referansı) ── Kartların bir tam kopyası daha
-   DOM'a yazılıp (aria-hidden) track %-50 kaydırılıyor; bu sayede döngü
-   dikişsiz (seamless) tekrarlanıyor. Üzerine gelince (herhangi bir kartın
-   üstünde) tüm şerit duruyor, okumaya izin veriyor — Framer'daki
-   tickerEffectHoverModifier davranışının sade/dayanıklı karşılığı. */
+/* ── Vital signs strip (science.nasa.gov/climate-change) ── */
+
+/* ── Hover ticker ──
+   The cards are rendered a second time (aria-hidden) and the track moves by
+   -50%, so the loop is seamless. Hovering any card pauses the whole strip so
+   it can be read. */
 .hover-ticker {
   overflow: hidden;
   width: 100%;
@@ -1944,16 +1879,21 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: max-content;
   gap: 16px;
   padding: 4px 0;
-  animation: hoverTickerScroll 34s linear infinite;
+  animation: hover-ticker-scroll 34s linear infinite;
 }
 
 .hover-ticker:hover .hover-ticker-track {
   animation-play-state: paused;
 }
 
-@keyframes hoverTickerScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+@keyframes hover-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1962,10 +1902,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* ── "Apple Glass Stack" kartı (Framer referansı) ── Fotoğraf arka planı +
-   üzerinde buzlu cam (frosted glass) panel: yarı saydam beyaz zemin,
-   backdrop-filter blur, ince açık kenarlık, hover'da hafif kalkma/büyüme
-   ve çapraz "shine" geçişi. */
+/* ── Glass card ──
+   Photo background with a frosted glass panel: translucent white,
+   backdrop-filter blur, thin light border, slight lift on hover and a
+   diagonal shine. */
 .vital-sign-card {
   position: relative;
   isolation: isolate;
@@ -1974,9 +1914,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   width: 230px;
   padding: 20px 18px;
   border-radius: var(--radius-l);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 18%);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .vital-sign-card-bg {
@@ -1988,21 +1931,20 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .vital-sign-card::before {
-  /* Fotoğrafın üstünde, cam panelin altında koyu bir gradyan — metin
-     okunabilirliği için. */
+  /* Dark gradient above the photo and below the glass panel for legibility. */
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(165deg, rgba(10, 18, 12, 0.35) 0%, rgba(10, 18, 12, 0.8) 100%);
+  background: linear-gradient(165deg, rgb(10 18 12 / 35%) 0%, rgb(10 18 12 / 80%) 100%);
   z-index: -1;
 }
 
 .vital-sign-card::after {
-  /* Hover'da çapraz geçen "shine" — AppleGlassStack'teki parıltı efekti. */
+  /* Diagonal shine on hover. */
   content: '';
   position: absolute;
   inset: -50%;
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.25) 50%, transparent 60%);
+  background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 25%) 50%, transparent 60%);
   background-size: 200% 200%;
   background-position: -100% -100%;
   transition: background-position 0.8s ease;
@@ -2012,7 +1954,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .vital-sign-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-2);
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgb(255 255 255 / 40%);
 }
 
 .vital-sign-card:hover::after {
@@ -2028,7 +1970,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .vital-sign-value {
   display: block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 800;
   font-size: clamp(1.5rem, 2.6vw, 2rem);
   color: #fff;
@@ -2037,23 +1979,22 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .vital-sign-value small {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
   margin-left: 4px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255 255 255 / 60%);
 }
 
 .vital-sign-label {
   display: block;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgb(255 255 255 / 80%);
   line-height: 1.4;
 }
 
-/* ── "Değişimin Kanıtları" zigzag düzeni: her örnek doğrudan arka plan
-   üzerinde, kart/kutu çerçevesi yok. Satır index'ine göre (nth-child even)
-   metin/fotoğraf yönü dönüşümlü değişiyor. ── */
+/* ── Evidence of change: zigzag rows directly on the background, no card
+   frame. Even rows (nth-child) swap the text/photo sides. ── */
 .evidence-zigzag {
   display: flex;
   flex-direction: column;
@@ -2077,8 +2018,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   min-width: 0;
 }
 
-.evidence-row-text h4 {
-  font-family: 'Montserrat', sans-serif !important;
+.evidence-row-text h3 {
+  font-family: Montserrat, sans-serif !important;
   font-size: clamp(1.15rem, 2.4vw, 1.6rem) !important;
   font-weight: 800 !important;
   color: #fff;
@@ -2088,7 +2029,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .evidence-row-text p {
   font-size: 0.95rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgb(255 255 255 / 70%);
   margin: 0;
   max-width: 480px;
 }
@@ -2122,13 +2063,13 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   }
 }
 
-/* ── Veri sahneleri: Global Isınma / Okyanusların Isınması / Orman Yangınları ──
-   Üç sahne tek iskeleti paylaşıyor: başlık → (varsa) açılış → yapışık görsel +
-   anlatım adımları. Mobilde görsel üstte yapışık kalıyor, adımlar altından
-   geçiyor; geniş ekranda adımlar solda, görsel sağda yapışık. script.js'teki
-   "Veri sahneleri" modülü sahneye .is-ready ekleyip aktif adımı yazıyor; JS
-   yoksa canlı grafikler gizleniyor, <noscript> içindeki ÇŞB grafikleri
-   görünüyor ve adımlar düz metin olarak okunuyor. */
+/* ── Data scenes: Global warming / Ocean warming / Forest fires ──
+   All three share one skeleton: title → optional opener → sticky media +
+   narrative steps. On mobile the media sticks at the top and the steps pass
+   beneath it; on wide screens the steps are on the left and the media sticks
+   on the right. The "Data scenes" module in script.js adds .is-ready and
+   marks the active step; without JS the live charts are hidden, the ÇŞB
+   charts inside <noscript> show and the steps read as plain text. */
 .ik-scenes {
   margin-top: var(--space-xl);
 }
@@ -2139,15 +2080,15 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   border-top: 1px solid var(--light-hair);
 }
 
-/* Sahneler "Neler Oluyor?" bölümünün alt başlıkları: ortalı bölüm başlığından
-   ayrışsın diye sola, anlatım sütunuyla aynı hizaya yaslı. */
+/* Scenes are sub-headings of "Neler Oluyor?": left-aligned with the narrative
+   column to set them apart from the centred section title. */
 .ik-scene-header {
   max-width: var(--measure);
   margin-bottom: var(--space-m);
 }
 
 .ik-scene-title {
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
+  font-family: 'Climate Crisis', Montserrat, sans-serif !important;
   font-size: var(--step-1) !important;
   font-weight: 900 !important;
   line-height: 1.15 !important;
@@ -2167,7 +2108,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .ik-scene-subtitle,
 .ik-seas-title,
 .ik-scene-step-title {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: var(--step-1) !important;
   font-weight: 800 !important;
   line-height: 1.25;
@@ -2191,16 +2132,16 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   background: var(--white);
 }
 
-/* Adımlar yapışık görselin altına girerken sert bir kesik yerine kısa bir
-   geçiş: metnin görselin arkasından geçtiğini gösteriyor. */
+/* A short fade instead of a hard cut where the steps slide under the sticky
+   media, showing the text passes behind it. */
 .ik-scene-media::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   height: var(--space-s);
-  background: linear-gradient(var(--white), rgba(255, 255, 255, 0));
+  background: linear-gradient(var(--white), rgb(255 255 255 / 0%));
   pointer-events: none;
 }
 
@@ -2226,24 +2167,25 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   margin-top: var(--space-xs);
 }
 
-/* JS varken adımlar birbirinden uzak duruyor ki her biri okuma çizgisini tek
-   başına geçsin; sondaki boşluk son adımın da çizgiye ulaşabilmesi için.
-   Sönük adımda siyah metin %60 opaklıkla beyaz zeminde 5,7:1, yani AA. */
+/* With JS the steps are spaced apart so each crosses the reading line on its
+   own; the trailing space lets the last step reach the line too. Dimmed
+   steps: black at 60% opacity on white is 5.7:1, so AA. */
 .ik-scene.is-ready .ik-scene-steps {
   padding-bottom: 30vh;
   padding-bottom: 30svh;
 }
 
-/* Şerit paneli "Türkiye'de Sıcaklık" adımı bitince serbest kalıyor: son adımın
-   altındaki boşluk paneli adım bittikten sonra da ekranda tutuyordu. Son yıl
-   bu adım aktifleşince çiziliyor (script.js: initStripesScene). */
+/* The stripes panel is released once the "Türkiye'de Sıcaklık" step ends;
+   the trailing space under the last step kept the panel on screen after it.
+   The last year is drawn when this step activates (script.js:
+   initStripesScene). */
 #global-isinma.is-ready .ik-scene-steps {
   padding-bottom: 0;
 }
 
-/* 40svh: bir adım okuma çizgisindeyken sıradakinin başı ekranın altında
-   kalıyor, yani ekranda aynı anda tek adım var; daha fazlası yalnızca
-   sayfayı uzatıyordu. */
+/* 40svh: when one step is on the reading line the next one starts below the
+   screen, so only one step is on screen at a time; more just lengthened the
+   page. */
 .ik-scene.is-ready .ik-scene-step + .ik-scene-step {
   margin-top: 40vh;
   margin-top: 40svh;
@@ -2251,7 +2193,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .ik-scene.is-ready .ik-scene-step {
   opacity: 0.6;
-  transition: opacity var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  transition:
+    opacity var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
 }
 
 .ik-scene.is-ready .ik-scene-step.is-active {
@@ -2259,7 +2203,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   border-left-color: var(--idd-green);
 }
 
-/* ── Grafik paneli ── */
+/* ── Chart panel ── */
 .ik-chart {
   position: relative;
   margin: 0;
@@ -2316,9 +2260,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   transform: translate(-50%, calc(-100% - var(--space-xs)));
 }
 
-/* ── Global Isınma: ısınma şeritleri ── */
-/* Okuma satırı kırılmıyor: kaydırırken alt satıra düşseydi yapışık görselin
-   yüksekliği değişip altındaki metni oynatırdı. */
+/* ── Global warming: warming stripes ── */
+
+/* The readout never wraps: wrapping while scrolling would change the sticky
+   media's height and shift the text below. */
 .ik-stripes-readout {
   display: flex;
   align-items: flex-end;
@@ -2326,17 +2271,17 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   margin-bottom: var(--space-xs);
 }
 
-/* Yıl, Climate Crisis'in YEAR ekseniyle yazılıyor: 1979'dan sonra şeritler
-   kızarırken rakamlar da eriyor (script.js yılı eksene bağlıyor). Kutu en
-   geniş yıl kadar sabit ("2000", eksenin her değerinde ≤4,38em ölçüldü):
-   yıl değiştikçe yanındaki değer yana kaymıyor. */
+/* The year is set in Climate Crisis's YEAR axis: after 1979 the digits melt
+   while the stripes redden (script.js binds the year to the axis). The box is
+   fixed to the widest year ("2000", ≤4.38em at every axis value) so the
+   value next to it does not shift as the year changes. */
 .ik-stripes-year {
   flex: 0 0 auto;
   min-width: 4.4em;
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif;
+  font-family: 'Climate Crisis', Montserrat, sans-serif;
   font-size: var(--step-3);
   line-height: 1;
-  font-variation-settings: "YEAR" 1979;
+  font-variation-settings: 'YEAR' 1979;
 }
 
 .ik-stripes-value {
@@ -2345,8 +2290,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   min-width: 0;
 }
 
-/* Kaydırırken her karede değişen bir okuma: rakam genişlikleri sabit olmazsa
-   "°C" yerinde titriyor, bu yüzden büyük boyutta da tabular rakam. */
+/* A readout that changes every frame while scrolling: without fixed digit
+   widths the "°C" jitters, so tabular figures even at large sizes. */
 .ik-stripes-value-number {
   font-size: var(--step-1);
   font-weight: 700;
@@ -2369,8 +2314,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   height: 1.5rem;
 }
 
-/* Rekor yıl etiketi sağ ucunu o yılın şeridine hizalıyor; alttaki çentik
-   şeride iniyor. Konumu script.js veriden yazıyor. */
+/* The record-year label aligns its right end with that year's stripe; the
+   notch below points at the stripe. script.js positions it from the data. */
 .ik-stripes-record {
   position: absolute;
   bottom: calc(var(--space-xs) / 2);
@@ -2383,13 +2328,13 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 }
 
 .ik-stripes-record::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 0;
   top: 100%;
   width: 2px;
   height: calc(var(--space-xs) / 2);
-  background: currentColor;
+  background: currentcolor;
 }
 
 .ik-stripes-frame.shows-record .ik-stripes-record {
@@ -2410,10 +2355,10 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   inset: 0;
 }
 
-/* Henüz çizilmemiş yıllar beyaz bir zaman çizgisi olarak kalıyor. Örtü
-   transform ile daraldığı için kaydırma karesi başına yalnızca kompozisyon.
-   Kenarlardan 1px taşıyor: yuvarlak köşede kenar yumuşatması son yılın
-   koyu kırmızısını ince bir çizgi olarak sızdırıyordu. */
+/* Undrawn years remain a white timeline. The cover shrinks with transform,
+   so each scroll frame is compositing only. It overhangs the edges by 1px:
+   anti-aliasing on the rounded corner leaked the last year's dark red as a
+   thin line. */
 .ik-stripes-cover {
   inset: -1px;
   background: var(--white);
@@ -2431,16 +2376,16 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   font-variant-numeric: tabular-nums;
 }
 
-/* Referans dönemi (1951-1980) şeritlerin altında köşeli parantezle
-   işaretleniyor. Etiket paranteze sığmadığında flex ortalaması onu iki
-   yana eşit taşırıyor. */
+/* The reference period (1951-1980) is marked with a bracket under the
+   stripes. When the label is wider than the bracket, flex centring overflows
+   it evenly on both sides. */
 .ik-stripes-baseline {
   position: absolute;
   top: 0;
   display: flex;
   justify-content: center;
   padding-top: var(--space-xs);
-  border-top: 2px solid currentColor;
+  border-top: 2px solid currentcolor;
   white-space: nowrap;
   opacity: 0;
   transition: opacity var(--dur-fast) ease;
@@ -2448,12 +2393,12 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 
 .ik-stripes-baseline::before,
 .ik-stripes-baseline::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -2px;
   width: 2px;
   height: calc(var(--space-xs) / 2 + 2px);
-  background: currentColor;
+  background: currentcolor;
 }
 
 .ik-stripes-baseline::before {
@@ -2493,7 +2438,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Okyanusların Isınması: dört deniz haritası ── */
+/* ── Ocean warming: four sea maps ── */
 .ik-seas {
   display: grid;
   gap: var(--space-m);
@@ -2527,26 +2472,26 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   vector-effect: non-scaling-stroke;
 }
 
-/* Renk, 1970-1980 ile 2014-2024 arasındaki artışın lejanttaki 0 → +2,5 °C
-   ölçeğindeki yeri. Ölçek anomali token'larının sıcak yarısı (5 → 10), her
-   adım 0,5 °C: ör. Marmara +2,2 °C, 9. ve 10. adım arasında %40. İlk bildirim
-   color-mix desteklemeyen tarayıcılar için en yakın adım. */
-.ik-map-sea[data-sea="karadeniz"] {
+/* The colour is where the 1970-1980 → 2014-2024 increase falls on the legend's
+   0 → +2.5 °C scale. The scale is the warm half of the anomaly tokens (5 → 10),
+   0.5 °C per step: e.g. Marmara +2.2 °C is 40% between steps 9 and 10. The
+   first declaration is the nearest step for browsers without color-mix. */
+.ik-map-sea[data-sea='karadeniz'] {
   fill: var(--anomaly-8);
   fill: color-mix(in srgb, var(--anomaly-7) 20%, var(--anomaly-8));
 }
 
-.ik-map-sea[data-sea="marmara"] {
+.ik-map-sea[data-sea='marmara'] {
   fill: var(--anomaly-9);
   fill: color-mix(in srgb, var(--anomaly-9) 60%, var(--anomaly-10));
 }
 
-.ik-map-sea[data-sea="ege"] {
+.ik-map-sea[data-sea='ege'] {
   fill: var(--anomaly-8);
   fill: color-mix(in srgb, var(--anomaly-8) 80%, var(--anomaly-9));
 }
 
-.ik-map-sea[data-sea="akdeniz"] {
+.ik-map-sea[data-sea='akdeniz'] {
   fill: var(--anomaly-8);
   fill: color-mix(in srgb, var(--anomaly-7) 40%, var(--anomaly-8));
 }
@@ -2586,10 +2531,19 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
 .ik-seas-legend-ramp {
   height: 0.75rem;
   border-radius: var(--chart-bar-radius);
-  background: linear-gradient(90deg, var(--anomaly-5), var(--anomaly-6), var(--anomaly-7), var(--anomaly-8), var(--anomaly-9), var(--anomaly-10));
+  background: linear-gradient(
+    90deg,
+    var(--anomaly-5),
+    var(--anomaly-6),
+    var(--anomaly-7),
+    var(--anomaly-8),
+    var(--anomaly-9),
+    var(--anomaly-10)
+  );
 }
 
-/* Ölçek 0 → +2,5 °C: +1 ve +2 °C etiketleri gerçek konumlarında (%40, %80). */
+/* Scale 0 → +2.5 °C: the +1 and +2 °C labels sit at their true positions
+   (40%, 80%). */
 .ik-seas-legend-ticks {
   position: relative;
   height: 1.1rem;
@@ -2616,7 +2570,7 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   flex-direction: column;
 }
 
-/* Deniz grafik kartları her genişlikte 2×2: dört eşit kart simetrik duruyor. */
+/* Sea chart cards are 2×2 at every width: four equal cards stay symmetric. */
 .ik-seas-text .ik-doc-links {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   max-width: none;
@@ -2629,10 +2583,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   letter-spacing: 0.02em;
 }
 
-/* ── Belge kartları (ÇŞB grafikleri lightbox'ta açılıyor) ──
-   Simge kutusu + ad + kısa açıklama + büyütme işareti. Eşit genişlikli
-   ızgarada duruyor; adım metinlerinin dar sütununda uzun adlar tek sütuna
-   iniyor. */
+/* ── Document cards (ÇŞB charts open in the lightbox) ──
+   Icon box + name + short description + zoom hint, in an equal-width grid;
+   long names drop to one column in the narrow step column. */
 .ik-doc-links {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
@@ -2675,7 +2628,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   background: var(--surface-gray);
   color: var(--idd-green);
   font-size: 0.875rem;
-  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+  transition:
+    background-color var(--dur-fast) ease,
+    color var(--dur-fast) ease;
 }
 
 .ik-doc-link-name {
@@ -2706,7 +2661,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: var(--white);
 }
 
-/* Açık zeminde sarı odak halkası seçilmiyor; koyu halka her iki zeminde net. */
+/* The yellow focus ring does not show on light backgrounds; the dark ring is
+   clear on both. */
 .ik-doc-link:focus-visible,
 .ik-reveal-toggle:focus-visible,
 .ik-dialog-close:focus-visible,
@@ -2715,9 +2671,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   outline-offset: 2px;
 }
 
-/* ── Ek içerik düğmeleri ve penceresi (tablo ikizleri, video) ──
-   Grafiğin hemen altında küçük, yan yana hap düğmeler; içerik yerel <dialog>
-   penceresinde açıldığı için sayfa ve komşu sütun yerinden oynamıyor. */
+/* ── Extra content buttons and dialog (table twins, video) ──
+   Small side-by-side pill buttons right under the chart; the content opens in
+   a native <dialog>, so the page and the neighbouring column do not move. */
 .ik-reveal-toggles {
   display: flex;
   flex-wrap: wrap;
@@ -2755,8 +2711,8 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: var(--idd-green);
 }
 
-/* JS yoksa grafik altındaki video paneli gizli (yapışık alanı büyütürdü);
-   denizlerin sayfa içi tablosu başlığıyla açık kalıyor. */
+/* Without JS the video panel under the chart is hidden (it would enlarge the
+   sticky area); the seas' in-page table stays open with its caption. */
 .ik-scene-media .ik-reveal:not(.is-ready) {
   display: none;
 }
@@ -2773,9 +2729,9 @@ body:has(.sdg-card-panel.sdg-card-visible) .section-dotnav {
   color: var(--light-ink);
 }
 
-/* Pencere ya da büyütülmüş grafik açıkken arkadaki sayfa kaymıyor (script.js:
-   setPageScrollLocked). Kilit html'de: body'deki overflow, html'deki
-   overflow-x:clip yüzünden görünüm alanına aktarılmıyordu. */
+/* While a dialog or the zoomed chart is open the page behind does not scroll
+   (script.js: setPageScrollLocked). The lock is on <html>: overflow on <body>
+   did not reach the viewport because of overflow-x:clip on <html>. */
 html.ik-scroll-locked {
   overflow: hidden;
 }
@@ -2846,7 +2802,8 @@ html.ik-scroll-locked {
   border-color: var(--idd-green);
 }
 
-/* İçerik sonuna gelince kaydırma arkadaki sayfaya geçmiyor (dokunmatik). */
+/* Scrolling does not chain to the page behind at the end of the content
+   (touch). */
 .ik-dialog-body {
   min-height: 0;
   overflow: auto;
@@ -2859,15 +2816,17 @@ html.ik-scroll-locked {
   margin: 0;
 }
 
-/* Pencerede tablo, pencere gövdesiyle birlikte kayıyor ve başlık satırı üstte
-   yapışık kalıyor; clip köşeleri kırparken yapışmayı bozmuyor (hidden bozardı). */
+/* Inside the dialog the table scrolls with the dialog body and the header row
+   stays sticky; clip rounds the corners without breaking stickiness (hidden
+   would). */
 .ik-dialog .ik-data-scroll {
   max-height: none;
   overflow: clip;
 }
 
-/* Pencere dar ekranda ~310px: üç sütunlu tablo (neden, sayı, alan) sağdan
-   kırpılıyordu. Başlıklar iki satıra inebiliyor, hücre boşlukları daralıyor. */
+/* The dialog is ~310px on narrow screens and the three-column table (cause,
+   count, area) was cut off on the right. Headers may wrap and cell padding
+   shrinks. */
 .ik-dialog .ik-data-table th,
 .ik-dialog .ik-data-table td {
   padding: var(--space-xs);
@@ -2878,8 +2837,8 @@ html.ik-scroll-locked {
   vertical-align: bottom;
 }
 
-/* En dar ekranlarda beş sütunlu deniz tablosu da sığsın: yazı ve yan boşluk
-   küçülüyor, dönem hücresi tireden iki satıra inebiliyor. */
+/* Make the five-column sea table fit on the narrowest screens too: smaller
+   text and side padding, and the period cell may wrap at the dash. */
 @media (max-width: 400px) {
   .ik-dialog .ik-data-table {
     font-size: 0.8125rem;
@@ -2955,7 +2914,7 @@ html.ik-scroll-locked {
   background: var(--site-dark);
 }
 
-/* ── Okyanus ısınmasının etkileri: fotoğraf geçişleri ── */
+/* ── Effects of ocean warming: photo cross-fades ── */
 .ik-photos {
   display: grid;
   gap: var(--space-s);
@@ -2983,23 +2942,27 @@ html.ik-scroll-locked {
   color: var(--light-ink-soft);
 }
 
-/* JS yoksa fotoğraflar alt alta akıyor. JS varken üst üste biniyor ve aktif
-   adımın fotoğrafı çapraz geçişle öne çıkıyor; görünmeyenler visibility ile
-   erişilebilirlik ağacından da çıkıyor. */
+/* Without JS the photos stack vertically. With JS they overlap and the active
+   step's photo cross-fades in; hidden ones also leave the accessibility tree
+   via visibility. */
 .ik-scene.is-ready .ik-photo {
   grid-area: 1 / 1;
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility 0s linear var(--dur-base);
 }
 
 .ik-scene.is-ready .ik-photo.is-active {
   opacity: 1;
   visibility: visible;
-  transition: opacity var(--dur-base) var(--ease-out), visibility 0s;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility 0s;
 }
 
-/* ── Orman Yangınları: açılış ve grafikler ── */
+/* ── Forest fires: opener and charts ── */
 .ik-fire-opener {
   display: grid;
   gap: var(--space-m);
@@ -3007,7 +2970,7 @@ html.ik-scroll-locked {
 
 .ik-hero-figure-value {
   margin: 0;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: max(3rem, var(--step-3));
   font-weight: 800;
   line-height: 1;
@@ -3050,9 +3013,10 @@ html.ik-scroll-locked {
   display: grid;
 }
 
-/* Görünümler üst üste; panel en uzun görünüm kadar yüksek, kısa olanlar
-   ortalanıyor. Sönen görünüm geçiş boyunca görünür kaldığı için fare
-   olaylarını almıyor, yoksa alttaki grafiğin ipucunu engelliyordu. */
+/* Views overlap; the panel is as tall as the tallest view and shorter ones
+   are centred. The fading view stays visible during the transition, so it
+   ignores pointer events; otherwise it blocked the tooltip of the chart
+   below. */
 .ik-fires-view {
   grid-area: 1 / 1;
   display: flex;
@@ -3060,14 +3024,18 @@ html.ik-scroll-locked {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility 0s linear var(--dur-base);
 }
 
 .ik-fires-view.is-active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity var(--dur-base) var(--ease-out), visibility 0s;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility 0s;
 }
 
 .ik-fires-view > .ik-hbars,
@@ -3076,9 +3044,9 @@ html.ik-scroll-locked {
   padding-top: var(--space-s);
 }
 
-/* Sütunlar düz HTML: yükseklik veriden (--value, eksen üst sınırına oran),
-   aralar 2px yüzey boşluğu, uçlar 4px yuvarlak, taban düz. SVG viewBox
-   ölçeklemesi olmadığı için her genişlikte boşluk ve köşe aynı kalıyor. */
+/* Columns are plain HTML: height from the data (--value, ratio to the axis
+   maximum), 2px surface gaps, 4px rounded ends, flat base. Without SVG
+   viewBox scaling, gaps and corners stay the same at every width. */
 .ik-columns {
   position: relative;
   height: clamp(10rem, 26vw, 17rem);
@@ -3133,8 +3101,8 @@ html.ik-scroll-locked {
   background: var(--chart-accent);
 }
 
-/* Dar ekranda kenara yaslanan etiket komşu uzun sütunun (2021) üstüne
-   biniyor; panel renginde zemin sütunu etiketin arkasında bırakıyor. */
+/* On narrow screens the edge-aligned label overlaps the tall neighbouring
+   column (2021); a panel-coloured backing keeps the column behind the label. */
 .ik-column-label {
   position: absolute;
   z-index: 1;
@@ -3197,7 +3165,8 @@ html.ik-scroll-locked {
   gap: var(--space-xs);
 }
 
-/* Değer etiketi çubuğun ucunda: çubuğa etiket genişliği kadar yer bırakılıyor. */
+/* The value label sits at the end of the bar; the bar leaves room for the
+   label's width. */
 .ik-hbar {
   flex: 0 0 auto;
   width: calc(var(--value) * (100% - 5rem));
@@ -3270,9 +3239,10 @@ html.ik-scroll-locked {
     column-gap: var(--space-l);
   }
 
-  /* Metin sütunu harita paneliyle aynı boyda; kartlar sütunun dibine
-     itildiği için alt kenarları haritanın alt kenarıyla hizalı. */
+  /* The text column is as tall as the map panel; the cards are pushed to the
+     bottom so their bottom edges line up with the map's. */
   .ik-seas {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     align-items: stretch;
   }
 
@@ -3281,20 +3251,16 @@ html.ik-scroll-locked {
     padding-top: var(--space-m);
   }
 
-  .ik-seas {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  }
-
   .ik-fire-opener {
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 }
 
-/* ── Yapışık görselin yükseklik bütçesi ──
-   Görsel her ekranda sığmalı ve metne yer bırakmalı. Alt alta düzende görsel
-   menünün altında kalan yüksekliğin en fazla %55'ini, yan yana düzende tamamını
-   kullanıyor. Bütçeye takılınca yazılar değil yalnızca çizim alanları
-   (şeritler, sütunlar, fotoğraf) küçülüyor: bunlar esnek, gerisi sabit. */
+/* ── Height budget for the sticky media ──
+   The media must fit on every screen and leave room for the text. Stacked, it
+   uses at most 55% of the height below the menu; side by side, all of it. At
+   the budget limit only the drawing areas (stripes, columns, photo) shrink:
+   they are flexible, everything else is fixed. */ /* stylelint-disable-next-line no-duplicate-selectors -- height-budget overrides are grouped in one section on purpose */
 .ik-scene-media {
   display: flex;
   flex-direction: column;
@@ -3317,9 +3283,9 @@ html.ik-scroll-locked {
   flex: none;
 }
 
-/* Tercih edilen yükseklik (height) tarayıcının küçülme alt sınırını da o
-   değere çekiyor; esnek parçalarda alt sınır açıkça yazılı. Yazı taşıyan
-   parçalar hiç küçülmüyor. */
+/* A preferred height also sets the browser's shrink floor to that value, so
+   flexible parts state their minimum explicitly. Parts that carry text never
+   shrink. */
 .ik-scene-media > .ik-chart > *,
 .ik-stripes-frame > * {
   flex-shrink: 0;
@@ -3337,19 +3303,20 @@ html.ik-scroll-locked {
   min-height: 2.5rem;
 }
 
-/* Üst üste binen görünümler ızgarası yüksekliği kapsayıcıdan alıyor; alt
-   sınır kısa görünümlerin (yangın başına alan, nedenler) sığdığı değer. */
+/* The overlapping views grid takes its height from the container; the
+   minimum is what the short views (area per fire, causes) need. */
 .ik-scene-media > .ik-chart > .ik-fires-views {
   flex: 1 1 auto;
   grid-template-rows: minmax(0, 1fr);
   min-height: 11rem;
 }
 
+/* stylelint-disable-next-line no-duplicate-selectors -- height-budget overrides are grouped in one section on purpose */
 .ik-fires-view {
   min-height: 0;
 }
 
-.ik-fires-view[data-view="area"] .ik-columns {
+.ik-fires-view[data-view='area'] .ik-columns {
   flex: 1 1 auto;
   min-height: 4rem;
 }
@@ -3359,6 +3326,7 @@ html.ik-scroll-locked {
   min-height: 8rem;
 }
 
+/* stylelint-disable-next-line no-duplicate-selectors -- height-budget overrides are grouped in one section on purpose */
 .ik-scene.is-ready .ik-photo {
   display: flex;
   flex-direction: column;
@@ -3370,16 +3338,16 @@ html.ik-scroll-locked {
   min-height: 0;
 }
 
-/* JS yoksa görsel yapışmıyor: fotoğraflar ve ÇŞB grafikleri metinle birlikte
-   akıyor, bütçeyle kırpılmıyor. */
+/* Without JS the media is not sticky: photos and ÇŞB charts flow with the
+   text and are not clipped by the budget. */
 .ik-scene:not(.is-ready) .ik-scene-media {
   position: static;
   max-height: none;
 }
 
-/* Geniş düzen: adımlar solda (%40), görsel sağda yapışık (%60). Yatay tutulan
-   kısa ekranlarda (≤600px yükseklik) da yan yana, çünkü üstte yapışık görsel
-   ekranı kapatırdı. Koşul script.js'teki wideLayout ile aynı. */
+/* Wide layout: steps on the left (40%), sticky media on the right (60%). Also
+   side by side on short landscape screens (≤600px tall), where media stuck on
+   top would cover the screen. Same condition as wideLayout in script.js. */
 @media (min-width: 992px), (orientation: landscape) and (max-height: 600px) and (min-width: 640px) {
   .ik-scene-body {
     display: grid;
@@ -3388,8 +3356,8 @@ html.ik-scroll-locked {
     align-items: start;
   }
 
-  /* Görsel menünün altındaki alanda dikey ortalı; --ik-media-top'u script.js
-     görselin yüksekliğinden hesaplıyor. */
+  /* Vertically centred in the area below the menu; script.js computes
+     --ik-media-top from the media's height. */
   .ik-scene-media {
     grid-column: 2;
     grid-row: 1;
@@ -3416,9 +3384,10 @@ html.ik-scroll-locked {
   }
 }
 
-/* Kısa ekranlar (dikeyde ≤760px, yatayda ≤600px yükseklik): görselin sabit
-   parçaları sıkılaşıyor ki bütçenin büyük kısmı çizim alanına kalsın. Renk
-   ölçeğinin sayı etiketleri gizleniyor; değerler ipucunda ve tabloda duruyor. */
+/* Short screens (≤760px tall in portrait, ≤600px in landscape): the media's
+   fixed parts tighten so most of the budget goes to the drawing area. The
+   colour scale's number labels are hidden; the values remain in the tooltip
+   and the table. */
 @media (orientation: portrait) and (max-height: 760px), (orientation: landscape) and (max-height: 600px) {
   .ik-scene-media > .ik-chart {
     padding: var(--space-xs) var(--space-s);
@@ -3445,7 +3414,7 @@ html.ik-scroll-locked {
     display: none;
   }
 
-  /* En üst eksen etiketi çizginin üstünde duruyor; başlıkla çakışmasın. */
+  /* The top axis label sits above its line; keep it clear of the title. */
   .ik-columns {
     margin-top: var(--space-s);
   }
@@ -3475,28 +3444,29 @@ html.ik-scroll-locked {
   }
 }
 
-/* Yatay telefonlarda metin sütunu dar kalıyordu (adımlar ekrandan uzundu):
-   iki sütun eşit genişlikte. */
+/* On landscape phones the text column was too narrow (steps were taller than
+   the screen): two equal columns. */
 @media (orientation: landscape) and (max-height: 600px) and (min-width: 640px) and (max-width: 991px) {
   .ik-scene-body {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
-/* Dar dikey ekranlarda (≤400px) yıl sayacı küçülüyor: yanındaki değer ve
-   açıklaması iki satıra kırılıp görseli uzatıyordu. */
+/* On narrow portrait screens (≤400px) the year counter shrinks: the value and
+   its note wrapped onto two lines and made the media taller. */
 @media (max-width: 400px) {
   .ik-stripes-year {
     font-size: var(--step-2);
   }
 }
 
-/* Yatay telefonlar: görsel sütunu ~290px genişlik, ~270px yükseklik. Yalnızca
-   okumayı doğrudan taşımayan parçalar kalkıyor. Renk ölçeği gizli (renklerin
-   anlamı ilk adımın metninde), değer açıklaması gizli (referans dönemi
-   şeritlerin altındaki köşeli parantezde yazıyor). Neden ve yangın başına alan
-   grafiklerinde etiketler çubuğun soluna geçiyor. */
-@media (orientation: landscape) and (max-height: 500px), (orientation: landscape) and (max-height: 600px) and (max-width: 991px) {
+/* Landscape phones: the media column is ~290px wide, ~270px tall. Only parts
+   that do not directly carry the reading are removed: the colour scale (its
+   meaning is in the first step's text) and the value note (the reference
+   period is in the bracket under the stripes). In the causes and area-per-
+   fire charts the labels move to the left of the bar. */
+@media (orientation: landscape) and (max-height: 500px),
+  (orientation: landscape) and (max-height: 600px) and (max-width: 991px) {
   .ik-stripes-year {
     font-size: var(--step-1);
   }
@@ -3538,7 +3508,8 @@ html.ik-scroll-locked {
     display: none;
   }
 
-  /* Dar sütunda referans etiketi eksen yıllarıyla çakışıyordu: bir alt satırda. */
+  /* In a narrow column the reference label collided with the axis years: move
+     it one line down. */
   .ik-stripes-axis {
     min-height: 2.6rem;
   }
@@ -3554,15 +3525,15 @@ html.ik-scroll-locked {
     white-space: nowrap;
   }
 
-  /* Simgesiz iki düğme dar sütunda tek satıra sığıyor; iki satır grafiğin
-     alanını yiyordu. */
+  /* Without icons the two buttons fit on one line in a narrow column; two lines
+     ate into the chart area. */
   .ik-reveal-toggle .ik-reveal-icon {
     display: none;
   }
 }
 
-/* Çok kısa dikey ekranlarda (ör. JioPhone 2, 240×320) görsel ile metin aynı
-   ekrana sığmıyor: görsel yapışmıyor, metinle birlikte akıyor. */
+/* On very short portrait screens (e.g. JioPhone 2, 240×320) media and text
+   cannot share the screen: the media is not sticky and flows with the text. */
 @media (orientation: portrait) and (max-height: 559px) {
   .ik-scene-media {
     position: static;
@@ -3594,19 +3565,18 @@ html.ik-scroll-locked {
   }
 }
 
-/*  ========================================================================= Causes Section Styles (Sekmeli Yapı) =============================================================================== */
-
+/* Causes section (tabs) */
 #causes-section .container,
 #happening-section .container {
   position: relative;
   z-index: 1;
 }
 
-/* justify-content:center kaydırılabilir bir kapsayıcıda taşan içeriği iki
-   yana eşit taşırıyor ve sol taraf kaydırma alanının dışında kalıyordu
-   (mobilde "Enerji ve Fosil Yakıtlar" hiç görünmüyordu). Ortalamayı ilk/son
-   öğenin auto margin'i yapıyor: sığdığında boşluğu paylaşıp ortalıyor,
-   taşınca 0'a inip içeriği kaydırma başlangıcından başlatıyor. */
+/* justify-content:center in a scroll container overflows evenly on both
+   sides, leaving the start outside the scrollable area (on mobile "Enerji ve
+   Fosil Yakıtlar" was unreachable). Auto margins on the first/last item
+   centre instead: they share the space when it fits and collapse to 0 when
+   it overflows, so content starts at the scroll origin. */
 .cause-tabs-nav {
   display: flex;
   flex-wrap: nowrap;
@@ -3632,16 +3602,19 @@ html.ik-scroll-locked {
   align-items: center;
   flex-shrink: 0;
   height: 44px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgb(255 255 255 / 4%);
+  border: 1px solid rgb(255 255 255 / 16%);
   border-radius: 999px;
   padding: 0;
   font-size: 0.78rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255 255 255 / 60%);
   white-space: nowrap;
   overflow: hidden;
-  transition: background 0.6s ease, border-color 0.6s ease, color 0.6s ease;
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    color 0.6s ease;
 }
 
 .cause-tab-btn-icon {
@@ -3652,7 +3625,7 @@ html.ik-scroll-locked {
   height: 44px;
   flex-shrink: 0;
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgb(255 255 255 / 75%);
   transition: color 0.6s ease;
 }
 
@@ -3669,14 +3642,10 @@ html.ik-scroll-locked {
   padding-right: 18px;
 }
 
-/* "İkon-sadece, hover'da etiket açılır" deseni gerçek (fare) hover'ı olan
-   cihazlara özgü — dokunmatikte kalıcı bir hover hâli yok, yani aktif
-   olmayan 4 sekmenin etiketi (Ormansızlaşma, Sanayi Üretimi, Tarım ve
-   Hayvancılık, Ulaşım) iPad/telefonda KEŞFEDİLEMEZ şekilde daralı
-   kalıyordu (max-width:0 kalıcıydı) — kullanıcının "1-2 kelime yazıp alt
-   satıra geçiyor" dediği tam olarak bu. Temel/varsayılan kural artık hep
-   açık; sadece gerçek imleçli hover cihazlarında daraltılıp hover/aktifte
-   açılıyor. */
+/* The "icon only, label on hover" pattern only works with a real pointer:
+   touch has no persistent hover, so the four inactive tab labels stayed
+   collapsed and undiscoverable on tablets and phones. Labels are open by
+   default and only collapse on devices with a hover-capable pointer. */
 @media (hover: hover) and (pointer: fine) {
   .cause-tab-btn-label {
     max-width: 0;
@@ -3689,7 +3658,7 @@ html.ik-scroll-locked {
 }
 
 .cause-tab-btn:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgb(255 255 255 / 40%);
   color: #fff;
 }
 
@@ -3709,24 +3678,19 @@ html.ik-scroll-locked {
   gap: 56px;
 }
 
-/* İki class'lı specificity, Bootstrap'ın ".tab-content > .active{display:block}"
-   kuralıyla eşleşip kaynak sırası sayesinde onu eziyor — sadece aktif sekme
-   flex olur, pasif sekmeler Bootstrap'ın display:none kuralıyla gizli kalır. */
+/* Two-class specificity matches Bootstrap's ".tab-content > .active
+   {display:block}" and wins by source order: only the active tab becomes
+   flex, inactive tabs stay hidden by Bootstrap's display:none. */
 .cause-tab-grid.active {
   display: flex;
 }
 
-/* Kutu/"cam kart" arka planı kaldırıldı: grafikler ve orta metin artık
-   doğrudan sayfanın yeşil zemininde duruyor, aralarında kutu sınırı yerine
-   bol boşluk var — "birbirinden ayrışsın, rahat gözüksün" isteği.
-   Kullanıcı isteğiyle düzen değişti: metin ÜSTTE (tam genişlik), 2 grafik
-   ALTINDA yan yana. HTML sırası hâlâ grafik/metin/grafik (değiştirmeye
-   gerek yok) — .cause-tab-text'e order:-1 vererek görsel sırayı flex ile
-   çeviriyoruz; flex-wrap:wrap + metnin flex-basis:100% olması, ondan
-   sonra gelen iki grafiği otomatik olarak bir alt "satıra" itip yan yana
-   bırakıyor. Dar ekranlarda grafikler için yer kalmazsa (ör. çok küçük
-   telefon) aynı wrap mekanizması onları da alt alta düşürür — ayrı bir
-   breakpoint gerekmiyor. */
+/* No box/glass card: the charts and text sit directly on the green
+   background, separated by generous space. Text on top at full width, the two
+   charts side by side below. The HTML order stays chart/text/chart;
+   .cause-tab-text gets order:-1 and flex-basis:100%, so with flex-wrap the
+   two charts drop to the next line together. If there is no room (very small
+   phones) the same wrap stacks them, no extra breakpoint needed. */
 .cause-tab-row {
   display: flex;
   flex-wrap: wrap;
@@ -3748,9 +3712,8 @@ html.ik-scroll-locked {
 }
 
 .cause-tab-chart .chart-wrapper {
-  /* Kare alan: donut grafik dairesi dikdörtgen kutunun yüksekliğiyle
-     sınırlandığından, kutuyu kareye getirip iki grafiğin de eşit
-     boyutta/aynı hizada görünmesini sağlıyoruz. */
+  /* Square area: the donut is limited by the box height, so a square box makes
+     both charts the same size and alignment. */
   width: min(320px, 100%);
   margin: 0 auto;
 }
@@ -3764,16 +3727,15 @@ html.ik-scroll-locked {
 .cause-chart-caption {
   font-size: 0.72rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgb(255 255 255 / 55%);
   text-align: center;
   letter-spacing: 0.01em;
 }
 
 .cause-tab-text {
-  /* order:-1, HTML'deki grafik/metin/grafik sırasını değiştirmeden metni
-     görsel olarak en üste taşıyor; flex:1 1 100% ile tam genişlik alıp
-     satırı sarmaya (wrap) zorluyor, böylece ondan sonra gelen iki grafik
-     otomatik olarak bir alt satıra düşüp yan yana duruyor. */
+  /* order:-1 moves the text to the top visually without changing the
+     chart/text/chart HTML order; flex:1 1 100% forces the wrap so the two
+     charts after it line up side by side on the next row. */
   order: -1;
   flex: 1 1 100%;
   min-width: 0;
@@ -3787,12 +3749,12 @@ html.ik-scroll-locked {
 
 .cause-tab-text p {
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgb(255 255 255 / 85%);
   line-height: 1.65;
   margin: 0;
-  /* 560px, dikey istif düzeninde (≤1300px, bkz. .cause-tab-row) mevcut
-     sütun genişliğinin (ör. iPad Air'de ~756px) çoğunu boşa harcıyordu —
-     kullanıcı isteğiyle satır uzunluğu gerçekten genişledi. */
+
+  /* 560px wasted most of the column in the stacked layout (≤1300px, see
+     .cause-tab-row), e.g. ~756px on an iPad Air. */
   max-width: 720px;
   width: 100%;
   text-align: left;
@@ -3803,7 +3765,7 @@ html.ik-scroll-locked {
   justify-content: center;
 }
 
-/* ── CardStack: örnek kartların fanlanmış istifi ── */
+/* ── Card stack: fanned example cards ── */
 .cause-stack {
   width: 100%;
   display: flex;
@@ -3829,29 +3791,33 @@ html.ik-scroll-locked {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* DefaultFanCard'taki gibi: fotoğraf + okunabilirlik için alttan koyu
-     gradient — iki background bir arada, gradient üstte (önde) çiziliyor. */
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 85%),
-    var(--stack-img);
+
+  /* Photo plus a dark bottom gradient for legibility: two backgrounds, the
+     gradient painted on top. */
+  background-image:
+    linear-gradient(to top, rgb(0 0 0 / 88%) 0%, rgb(0 0 0 / 25%) 55%, transparent 85%), var(--stack-img);
   background-size: cover;
   background-position: center;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgb(255 255 255 / 18%);
   border-radius: var(--radius-s);
   cursor: pointer;
-  /* --offset: aktif karta göre (sonsuz döngü olacak şekilde en kısa
-     mesafe üzerinden, JS tarafından) hesaplanır. |offset|>1 olan kartlar
-     görünmez ve tıklanamaz tutulur — kullanıcı sadece o anki sol/sağ
-     komşu karta tıklayarak bir yönde ilerleyebilir, dizinin sonuna
-     gelindiğinde başa (veya tersi) sarar. */
+
+  /* --offset is computed by JS relative to the active card (shortest circular
+     distance). Cards with |offset| > 1 are hidden and not clickable: the user
+     moves by clicking the current left/right neighbour, wrapping at the ends. */
   --offset: 0;
+
   transform: translate(-50%, 0) translateX(calc(var(--offset) * 290px)) rotate(calc(var(--offset) * 6deg)) scale(0.9);
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, z-index 0.5s;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease,
+    z-index 0.5s;
   opacity: 0.5;
   z-index: 1;
   pointer-events: none;
 }
 
-.cause-stack-card[data-visible="true"] {
+.cause-stack-card[data-visible='true'] {
   opacity: 0.5;
   pointer-events: auto;
 }
@@ -3860,9 +3826,10 @@ html.ik-scroll-locked {
   opacity: 1;
   z-index: 5;
   pointer-events: auto;
-  border-color: rgba(255, 255, 255, 0.55);
+  border-color: rgb(255 255 255 / 55%);
   box-shadow: var(--shadow-2);
-  transform: translate(-50%, -8px) translateX(calc(var(--offset) * 290px)) rotate(calc(var(--offset) * 6deg)) scale(1.05);
+  transform: translate(-50%, -8px) translateX(calc(var(--offset) * 290px)) rotate(calc(var(--offset) * 6deg))
+    scale(1.05);
 }
 
 .cause-stack-card h4 {
@@ -3870,12 +3837,12 @@ html.ik-scroll-locked {
   font-weight: 800 !important;
   color: #fff;
   margin: 0 0 8px !important;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 4px rgb(0 0 0 / 60%);
 }
 
 .cause-stack-card p {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgb(255 255 255 / 85%);
   line-height: 1.5;
   margin: 0;
   display: -webkit-box;
@@ -3883,7 +3850,7 @@ html.ik-scroll-locked {
   line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 4px rgb(0 0 0 / 60%);
 }
 
 @media (max-width: 991px) {
@@ -3897,25 +3864,19 @@ html.ik-scroll-locked {
   }
 
   .cause-stack-card.active {
-    transform: translate(-50%, -6px) translateX(calc(var(--offset) * 190px)) rotate(calc(var(--offset) * 5deg)) scale(1.02);
+    transform: translate(-50%, -6px) translateX(calc(var(--offset) * 190px)) rotate(calc(var(--offset) * 5deg))
+      scale(1.02);
   }
 }
 
-/*  ========================================================================= Consequences Section Styles (Karşılaşabileceğimiz Gelecek — "CardShowcase") =============================================================================== */
+/* Consequences section (possible futures: card showcase) */
 
-/* Framer'ın CardShowcase referansı aslen yatay bir kart şeridiydi (aktif
-   kart genişleyip açıklamayı gösterirken diğerleri ince dikey şeritlere
-   daralıyordu, 9 kart yan yana kaydırılıyordu) — kullanıcı isteğiyle dikeye
-   çevrildi: kartlar üst üste yığılı, aktif kart YANA değil AŞAĞI doğru
-   büyüyor, diğerleri ince YATAY şeritlere daralıyor. Bir ilerleme çubuğu
-   dolup otomatik bir sonraki karta geçiyor, karta tıklamak doğrudan o karta
-   atlıyor (script.js: initFutureCardShowcase — scrollIntoView zaten yön
-   bağımsız olduğundan JS tarafında değişiklik gerekmedi).
-   width:100% burada kritik: .card-showcase-photo/-body position:absolute
-   olduğundan (normal akıştan çıkmış), üst kapsayıcıya kendiliğinden hiç
-   genişlik vermiyor — eskiden bunu satır yönünde flex-basis üstleniyordu,
-   sütun yönünde ise (önceden sadece ≤767px'te) genişlik hiçbir yerden
-   gelmeyip track/kartlar 0 genişliğe çöküyordu. */
+/* Vertical card showcase: cards are stacked, the active card grows downward
+   while the others narrow to thin horizontal strips. A progress bar fills
+   and advances to the next card; clicking a card jumps to it (script.js).
+   width:100% is essential: .card-showcase-photo/-body are position:absolute,
+   so they give the container no width, and in a column layout the track and
+   cards would collapse to zero width. */
 #consequences-section.section-dark {
   padding: 60px 0;
 }
@@ -3976,7 +3937,7 @@ html.ik-scroll-locked {
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgb(255 255 255 / 15%);
   z-index: 2;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -4000,25 +3961,25 @@ html.ik-scroll-locked {
   bottom: 0;
   z-index: 1;
   padding: 16px 14px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.15) 75%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(0deg, rgb(0 0 0 / 88%) 0%, rgb(0 0 0 / 15%) 75%, rgb(0 0 0 / 0%) 100%);
 }
 
 .card-showcase-card.active .card-showcase-body {
   padding: 22px 26px 26px;
 }
 
-/* Boyutlar artık "inactive = dar" değil "inactive = kısa" mantığına göre:
-   kartlar yönden bağımsız hep tam genişlikte, sadece pasifken (140px) az
-   yükseklik var — eski değerler (0.85rem gibi) 100px'lik dar şerit için
-   ayarlanmıştı, artık geçerli değil. */
+/* Sizes follow "inactive = short" rather than "inactive = narrow": cards are
+   always full width and only short (140px) while inactive. */
 .card-showcase-body h3 {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: 1rem !important;
   font-weight: 700 !important;
   color: #fff;
   margin: 6px 0 0 !important;
   line-height: 1.35;
-  transition: font-size 0.4s ease, margin 0.4s ease;
+  transition:
+    font-size 0.4s ease,
+    margin 0.4s ease;
 }
 
 .card-showcase-card.active .card-showcase-body h3 {
@@ -4033,18 +3994,16 @@ html.ik-scroll-locked {
   }
 }
 
-/* PC'de (geniş + yatay ekran) kullanıcı isteğiyle özgün yatay şeride
-   dönüyor: kartlar yan yana, aktif kart YANA genişliyor, diğerleri ince
-   DİKEY şeride daralıyor. Dikey/dar/portre ekranlı cihazlarda (yukarıdaki
-   temel kural) değişiklik yok. */
+/* On desktop (wide landscape screens) it switches to the horizontal strip:
+   cards side by side, the active one widens sideways while the others narrow
+   to thin vertical strips. Portrait/narrow screens keep the base rule above. */
 @media (min-width: 1100px) and (orientation: landscape) {
   .card-showcase-track {
     flex-direction: row;
     width: auto;
     max-width: none;
     height: 520px;
-    overflow-x: auto;
-    overflow-y: visible;
+    overflow: auto visible;
     scroll-behavior: smooth;
     scrollbar-width: none;
     padding-bottom: 4px;
@@ -4062,8 +4021,8 @@ html.ik-scroll-locked {
     flex: 0 0 min(600px, 66vw);
   }
 
-  /* 100px'lik dar pasif şeritte tam boy metin sığmaz — özgün dar/geniş
-     yazı tipi ölçeği (0.85rem → 1.35rem) geri geliyor. */
+  /* Full-size text does not fit in the 100px inactive strip, so the narrow/wide
+     type scale (0.85rem → 1.35rem) applies here. */
   .card-showcase-body h3 {
     font-size: 0.85rem !important;
   }
@@ -4075,13 +4034,15 @@ html.ik-scroll-locked {
 
 .card-showcase-body p {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgb(255 255 255 / 80%);
   line-height: 1.65;
   margin: 0;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: opacity 0.35s ease, max-height 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    max-height 0.35s ease;
 }
 
 .card-showcase-card.active .card-showcase-body p {
@@ -4090,8 +4051,8 @@ html.ik-scroll-locked {
   margin-top: 12px;
 }
 
-/* Dikey düzen artık her genişlikte aynı (yukarıda); telefonlarda sadece
-   dikey alan daha kısıtlı olduğundan yükseklikler biraz küçültülüyor. */
+/* Phones keep the vertical layout with slightly smaller heights because
+   vertical space is tighter. */
 @media (max-width: 767px) {
   .card-showcase-card {
     height: 130px;
@@ -4108,18 +4069,16 @@ html.ik-scroll-locked {
   }
 }
 
-/*  ========================================================================= Actions Section Styles (Adım Listesi) =============================================================================== */
-
+/* Actions section (step list) */
 #actions-section.section-dark .container {
   position: relative;
   z-index: 1;
 }
 
-/* ── Adım Listesi (zerocircle.in "Products" showcase'inden esinlenilen:
-   başlık + açıklama solda, fotoğraf sağda, sabit taraflarda — sırayla
-   dönüşümlü DEĞİL, ilerleme section'ındaki dönüşümlü zaman tünelinden
-   görsel olarak ayrışması için. Fotoğraflar scroll'da IntersectionObserver
-   ile "animasyonlu" beliriyor (script.js). ── */
+/* ── Step list: title + description on the left, photo on the right, on
+   fixed sides (not alternating) so it reads differently from the alternating
+   timeline in the progress section. Photos fade in on scroll
+   (IntersectionObserver, script.js). ── */
 .steps-group {
   margin-top: 90px;
 }
@@ -4132,40 +4091,39 @@ html.ik-scroll-locked {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-family: 'Climate Crisis', 'Montserrat', sans-serif !important;
+  font-family: 'Climate Crisis', Montserrat, sans-serif !important;
   font-size: clamp(1.3rem, 2.4vw, 1.8rem) !important;
   font-weight: 800 !important;
   color: #fff;
   margin: 0 0 10px !important;
 }
 
-/* Simge bölümün gri zemininde duruyor: beyaz 1,2:1 ile seçilmiyordu, site
-   yeşili 4,4:1 (simgeler için gereken 3:1'in üstünde). */
+/* The icon sits on the section's grey background: white was 1.2:1 and
+   invisible, the site green is 4.4:1 (above the 3:1 needed for icons). */
 .steps-group-title i {
   font-size: 0.85em;
   color: var(--idd-green);
 }
 
 .steps-group-desc {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgb(255 255 255 / 65%);
   font-size: 0.95rem;
   margin: 0 0 50px;
   max-width: 560px;
 }
 
-/* ── Adım Karuseli (Reel) ──
-   Kullanıcının verdiği "ScrollReelTestimonials" React bileşeninin (ters
-   yönde dönen 3 sütunlu makara + karakter bazlı metin animasyonu) vanilla
-   JS/CSS portu. DOM tamamen script.js'teki createStepReel() tarafından
-   inşa ediliyor; burada sadece görünüm tanımlanıyor. ── */
+/* ── Step carousel (reel) ──
+   Three columns turning in opposite directions plus per-character title
+   animation. The DOM is built entirely by createStepReel() in script.js;
+   only the presentation is defined here. ── */
 .reel {
   display: flex;
   align-items: stretch;
   gap: 36px;
   min-height: 380px;
   border-radius: var(--radius-l);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgb(255 255 255 / 12%);
+  background: rgb(0 0 0 / 18%);
   overflow: hidden;
   outline: none;
 }
@@ -4174,8 +4132,7 @@ html.ik-scroll-locked {
   box-shadow: 0 0 0 3px var(--idd-accent-yellow);
 }
 
-/* JS'siz/noscript geri dönüş listesi — .reel'in görsel "makara" efekti yerine
-   sade, okunabilir bir kart listesi. */
+/* No-JS fallback list: a plain, readable card list instead of the reel. */
 .reel-fallback {
   display: grid;
   gap: 20px;
@@ -4186,8 +4143,8 @@ html.ik-scroll-locked {
 .reel-fallback-item {
   padding: 20px 22px;
   border-radius: var(--radius-s);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgb(255 255 255 / 12%);
+  background: rgb(0 0 0 / 18%);
 }
 
 .reel-fallback-item h4 {
@@ -4219,9 +4176,11 @@ html.ik-scroll-locked {
   position: relative;
   flex: 0 0 380px;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -4250,8 +4209,8 @@ html.ik-scroll-locked {
   width: 130px;
   height: 130px;
   border-radius: var(--radius-s);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgb(255 255 255 / 14%), rgb(255 255 255 / 4%));
+  border: 1px solid rgb(255 255 255 / 10%);
   filter: blur(1px);
 }
 
@@ -4265,14 +4224,20 @@ html.ik-scroll-locked {
   background-size: cover;
   background-position: center;
   box-shadow: var(--shadow-2);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgb(255 255 255 / 18%);
 }
 
 .reel-featured::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(220deg, transparent 35%, rgba(86, 192, 43, 0.35) 48%, rgba(255, 182, 72, 0.3) 60%, transparent 75%);
+  background: linear-gradient(
+    220deg,
+    transparent 35%,
+    rgb(86 192 43 / 35%) 48%,
+    rgb(255 182 72 / 30%) 60%,
+    transparent 75%
+  );
   mix-blend-mode: overlay;
 }
 
@@ -4290,7 +4255,7 @@ html.ik-scroll-locked {
 }
 
 .reel-title {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: clamp(1.2rem, 1.9vw, 1.55rem) !important;
   font-weight: 800 !important;
   color: #fff;
@@ -4317,7 +4282,7 @@ html.ik-scroll-locked {
 }
 
 .reel-desc {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgb(255 255 255 / 72%);
   font-size: 0.9rem;
   line-height: 1.6;
   margin: 0 0 16px;
@@ -4342,7 +4307,7 @@ html.ik-scroll-locked {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255 255 255 / 60%);
   font-size: 0.82rem;
   line-height: 1.5;
 }
@@ -4394,18 +4359,21 @@ html.ik-scroll-locked {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgb(255 255 255 / 25%);
   background: transparent;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .reel-nav-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgb(255 255 255 / 12%);
   transform: scale(1.08);
 }
 
@@ -4419,9 +4387,9 @@ html.ik-scroll-locked {
 }
 
 .reel-nav-counter {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgb(255 255 255 / 50%);
   margin-left: 4px;
 }
 
@@ -4453,13 +4421,11 @@ html.ik-scroll-locked {
   }
 }
 
-/*  ========================================================================= İlerleme Section Styles (Kronoloji) =============================================================================== */
+/* Progress section (timeline) */
 
-/* 1000whales.com'daki "Where a Dead Whale Goes" bölümünden esinlenilen
-   dikey kronoloji: ortada uzanan bir "omurga" hattı üzerinde ilerlemeyi
-   gösteren dolan bir çizgi (script.js scroll ilerlemesine göre height
-   günceller), her kilometre taşı kendi fotoğrafı + kalın başlığıyla sırayla
-   ortaya çıkıyor. */
+/* Vertical timeline: a filling line on a central spine shows progress
+   (script.js updates it from scroll), and each milestone appears in turn with
+   its photo and bold title. */
 #progress-section.progress-parallax-section {
   padding: 60px 0;
 }
@@ -4477,18 +4443,20 @@ html.ik-scroll-locked {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: rgba(20, 33, 15, 0.15);
+  background: rgb(20 33 15 / 15%);
   transform: translateX(-50%);
   border-radius: 3px;
   overflow: hidden;
 }
 
-/* Omurga kırmızıdan maviye geçiyor (sıcaklık ölçeğinin iki ucu). Dolgu tam
-   boy; script.js --spine-progress ile yalnızca üstten görünen kısmını açıyor,
-   bu yüzden renk geçişi kaydırmayla sıkışmıyor. İkinci bildirim oklch
-   aradeğerlemesi: sRGB'de geçişin ortası çamurlu bir mora düşüyordu. */
+/* The spine runs red to blue (the two ends of the temperature scale). The
+   fill is full height; script.js reveals only its visible top part via
+   --spine-progress, so the gradient does not compress with scrolling. The
+   second declaration interpolates in oklch: in sRGB the middle of the
+   gradient turned a muddy purple. */
 .timeline-spine-fill {
   --spine-progress: 0;
+
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, var(--anomaly-9), var(--anomaly-1));
@@ -4503,7 +4471,9 @@ html.ik-scroll-locked {
   padding: 40px 0;
   opacity: 0;
   translate: 0 24px;
-  transition: opacity 0.6s ease, translate 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    translate 0.6s ease;
 }
 
 .timeline-item.is-in-view {
@@ -4515,9 +4485,9 @@ html.ik-scroll-locked {
   justify-content: flex-end;
 }
 
-/* Kilometre taşları gerçek bir sıra izlemediği için (2015, 2023, 2024,
-   2019…) numara taşımıyor; işaret yalnızca omurga üzerindeki konumu gösteriyor.
-   24px, kartla aynı işi yapan ikincil dokunma hedefi için asgari boyut. */
+/* Milestones do not follow a strict order (2015, 2023, 2024, 2019…), so they
+   carry no numbers; the marker only shows the position on the spine. 24px is
+   the minimum for a secondary target that does the same job as the card. */
 .timeline-marker {
   position: absolute;
   left: 50%;
@@ -4528,10 +4498,12 @@ html.ik-scroll-locked {
   background: var(--idd-accent-green);
   transform: translate(-50%, 0) scale(0.7);
   border: 4px solid var(--idd-green);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 20%);
   z-index: 2;
   cursor: pointer;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease;
 }
 
 .timeline-item.is-in-view .timeline-marker {
@@ -4539,29 +4511,32 @@ html.ik-scroll-locked {
 }
 
 .timeline-marker.active {
-  box-shadow: 0 0 0 6px rgba(20, 33, 15, 0.12), 0 0 28px var(--idd-accent-green);
+  box-shadow:
+    0 0 0 6px rgb(20 33 15 / 12%),
+    0 0 28px var(--idd-accent-green);
 }
 
-/* ── Kart (Framer/React "Timeline3D" referansı: görsel üstte + kategori
-   rozeti, altında tarih+nokta, başlık, hover/tıklamayla açılan açıklama,
-   alt kenarda dolan renkli ilerleme çizgisi. Omurga hattı ve dolgu
-   animasyonu (.timeline-spine / .timeline-spine-fill) sitenin kendi
-   mevcut implementasyonu — referanstaki düz çizgi yerine bu kullanılıyor. */
+/* ── Card: image on top with a category badge, date + dot below, title, a
+   description that opens on hover/click, and a coloured progress line along
+   the bottom edge. The spine and its fill animation (.timeline-spine /
+   .timeline-spine-fill) are the page's own implementation. */
 .timeline-card {
   position: relative;
   width: min(460px, 44%);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 10%);
   border-radius: var(--radius-l);
   overflow: hidden;
   cursor: pointer;
   transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .timeline-card:hover,
 .timeline-card.active {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgb(255 255 255 / 22%);
   box-shadow: var(--shadow-2);
 }
 
@@ -4588,7 +4563,7 @@ html.ik-scroll-locked {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(8, 14, 8, 0.92) 100%);
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 45%, rgb(8 14 8 / 92%) 100%);
 }
 
 .timeline-card-body {
@@ -4596,7 +4571,7 @@ html.ik-scroll-locked {
 }
 
 .timeline-card h3 {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: 1.2rem !important;
   font-weight: 900 !important;
   color: #fff;
@@ -4608,7 +4583,9 @@ html.ik-scroll-locked {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+  transition:
+    max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
 }
 
 .timeline-card:hover .timeline-card-desc,
@@ -4619,7 +4596,7 @@ html.ik-scroll-locked {
 
 .timeline-card-desc p {
   font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgb(255 255 255 / 80%);
   line-height: 1.6;
   margin: 12px 0 0;
 }
@@ -4674,8 +4651,7 @@ html.ik-scroll-locked {
   }
 }
 
-/*  ========================================================================= Resources Section Styles =============================================================================== */
-
+/* Resources section */
 #resources-section.section-dark {
   position: relative;
 }
@@ -4685,9 +4661,9 @@ html.ik-scroll-locked {
   z-index: 1;
 }
 
-/* ── Bento Grid: kaynak kartları, özelliğine göre farklı mini-bileşen
-   gösteren asimetrik mozaik düzeninde. Fare hareketiyle hafif 3D tilt
-   (--rx/--ry, script.js) + scroll'da giriş animasyonu uyguluyor. ── */
+/* ── Bento grid: resource cards in an asymmetric mosaic, each showing a
+   different mini component. Subtle 3D tilt on mouse move (--rx/--ry,
+   script.js) and an entrance animation on scroll. ── */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -4701,6 +4677,7 @@ html.ik-scroll-locked {
 .bento-card {
   --rx: 0deg;
   --ry: 0deg;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -4709,20 +4686,23 @@ html.ik-scroll-locked {
   padding: 20px 22px;
   border-radius: var(--radius-s);
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgb(255 255 255 / 78%);
+  border: 1px solid rgb(0 0 0 / 8%);
   box-shadow: var(--shadow-1);
   transform: perspective(900px) rotateX(var(--ry)) rotateY(var(--rx));
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
   opacity: 0;
   translate: 0 16px;
 }
 
 .bento-card.bento-in-view {
-  animation: bentoFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: bento-fade-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes bentoFadeIn {
+@keyframes bento-fade-in {
   to {
     opacity: 1;
     translate: 0 0;
@@ -4730,7 +4710,7 @@ html.ik-scroll-locked {
 }
 
 .bento-card:hover {
-  border-color: rgba(0, 0, 0, 0.16);
+  border-color: rgb(0 0 0 / 16%);
   box-shadow: var(--shadow-2);
 }
 
@@ -4742,10 +4722,10 @@ html.ik-scroll-locked {
 
 .bento-card-title {
   flex: 1;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
   font-size: 1.05rem !important;
   font-weight: 800 !important;
-  color: #000000;
+  color: #000;
   margin: 0 !important;
   letter-spacing: -0.2px;
 }
@@ -4754,10 +4734,12 @@ html.ik-scroll-locked {
   flex-shrink: 0;
   margin-top: 3px;
   font-size: 0.85rem;
-  color: #000000;
+  color: #000;
   opacity: 0;
   transform: translate(-2px, 2px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .bento-card:hover .bento-card-arrow {
@@ -4775,20 +4757,20 @@ html.ik-scroll-locked {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #000000;
-  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+  background: rgb(0 0 0 / 5%);
   padding: 3px 9px;
   border-radius: 20px;
 }
 
 .bento-card-desc {
   font-size: 0.78rem;
-  color: #000000;
+  color: #000;
   line-height: 1.5;
   margin: 2px 0 0;
 }
 
-/* Spotlight (checklist) özelliği */
+/* Spotlight (checklist) variant */
 .bento-spotlight-list {
   list-style: none;
   margin: 10px 0 0;
@@ -4803,7 +4785,7 @@ html.ik-scroll-locked {
   align-items: center;
   gap: 8px;
   font-size: 0.78rem;
-  color: #000000;
+  color: #000;
 }
 
 .bento-spotlight-list .fa-circle-check {
@@ -4811,7 +4793,7 @@ html.ik-scroll-locked {
   flex-shrink: 0;
 }
 
-/* Counter özelliği */
+/* Counter variant */
 .bento-counter {
   display: flex;
   align-items: baseline;
@@ -4821,28 +4803,28 @@ html.ik-scroll-locked {
 }
 
 .bento-counter-value {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 2.4rem;
   font-weight: 900;
-  color: #000000;
+  color: #000;
   line-height: 1;
 }
 
 .bento-counter-suffix {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 1.3rem;
   font-weight: 800;
-  color: #000000;
+  color: #000;
 }
 
 .bento-counter-label {
   display: block;
   font-size: 0.66rem;
-  color: #000000;
+  color: #000;
   margin-top: 2px;
 }
 
-/* Timeline özelliği */
+/* Timeline variant */
 .bento-timeline {
   position: relative;
   list-style: none;
@@ -4857,7 +4839,7 @@ html.ik-scroll-locked {
   bottom: 4px;
   left: 4px;
   width: 2px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgb(0 0 0 / 10%);
 }
 
 .bento-timeline li {
@@ -4878,24 +4860,24 @@ html.ik-scroll-locked {
   border-radius: 50%;
   background: var(--idd-green);
   border: 2px solid #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 12%);
 }
 
 .bento-timeline-year {
   flex-shrink: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 0.74rem;
   font-weight: 800;
-  color: #000000;
+  color: #000;
 }
 
 .bento-timeline-event {
   font-size: 0.72rem;
-  color: #000000;
+  color: #000;
   line-height: 1.3;
 }
 
-/* Chart özelliği */
+/* Chart variant */
 .bento-chart-row {
   display: flex;
   align-items: center;
@@ -4904,20 +4886,20 @@ html.ik-scroll-locked {
   padding-top: 14px;
   font-size: 0.74rem;
   font-weight: 600;
-  color: #000000;
+  color: #000;
 }
 
 .bento-chart-value {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 800;
-  color: #000000;
+  color: #000;
 }
 
 .bento-chart-track {
   margin-top: 6px;
   height: 8px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgb(0 0 0 / 8%);
   overflow: hidden;
 }
 
@@ -4957,11 +4939,11 @@ html.ik-scroll-locked {
   }
 }
 
-/*  ========================================================================= Kaynakça Section Styles =============================================================================== */
+/* Bibliography section */
 
-/* #resources-section'ın ::after'ı zaten alttan #212529'e (footer'ın rengi)
-   doğru soluyor — bu bölüm o rengi devam ettirip footer'a köprü kuruyor,
-   ağır bir section-dark bloğu yerine sade/kompakt bir "kaynak şeridi". */
+/* #resources-section's ::after already fades towards #212529 (the footer
+   colour); this section continues that colour as a compact source strip that
+   bridges into the footer. */
 .sources-section {
   position: relative;
   z-index: 1;
@@ -4977,7 +4959,7 @@ html.ik-scroll-locked {
 }
 
 .sources-label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 800;
   font-size: 0.74rem;
   letter-spacing: 0.18em;
@@ -4998,11 +4980,14 @@ html.ik-scroll-locked {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgb(255 255 255 / 30%);
   color: var(--white);
   font-size: 0.8rem;
   text-decoration: none;
-  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease;
 }
 
 .sources-links a i {
@@ -5012,11 +4997,10 @@ html.ik-scroll-locked {
 
 .sources-links a:hover {
   border-color: var(--white);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgb(255 255 255 / 12%);
 }
 
-/*  ========================================================================= Lightbox (grafik/chart görsellerine tıkla-büyüt) =============================================================================== */
-
+/* Lightbox (click-to-zoom for chart images) */
 .lightbox-overlay {
   position: fixed;
   inset: 0;
@@ -5025,20 +5009,24 @@ html.ik-scroll-locked {
   align-items: center;
   justify-content: center;
   padding: clamp(20px, 5vw, 60px);
-  background: rgba(5, 10, 5, 0.92);
+  background: rgb(5 10 5 / 92%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
 }
 
-/* Kapalı katman görünmez olsa da odaklanabilir kalıyordu; visibility onu
-   sekme sırasından çıkarıyor. */
+/* A closed layer was invisible yet still focusable; visibility removes it
+   from the tab order. */
 .lightbox-overlay.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0.3s ease, visibility 0s;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s;
 }
 
 .lightbox-img {
@@ -5057,9 +5045,9 @@ html.ik-scroll-locked {
   transform: scale(1);
 }
 
-/* Yakın görünüm: tıklanan nokta sabit kalacak şekilde büyüyor (script.js
-   --zoom-x/--zoom-y ve --zoom-scale yazıyor). Parmakla sürükleme sayfayı
-   değil görseli taşısın diye dokunma hareketleri tarayıcıya bırakılmıyor. */
+/* Zoomed view: grows around the clicked point (script.js writes --zoom-x,
+   --zoom-y and --zoom-scale). Touch gestures are not left to the browser so a
+   finger drag pans the image instead of the page. */
 .lightbox-overlay.active.is-zoomed .lightbox-img {
   transform: scale(var(--zoom-scale, 2));
   cursor: zoom-out;
@@ -5083,18 +5071,20 @@ html.ik-scroll-locked {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgb(255 255 255 / 25%);
+  background: rgb(255 255 255 / 8%);
   color: #fff;
   font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .lightbox-close:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgb(255 255 255 / 18%);
+  border-color: rgb(255 255 255 / 50%);
 }
 
 @media (max-width: 767px) {
@@ -5107,11 +5097,11 @@ html.ik-scroll-locked {
   }
 }
 
-/* ── GÖRSEL KÜNYESİ ──
-   CC BY / CC BY-SA lisanslı fotoğrafların künyesini açan rozet ve açılır kutu
-   (script.js: "GÖRSEL KÜNYESİ" modülü). Rozet dört farklı yüzeyde (neden
-   kartı, şerit kartı, kronoloji görseli, reel küçük resmi) aynı yerde
-   duruyor; bu yüzden konumlandırma tek kuralda toplandı. */
+/* ── Image credits ──
+   Badge and popover that reveal the credits of CC BY / CC BY-SA photos
+   (script.js: "Image credits" module). The badge sits in the same corner on
+   four different surfaces (cause card, strip card, timeline image, reel
+   thumbnail), so positioning lives in one rule. */
 .media-credit-badge {
   position: absolute;
   right: 8px;
@@ -5130,14 +5120,16 @@ html.ik-scroll-locked {
   border-radius: 50%;
   cursor: pointer;
   opacity: 0.55;
-  transition: opacity 160ms ease, background-color 160ms ease;
+  transition:
+    opacity 160ms ease,
+    background-color 160ms ease;
 }
 
 .media-credit-badge:hover,
 .media-credit-badge:focus-visible,
-.media-credit-badge[aria-expanded="true"] {
+.media-credit-badge[aria-expanded='true'] {
   opacity: 1;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgb(0 0 0 / 85%);
 }
 
 .media-credit-badge:focus-visible {
@@ -5145,7 +5137,8 @@ html.ik-scroll-locked {
   outline-offset: 2px;
 }
 
-/* Reel küçük resmi 130x130 — rozeti oransal olarak küçültüp kenara yaklaştır. */
+/* Reel thumbnails are 130×130: shrink the badge proportionally and move it
+   closer to the edge. */
 .reel-featured .media-credit-badge {
   right: 5px;
   bottom: 5px;
@@ -5166,11 +5159,12 @@ html.ik-scroll-locked {
   padding: var(--space-xs) calc(var(--space-xs) + 0.5rem);
   padding-right: calc(var(--space-xs) + 1.5rem);
   text-align: left;
-  /* body'ye basıldığı için .theme-* kapsamının dışında kalıyor; açık zeminli
-     bölümlerdeki kart yüzeyinin (bento-card) değerleri burada birebir yazılı. */
+
+  /* Appended to <body>, so it is outside any .theme-* scope; the light card
+     surface values (bento-card) are repeated here. */
   color: #000;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 14%);
   border-radius: var(--radius-s);
   box-shadow: var(--shadow-2);
   cursor: default;
@@ -5185,8 +5179,8 @@ html.ik-scroll-locked {
 }
 
 .media-credit-row {
-  /* Grid: uzun fotografci adlari sarktiginda etiketin altina degil,
-     deger sutununda hizali kalsin. */
+  /* Grid: long photographer names wrap under the value column, not under the
+     label. */
   display: grid;
   grid-template-columns: 4rem 1fr;
   gap: 0 0.5rem;
@@ -5196,12 +5190,14 @@ html.ik-scroll-locked {
   color: #000;
 }
 
-.media-credit-row:last-of-type { margin-bottom: 0; }
+.media-credit-row:last-of-type {
+  margin-bottom: 0;
+}
 
 .media-credit-key {
-  /* Etiket/deger ayrimi icin bolum metinlerindeki duz siyah kuraldan
-     kasitli sapma: kunye satirlari taranabilir kalsin. */
-  color: rgba(0, 0, 0, 0.5);
+  /* Deliberate deviation from the plain-black text rule for the label/value
+     distinction: credit rows stay scannable. */
+  color: rgb(0 0 0 / 50%);
 }
 
 .media-credit-row a {
@@ -5210,7 +5206,9 @@ html.ik-scroll-locked {
   text-underline-offset: 2px;
 }
 
-.media-credit-row a:hover { color: #000; }
+.media-credit-row a:hover {
+  color: #000;
+}
 
 .media-credit-close {
   position: absolute;
@@ -5222,25 +5220,30 @@ html.ik-scroll-locked {
   display: grid;
   place-items: center;
   font-size: 0.75rem;
-  color: rgba(0, 0, 0, 0.45);
+  color: rgb(0 0 0 / 45%);
   background: none;
   border: 0;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.media-credit-close:hover { color: #000; }
+.media-credit-close:hover {
+  color: #000;
+}
 
 .media-credit-close:focus-visible {
   outline: 2px solid var(--idd-accent-yellow);
   outline-offset: 1px;
 }
 
-/* Şerit kayarken künye okunamaz — bir künye açıkken şeridi durdur. */
+/* The credit cannot be read while the strip moves; pause the strip while a
+   credit is open. */
 .media-credit-open .hover-ticker-track {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .media-credit-badge { transition: none; }
+  .media-credit-badge {
+    transition: none;
+  }
 }

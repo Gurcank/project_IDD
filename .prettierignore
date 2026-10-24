@@ -1,0 +1,5 @@
+# Prettier has no Blade parser; Blade is kept tidy by hand.
+*.blade.php
+package-lock.json
+public/assets/iklim-krizi/image/
+public/assets/iklim-krizi/video/

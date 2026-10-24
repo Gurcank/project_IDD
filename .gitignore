@@ -1,2 +1,4 @@
-# Claude Code yerel gelistirme araclari (onizleme sunucusu, medya betikleri)
+# Claude Code local tooling (preview server, media scripts)
 .claude/
+
+node_modules/
